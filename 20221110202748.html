@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<HTML lang = "en">
+<HEAD>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  
+  
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: { equationNumbers: { autoNumber: "AMS" } }
+    });
+  </script>
+
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+
+  
+<style>
+pre.hljl {
+    border: 1px solid #ccc;
+    margin: 5px;
+    padding: 5px;
+    overflow-x: auto;
+    color: rgb(68,68,68); background-color: rgb(251,251,251); }
+pre.hljl > span.hljl-t { }
+pre.hljl > span.hljl-w { }
+pre.hljl > span.hljl-e { }
+pre.hljl > span.hljl-eB { }
+pre.hljl > span.hljl-o { }
+pre.hljl > span.hljl-k { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kc { color: rgb(59,151,46); font-style: italic; }
+pre.hljl > span.hljl-kd { color: rgb(214,102,97); font-style: italic; }
+pre.hljl > span.hljl-kn { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kp { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kr { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kt { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-n { }
+pre.hljl > span.hljl-na { }
+pre.hljl > span.hljl-nb { }
+pre.hljl > span.hljl-nbp { }
+pre.hljl > span.hljl-nc { }
+pre.hljl > span.hljl-ncB { }
+pre.hljl > span.hljl-nd { color: rgb(214,102,97); }
+pre.hljl > span.hljl-ne { }
+pre.hljl > span.hljl-neB { }
+pre.hljl > span.hljl-nf { color: rgb(66,102,213); }
+pre.hljl > span.hljl-nfm { color: rgb(66,102,213); }
+pre.hljl > span.hljl-np { }
+pre.hljl > span.hljl-nl { }
+pre.hljl > span.hljl-nn { }
+pre.hljl > span.hljl-no { }
+pre.hljl > span.hljl-nt { }
+pre.hljl > span.hljl-nv { }
+pre.hljl > span.hljl-nvc { }
+pre.hljl > span.hljl-nvg { }
+pre.hljl > span.hljl-nvi { }
+pre.hljl > span.hljl-nvm { }
+pre.hljl > span.hljl-l { }
+pre.hljl > span.hljl-ld { color: rgb(148,91,176); font-style: italic; }
+pre.hljl > span.hljl-s { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sa { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sb { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sc { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sd { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sdB { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sdC { color: rgb(201,61,57); }
+pre.hljl > span.hljl-se { color: rgb(59,151,46); }
+pre.hljl > span.hljl-sh { color: rgb(201,61,57); }
+pre.hljl > span.hljl-si { }
+pre.hljl > span.hljl-so { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sr { color: rgb(201,61,57); }
+pre.hljl > span.hljl-ss { color: rgb(201,61,57); }
+pre.hljl > span.hljl-ssB { color: rgb(201,61,57); }
+pre.hljl > span.hljl-nB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nbB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nfB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nh { color: rgb(59,151,46); }
+pre.hljl > span.hljl-ni { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nil { color: rgb(59,151,46); }
+pre.hljl > span.hljl-noB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-oB { color: rgb(102,102,102); font-weight: bold; }
+pre.hljl > span.hljl-ow { color: rgb(102,102,102); font-weight: bold; }
+pre.hljl > span.hljl-p { }
+pre.hljl > span.hljl-c { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-ch { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cm { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cp { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cpB { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cs { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-csB { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-g { }
+pre.hljl > span.hljl-gd { }
+pre.hljl > span.hljl-ge { }
+pre.hljl > span.hljl-geB { }
+pre.hljl > span.hljl-gh { }
+pre.hljl > span.hljl-gi { }
+pre.hljl > span.hljl-go { }
+pre.hljl > span.hljl-gp { }
+pre.hljl > span.hljl-gs { }
+pre.hljl > span.hljl-gsB { }
+pre.hljl > span.hljl-gt { }
+</style>
+
+
+
+  <style type="text/css">
+  @font-face {
+  font-style: normal;
+  font-weight: 300;
+}
+@font-face {
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
+  font-style: normal;
+  font-weight: 600;
+}
+html {
+  font-family: sans-serif; /* 1 */
+  -ms-text-size-adjust: 100%; /* 2 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+body {
+  margin: 0;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+audio,
+canvas,
+progress,
+video {
+  display: inline-block; /* 1 */
+  vertical-align: baseline; /* 2 */
+}
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+[hidden],
+template {
+  display: none;
+}
+a:active,
+a:hover {
+  outline: 0;
+}
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+b,
+strong {
+  font-weight: bold;
+}
+dfn {
+  font-style: italic;
+}
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+mark {
+  background: #ff0;
+  color: #000;
+}
+small {
+  font-size: 80%;
+}
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.25em;
+}
+img {
+  border: 0;
+}
+svg:not(:root) {
+  overflow: hidden;
+}
+figure {
+  margin: 1em 40px;
+}
+hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+pre {
+  overflow: auto;
+}
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit; /* 1 */
+  font: inherit; /* 2 */
+  margin: 0; /* 3 */
+}
+button {
+  overflow: visible;
+}
+button,
+select {
+  text-transform: none;
+}
+button,
+html input[type="button"], /* 1 */
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button; /* 2 */
+  cursor: pointer; /* 3 */
+}
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+input {
+  line-height: normal;
+}
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+input[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box; /* 2 */
+  box-sizing: content-box;
+}
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+legend {
+  border: 0; /* 1 */
+  padding: 0; /* 2 */
+}
+textarea {
+  overflow: auto;
+}
+optgroup {
+  font-weight: bold;
+}
+table {
+  font-family: monospace, monospace;
+  font-size : 0.8em;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+td,
+th {
+  padding: 0;
+}
+thead th {
+    border-bottom: 1px solid black;
+    background-color: white;
+}
+tr:nth-child(odd){
+  background-color: rgb(248,248,248);
+}
+
+
+/*
+* Skeleton V2.0.4
+* Copyright 2014, Dave Gamache
+* www.getskeleton.com
+* Free to use under the MIT license.
+* http://www.opensource.org/licenses/mit-license.php
+* 12/29/2014
+*/
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box; }
+.column,
+.columns {
+  width: 100%;
+  float: left;
+  box-sizing: border-box; }
+@media (min-width: 400px) {
+  .container {
+    width: 85%;
+    padding: 0; }
+}
+@media (min-width: 550px) {
+  .container {
+    width: 80%; }
+  .column,
+  .columns {
+    margin-left: 4%; }
+  .column:first-child,
+  .columns:first-child {
+    margin-left: 0; }
+
+  .one.column,
+  .one.columns                    { width: 4.66666666667%; }
+  .two.columns                    { width: 13.3333333333%; }
+  .three.columns                  { width: 22%;            }
+  .four.columns                   { width: 30.6666666667%; }
+  .five.columns                   { width: 39.3333333333%; }
+  .six.columns                    { width: 48%;            }
+  .seven.columns                  { width: 56.6666666667%; }
+  .eight.columns                  { width: 65.3333333333%; }
+  .nine.columns                   { width: 74.0%;          }
+  .ten.columns                    { width: 82.6666666667%; }
+  .eleven.columns                 { width: 91.3333333333%; }
+  .twelve.columns                 { width: 100%; margin-left: 0; }
+
+  .one-third.column               { width: 30.6666666667%; }
+  .two-thirds.column              { width: 65.3333333333%; }
+
+  .one-half.column                { width: 48%; }
+
+  /* Offsets */
+  .offset-by-one.column,
+  .offset-by-one.columns          { margin-left: 8.66666666667%; }
+  .offset-by-two.column,
+  .offset-by-two.columns          { margin-left: 17.3333333333%; }
+  .offset-by-three.column,
+  .offset-by-three.columns        { margin-left: 26%;            }
+  .offset-by-four.column,
+  .offset-by-four.columns         { margin-left: 34.6666666667%; }
+  .offset-by-five.column,
+  .offset-by-five.columns         { margin-left: 43.3333333333%; }
+  .offset-by-six.column,
+  .offset-by-six.columns          { margin-left: 52%;            }
+  .offset-by-seven.column,
+  .offset-by-seven.columns        { margin-left: 60.6666666667%; }
+  .offset-by-eight.column,
+  .offset-by-eight.columns        { margin-left: 69.3333333333%; }
+  .offset-by-nine.column,
+  .offset-by-nine.columns         { margin-left: 78.0%;          }
+  .offset-by-ten.column,
+  .offset-by-ten.columns          { margin-left: 86.6666666667%; }
+  .offset-by-eleven.column,
+  .offset-by-eleven.columns       { margin-left: 95.3333333333%; }
+
+  .offset-by-one-third.column,
+  .offset-by-one-third.columns    { margin-left: 34.6666666667%; }
+  .offset-by-two-thirds.column,
+  .offset-by-two-thirds.columns   { margin-left: 69.3333333333%; }
+
+  .offset-by-one-half.column,
+  .offset-by-one-half.columns     { margin-left: 52%; }
+
+}
+html {
+  font-size: 62.5%; }
+body {
+  font-size: 1.5em; /* currently ems cause chrome bug misinterpreting rems on body element */
+  line-height: 1.6;
+  font-weight: 400;
+  font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #222; }
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  font-weight: 300; }
+h1 { font-size: 3.6rem; line-height: 1.2;  letter-spacing: -.1rem;}
+h2 { font-size: 3.4rem; line-height: 1.25; letter-spacing: -.1rem; }
+h3 { font-size: 3.2rem; line-height: 1.3;  letter-spacing: -.1rem; }
+h4 { font-size: 2.8rem; line-height: 1.35; letter-spacing: -.08rem; }
+h5 { font-size: 2.4rem; line-height: 1.5;  letter-spacing: -.05rem; }
+h6 { font-size: 1.5rem; line-height: 1.6;  letter-spacing: 0; }
+
+p {
+  margin-top: 0; }
+a {
+  color: #1EAEDB; }
+a:hover {
+  color: #0FA0CE; }
+.button,
+button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+  display: inline-block;
+  height: 38px;
+  padding: 0 30px;
+  color: #555;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 38px;
+  letter-spacing: .1rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: transparent;
+  border-radius: 4px;
+  border: 1px solid #bbb;
+  cursor: pointer;
+  box-sizing: border-box; }
+.button:hover,
+button:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+.button:focus,
+button:focus,
+input[type="submit"]:focus,
+input[type="reset"]:focus,
+input[type="button"]:focus {
+  color: #333;
+  border-color: #888;
+  outline: 0; }
+.button.button-primary,
+button.button-primary,
+input[type="submit"].button-primary,
+input[type="reset"].button-primary,
+input[type="button"].button-primary {
+  color: #FFF;
+  background-color: #33C3F0;
+  border-color: #33C3F0; }
+.button.button-primary:hover,
+button.button-primary:hover,
+input[type="submit"].button-primary:hover,
+input[type="reset"].button-primary:hover,
+input[type="button"].button-primary:hover,
+.button.button-primary:focus,
+button.button-primary:focus,
+input[type="submit"].button-primary:focus,
+input[type="reset"].button-primary:focus,
+input[type="button"].button-primary:focus {
+  color: #FFF;
+  background-color: #1EAEDB;
+  border-color: #1EAEDB; }
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+textarea,
+select {
+  height: 38px;
+  padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
+  background-color: #fff;
+  border: 1px solid #D1D1D1;
+  border-radius: 4px;
+  box-shadow: none;
+  box-sizing: border-box; }
+/* Removes awkward default styles on some inputs for iOS */
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+textarea {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none; }
+textarea {
+  min-height: 65px;
+  padding-top: 6px;
+  padding-bottom: 6px; }
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+  border: 1px solid #33C3F0;
+  outline: 0; }
+label,
+legend {
+  display: block;
+  margin-bottom: .5rem;
+  font-weight: 600; }
+fieldset {
+  padding: 0;
+  border-width: 0; }
+input[type="checkbox"],
+input[type="radio"] {
+  display: inline; }
+label > .label-body {
+  display: inline-block;
+  margin-left: .5rem;
+  font-weight: normal; }
+ul {
+  list-style: circle; }
+ol {
+  list-style: decimal; }
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+  margin: 1.5rem 0 1.5rem 3rem;
+  font-size: 90%; }
+li > p {margin : 0;}
+th,
+td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #E1E1E1; }
+th:first-child,
+td:first-child {
+  padding-left: 0; }
+th:last-child,
+td:last-child {
+  padding-right: 0; }
+button,
+.button {
+  margin-bottom: 1rem; }
+input,
+textarea,
+select,
+fieldset {
+  margin-bottom: 1.5rem; }
+pre,
+blockquote,
+dl,
+figure,
+table,
+p,
+ul,
+ol,
+form {
+  margin-bottom: 1.0rem; }
+.u-full-width {
+  width: 100%;
+  box-sizing: border-box; }
+.u-max-full-width {
+  max-width: 100%;
+  box-sizing: border-box; }
+.u-pull-right {
+  float: right; }
+.u-pull-left {
+  float: left; }
+hr {
+  margin-top: 3rem;
+  margin-bottom: 3.5rem;
+  border-width: 0;
+  border-top: 1px solid #E1E1E1; }
+.container:after,
+.row:after,
+.u-cf {
+  content: "";
+  display: table;
+  clear: both; }
+
+pre {
+  display: block;
+  padding: 9.5px;
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.42857143;
+  word-break: break-all;
+  word-wrap: break-word;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre.hljl {
+  margin: 0 0 10px;
+  display: block;
+  background: #f5f5f5;
+  border-radius: 4px;
+  padding : 5px;
+}
+
+pre.output {
+  background: #ffffff;
+}
+
+pre.code {
+  background: #ffffff;
+}
+
+pre.julia-error {
+  color : red
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-size: 0.9em;
+}
+
+
+@media (min-width: 400px) {}
+@media (min-width: 550px) {}
+@media (min-width: 750px) {}
+@media (min-width: 1000px) {}
+@media (min-width: 1200px) {}
+
+h1.title {margin-top : 20px}
+img {max-width : 100%}
+div.title {text-align: center;}
+
+  </style>
+</HEAD>
+
+<BODY>
+  <div class ="container">
+    <div class = "row">
+      <div class = "col-md-12 twelve columns">
+        <div class="title">
+          
+          
+          
+        </div>
+
+        <h2>&#40;づ￣ 3￣&#41;づ 	재외동포&#40;在外同胞&#41; 정보지&#40;信息刊物&#41; 	✍&#40;◔◡◔&#41;😘</h2>
+<hr />
+<h4>2022 년 &#91;壬寅&#93; 年 &#40;임인 년, 수&#40;흑색&#41; 범&#40;🐯&#41;; 양&#40;&#43;&#41; 의 해 의며 육십갑자의 39 번째 해&#41;</h4>
+<h5>중국시간 으로 :11월 10일,  20시27분에 재외동포분들이 보기쉽게 자동으로 긁어모음</h5>
+<p>최근 뉴스: 한국시간 &#40;Thu, 10 Nov 2022 21:20:30 &#43;0900&#41;</p>
+<h4>📌사회&#40;🌈&#41;➖	<a href="http://www.hani.co.kr/arti/society/environment/1066754.html">“한중일, 국외 화석연료 사업에 4년간 33조원 투자…흐름 역행”</a></h4>
+<h5>📍기후단체, 세계기후총회서 촉구</h5>
+<h6>📖 기후단체들이 이집트 샤름엘셰이크에서 열리고 있는 제27차 유엔기후변화협약 당사국총회&#40;COP27&#41;에서 각국 정부에 화석연료 투자를 멈추고 재생에너지로의 전환을 가속하라고 촉구했다.기후솔루션과 지구의 벗 일본지부 등은 지난 9일&#40;현지시각&#41; 당사국총회 회의장 안뜰에서 집회를 열고 “기후위기에도 정부는 여전히 새로운 가스, 석유, 석탄 사업에 수백억 달러를 지출하💬@Thu, 10 Nov 2022 21:14:06 &#43;0900</h6>
+<h4>📌정치&#40;🎴&#41;➖	<a href="http://www.hani.co.kr/arti/politics/politics_general/1066753.html">&#91;공덕포차&#93; ‘웃기고 있네’, ‘MBC 배제’...윤석열 정부, ‘발뺌이 체질’?</a></h4>
+<p>📖&#91; 대통령실의 반성 없는 모습이 여실히 드러났습니다. 지난 8일 김은혜 대통령실 홍보수석이 대통령실 국정감사 현장에서 강승규 시민사회수석 노트에 ‘웃기고 있네’라고 메모한 장면이 카메라에 포착됐습니다. 김 수석과 강 수석은 ‘사적 대화’라고 ‘발뺌’했는데요. 이래도 되는 겁니까? 당시 국감장에서는 이태원 참사 관련 질의가 한창이었는데 말이죠. 한편 윤석열 대통💬@Thu, 10 Nov 2022 20:40:43 &#43;0900</p>
+<h4>📌정치&#40;🎴&#41;➖	<a href="http://www.hani.co.kr/arti/politics/politics_general/1066752.html">‘MBC 탑승 배제’ 윤 대통령 적대적 언론관, 후보 때부터 보였다</a></h4>
+<p>📖&#91; 윤석열 대통령의 비속어 발언을 처음 보도한 lt;문화방송gt;&#40;MBC&#41;에 대한 대통령실의 분노가 ‘전용기 탑승 배제’라는 초유의 행동으로 이어졌다. 취임 이후 “자유”를 수없이 언급하고, 출근길 약식회견&#40;도어스테핑&#41;을 전 정부들과의 차별점으로 내세우는 윤 대통령이지만, 비판적 언론에는 “보복행정”&#40;이정미 정의당 대표&#41;을 주저하지 않았다. 이번 사태는 대💬@Thu, 10 Nov 2022 20:37:05 &#43;0900</p>
+<h4>📌사회&#40;🌈&#41;➖	<a href="http://www.hani.co.kr/arti/society/society_general/1066751.html">유동규는 풀려났는데…검찰, 남욱·김만배 구속 연장 요청</a></h4>
+<p>📖&#91; 대장동 개발 특혜 의혹 사건으로 재판을 받고 있는 남욱 변호사와 화천대유자산관리&#40;화천대유&#41; 대주주 김만배씨의 구속기한 만료를 앞두고 검찰이 재판부에 구속기한 연장을 요청했다.대장동 민간사업자들로부터 불법 정치자금을 받은 이재명 더불어민주당 대표 측근들에 대한 수사를 진행하고 있는 서울중앙지검 수사팀이 서울중앙지법 형사22부&#40;재판장 이준철&#41;에 남 변호사와 김💬@Thu, 10 Nov 2022 20:18:45 &#43;0900</p>
+<h4>📌정치&#40;🎴&#41;➖	<a href="http://www.hani.co.kr/arti/politics/politics_general/1066750.html">윤 대통령, 비판 보도 노골적 통제…언론단체 “명백한 도전”</a></h4>
+<h5>📍대통령 전용기에 MBC 탑승 배제비속어 보도 “왜곡” 규정“취재 편의 제공 안할 것”비판 언론에 재갈 물리기</h5>
+<h6>📖 대통령실이 윤석열 대통령의 동남아 순방&#40;11~16일&#41; 때 lt;문화방송gt;&#40;MBC&#41; 기자들의 대통령 전용기 탑승을 배제하기로 한 것을 두고 논란이 거세지고 있다. 비판적 언론에 대해 “조작, 왜곡, 편파 방송”을 이유로 들어 전용기 탑승 배제라는 수단을 써서 취재 활동에 제약을 가하는 것은 전례를 찾기 힘든 일이다. 국내 언론단체들과 외신기자클럽 등은💬@Thu, 10 Nov 2022 20:10:25 &#43;0900</h6>
+<h4>📌전국&#40;🌏&#41;➖	<a href="http://www.hani.co.kr/arti///1066749.html">‘수원 연쇄성폭행범’ 외출제한, 자정부터→밤 9시부터로 연장</a></h4>
+<h5>📍지난달 31일 만기 출소…주민 불안에 추가 조처</h5>
+<h6>📖 검찰이 \&#39;수원 연쇄성폭행범\&#39; 출소로 경기 화성시민들의 불안감이 커지자 외출제한 3시간 연장, 아동·청소년 관련 보육·교육시설 출입제한 등의 추가 조처에 들어갔다.수원지검 여성아동범죄조사부&#40;부장 김봉준&#41;는 박아무개&#40;39&#41;씨의 외출제한 시간을 기존 자정부터 새벽 6시에서 밤 9시부터 다음날 새벽 6시까지로 추가로 ‘3시간 연장’하는 내용의 준수사항 부과를 💬@Thu, 10 Nov 2022 20:01:04 &#43;0900</h6>
+<h4>📌사회&#40;🌈&#41;➖	<a href="http://www.hani.co.kr/arti/society/schooling/1066748.html">&#91;육퇴한 밤&#93; 덜 애써도 불안하지 않은 ‘본질 육아’ 알려드릴게요</a></h4>
+<h5>📍육아 동지 유튜브 채널 육퇴한 밤지나영 존스홉킨스대학교 교수</h5>
+<h6>📖 “아이들의 내면도 건강한 사회가 되기까지”10일 유튜브 채널 lt;육퇴한 밤gt;에서 만난 지나영 교수&#40;미국 존스홉킨스대학교 의과대학 소아·청소년 정신의학과&#41;가 독자에게 건넨 첫인사이자 당부다. 그가 아이들의 마음 건강을 우려하게 된 계기는 이렇다. 마흔 즈음, 신경계 희귀 질환을 앓게 된 지 교수는 요양 차 한국에 왔다가 놀라운 장면을 마주했다. 한 💬@Thu, 10 Nov 2022 20:00:15 &#43;0900</h6>
+<h4>📌만화➖	<a href="http://www.hani.co.kr/arti/cartoon/hanicartoon/1066747.html">11월 11일 한겨레 그림판</a></h4>
+<p>📖&#91; 권범철 기자 kartoon@hani.co.kr■ 한겨레 그림판 바로가기💬@Thu, 10 Nov 2022 19:49:51 &#43;0900</p>
+<h4>📌사회&#40;🌈&#41;➖	<a href="http://www.hani.co.kr/arti/society/media/1066746.html">한국신문방송편집인협회도 “MBC 취재제한 철회” 촉구</a></h4>
+<h5>📍원로 언론인들 “민주주의 국가에서 상상할 수조차 없는 일”</h5>
+<h6>📖 한국신문방송편집인협회&#40;회장 서양원·이하 편협&#41;가 10일 lt;문화방송gt;&#40;MBC&#41; 취재진에 대한 대통령실의 ‘대통령 전용기 탑승 불허’ 통보를 언론자유에 대한 탄압으로 규정하고 즉각 철회를 요구했다. 편협은 국내 신문·방송·통신사의 편집인과 보도국장&#40;본부장&#41;, 논설주간 등 최고 보도책임자가 속한 언론단체다.편협은 이날 긴급 성명에서 대통령실의 이번 조💬@Thu, 10 Nov 2022 19:47:17 &#43;0900</h6>
+<h4>📌정치&#40;🎴&#41;➖	<a href="http://www.hani.co.kr/arti/politics/politics_general/1066745.html">윤 대통령 폭주에 장단 맞추는 국힘…야 “뒤끝 작렬 정치”</a></h4>
+<h5>📍윤 대통령 대신해 MBC 고발도</h5>
+<h6>📖 국민의힘이 10일 lt;문화방송gt;&#40;MBC&#41; 출입기자를 대통령 전용기 탑승에서 배제하겠다는 대통령실의 방침에 “취재 윤리를 위반한 언론사에 취재 편의를 제공할 의무는 없다”며 동조하고 나섰다. 그동안 lt;문화방송gt; 좌표찍기에 앞장선 데 이어 윤석열 대통령의 언론 통제 움직임에 적극 보조를 맞추는 모양새다. 정진석 국민의힘 비상대책위원장은 이날💬@Thu, 10 Nov 2022 19:16:00 &#43;0900</h6>
+<h4>📌사회&#40;🌈&#41;➖	<a href="http://www.hani.co.kr/arti/society/internalmove/1066743.html">대한교육법학회장 이덕난 입법조사관</a></h4>
+<p>📖&#91;   이덕난 국회입법조사처 입법조사연구관이 대한교육법학회 19대 학회장에 선출됐다. 이 신임 학회장은 중앙대·건국대 겸임교수, 한국교육개발원 연구위원을 역임했다. 교육법의 이해와 실제 등 저서와 학교폭력·교권보호·입법평가 관련 논문 등을 저술했다. 그는 “코로나19 이후 학업성취도 저하, 사교육비 급증, 교육격차 심화 등 해결 과제와 학령인구 감소 등 구💬@Thu, 10 Nov 2022 19:00:47 &#43;0900</p>
+<h4>📌경제&#40;📊&#41;➖	<a href="http://www.hani.co.kr/arti/economy/economy_general/1066742.html">“사용후핵연료 해법, ‘죄수의 딜레마’에 빠져 실패”</a></h4>
+<h5>📍2022년 아시아미래포럼 섹션4‘탄소중립 위한 사용후핵연료 해법’ 토론회원전 가동 43년째 처리장 마련 못해</h5>
+<h6>📖 한국이 40여년 동안 사용후핵연료&#40;고준위 방사성폐기물&#41; 해법 마련에 실패한 것은 주민·환경단체·원전업계·정부 등 이해관계자들이 서로 협력하면 모두에게 이익이 되는데도 소통과 신뢰 부족으로 인해 협력하지 않는 길을 선택한 이른바 ‘죄수의 딜레마’에 빠졌기 때문이며, 건강한 공론장 형성을 통한 신뢰회복이 해법 마련의 관건이라는 의견이 제시됐다. 또 정부 주도 💬@Thu, 10 Nov 2022 19:00:33 &#43;0900</h6>
+<h4>📌경제&#40;📊&#41;➖	<a href="http://www.hani.co.kr/arti/economy/economy_general/1066741.html">12월부터 규제지역 LTV 50&#37; 단일화…15억 초과 주담대 허용</a></h4>
+<h5>📍한 달 앞당겨 대출 규제 완화실수요자 무주택자 대출 한도 4→6억“금리 높아 효과 제한적” 지적</h5>
+<h6>📖 다음달 1일부터 규제지역 내 무주택자&#40;1주택자는 처분 조건&#41;의 주택담보대출비율&#40;LTV&#41;이 50&#37;로 단일화된다. 또한 투기지역·투기과열지구에 위치한 15억원 초과 아파트의 주택담보대출도 허용된다.10일 금융위원회는 이러한 내용의 부동산시장 정상화 방안을 발표했다. 금융위는 이번 대책에서 엘티브이 규제 완화 시기를 내년 초에서 다음달 1일로 앞당겼다. 김주현 💬@Thu, 10 Nov 2022 18:57:57 &#43;0900</h6>
+<h4>📌경제&#40;📊&#41;➖	<a href="http://www.hani.co.kr/arti/economy/economy_general/1066740.html">금융위, 예보 사장에 ‘인사전횡’ 유재훈 전 예탁결제원 사장 제청</a></h4>
+<h5>📍금융위원회, 유재훈 전 사장 임명 제청예탁결제원 사장 시절 인사 전횡 논란근로기준법 위반 등으로 대법원 판결도</h5>
+<h6>📖 금융위원회가 신임 예금보험공사 사장으로 유재훈 전 한국예탁결제원 사장을 임명 제청했다. 그러나 인사 전횡으로 논란을 빚은 인물이어서 노동조합과 정치권을 중심으로 반발이 예상된다. 10일 금융위는 신임 예금보험공사 사장으로 유재훈 전 한국예탁결제원 사장을 임명 제청했다고 밝혔다. 관련 법&#40;공공기관의 운영에 관한 법률 제26조제1항&#41;에 따르면, 예금보험공사 사💬@Thu, 10 Nov 2022 18:57:23 &#43;0900</h6>
+<h4>📌사회&#40;🌈&#41;➖	<a href="http://www.hani.co.kr/arti/society/environment/1066739.html">온실가스 최대 배출국 중국 “기후 피해에 재정지원 안 할 것”</a></h4>
+<h5>📍&#91;제27차 유엔기후변화총회&#93;중, 논의 지지한다면서도 재정지원엔 선 그어도서국연합 “중국은 주요 오염국…비용 내야”</h5>
+<h6>📖 온실가스 최대 배출국인 중국이 기후변화에 따른 개발도상국의 ‘손실과 피해’를 지원하는 논의를 지지한다면서도 재정지원을 할 뜻은 없다고 밝혔다. 기후변화로 해수면 상승 등의 피해를 받고 있는 섬나라들은 중국의 적극적인 책임 분담을 요구했다.lt;로이터gt; 통신 등을 보면, 셰전화 중국 기후변화사무 특사는 9일&#40;현지시각&#41; 이집트 샤름엘셰이크에서 열린 제2💬@Thu, 10 Nov 2022 18:56:33 &#43;0900</h6>
+<h4>📌경제&#40;📊&#41;➖	<a href="http://www.hani.co.kr/arti/economy/property/1066738.html">준공 전 미분양에도 PF 대출 보증 5조 지원</a></h4>
+<p>📖&#91; 10일 정부가 5조원 규모의 미분양 주택 프로젝트파이낸싱&#40;PF&#41; 보증 상품을 신설하겠다고 밝힌 것은, 최근 미분양 주택이 늘어나면서 건설사들의 유동성이 부족해지고 공사 중단 상황까지 생길 수 있다는 목소리가 커져왔기 때문이다. 통상 건설사는 사업비의 30&#37;가량을 프로젝트 파이낸싱 대출로, 나머지 70&#37; 정도를 중도금 등으로 조달한다.건설업계는 그동안 정부가💬@Thu, 10 Nov 2022 18:55:22 &#43;0900</p>
+<h4>📌휴심정➖	<a href="http://www.hani.co.kr/arti///1066735.html">“몇몇 목사, 전광훈에 자기 욕망 투사…타락 주범은 결국 돈”</a></h4>
+<h5>📍&#91;짬&#93; 교회개혁실천연대 공동대표 남오성 목사</h5>
+<h6>📖 이태원 참사 뒤 상처를 헤집는 발언이 종교인들의 입에서 잇따라 나와 우려를 사고 있다. 전광훈 목사는 “북한 공작”이라고 주장했고, 개신교 예수교장로회통합 부총회장인 김의식 목사는 교회 설교에서 “귀신 축제인 핼러윈데이 대신 할렐루야데이를 만들려고 했는데, 귀신이 먼저 손을 썼다”고 말했다. 한국 개신교의 대표적인 교회개혁운동가인 남오성&#40;52&#41; 목사는 이런💬@Thu, 10 Nov 2022 18:53:30 &#43;0900</h6>
+<h4>📌사회&#40;🌈&#41;➖	<a href="http://www.hani.co.kr/arti/society/society_general/1066734.html">“우크라 전쟁·글로벌 공급망 문제 극복, 신뢰 회복이 관건”</a></h4>
+<h5>📍김진표 국회의장·최태원 회장 등 참석 축사</h5>
+<h6>📖 10일 서울 중구 대한상공회의소 국제회의장에서 열린 제13회 아시아미래포럼에는 김진표 국회의장, 최태원 대한상공회의소 회장, 김은미 이화여대 총장 등이 참석해 환영사와 축사를 건넸다. 한덕수 국무총리를 대신해 방문규 국무조정실장이 참석해 축사를 대독했다.포럼 조직위 공동위원장인 최태원 회장은 환영사에서 “미-중 간 디커플링, 우크라이나 전쟁, 글로벌 공급망💬@Thu, 10 Nov 2022 18:53:16 &#43;0900</h6>
+<h4>📌경제&#40;📊&#41;➖	<a href="http://www.hani.co.kr/arti/economy/economy_general/1066733.html">서울 전역·경기 4곳 빼고 규제 다 푼다…LTV 완화도 한 달 당겨</a></h4>
+<p>📖&#91; 오는 14일부터 서울과 경기 4곳&#40;과천·성남·하남·광명&#41;만 대출, 세금, 청약 관련 규제가 폭넓게 적용되는 부동산 규제지역으로 남게 된다. 정부가 올해 들어 세번째 규제지역 해제에 나선 데 따른 것이다. 정부는 건설사들을 위한 5조원 규모의 미분양 프로젝트파이낸싱&#40;PF&#41; 대출 보증도 신설하고, 무주택·1주택자의 주택담보대출비율&#40;LTV&#41; 규제 완화도 예고했던💬@Thu, 10 Nov 2022 18:51:08 &#43;0900</p>
+<h4>📌사설.칼럼➖	<a href="http://www.hani.co.kr/arti/opinion/editorial/1066732.html">&#91;사설&#93; MBC 전용기 탑승불허, 반헌법적 ‘언론통제’다</a></h4>
+<p>📖&#91; 대통령실이 9일 “최근 lt;문화방송gt;&#40;MBC&#41;의 외교 관련 왜곡, 편파 보도가 반복돼왔다”며 11~16일 윤석열 대통령의 동남아 순방 기간 문화방송 기자들의 전용기 탑승을 불허한다고 통보했다. 문화방송이 지난 9월 미국 순방 도중 나온 윤석열 대통령의 비속어 발언을 가장 먼저 보도한 점, 지난달 ‘피디수첩’에서 김건희 여사의 논문 표절 의혹 관련 💬@Thu, 10 Nov 2022 18:48:34 &#43;0900</p>
+<h4>📌사회&#40;🌈&#41;➖	<a href="http://www.hani.co.kr/arti/society/media/1066731.html">“언론은 사회적 가치재…투명성·다양성 높여 신뢰 위기 극복을”</a></h4>
+<h5>📍아시아미래포럼 세션2 신뢰받는 저널리즘의 조건</h5>
+<h6>📖 언론에 대한 적대적 표현과 미디어 종사자에 대한 혐오와 공격마저 낯설지 않게 된 현실 속에서 언론은 과연 신뢰의 위기를 극복할 수 있을까. 언론에 대한 이용자의 불신이 어디서 비롯하는지 그 원인과 맥락을 진단하고 대안을 모색하기 위한 자리가 마련됐다.10일 한겨레신문사는 서울 중구 대한상공회의소에서 ‘분열과 배제의 시대: 새로운 신뢰를 찾아’를 주제로 13💬@Thu, 10 Nov 2022 18:48:05 &#43;0900</h6>
+<h4>📌사회&#40;🌈&#41;➖	<a href="http://www.hani.co.kr/arti/society/society_general/1066730.html">“연대와 연결, 더 나은 사회로 가는 길”</a></h4>
+<h5>📍아시아미래포럼 세션3 어떻게 신뢰의 다리를 놓을 것인가</h5>
+<h6>📖 전문가들은 한국 사회의 무너진 신뢰를 회복하기 위한 열쇠로 연대와 연결을 꼽았다.10일 서울 중구 대한상공회의소 국제회의장에서 ‘어떻게 신뢰의 다리를 놓을 것인가’를 주제로 열린 제13회 한겨레 아시아미래포럼 제3세션 행사에서 이형희 에스케이&#40;SK&#41;수펙스추구협의회 에스브이&#40;SV&#41;위원장은 첫번째 발제자로 나서 “기업이 신뢰를 회복하려면 사회가 기업에 바라는 💬@Thu, 10 Nov 2022 18:47:30 &#43;0900</h6>
+<h4>📌경제&#40;📊&#41;➖	<a href="http://www.hani.co.kr/arti/economy/finance/1066729.html">CP-CD 금리차 연일 확대…기업 자금조달 내년에야 숨통 트나</a></h4>
+<h5>📍CP 금리, 금융위기 이후 최고 수준 기록해 “내년 상반기 돼야 채권 시장 안정화될 것”</h5>
+<h6>📖 가파른 금리 상승에 레고랜드 사태까지 겹치며 기업과 은행의 신용 격차가 급격히 확대되고 기업의 자금조달 여력이 악화하는 것으로 나타났다. 내년 상반기는 돼야 채권시장이 안정될 것이란 전망도 나온다.10일 금융투자협회 집계를 보면, 이날 최상위 신용등급인 ‘A1’ 기준 기업어음&#40;CP&#41; 91일물 금리는 5.09&#37;로 ‘AAA’ 양도성예금증서&#40;CD&#41; 91일물 금리💬@Thu, 10 Nov 2022 18:44:15 &#43;0900</h6>
+<h4>📌경제&#40;📊&#41;➖	<a href="http://www.hani.co.kr/arti/economy/heri_review/1066728.html">“사회적 자본이 불평등 등 사회경제적 위기 풀어갈 열쇠”</a></h4>
+<h5>📍아시아미래포럼 기조세션2 로버트 퍼트넘 미 하버드대 교수 노리나 허츠 영 UCL 명예교수</h5>
+<h6>📖 “미국의 19세기 말에도 극심한 불평등과 정치적 양극화, 지독한 분열, 비관적 사회 분위기가 만연했지만 결국 파국을 피하고 상승의 시기로 역전했다. 도덕·문화적 변화가 이끌었고, 카리스마적 리더십이 아니라 청년, 시민들의 참여 때문에 가능했다.”10일 서울 중구 대한상공회의소 국제회의장에서 열린 아시아미래포럼의 ‘디지털 시대, 새로운 신뢰는 가능한가’ 주제💬@Thu, 10 Nov 2022 18:42:07 &#43;0900</h6>
+<h4>📌경제&#40;📊&#41;➖	<a href="http://www.hani.co.kr/arti/economy/economy_general/1066727.html">“제로섬 정치로 민주주의 위기…상호관용·이해·자제 절실”</a></h4>
+<h5>📍아시아미래포럼 기조세션1 대니얼 지블랫 미 하버드대 교수토론자로 나선 손석희 전 앵커 “언론도 진영 갈등 심화에 책임”</h5>
+<h6>📖 정치 신뢰도 하락은 민주주의 경험이나 경제적 수준과 무관하게 전세계적으로 나타나는 현상이다. 그러나 이를 방치할 경우 공적 신뢰와 민주주의의 위기로 이어진다. 사회 불평등과 정치적 양극화, 갈등 해소에 대한 일차적 책임이 정치에 있기 때문이다. 어떻게 해야 정치에 대한 신뢰를 회복할 수 있을까?트럼프 시대 미국 민주주의의 위기를 연구한 대니얼 지블랫 하버드💬@Thu, 10 Nov 2022 18:41:27 &#43;0900</h6>
+<h4>📌사설.칼럼➖	<a href="http://www.hani.co.kr/arti/opinion/editorial/1066726.html">&#91;사설&#93; ‘용산소방서장 입건’이 국민 공분 사는 이유 돌아봐야</a></h4>
+<p>📖&#91; 경찰청 특별수사본부가 이태원 참사 당시 현장 구조를 지휘한 최성범 서울 용산소방서장을 업무상 과실치사상 등의 혐의로 입건한 뒤 비판의 목소리가 잇따르고 있다. 최 서장의 현장 대응에 대해 법리적 적절성을 따져보는 것을 뭐라 할 수는 없다고 본다. 그러나 이런 여론에는 참사 뒤에도 무책임하고 뻔뻔한 언행으로 일관하고 있는 정부 최고 지휘부에 대한 국민의 분노💬@Thu, 10 Nov 2022 18:33:36 &#43;0900</p>
+<h4>📌사설.칼럼➖	<a href="http://www.hani.co.kr/arti/opinion/column/1066725.html">재난을 대하는 윤석열 대통령의 이중잣대</a></h4>
+<p>📖&#91; &#91;세상읽기&#93; 김종대 | 연세대 통일연구원 객원교수“현장에 나가 있었잖아&#33;”반말로 윽박지르는 이 한마디가 이태원 참사에 대한 윤석열 대통령 인식의 실체다. 지난 7일 대통령실에서 열린 국가안전시스템 점검회의에서 윤 대통령은 경찰을 향해 “&#40;참사 조짐에도&#41; 왜 4시간 동안 물끄러미 쳐다만 보고 있었냐”고 질타했다. 이날 윤 대통령의 발언을 해석하면 이태원 참사💬@Thu, 10 Nov 2022 18:25:04 &#43;0900</p>
+<hr />
+<h3>주요 이슈들</h3>
+<hr />
+<ul>
+<li><p>코로나19 7차 재유행이 본격적으로 시작됐다며 다음 달에 하루 최대 확진자 수가 20만 명에 달할 것으로 전망했습니다. 일률적인 사회적 거리두기는 없을 것이라고 밝혔지만, 치명률이 급격히 증가하는 국가에 대해서는 비자 발급이나 항공편 운항 제한 등을 재도입 할 수 있다고 밝혔습니다.</p>
+</li>
+<li><p>신규 코로나 확진자가 이틀 연속 6만 명을 넘었습니다. 정부는 증가세가 이어지며 겨울철 재유행이 본격 시작됐다고 공식화했습니다. 방역당국은 재유행 규모는 여름철 유행 수준일 것으로 전망하고 고위험군 보호에 집중할 방침입니다.</p>
+</li>
+<li><p>미국 중간선거에서 하원은 공화당이 다수당을 차지했지만 상원은 개표가 마무리되지 않은 몇몇 선거구에서 접전이 이어지고 있습니다. 민주당 앤디 김 연방 하원의원은 뉴저지주에서 승리해 26년 만에 첫 한국계 3선 의원이 됐습니다.</p>
+</li>
+<li><p>더불어민주당과 정의당 등 야 3당이 제출한 이태원 참사 진상규명을 위한 국정조사 요구서가 오늘 본회의에 보고됩니다. 국민의힘은 경찰 수사를 방해하고 정쟁만 불러온다며 반대한다고 했습니다.</p>
+</li>
+<li><p>검찰이 이재명 민주당 대표의 측근인 정진상 정무조정실장의 자택과 민주당 사무실 등을 압수수색 했습니다. 민주당은 이태원 참사로부터 국민의 눈을 돌리기 위한 정치 쇼라며 맹비난했습니다.</p>
+</li>
+<li><p>윤석열 대통령이 오늘로 취임 6개월을 맞은 가운데 내일부터는 4박 6일간의 일정으로 아세안과 G20 정상회의에 참석하기 위해 동남아 순방에 나섭니다. 한·미·일 정상회담도 추진 중인데 취임 후 처음으로 시진핑 중국 국가주석과도 대면할 것으로 보입니다.</p>
+</li>
+<li><p>원희룡 국토교통부 장관이 늦은 밤 영등포역 탈선사고 현장에서 철도안전 간담회를 열었습니다. 철도노동조합이 오봉역 사고 유가족에게 사과 먼저 하라며 강하게 항의하면서 역사 안 사무실에 갇히기도 했습니다.</p>
+</li>
+<li><p>미국 중간선거에서 하원은 공화당이 다수당을 차지했지만 상원은 개표가 마무리되지 않은 몇몇 선거구에서 접전이 이어지고 있습니다. 민주당 앤디 김 연방 하원의원은 뉴저지주에서 승리해 26년 만에 첫 한국계 3선 의원이 됐습니다.</p>
+</li>
+<li><p>인터넷 중고 거래 시장에서 유명 포털 사이트 안전거래라고 속여 가짜 링크를 발송하거나 대포 통장 여러개를 돌려쓰는 수법에 당하는 피해자가 늘고 있습니다. 추가 피해를 막기 위해 중고거래 사기에 이용된 계좌를 공개했습니다.</p>
+</li>
+<li><p>광주지역 중견 건설사 회장 동생이 검찰 내사를 무마하기 위해 전현직 검찰 수사관에게 수억 원의 돈을 전했다는 주장이 나왔습니다. 경찰은 언론보도와 관련한 내용을 중심으로 사실관계를 확인하고 있습니다.</p>
+</li>
+<li><p>경부고속도로에서 화물차끼리 추돌해 운전자 4명이 다쳤고, 도로에 화물이 떨어져 극심한 정체가 빚어졌습니다. 바다에서는 어선끼리 충돌하는 사고가 발생했습니다.</p>
+</li>
+<li><p>지난달 데이터센터 화재로 발생한 카카오 먹통 사태에 대한 피해 접수 결과 2천건 넘는 신고가 들어왔다고 합니다. 업종별로는 외식업이 26.9&#37;로 피해 신고가 가장 많았는데요. 카카오페이 결제가 안되거나 카카오톡 채널 마비로 주문을 못 받았다는 겁니다. 카카오T 의존도가 높은 개인택시 기사들의 피해도 컸습니다. 이들 가운데 카카오 유료 서비스 가입자가 70&#37;에 달했습니다.</p>
+</li>
+<li><p>신규 취업자 증가 폭이 다섯 달째 둔화하고 있는 것으로 나타났습니다. 취업자 수 증가 폭을 보면 올해 초 1백만 명을 웃돌며 이례적인 호조를 보였지만, 5월 이후 5개월째 줄면서 지난달에는 60만명 수준까지 떨어진 것으로 나타났습니다. </p>
+</li>
+<li><p>고용의 질도 그다지 좋지 않습니다. 지난달 취업자 증가 폭의 70&#37; 가까이 60세 이상 고령층이 차지했고, 장기직은 줄고 단기직이 큰 폭으로 늘었습니다. 36시간 미만 단기직 취업자는 지난달 346만 명 가까이 늘어 1982년 통계 작성 이래 최대 규모를 기록했습니다.</p>
+</li>
+<li><p>가계대출 평균 금리가 7&#37; 수준까지 치솟으면, 소득에서 세금을 내고 나면 원금과 이자도 못 갚는 대출자가 120만 명에 이를 것이라는 분석이 나왔습니다. 기준금리 인상에 따라 시장금리도 당분간 계속 상승할 것으로 보여, 대출 취약층에 대한 대책도 시급해 보입니다.</p>
+</li>
+<li><p>기준금리 인상으로 예금 금리가 크게 오르면서 은행으로 막대한 돈이 몰리고 있습니다. 지난 한 달간 은행 정기예금은 무려 56조 원 이상 늘었는데요. 통계 작성 이후 20년 만에 역대 최대 증가 폭을 기록했습니다. 1금융권 은행 예금금리가 이미 5&#37;에 육박하는데다, 78&#37;대 특판 상품까지 나왔기 때문입니다.</p>
+</li>
+<li><p>최근 온라인에서 라면을 사는 소비자가 부쩍 늘었다고 합니다. 온라인 판매 비중이 지난해 15&#37;까지 증가했는데, 업계는 올해는 10&#37; 후반대까지 늘어날 것으로 보고 있는데요. 대형마트에서 20개 한 상자에 1만6천 원 정도 하는 라면도 온라인에서 사면 10&#37; 정도 저렴합니다. 아무래도 가격이 싸니까 소비자들이 몰리는 현상입니다.</p>
+</li>
+<li><p>최근 뮤지컬 티켓값이 18만 원까지 오르면서 갑론을박이 뜨겁습니다. 다음 달 개막하는 뮤지컬 물랑루즈, 아시아 첫 공연이란 기대감 못지않게 티켓 가격으로 화젭니다. 그동안 최대 15만 원에 형성됐던 VIP석 관람료를 물랑루즈 측은 18만 원으로 책정했기 때문인데요. 국내 프로덕션이 제작하는 뮤지컬 중 가장 비싼 금액입니다.</p>
+</li>
+<li><p>서울의 초미세먼지 농도가 평소보다 두 세배 가량 높아 올가을 들어 처음으로 초미세먼지 주의보가 내려졌습니다. 남해안을 제외한 대부분 지역에서 대기 질이 나쁨 수준을 보이고 있어 장시간 야외활동은 자제하는 게 좋겠습니다.</p>
+</li>
+</ul>
+<hr />
+<h3>경제지표</h3>
+<hr />
+<ul>
+<li><p>환율&#40;1달러&#41;: 1,382.00원</p>
+</li>
+<li><p>코스피 : 2,402.23&#40;&#43;1.06&#37;&#41; </p>
+</li>
+</ul>
+<pre><code>&#43; 52주최고 : 3,043.83 
+&#43; 52주최저 : 2,134.77</code></pre>
+<ul>
+<li><p>나스닥: 10,353.18&#40;-2.48&#37;&#41; </p>
+</li>
+</ul>
+<pre><code>&#43; 52주 최고 : 16,212.23 
+&#43; 52주 최저 : 10,088.83</code></pre>
+<ul>
+<li><p>다우존스 : 32,513.94&#40;-1.95&#37;&#41; </p>
+</li>
+</ul>
+<pre><code>&#43; 52주 최고 : 36,952.65 
+&#43; 52주 최저 : 28,660.94</code></pre>
+<ul>
+<li><p>S&amp;P500 : 3,748.57&#40;-2.08&#37;&#41; </p>
+</li>
+</ul>
+<pre><code>&#43; 52주 최고 : 4,818.62 
+&#43; 52주 최저 : 3,491.58</code></pre>
+<ul>
+<li><p>국제 금값 : 1,710.40&#40;-0.19&#37;&#41;</p>
+</li>
+</ul>
+<pre><code>&#43; 52주 최고 : 2,078.80 
+&#43; 52주 최저 : 1,618.30</code></pre>
+<ul>
+<li><p>국제 유가: 85.36&#40;-0.55&#37;&#41; </p>
+</li>
+</ul>
+<pre><code>&#43; 52주 최고 : 130.50 
+&#43; 52주 최저 : 62.43</code></pre>
+<hr />
+<h3>주요코인가격</h3>
+<hr />
+<ul>
+<li><p>비트코인 : 23,442,000원&#40;&#43;2.28&#37;&#41; </p>
+</li>
+</ul>
+<pre><code>&#43; 52주 최고 : 82,520,000원 
+&#43; 52주 최저 : 22,564,000원</code></pre>
+<ul>
+<li><p>이더리움 : 1,707,000원&#40;&#43;7.46&#37;&#41; </p>
+</li>
+</ul>
+<pre><code>&#43; 52주 최고 : 5,900,000원 
+&#43; 52주 최저 : 1,201,500원</code></pre>
+<ul>
+<li><p>리　　플 : 517원&#40;&#43;7.48&#37;&#41; </p>
+</li>
+</ul>
+<pre><code>&#43; 52주 최고 : 1,610원 
+&#43; 52주 최저 : 384원</code></pre>
+<hr />
+<h3>환율표</h3>
+<hr />
+<table><tr><th>국가</th><th>환율</th><th>전일대비</th><th>퍼센트</th></tr><tr><td>미국</td><td>1382.0</td><td>상승</td><td>&#43;0.99&#37;</td></tr><tr><td>일본</td><td>943.12</td><td>상승</td><td>&#43;0.92&#37;</td></tr><tr><td>유럽연합</td><td>1373.29</td><td>상승</td><td>&#43;0.13&#37;</td></tr><tr><td>중국</td><td>190.16</td><td>상승</td><td>&#43;0.77&#37;</td></tr><tr><td>영국</td><td>1571.61</td><td>상승</td><td>&#43;0.72&#37;</td></tr><tr><td>호주</td><td>883.44</td><td>하락</td><td>-0.09&#37;</td></tr><tr><td>캐나다</td><td>1019.06</td><td>상승</td><td>&#43;0.19&#37;</td></tr><tr><td>뉴질랜드</td><td>808.4</td><td>상승</td><td>&#43;0.16&#37;</td></tr></table>
+<hr />
+<h5>E-mail📧: <a href="mailto:jaewoo.joung@outlook.com">jaewoo.joung@outlook.com</a></h5>
+<h5>Mobile📱:&#43;86-130-6582-6195</h5>
+
+
+        <HR/>
+        <div class="footer">
+          <p>
+            Published from <a href="20221110202748.jmd">20221110202748.jmd</a>
+            using <a href="http://github.com/JunoLab/Weave.jl">Weave.jl</a> v0.10.9 on 2022-11-10.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</BODY>
+
+</HTML>
