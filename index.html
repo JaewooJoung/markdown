@@ -1,688 +1,940 @@
 <!DOCTYPE html>
-<HTML lang = "en">
-<HEAD>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  
-  
+  <html>
+    <head>
+      <title>myProfile</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///c:\Users\jaewo\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.6.8\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <style>
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
 
-  <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
-      TeX: { equationNumbers: { autoNumber: "AMS" } }
-    });
-  </script>
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
 
-  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-  </script>
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
 
-  
-<style>
-pre.hljl {
-    border: 1px solid #ccc;
-    margin: 5px;
-    padding: 5px;
-    overflow-x: auto;
-    color: rgb(68,68,68); background-color: rgb(251,251,251); }
-pre.hljl > span.hljl-t { }
-pre.hljl > span.hljl-w { }
-pre.hljl > span.hljl-e { }
-pre.hljl > span.hljl-eB { }
-pre.hljl > span.hljl-o { }
-pre.hljl > span.hljl-k { color: rgb(148,91,176); font-weight: bold; }
-pre.hljl > span.hljl-kc { color: rgb(59,151,46); font-style: italic; }
-pre.hljl > span.hljl-kd { color: rgb(214,102,97); font-style: italic; }
-pre.hljl > span.hljl-kn { color: rgb(148,91,176); font-weight: bold; }
-pre.hljl > span.hljl-kp { color: rgb(148,91,176); font-weight: bold; }
-pre.hljl > span.hljl-kr { color: rgb(148,91,176); font-weight: bold; }
-pre.hljl > span.hljl-kt { color: rgb(148,91,176); font-weight: bold; }
-pre.hljl > span.hljl-n { }
-pre.hljl > span.hljl-na { }
-pre.hljl > span.hljl-nb { }
-pre.hljl > span.hljl-nbp { }
-pre.hljl > span.hljl-nc { }
-pre.hljl > span.hljl-ncB { }
-pre.hljl > span.hljl-nd { color: rgb(214,102,97); }
-pre.hljl > span.hljl-ne { }
-pre.hljl > span.hljl-neB { }
-pre.hljl > span.hljl-nf { color: rgb(66,102,213); }
-pre.hljl > span.hljl-nfm { color: rgb(66,102,213); }
-pre.hljl > span.hljl-np { }
-pre.hljl > span.hljl-nl { }
-pre.hljl > span.hljl-nn { }
-pre.hljl > span.hljl-no { }
-pre.hljl > span.hljl-nt { }
-pre.hljl > span.hljl-nv { }
-pre.hljl > span.hljl-nvc { }
-pre.hljl > span.hljl-nvg { }
-pre.hljl > span.hljl-nvi { }
-pre.hljl > span.hljl-nvm { }
-pre.hljl > span.hljl-l { }
-pre.hljl > span.hljl-ld { color: rgb(148,91,176); font-style: italic; }
-pre.hljl > span.hljl-s { color: rgb(201,61,57); }
-pre.hljl > span.hljl-sa { color: rgb(201,61,57); }
-pre.hljl > span.hljl-sb { color: rgb(201,61,57); }
-pre.hljl > span.hljl-sc { color: rgb(201,61,57); }
-pre.hljl > span.hljl-sd { color: rgb(201,61,57); }
-pre.hljl > span.hljl-sdB { color: rgb(201,61,57); }
-pre.hljl > span.hljl-sdC { color: rgb(201,61,57); }
-pre.hljl > span.hljl-se { color: rgb(59,151,46); }
-pre.hljl > span.hljl-sh { color: rgb(201,61,57); }
-pre.hljl > span.hljl-si { }
-pre.hljl > span.hljl-so { color: rgb(201,61,57); }
-pre.hljl > span.hljl-sr { color: rgb(201,61,57); }
-pre.hljl > span.hljl-ss { color: rgb(201,61,57); }
-pre.hljl > span.hljl-ssB { color: rgb(201,61,57); }
-pre.hljl > span.hljl-nB { color: rgb(59,151,46); }
-pre.hljl > span.hljl-nbB { color: rgb(59,151,46); }
-pre.hljl > span.hljl-nfB { color: rgb(59,151,46); }
-pre.hljl > span.hljl-nh { color: rgb(59,151,46); }
-pre.hljl > span.hljl-ni { color: rgb(59,151,46); }
-pre.hljl > span.hljl-nil { color: rgb(59,151,46); }
-pre.hljl > span.hljl-noB { color: rgb(59,151,46); }
-pre.hljl > span.hljl-oB { color: rgb(102,102,102); font-weight: bold; }
-pre.hljl > span.hljl-ow { color: rgb(102,102,102); font-weight: bold; }
-pre.hljl > span.hljl-p { }
-pre.hljl > span.hljl-c { color: rgb(153,153,119); font-style: italic; }
-pre.hljl > span.hljl-ch { color: rgb(153,153,119); font-style: italic; }
-pre.hljl > span.hljl-cm { color: rgb(153,153,119); font-style: italic; }
-pre.hljl > span.hljl-cp { color: rgb(153,153,119); font-style: italic; }
-pre.hljl > span.hljl-cpB { color: rgb(153,153,119); font-style: italic; }
-pre.hljl > span.hljl-cs { color: rgb(153,153,119); font-style: italic; }
-pre.hljl > span.hljl-csB { color: rgb(153,153,119); font-style: italic; }
-pre.hljl > span.hljl-g { }
-pre.hljl > span.hljl-gd { }
-pre.hljl > span.hljl-ge { }
-pre.hljl > span.hljl-geB { }
-pre.hljl > span.hljl-gh { }
-pre.hljl > span.hljl-gi { }
-pre.hljl > span.hljl-go { }
-pre.hljl > span.hljl-gp { }
-pre.hljl > span.hljl-gs { }
-pre.hljl > span.hljl-gsB { }
-pre.hljl > span.hljl-gt { }
-</style>
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
 
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
 
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
 
-  <style type="text/css">
-  @font-face {
-  font-style: normal;
-  font-weight: 300;
+.token.cdata {
+  color: #183691;
 }
-@font-face {
-  font-style: normal;
-  font-weight: 400;
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
 }
-@font-face {
-  font-style: normal;
-  font-weight: 600;
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
 }
-html {
-  font-family: sans-serif; /* 1 */
-  -ms-text-size-adjust: 100%; /* 2 */
-  -webkit-text-size-adjust: 100%; /* 2 */
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
 }
-body {
-  margin: 0;
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
 }
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-main,
-menu,
-nav,
-section,
-summary {
-  display: block;
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
 }
-audio,
-canvas,
-progress,
-video {
-  display: inline-block; /* 1 */
-  vertical-align: baseline; /* 2 */
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
 }
-audio:not([controls]) {
-  display: none;
-  height: 0;
+
+.token.entity {
+  cursor: help;
 }
-[hidden],
-template {
-  display: none;
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
 }
-a:active,
-a:hover {
-  outline: 0;
+
+.token.list {
+  color: #ed6a43;
 }
-abbr[title] {
-  border-bottom: 1px dotted;
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
 }
-b,
-strong {
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
   font-weight: bold;
 }
-dfn {
+
+.token.italic {
   font-style: italic;
 }
-h1 {
-  font-size: 2em;
-  margin: 0.67em 0;
-}
-mark {
-  background: #ff0;
-  color: #000;
-}
-small {
-  font-size: 80%;
-}
-sub,
-sup {
-  font-size: 75%;
-  line-height: 0;
-  position: relative;
-  vertical-align: baseline;
-}
-sup {
-  top: -0.5em;
-}
-sub {
-  bottom: -0.25em;
-}
-img {
-  border: 0;
-}
-svg:not(:root) {
-  overflow: hidden;
-}
-figure {
-  margin: 1em 40px;
-}
-hr {
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-  height: 0;
-}
-pre {
-  overflow: auto;
-}
-code,
-kbd,
-pre,
-samp {
-  font-family: monospace, monospace;
-  font-size: 1em;
-}
-button,
-input,
-optgroup,
-select,
-textarea {
-  color: inherit; /* 1 */
-  font: inherit; /* 2 */
-  margin: 0; /* 3 */
-}
-button {
-  overflow: visible;
-}
-button,
-select {
-  text-transform: none;
-}
-button,
-html input[type="button"], /* 1 */
-input[type="reset"],
-input[type="submit"] {
-  -webkit-appearance: button; /* 2 */
-  cursor: pointer; /* 3 */
-}
-button[disabled],
-html input[disabled] {
-  cursor: default;
-}
-button::-moz-focus-inner,
-input::-moz-focus-inner {
-  border: 0;
-  padding: 0;
-}
-input {
-  line-height: normal;
-}
-input[type="checkbox"],
-input[type="radio"] {
-  box-sizing: border-box; /* 1 */
-  padding: 0; /* 2 */
-}
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  height: auto;
-}
-input[type="search"] {
-  -webkit-appearance: textfield; /* 1 */
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box; /* 2 */
-  box-sizing: content-box;
-}
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-decoration {
-  -webkit-appearance: none;
-}
-fieldset {
-  border: 1px solid #c0c0c0;
-  margin: 0 2px;
-  padding: 0.35em 0.625em 0.75em;
-}
-legend {
-  border: 0; /* 1 */
-  padding: 0; /* 2 */
-}
-textarea {
-  overflow: auto;
-}
-optgroup {
-  font-weight: bold;
-}
-table {
-  font-family: monospace, monospace;
-  font-size : 0.8em;
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-td,
-th {
-  padding: 0;
-}
-thead th {
-    border-bottom: 1px solid black;
-    background-color: white;
-}
-tr:nth-child(odd){
-  background-color: rgb(248,248,248);
-}
 
 
-/*
-* Skeleton V2.0.4
-* Copyright 2014, Dave Gamache
-* www.getskeleton.com
-* Free to use under the MIT license.
-* http://www.opensource.org/licenses/mit-license.php
-* 12/29/2014
-*/
-.container {
-  position: relative;
-  width: 100%;
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 0 20px;
-  box-sizing: border-box; }
-.column,
-.columns {
-  width: 100%;
-  float: left;
-  box-sizing: border-box; }
-@media (min-width: 400px) {
-  .container {
-    width: 85%;
-    padding: 0; }
+/* JSON */
+.language-json .token.property {
+  color: #183691;
 }
-@media (min-width: 550px) {
-  .container {
-    width: 80%; }
-  .column,
-  .columns {
-    margin-left: 4%; }
-  .column:first-child,
-  .columns:first-child {
-    margin-left: 0; }
 
-  .one.column,
-  .one.columns                    { width: 4.66666666667%; }
-  .two.columns                    { width: 13.3333333333%; }
-  .three.columns                  { width: 22%;            }
-  .four.columns                   { width: 30.6666666667%; }
-  .five.columns                   { width: 39.3333333333%; }
-  .six.columns                    { width: 48%;            }
-  .seven.columns                  { width: 56.6666666667%; }
-  .eight.columns                  { width: 65.3333333333%; }
-  .nine.columns                   { width: 74.0%;          }
-  .ten.columns                    { width: 82.6666666667%; }
-  .eleven.columns                 { width: 91.3333333333%; }
-  .twelve.columns                 { width: 100%; margin-left: 0; }
-
-  .one-third.column               { width: 30.6666666667%; }
-  .two-thirds.column              { width: 65.3333333333%; }
-
-  .one-half.column                { width: 48%; }
-
-  /* Offsets */
-  .offset-by-one.column,
-  .offset-by-one.columns          { margin-left: 8.66666666667%; }
-  .offset-by-two.column,
-  .offset-by-two.columns          { margin-left: 17.3333333333%; }
-  .offset-by-three.column,
-  .offset-by-three.columns        { margin-left: 26%;            }
-  .offset-by-four.column,
-  .offset-by-four.columns         { margin-left: 34.6666666667%; }
-  .offset-by-five.column,
-  .offset-by-five.columns         { margin-left: 43.3333333333%; }
-  .offset-by-six.column,
-  .offset-by-six.columns          { margin-left: 52%;            }
-  .offset-by-seven.column,
-  .offset-by-seven.columns        { margin-left: 60.6666666667%; }
-  .offset-by-eight.column,
-  .offset-by-eight.columns        { margin-left: 69.3333333333%; }
-  .offset-by-nine.column,
-  .offset-by-nine.columns         { margin-left: 78.0%;          }
-  .offset-by-ten.column,
-  .offset-by-ten.columns          { margin-left: 86.6666666667%; }
-  .offset-by-eleven.column,
-  .offset-by-eleven.columns       { margin-left: 95.3333333333%; }
-
-  .offset-by-one-third.column,
-  .offset-by-one-third.columns    { margin-left: 34.6666666667%; }
-  .offset-by-two-thirds.column,
-  .offset-by-two-thirds.columns   { margin-left: 69.3333333333%; }
-
-  .offset-by-one-half.column,
-  .offset-by-one-half.columns     { margin-left: 52%; }
-
-}
-html {
-  font-size: 62.5%; }
-body {
-  font-size: 1.5em; /* currently ems cause chrome bug misinterpreting rems on body element */
-  line-height: 1.6;
-  font-weight: 400;
-  font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #222; }
-h1, h2, h3, h4, h5, h6 {
-  margin-top: 0;
-  margin-bottom: 2rem;
-  font-weight: 300; }
-h1 { font-size: 3.6rem; line-height: 1.2;  letter-spacing: -.1rem;}
-h2 { font-size: 3.4rem; line-height: 1.25; letter-spacing: -.1rem; }
-h3 { font-size: 3.2rem; line-height: 1.3;  letter-spacing: -.1rem; }
-h4 { font-size: 2.8rem; line-height: 1.35; letter-spacing: -.08rem; }
-h5 { font-size: 2.4rem; line-height: 1.5;  letter-spacing: -.05rem; }
-h6 { font-size: 1.5rem; line-height: 1.6;  letter-spacing: 0; }
-
-p {
-  margin-top: 0; }
-a {
-  color: #1EAEDB; }
-a:hover {
-  color: #0FA0CE; }
-.button,
-button,
-input[type="submit"],
-input[type="reset"],
-input[type="button"] {
-  display: inline-block;
-  height: 38px;
-  padding: 0 30px;
-  color: #555;
-  text-align: center;
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 38px;
-  letter-spacing: .1rem;
-  text-transform: uppercase;
-  text-decoration: none;
-  white-space: nowrap;
-  background-color: transparent;
-  border-radius: 4px;
-  border: 1px solid #bbb;
-  cursor: pointer;
-  box-sizing: border-box; }
-.button:hover,
-button:hover,
-input[type="submit"]:hover,
-input[type="reset"]:hover,
-input[type="button"]:hover,
-.button:focus,
-button:focus,
-input[type="submit"]:focus,
-input[type="reset"]:focus,
-input[type="button"]:focus {
+.language-markup .token.tag .token.punctuation {
   color: #333;
-  border-color: #888;
-  outline: 0; }
-.button.button-primary,
-button.button-primary,
-input[type="submit"].button-primary,
-input[type="reset"].button-primary,
-input[type="button"].button-primary {
-  color: #FFF;
-  background-color: #33C3F0;
-  border-color: #33C3F0; }
-.button.button-primary:hover,
-button.button-primary:hover,
-input[type="submit"].button-primary:hover,
-input[type="reset"].button-primary:hover,
-input[type="button"].button-primary:hover,
-.button.button-primary:focus,
-button.button-primary:focus,
-input[type="submit"].button-primary:focus,
-input[type="reset"].button-primary:focus,
-input[type="button"].button-primary:focus {
-  color: #FFF;
-  background-color: #1EAEDB;
-  border-color: #1EAEDB; }
-input[type="email"],
-input[type="number"],
-input[type="search"],
-input[type="text"],
-input[type="tel"],
-input[type="url"],
-input[type="password"],
-textarea,
-select {
-  height: 38px;
-  padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
-  background-color: #fff;
-  border: 1px solid #D1D1D1;
-  border-radius: 4px;
-  box-shadow: none;
-  box-sizing: border-box; }
-/* Removes awkward default styles on some inputs for iOS */
-input[type="email"],
-input[type="number"],
-input[type="search"],
-input[type="text"],
-input[type="tel"],
-input[type="url"],
-input[type="password"],
-textarea {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none; }
-textarea {
-  min-height: 65px;
-  padding-top: 6px;
-  padding-bottom: 6px; }
-input[type="email"]:focus,
-input[type="number"]:focus,
-input[type="search"]:focus,
-input[type="text"]:focus,
-input[type="tel"]:focus,
-input[type="url"]:focus,
-input[type="password"]:focus,
-textarea:focus,
-select:focus {
-  border: 1px solid #33C3F0;
-  outline: 0; }
-label,
-legend {
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
   display: block;
-  margin-bottom: .5rem;
-  font-weight: 600; }
-fieldset {
-  padding: 0;
-  border-width: 0; }
-input[type="checkbox"],
-input[type="radio"] {
-  display: inline; }
-label > .label-body {
-  display: inline-block;
-  margin-left: .5rem;
-  font-weight: normal; }
-ul {
-  list-style: circle; }
-ol {
-  list-style: decimal; }
-ul ul,
-ul ol,
-ol ol,
-ol ul {
-  margin: 1.5rem 0 1.5rem 3rem;
-  font-size: 90%; }
-li > p {margin : 0;}
-th,
-td {
-  padding: 12px 15px;
-  text-align: left;
-  border-bottom: 1px solid #E1E1E1; }
-th:first-child,
-td:first-child {
-  padding-left: 0; }
-th:last-child,
-td:last-child {
-  padding-right: 0; }
-button,
-.button {
-  margin-bottom: 1rem; }
-input,
-textarea,
-select,
-fieldset {
-  margin-bottom: 1.5rem; }
-pre,
-blockquote,
-dl,
-figure,
-table,
-p,
-ul,
-ol,
-form {
-  margin-bottom: 1.0rem; }
-.u-full-width {
   width: 100%;
-  box-sizing: border-box; }
-.u-max-full-width {
-  max-width: 100%;
-  box-sizing: border-box; }
-.u-pull-right {
-  float: right; }
-.u-pull-left {
-  float: left; }
-hr {
-  margin-top: 3rem;
-  margin-bottom: 3.5rem;
-  border-width: 0;
-  border-top: 1px solid #E1E1E1; }
-.container:after,
-.row:after,
-.u-cf {
-  content: "";
-  display: table;
-  clear: both; }
-
-pre {
-  display: block;
-  padding: 9.5px;
-  margin: 0 0 10px;
-  font-size: 13px;
-  line-height: 1.42857143;
-  word-break: break-all;
-  word-wrap: break-word;
-  border: 1px solid #ccc;
-  border-radius: 4px;
 }
 
-pre.hljl {
-  margin: 0 0 10px;
-  display: block;
-  background: #f5f5f5;
-  border-radius: 4px;
-  padding : 5px;
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
 }
 
-pre.output {
-  background: #ffffff;
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
 }
 
-pre.code {
-  background: #ffffff;
-}
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p,html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div{display:inline}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  300px/2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
 
-pre.julia-error {
-  color : red
-}
+      </style>
+    </head>
+    <body for="html-export" >
+      <div class="mume markdown-preview  "  >
+      <h1 class="mume-header" id="jaewoo-joung">Jaewoo Joung</h1>
 
-code,
-kbd,
-pre,
-samp {
-  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-  font-size: 0.9em;
-}
+<h4 class="mume-header" id="dob-08-february-1976-div-stylefloat-right-nationality-south-koreadiv">D.O.B: 08 February 1976 <div style="float: right;"> Nationality: South Korea</div></h4>
 
+<h5 class="mume-header" id="address-1102-temperaturgatan-51-418-41-g%C3%B6teborg-sverige">&#x1F3E0;Address: [1102, Temperaturgatan 51, 418 41, G&#xF6;teborg, Sverige]</h5>
 
-@media (min-width: 400px) {}
-@media (min-width: 550px) {}
-@media (min-width: 750px) {}
-@media (min-width: 1000px) {}
-@media (min-width: 1200px) {}
+<h5 class="mume-header" id="work-jaewoojoungtatatechnologiescommailtojaewoojoungtatatechnologiescom-div-stylefloat-right-private--jaewoojoungoutlookcommailtojaewoojoungoutlookcom-div">Work &#x1F4E8;:<a href="mailto:jaewoo.joung@tatatechnologies.com">jaewoo.joung@tatatechnologies.com</a> <div style="float: right;"> Private &#x1F4E8;: <a href="mailto:jaewoo.joung@outlook.com">jaewoo.joung@outlook.com</a> </div></h5>
 
-h1.title {margin-top : 20px}
-img {max-width : 100%}
-div.title {text-align: center;}
+<h5 class="mume-header" id="-mobile-a-hreftel46-073-500-327546-073-500-3275a">&#x1F4F2; mobile: <a href="tel:+46-(0)73-500-3275">+46-(0)73-500-3275</a></h5>
 
-  </style>
-</HEAD>
+<hr>
+<h4 class="mume-header" id="font-color6666cc-employment-history-font"><font color="#6666CC"> EMPLOYMENT HISTORY </font></h4>
 
-<BODY>
-  <div class ="container">
-    <div class = "row">
-      <div class = "col-md-12 twelve columns">
-        <div class="title">
-          
-          
-          
-        </div>
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+Dec.2022~Today: 
+</div>
+<div style="border: 1px;color: #6666FF; float: left;text-align:center; width: 33%;">
+Tata Technologies Nordics AB
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+G&#xF6;teborg, Sverige
+</div></b><br><br>
+<p><br>Mar.2023 ~ Today:</p>
+<ul>
+<li>Customer(Volvo) meetings</li>
+<li>Engineering a better world with customer</li>
+</ul>
+<p><br>Dec.2022 ~ Feb. 2023: ADS Lead Engineer</p>
+<ul>
+<li>Customer(Volvo) meetings</li>
+<li>Customer(IVECO) presentation support</li>
+<li>Customer(Vinfast) supplier function review</li>
+<li>Center Of Excellece(Education,training)</li>
+<li>Tata Mfg Tech Shanghai(Education,training)</li>
+<li>Tata Mfg Tech Shanghai Bussiness Outlook Support</li>
+</ul>
+</div>
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+Jan.2018~Dec.2022: 
+</div>
+<div style="border: 1px;color: #6666FF; float: left;text-align:center; width: 33%;">
+Geely Research Institute
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+Hangzhouwan, Zhejiang, China
+</div></b><br><br>
+<p><br>Jan.2021 ~ Dec.2022: Chief Technology Officer. (600 people)</p>
+<ul>
+<li>Internal SW Development evaluation (ASPICE, SOTIF, ISO26262, Cybersecurity.)</li>
+<li>Function architecture design support.</li>
+<li>Technical board member for incubating start-ups for Geely investments</li>
+<li>Renault &amp; Geely ADAS function development support.</li>
+<li>Benchmark ADAS Products of other company.</li>
+<li>Member of internal vehicle test evaluation.</li>
+</ul>
+<p><br>Jan.2020 ~ Jan. 2021: Function &amp; Scenario Expert. (200 people)</p>
+<ul>
+<li>ADAS SW Quality Assurance(SWQA) check.</li>
+<li>Function owner of ERMD, IRMD, CPD(Child Presence Detection.)</li>
+<li>Geely-CEVT communication support for ADAS function.</li>
+<li>Geely-Volvo communication support for ADAS function.</li>
+<li>Function Process support.</li>
+</ul>
+<p><br>Jan.2018 ~ Dec. 2019: ADAS Expert.(400 people)</p>
+<ul>
+<li>Build current SWQA(Software Quality Assurance) foundation process for Geely.</li>
+<li>Innovation Award for &apos;Swift Method to create a patent&apos;.</li>
+<li>PSS360 leader.</li>
+<li>ADAS Scenario Technical Specialist.</li>
+<li>Parking Solution Specialist.</li>
+<li>SOC (System On Chip) Benchmark</li>
+</ul>
+</div>
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+Aug.2012~Dec.2017: 
+</div>
+<div style="border: 1px;color: #6666FF; float: left;text-align:center; width: 33%;">
+Hyundai Autron
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+Pangyo, Korea 
+</div></b><br><br>
+<p><br>Jan. 2013 ~ Dec.2017: ADAS &amp; New Technology team, ADAS Leader (Managed 25 people.)</p>
+<ul>
+<li>Build &amp; Managed ADAS &amp; New Technology development team (25 people.)</li>
+<li>Responsible for system requirements of AUTOSAR development(cooperated with TTTech Auto.)</li>
+<li>Responsible for Function development of ADAS Domain Controller (LV2/LV3) modeling and embedded SW.</li>
+<li>Developed many advanced systems prototyping of smart glass, intelligent seat, ADAS HMI, etc.</li>
+<li>HKMC Group Technical Road Map committee member for ADAS.</li>
+<li>HKMC Group Automotive Health Care &amp; ADAS Control Transition (HMI) committee member.</li>
+</ul>
+<p><br>Aug. 2012 ~ Dec. 2012: ADAS Expert. (5 people)</p>
+<ul>
+<li>HMKC Group Power Net Architecture committee member as ADAS expert.</li>
+<li>ADAS standardization for Commercial vehicle.</li>
+<li>Support for project coordination and communication with customer and supplier.</li>
+</ul>
+</div>
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+Apr.2009~Jul.2012: 
+</div>
+<div style="border: 1px;color: #6666FF; float: left;text-align:center; width: 33%;">
+Mando Hella Electronics
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+Songdo, Korea 
+</div></b><br><br>
+<p><br>Apr. 2009 ~ Jul.2012 : ADAS Team, System Leader (Managed 10 people)</p>
+<ul>
+<li>Responsible for System Design of BSD/LCA Radar.(Applied vehicles produced in Hyundai)</li>
+<li>Responsible for System Design of USS and Parking function.</li>
+<li>Model based SW development for Ultrasonic BSD.</li>
+<li>Support for project coordination and communication with customer.</li>
+<li>Romania based SW center co-operation.</li>
+</ul>
+</div>
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+Apr.2004~Sep.2007 
+</div>
+<div style="border: 1px;color: #6666FF; float: left;text-align:center; width: 33%;">
+SIEMENS VDO HALLA
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+Sejong, Korea
+</div></b><br><br>
+<p><br>Apr.2004 ~ Sep.2007: Body and Chassis Team, Senior Software Engineer</p>
+<ul>
+<li>Developed Parking Aid System in C++ language.</li>
+<li>Patent for Virtual Sensing Algorithm, the patent reduced 10% of product quality testing fee.</li>
+<li>Developed Parking Aid System for a number of OEM&#x2019;s such as DPCA (Dongfeng Peugeot Citro&#xEB;n Automobiles), Kia, AvtoVAZ, IKCO(Iran Khodro Industrial Group), Smotor(Ssangyong), GM and, Hyundai.(and still there are applied vehicles produced.)</li>
+<li>Developed programs were labeled as CMMI Level 3, and followed MISRA rule book</li>
+<li>Tested software with Vector(CAN and LIN) tools.</li>
+<li>Assembler language PDC(Parking Distance Control) was rewrote in C language.</li>
+<li>Digital Circuit Design with OrCAD and simulated circuit.</li>
+</ul>
+</div>
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+Sep.2002~Mar.2004  
+</div>
+<div style="border: 1px;color: #6666FF; float: left;text-align:center; width: 33%;">
+Military &amp; Space co. 
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+Seoul, Korea
+</div></b><br><br>
+<p><br>Apr.2004 ~ Sep.2007: Body and Chassis Team, Senior Software Engineer</p>
+<ul>
+<li>Developed infrared camera viewer associating with an equipment.</li>
+<li>RF communication ROM writing tool for ESA(ARIANE 5).</li>
+<li>Wav files format reader for VOIP solution.</li>
+<li>Windows MFC used to create the P2P Chat SW.</li>
+</ul>
+</div>
+<hr>
+<h4 class="mume-header" id="font-color6666cc-related-experiences-font"><font color="#6666CC"> RELATED EXPERIENCES </font></h4>
 
-        <h2>&#91;&#93;~&#40;￣▽￣&#41;~<em>🎈 	 뉴스 메인페이지 	  d&#61;&#61;&#61;&#61;&#61;&#40;￣▽￣</em>&#41;b</h2>
-<hr />
-<h3><a href="20221124191738.html">Todays NEWS ▶ 2022년 11월 24일 19시 17분</a></h3>
-<hr />
-<p>개인적 메세지 : 모두들 오늘도 즐거운 하루되세요~ 🫡</p>
-<hr />
-<h5>내일이 궁금하다면⁉️ 또는 아는척 하고싶다면 <a href="https://namu.wiki/w/11월&#37;2025일">▶️11 월 25 일◀️</a> 을 클릭하세요.</h5>
-<hr />
-<h4>ARCHIVES&#40;저장소&#41;</h4>
-<table><tr><th>시간별 목록</th></tr><tr><td>📅<a href="20221124063350.html">2022 년 11 월 24 일 06 시 33 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221123223245.html">2022 년 11 월 23 일 22 시 32 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221123210935.html">2022 년 11 월 23 일 21 시 09 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221123092610.html">2022 년 11 월 23 일 09 시 26 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221122180739.html">2022 년 11 월 22 일 18 시 07 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221121215310.html">2022 년 11 월 21 일 21 시 53 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221121130205.html">2022 년 11 월 21 일 13 시 02 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221116061813.html">2022 년 11 월 16 일 06 시 18 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221115184946.html">2022 년 11 월 15 일 18 시 49 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221115064053.html">2022 년 11 월 15 일 06 시 40 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221114181104.html">2022 년 11 월 14 일 18 시 11 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221114164812.html">2022 년 11 월 14 일 16 시 48 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221114164701.html">2022 년 11 월 14 일 16 시 47 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221114064359.html">2022 년 11 월 14 일 06 시 43 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221113203106.html">2022 년 11 월 13 일 20 시 31 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221113081610.html">2022 년 11 월 13 일 08 시 16 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221112172749.html">2022 년 11 월 12 일 17 시 27 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221112083330.html">2022 년 11 월 12 일 08 시 33 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221111064917.html">2022 년 11 월 11 일 06 시 49 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221110202748.html">2022 년 11 월 10 일 20 시 27 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221110120347.html">2022 년 11 월 10 일 12 시 03 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221110062746.html">2022 년 11 월 10 일 06 시 27 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221109183752.html">2022 년 11 월 09 일 18 시 37 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221109183056.html">2022 년 11 월 09 일 18 시 30 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221109054334.html">2022 년 11 월 09 일 05 시 43 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221108193813.html">2022 년 11 월 08 일 19 시 38 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221108063500.html">2022 년 11 월 08 일 06 시 35 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221108062738.html">2022 년 11 월 08 일 06 시 27 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221107223835.html">2022 년 11 월 07 일 22 시 38 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221107223101.html">2022 년 11 월 07 일 22 시 31 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221107222907.html">2022 년 11 월 07 일 22 시 29 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221107060307.html">2022 년 11 월 07 일 06 시 03 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221106203031.html">2022 년 11 월 06 일 20 시 30 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221106202756.html">2022 년 11 월 06 일 20 시 27 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221105180211.html">2022 년 11 월 05 일 18 시 02 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221105072643.html">2022 년 11 월 05 일 07 시 26 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221104190914.html">2022 년 11 월 04 일 19 시 09 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221104103237.html">2022 년 11 월 04 일 10 시 32 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221104102838.html">2022 년 11 월 04 일 10 시 28 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221103182559.html">2022 년 11 월 03 일 18 시 25 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221103180032.html">2022 년 11 월 03 일 18 시 00 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221103064150.html">2022 년 11 월 03 일 06 시 41 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221102143111.html">2022 년 11 월 02 일 14 시 31 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221102062505.html">2022 년 11 월 02 일 06 시 25 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221101200600.html">2022 년 11 월 01 일 20 시 06 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221101054108.html">2022 년 11 월 01 일 05 시 41 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221031183114.html">2022 년 10 월 31 일 18 시 31 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221031062950.html">2022 년 10 월 31 일 06 시 29 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221030100923.html">2022 년 10 월 30 일 10 시 09 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221030081919.html">2022 년 10 월 30 일 08 시 19 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221029212735.html">2022 년 10 월 29 일 21 시 27 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221029104934.html">2022 년 10 월 29 일 10 시 49 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221029080648.html">2022 년 10 월 29 일 08 시 06 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221028183252.html">2022 년 10 월 28 일 18 시 32 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221028060745.html">2022 년 10 월 28 일 06 시 07 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221028053732.html">2022 년 10 월 28 일 05 시 37 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221027203503.html">2022 년 10 월 27 일 20 시 35 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221027184100.html">2022 년 10 월 27 일 18 시 41 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221027060118.html">2022 년 10 월 27 일 06 시 01 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221026184533.html">2022 년 10 월 26 일 18 시 45 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221026063239.html">2022 년 10 월 26 일 06 시 32 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221025233835.html">2022 년 10 월 25 일 23 시 38 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221025194239.html">2022 년 10 월 25 일 19 시 42 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221025183616.html">2022 년 10 월 25 일 18 시 36 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221025105625.html">2022 년 10 월 25 일 10 시 56 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221025094858.html">2022 년 10 월 25 일 09 시 48 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221025063820.html">2022 년 10 월 25 일 06 시 38 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221024212432.html">2022 년 10 월 24 일 21 시 24 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221024182218.html">2022 년 10 월 24 일 18 시 22 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221024070145.html">2022 년 10 월 24 일 07 시 01 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221023191435.html">2022 년 10 월 23 일 19 시 14 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221023083900.html">2022 년 10 월 23 일 08 시 39 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221022205939.html">2022 년 10 월 22 일 20 시 59 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221022194005.html">2022 년 10 월 22 일 19 시 40 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221022080925.html">2022 년 10 월 22 일 08 시 09 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221021180441.html">2022 년 10 월 21 일 18 시 04 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221021160232.html">2022 년 10 월 21 일 16 시 02 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221021062507.html">2022 년 10 월 21 일 06 시 25 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221021054657.html">2022 년 10 월 21 일 05 시 46 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221021052137.html">2022 년 10 월 21 일 05 시 21 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221020181909.html">2022 년 10 월 20 일 18 시 19 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221020063700.html">2022 년 10 월 20 일 06 시 37 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221019205558.html">2022 년 10 월 19 일 20 시 55 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221019195847.html">2022 년 10 월 19 일 19 시 58 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221019061421.html">2022 년 10 월 19 일 06 시 14 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221018224119.html">2022 년 10 월 18 일 22 시 41 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221018223847.html">2022 년 10 월 18 일 22 시 38 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221018182511.html">2022 년 10 월 18 일 18 시 25 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221018064718.html">2022 년 10 월 18 일 06 시 47 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221018014646.html">2022 년 10 월 18 일 01 시 46 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221017195610.html">2022 년 10 월 17 일 19 시 56 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221017190410.html">2022 년 10 월 17 일 19 시 04 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221017190147.html">2022 년 10 월 17 일 19 시 01 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221017063307.html">2022 년 10 월 17 일 06 시 33 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221016205139.html">2022 년 10 월 16 일 20 시 51 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221016180714.html">2022 년 10 월 16 일 18 시 07 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221016151729.html">2022 년 10 월 16 일 15 시 17 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221016102021.html">2022 년 10 월 16 일 10 시 20 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221016055103.html">2022 년 10 월 16 일 05 시 51 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221015183252.html">2022 년 10 월 15 일 18 시 32 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221015181815.html">2022 년 10 월 15 일 18 시 18 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221015164932.html">2022 년 10 월 15 일 16 시 49 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221015111125.html">2022 년 10 월 15 일 11 시 11 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221015070117.html">2022 년 10 월 15 일 07 시 01 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221015065320.html">2022 년 10 월 15 일 06 시 53 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221014230228.html">2022 년 10 월 14 일 23 시 02 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221014203026.html">2022 년 10 월 14 일 20 시 30 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221014181837.html">2022 년 10 월 14 일 18 시 18 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221014181417.html">2022 년 10 월 14 일 18 시 14 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221014061548.html">2022 년 10 월 14 일 06 시 15 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221014060625.html">2022 년 10 월 14 일 06 시 06 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221013212639.html">2022 년 10 월 13 일 21 시 26 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221013190438.html">2022 년 10 월 13 일 19 시 04 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221013115101.html">2022 년 10 월 13 일 11 시 51 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221013064323.html">2022 년 10 월 13 일 06 시 43 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221013063533.html">2022 년 10 월 13 일 06 시 35 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221013063240.html">2022 년 10 월 13 일 06 시 32 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221013062020.html">2022 년 10 월 13 일 06 시 20 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221013055336.html">2022 년 10 월 13 일 05 시 53 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221013055210.html">2022 년 10 월 13 일 05 시 52 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221012212028.html">2022 년 10 월 12 일 21 시 20 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221012191624.html">2022 년 10 월 12 일 19 시 16 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221012053600.html">2022 년 10 월 12 일 05 시 36 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221011233440.html">2022 년 10 월 11 일 23 시 34 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221011214243.html">2022 년 10 월 11 일 21 시 42 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221011190828.html">2022 년 10 월 11 일 19 시 08 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221011065543.html">2022 년 10 월 11 일 06 시 55 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221011062227.html">2022 년 10 월 11 일 06 시 22 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221010214043.html">2022 년 10 월 10 일 21 시 40 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221010210253.html">2022 년 10 월 10 일 21 시 02 분🖫 뉴스📃</a></td></tr><tr><td>📅<a href="20221010204552.html">2022 년 10 월 10 일 20 시 45 분🖫 뉴스📃</a></td></tr></table>
-<hr />
-<h5>E-mail📧: <a href="mailto:jaewoo.joung@outlook.com">jaewoo.joung@outlook.com</a></h5>
-<h5>Mobile📱:&#43;86-130-6582-6195</h5>
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+Dec.2008~Mar.2009 
+</div>
+<div style="border: 1px;color: #6666CC; float: left;text-align:center; width: 33%;">
+TMax Electronics
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+London, U.K.
+</div></b><br><br>
+<ul>
+<li>Internet commerce Front-end design and development with PHP</li>
+<li>Credit card payment system develoment with security algorithms</li>
+</ul>
+</div>
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+Oct.2001~Sep.2002 
+</div>
+<div style="border: 1px;color: #6666CC; float: left;text-align:center; width: 33%;">
+Northwood Health System 
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+West Virginia, U.S.
+</div></b><br><br>
+<ul>
+<li>Created an effective PHP/SQL solution to manage employee Testing service</li>
+<li>UNIX cron and batch programming</li>
+<li>Company offered 5yr contract due to excellence in programming</li>
+</ul>
+</div>
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+May.2000~Sep.2000 
+</div>
+<div style="border: 1px;color: #6666CC; float: left;text-align:center; width: 33%;">
+Alternativas
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+Quetzaltenango, Guatemala 
+</div></b><br><br>
+<ul>
+<li>Supervised the design of network structure</li>
+<li>Taught and trained new employees how to manage computer network</li>
+</ul>
+</div>
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+Oct.1996~Dec.1998 
+</div>
+<div style="border: 1px;color: #6666CC; float: left;text-align:center; width: 33%;">
+Republic Of Korea Army 
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+Gyeonggi-do, Korea
+</div></b><br><br>
+<p>(Compulsory Service for a healthy man in Republic of Korea)</p>
+<ul>
+<li>Used military facilities and operated Virtual Mission System</li>
+<li>Utilized various old UNIX systems</li>
+<li>Translated from English to Korean / Korean to English</li>
+</ul>
+</div>
+<hr>
+<h4 class="mume-header" id="font-color6666cc-education-font"><font color="#6666CC"> EDUCATION </font></h4>
 
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+Sep.2007~Nov.2008
+</div>
+<div style="border: 1px;color: #6666FF; float: left;text-align:center; width: 33%;">
+University of Southampton 
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+Hampshire, UK
+</div></b><br><br>
+<p><br>Master of Science &#x2013; Complexity(AI) Science (Post Graduate Course)</p>
+<ul>
+<li>Over 65% average mark (Overall 3rd in course)</li>
+<li>Intensive and dedicated master&#x2019;s degree in Artificial Intelligence</li>
+<li>Decentralized Programming with C++ and GNU R</li>
+<li>Took main programmer part in Adaptive Robot project</li>
+<li>THESIS PAPER: Design of Adaptive Traffic Light Agent System (2008)</li>
+</ul>
+</div>
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+Jan.2001~Sep.2002
+</div>
+<div style="border: 1px;color: #6666FF; float: left;text-align:center; width: 33%;">
+Microsoft Network Professional
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+Pittsburgh, USA
+</div></b><br><br>
+<p><br>Self-Studied - (Certificate, Weekend course)</p>
+<ul>
+<li>Network specialty and Infrastructure</li>
+<li>Lower level system network analysis</li>
+</ul>
+</div>
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+Sep.1995~May.2002
+</div>
+<div style="border: 1px;color: #6666FF; float: left;text-align:center; width: 33%;">
+Wheeling Jesuit University
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+West Virginia, USA 
+</div></b><br><br>
+<p><br>Bachelor of Arts &amp; Sciences - Computer Science (Undergraduate Course)</p>
+<ul>
+<li>1996 ~1998, served ROKA(Republic Of Korea Army)</li>
+<li>(2.86 / 4.00 GPA) / A grade (Top 10% of the class) for all Computer Science subjects</li>
+</ul>
+</div>
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+Sep.1992~May.1995 
+</div>
+<div style="border: 1px;color: #6666FF; float: left;text-align:center; width: 33%;">
+Georgetown Preparatory
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+Maryland, USA 
+</div></b><br><br>
+<p><br>High school &#x2013; 4 years, (&gt;3.0 / 4.0 GPA)</p>
+</div>
+<hr>
+<h4 class="mume-header" id="font-color6666cc-awards-font"><font color="#6666CC"> AWARDS </font></h4>
 
-        <HR/>
-        <div class="footer">
-          <p>
-            Published from <a href="index.jmd">index.jmd</a>
-            using <a href="http://github.com/JunoLab/Weave.jl">Weave.jl</a> v0.10.9 on 2022-11-24.
-          </p>
-        </div>
+<div style="border: 1px; float: left; width: 50%;">
+&#x2022;   Development of others award 2022
+</div>
+<div style="border: 1px; float: left; right: 50%;">
+&#x2022;   Zhejiang Foreign Talent 2021
+</div>
+<div style="border: 1px; float: left; width: 50%;">
+&#x2022;	Best innovators of 2019
+</div>
+<div style="border: 1px; float: left; right: 50%;">
+&#x2022;  Best Instructor of 2018
+</div>
+<div style="border: 1px; float: left; width: 50%;">
+&#x2022;  Best Interviewer of 2016
+</div>
+<div style="border: 1px; float: left; right: 50%;">
+&#x2022;  Best employee of 2010
+</div>
+<br><br>
+<hr>
+<h4 class="mume-header" id="font-color6666cc-skill-sets-font"><font color="#6666CC"> SKILL SETS </font></h4>
+
+<div style="border: 1px; float: left; width: 50%;">
+&#x2022;   Networking
+</div>
+<div style="border: 1px; float: left; right: 50%;">
+&#x2022;   Embedded C / C++ / Any API related to C
+</div>
+<div style="border: 1px; float: left; width: 50%;">
+&#x2022;   JULIA / PYTHON / MATLAB / QT / PERL / SQL
+</div>
+<div style="border: 1px; float: left; right: 50%;">
+&#x2022;   Window drivers programming
+</div>
+<div style="border: 1px; float: left; width: 50%;">
+&#x2022;   Embedded Assembler  
+</div>
+<div style="border: 1px; float: left; right: 50%;">
+&#x2022;   Microsoft Certified Professional (MCP)
+</div>
+<br><br>
+<hr>
+<h4 class="mume-header" id="font-color6666cc-language-skills-font"><font color="#6666CC"> LANGUAGE SKILLS </font></h4>
+
+<div style="border: 1px; float: left; width: 50%;">
+&#x2022;   English: almost native
+</div>
+<div style="border: 1px; float: left; right: 50%;">
+&#x2022;   Chinese: Basic(listening)
+</div>
+<div style="border: 1px; float: left; width: 50%;">
+&#x2022;   Spanish: Fluent (speaking, reading); intermediate (writing) 
+</div>
+<div style="border: 1px; float: left; right: 50%;">
+&#x2022;   Korean: native language
+</div>
+<br><br>
+<hr>
+<h4 class="mume-header" id="font-color6666cc-patents-font"><font color="#6666CC"> PATENTS </font></h4>
+
+<font size="2">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Classification</th>
+<th style="text-align:center">Patent ID</th>
+<th style="text-align:left">Patent name</th>
+<th style="text-align:center">Enabling Country</th>
+<th style="text-align:center">Owner of patent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Sensor</td>
+<td style="text-align:center">10-1393644</td>
+<td style="text-align:left">Dynamic ultrasonic sensor and sensing method</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Sensor</td>
+<td style="text-align:center">10-1683575</td>
+<td style="text-align:left">Apparatus and method for adjusting angle of auto-mobile side camera</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Sensor</td>
+<td style="text-align:center">10-1512401</td>
+<td style="text-align:left">An apparatus and a method for controlling a ecu of a vehicle, and a system for controlling the ecu of the vehicle with the apparatus</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Sensor</td>
+<td style="text-align:center">10-1527132</td>
+<td style="text-align:left">Adjusting apparatus and method for steering force according to driver&apos;s patterns</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Sensor</td>
+<td style="text-align:center">10-1428296</td>
+<td style="text-align:left">Camera module for vehicle and monitoring system provided with the same</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Sensor</td>
+<td style="text-align:center">US2014/0168438A1</td>
+<td style="text-align:left">Camera module for vehicle and monitoring system provided with the same</td>
+<td style="text-align:center">US</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Human Machine</td>
+<td style="text-align:center">10-1683570</td>
+<td style="text-align:left">System and method for shading using voice recognition</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Interface</td>
+<td style="text-align:center">10-1339833</td>
+<td style="text-align:left">Method and apparatus for providing active user manual by using touch sensor</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Interface</td>
+<td style="text-align:center">10-1364767</td>
+<td style="text-align:left">Head up display, apparatus for compensation double image and method thereof</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Interface</td>
+<td style="text-align:center">10-1683582</td>
+<td style="text-align:left">Method and system for providing information using smart sun visor</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Interface</td>
+<td style="text-align:center">10-1673255</td>
+<td style="text-align:left">Method and apparatus for controlling sun visor</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Interface</td>
+<td style="text-align:center">10-1673257</td>
+<td style="text-align:left">Method and system for providing rear-side image of vehicle, low reflection glass for vehicle</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Interface</td>
+<td style="text-align:center">10-1568248</td>
+<td style="text-align:left">Method and apparatus for displaying operation of remote controller mounted on steering wheel</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Interface</td>
+<td style="text-align:center">10-1362416</td>
+<td style="text-align:left">Steering and gearbox control apparatus using automobile steering wheel</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">ADAS Network</td>
+<td style="text-align:center">10-1558976</td>
+<td style="text-align:left">System and method for transmitting and receiving data using Ethernet network</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">ADAS Network</td>
+<td style="text-align:center">10-1439489</td>
+<td style="text-align:left">Ethernet address allocation method and apparatus in Ethernet network for vehicle</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">ADAS Network</td>
+<td style="text-align:center">10-1481131</td>
+<td style="text-align:left">Packet processing method and apparatus in Ethernet network for vehicle</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">ADAS Network</td>
+<td style="text-align:center">10-1481132</td>
+<td style="text-align:left">Apparatus and method for synchronizing data output time in vehicle network</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">ADAS Network</td>
+<td style="text-align:center">10-1481133</td>
+<td style="text-align:left">Vehicle communication system for transmitting data based on Ethernet and method thereof</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Semiconductor</td>
+<td style="text-align:center">10-1665794</td>
+<td style="text-align:left">Method for designing vehicle controller-only semiconductor based on die and vehicle controller-only semiconductor by the same</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Etc.</td>
+<td style="text-align:center">10-1388465</td>
+<td style="text-align:left">Apparatus for measuring tread abrasion of tire</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Etc.</td>
+<td style="text-align:center">10-1499519</td>
+<td style="text-align:left">Apparatus for controlling motor torque of MDPS(Motor driven Power Steering) and the method thereof</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">AUTOMATED PARKING</td>
+<td style="text-align:center">CN109655073B</td>
+<td style="text-align:left">Map drawing method, device and vehicle in no or weak signal area</td>
+<td style="text-align:center">CHINA</td>
+<td style="text-align:center">GEELY</td>
+</tr>
+<tr>
+<td style="text-align:center">AUTOMATED PARKING</td>
+<td style="text-align:center">CN110321398A</td>
+<td style="text-align:left">Method, device and terminal for establishing parking map in no-signal zone</td>
+<td style="text-align:center">CHINA</td>
+<td style="text-align:center">GEELY</td>
+</tr>
+<tr>
+<td style="text-align:center">AUTOMATED PARKING</td>
+<td style="text-align:center">CN110733497A</td>
+<td style="text-align:left">Parking control method, system, electronic equipment and storage medium</td>
+<td style="text-align:center">CHINA</td>
+<td style="text-align:center">GEELY</td>
+</tr>
+<tr>
+<td style="text-align:center">AUTOMATED PARKING</td>
+<td style="text-align:center">CN110103909A</td>
+<td style="text-align:left">Contact-type vehicle blind area detection device and vehicle</td>
+<td style="text-align:center">CHINA</td>
+<td style="text-align:center">GEELY</td>
+</tr>
+<tr>
+<td style="text-align:center">AUTOMATED PARKING</td>
+<td style="text-align:center">CN111610531A</td>
+<td style="text-align:left">Vehicle driving early warning method, device and storage medium</td>
+<td style="text-align:center">CHINA</td>
+<td style="text-align:center">GEELY</td>
+</tr>
+<tr>
+<td style="text-align:center">ADAS UX</td>
+<td style="text-align:center">2 In process</td>
+<td style="text-align:left">Drone scout system contact system / mapping cloud system</td>
+<td style="text-align:center">CHINA</td>
+<td style="text-align:center">GEELY</td>
+</tr>
+</tbody>
+</table>
+</font>
       </div>
-    </div>
-  </div>
-</BODY>
-
-</HTML>
+      
+      
+    </body>
+    
+    
+    
+    
+    
+    
+    
+  </html>
