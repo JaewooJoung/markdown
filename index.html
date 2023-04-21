@@ -3,23 +3,59 @@
 <head>
 	<title>My GitHub Page</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			font-size: 16px;
+			margin: 0;
+			padding: 0;
+		}
+
+		form {
+			max-width: 500px;
+			margin: 0 auto;
+			padding: 20px;
+			border: 1px solid #ccc;
+			border-radius: 10px;
+			background-color: #f5f5f5;
+		}
+
+		input[type="radio"],
+		input[type="submit"] {
+			display: block;
+			margin: 10px 0;
+		}
+
+		input[type="submit"] {
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			padding: 10px 20px;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		input[type="submit"]:hover {
+			background-color: #3e8e41;
+		}
+	</style>
 </head>
 <body>
 
 	<form action="save.php" method="post">
-		<label for="number">Select a number:</label><br>
+		<label for="number">Select a number:</label>
 		<input type="radio" id="number1" name="number" value="1">
-		<label for="number1">1</label><br>
+		<label for="number1">1</label>
 		<input type="radio" id="number2" name="number" value="2">
-		<label for="number2">2</label><br>
+		<label for="number2">2</label>
 		<input type="radio" id="number3" name="number" value="3">
-		<label for="number3">3</label><br><br>
+		<label for="number3">3</label>
 
-		<label for="status">Select status:</label><br>
+		<label for="status">Select status:</label>
 		<input type="radio" id="ok" name="status" value="ok">
-		<label for="ok">OK</label><br>
+		<label for="ok">OK</label>
 		<input type="radio" id="nok" name="status" value="nok">
-		<label for="nok">NOK</label><br><br>
+		<label for="nok">NOK</label>
 
 		<input type="submit" name="submit" value="+">
 		<input type="submit" name="submit" value="Submit">
