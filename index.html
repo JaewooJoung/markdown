@@ -1,97 +1,25 @@
+<?php
+// Process form data if submitted
+if (isset($_POST['submit'])) {
+  // Form processing code goes here
+  // ...
+  // Display success message
+  echo 'Form submitted successfully!';
+} else {
+  // Display form
+?>
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My Website</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <body>
-    <style>
-      * {
-        box-sizing: border-box;
-      }
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-      }
-      .container {
-        max-width: 600px;
-        margin: 0 auto;
-        padding: 20px;
-      }
-      .btn {
-        display: block;
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 10px;
-        font-size: 24px;
-        text-align: center;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-      textarea {
-        display: block;
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 10px;
-        font-size: 24px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        resize: none;
-      }
-      label {
-        display: block;
-        margin-bottom: 10px;
-        font-size: 24px;
-      }
-      input[type="radio"] {
-        display: inline-block;
-        margin-right: 10px;
-      }
-      input[type="submit"] {
-        display: block;
-        width: 100%;
-        padding: 10px;
-        margin-top: 20px;
-        font-size: 24px;
-        text-align: center;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-    </style>
-    </body>
+    <title>My Form</title>
   </head>
   <body>
-    <div class="container">
-      <form action="#" method="post">
-        <button type="button" class="btn" onclick="addPlus()">+</button>
-        <textarea id="count" name="count" rows="1" cols="10" readonly></textarea>
-        <label for="number">Number:</label>
-        <input type="radio" id="number1" name="number" value="1" checked>
-        <label for="number1">1</label>
-        <input type="radio" id="number2" name="number" value="2">
-        <label for="number2">2</label>
-        <input type="radio" id="number3" name="number" value="3">
-        <label for="number3">3</label>
-        <label for="status">Status:</label>
-        <input type="radio" id="ok" name="status" value="ok" checked>
-        <label for="ok">OK</label>
-        <input type="radio" id="nok" name="status" value="nok">
-        <label for="nok">NOK</label>
-        <input type="submit" name="submit" value="Submit">
-      </form>
-    </div>
-    <script>
-      var count = 0;
-      function addPlus() {
-        count++;
-        document.getElementById("count").value = count;
-      }
-    </script>
+    <form method="post">
+      <!-- Form fields go here -->
+      <input type="submit" name="submit" value="Submit">
+    </form>
   </body>
 </html>
+<?php
+}
+?>
