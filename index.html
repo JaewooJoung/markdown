@@ -2,6 +2,88 @@
 <html>
   <head>
     <title>My Website</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .btn {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        font-size: 24px;
+        text-align: center;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      textarea {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        font-size: 24px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        resize: none;
+      }
+      label {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 24px;
+      }
+      input[type="radio"] {
+        display: inline-block;
+        margin-right: 10px;
+      }
+      input[type="submit"] {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-top: 20px;
+        font-size: 24px;
+        text-align: center;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <form action="#" method="post">
+        <button type="button" class="btn" onclick="addPlus()">+</button>
+        <textarea id="count" name="count" rows="1" cols="10" readonly></textarea>
+        <label for="number">Number:</label>
+        <input type="radio" id="number1" name="number" value="1" checked>
+        <label for="number1">1</label>
+        <input type="radio" id="number2" name="number" value="2">
+        <label for="number2">2</label>
+        <input type="radio" id="number3" name="number" value="3">
+        <label for="number3">3</label>
+        <label for="status">Status:</label>
+        <input type="radio" id="ok" name="status" value="ok" checked>
+        <label for="ok">OK</label>
+        <input type="radio" id="nok" name="status" value="nok">
+        <label for="nok">NOK</label>
+        <input type="submit" name="submit" value="Submit">
+      </form>
+    </div>
     <script>
       var count = 0;
       function addPlus() {
@@ -9,62 +91,45 @@
         document.getElementById("count").value = count;
       }
     </script>
-  </head>
-  <body>
-    <form action="#" method="post">
-      <input type="button" value="+" onclick="addPlus()" />
-      <br />
-      <textarea id="count" name="count" rows="1" cols="10" readonly></textarea>
-      <br />
-      <input type="radio" name="number" value="1" checked> 1
-      <input type="radio" name="number" value="2"> 2
-      <input type="radio" name="number" value="3"> 3
-      <br />
-      <input type="radio" name="status" value="ok" checked> OK
-      <input type="radio" name="status" value="nok"> NOK
-      <br />
-      <input type="submit" name="submit" value="Submit" />
-    </form>
-    <?php
-      if (isset($_POST['submit'])) {
-        // GitHub API endpoint for creating a new file in the repository
-        $url = 'https://api.github.com/repos/JaewooJoung/markdown/content';
-        
-        // GitHub personal access token with the necessary permissions
-        $token = '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';
+  </body>
+</html>
 
-        // Form data
-        $count = $_POST['count'];
-        $number = $_POST['number'];
-        $status = $_POST['status'];
-        
-        // File content as a JSON object
-        $content = json_encode(array(
-          'message' => 'Add new form data',
-          'content' => base64_encode("Count: $count\nNumber: $number\nStatus: $status")
-        ));
+   <?php
+// GitHub API endpoint for creating a new file
+$url = 'https://api.github.com/repos/JaewooJoung/markdown/contents/form-data.log';
 
-        // cURL options for the API request
-        $options = array(
-          CURLOPT_URL => $url,
-          CURLOPT_RETURNTRANSFER => true,
-          CURLOPT_CUSTOMREQUEST => 'POST',
-          CURLOPT_POSTFIELDS => $content,
-          CURLOPT_HTTPHEADER => array(
-            'Authorization: token ' . $token,
-            'Content-Type: application/json',
-            'User-Agent: PHP'
-          )
-        );
+// GitHub personal access token with the necessary permissions
+$token = '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';
 
-        // Create a new cURL handle and execute the API request
-        $curl = curl_init();
-        curl_setopt_array($curl, $options);
-        $response = curl_exec($curl);
-        curl_close($curl);
+// Form data
+$data = array(
+    'date' => date('Y-m-d H:i:s'),
+    'count' => $_POST['count'],
+    'number' => $_POST['number'],
+    'status' => $_POST['status'],
+);
 
-        // Print the API response
-        echo '<pre>' . $response . '</pre>';
+// Encode the form data as JSON
+$json = json_encode($data);
+
+// Create a new file in GitHub with the form data
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
+curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+    'Authorization: token ' . $token,
+    'Content-Type: application/json',
+    'User-Agent: My-GitHub-App'
+));
+$result = curl_exec($ch);
+curl_close($ch);
+
+// Display a message to the user
+if ($result !== false) {
+    echo 'Form data saved to GitHub successfully.';
+} else {
+    echo 'Error saving form data to GitHub.';
       }
     ?>
   </body>
