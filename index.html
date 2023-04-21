@@ -1,4 +1,7 @@
+
 <?php
+// Process form data if submitted
+if (isset($_POST['submit'])) {
 // GitHub API endpoint for creating a new file
 $url = 'https://api.github.com/repos/JaewooJoung/markdown/form-data.log';
 
@@ -33,14 +36,15 @@ curl_close($ch);
 if ($result !== false) {
     echo 'Form data saved to GitHub successfully.';
 } else {
-    echo 'Error saving form data to GitHub.';
-}
+  // Display form
 ?>
-
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My Website</title>
+    <title>My Form</title>
+  </head>
+  <body>
+    <form method="post">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
       * {
@@ -102,4 +106,10 @@ if ($result !== false) {
         cursor: pointer;
       }
     </style>
-  </head>
+      <input type="submit" name="submit" value="Submit">
+    </form>
+  </body>
+</html>
+<?php
+}
+?>
