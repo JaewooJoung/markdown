@@ -1,142 +1,167 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Button Counter Example</title>
+	<title>CEVT Index</title>
 	<style>
-		body {
+		* {
+			box-sizing: border-box;
 			font-family: Arial, sans-serif;
 			font-size: 16px;
+			color: #333;
 		}
-		h1 {
-			font-size: 24px;
-			text-align: center;
+		
+		.container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			margin: 10px;
 		}
-		form {
-			margin: 0 auto;
-			max-width: 400px;
-			text-align: center;
+		
+		.row {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: center;
+			margin: 10px;
 		}
-		label {
-			display: block;
-			margin-bottom: 10px;
+		
+		.radio-group {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			margin: 10px;
 		}
-		input[type="radio"] {
-			margin-right: 5px;
+		
+		.radio-group label {
+			margin-right: 10px;
 		}
-		.counter {
-			display: inline-block;
-			background-color: #5cb85c;
-			color: #fff;
-			border-radius: 50%;
-			width: 40px;
-			height: 40px;
-			line-height: 40px;
-			text-align: center;
-			font-size: 20px;
-			margin: 0 10px;
+		
+		.button-group {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			margin: 10px;
 		}
-		.total {
-			font-size: 32px;
-			text-align: center;
-			margin: 20px 0;
-		}
-		.submit {
-			display: block;
-			margin: 20px auto;
-			padding: 10px 20px;
-			background-color: #5cb85c;
-			color: #fff;
+		
+		.button-group button {
+			margin-right: 10px;
+			padding: 10px;
 			border: none;
 			border-radius: 5px;
-			font-size: 16px;
 			cursor: pointer;
+			color: #fff;
+			font-size: 16px;
+			font-weight: bold;
+		}
+		
+		.green {
+			background-color: green;
+		}
+		
+		.red {
+			background-color: red;
+		}
+		
+		.counter {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 24px;
+			font-weight: bold;
+			margin: 10px;
+		}
+		
+		.total {
+			font-size: 48px;
+			font-weight: bold;
+			margin: 10px;
+		}
+		
+		.submit {
+			margin-top: 20px;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			background-color: blue;
+			color: #fff;
+			font-size: 16px;
+			font-weight: bold;
+		}
+		
+		.result {
+			font-size: 24px;
+			font-weight: bold;
+			margin-top: 20px;
 		}
 	</style>
 </head>
 <body>
-	<h1>Button Counter Example</h1>
-	<form>
-		<label>
-			<input type="radio" name="location" value="Urban">Urban
-		</label>
-		<label>
-			<input type="radio" name="location" value="City">City
-		</label>
-		<label>
-			<input type="radio" name="location" value="Highway">Highway
-		</label>
-		<label>
-			<input type="radio" name="country" value="Sweden">Sweden
-		</label>
-		<label>
-			<input type="radio" name="country" value="Germany">Germany
-		</label>
-		<label>
-			<span class="counter">0</span>
-			<button type="button" class="green">+OK</button>
-			<button type="button" class="red">+NOK</button>
-			<span class="counter">0</span>
-		</label>
+	<div class="container">
 		<div class="total">0</div>
-		<button type="submit" class="submit">Submit</button>
-	</form>
-	<script>
-		// Counter logic
-		var counters = document.querySelectorAll('.counter');
-		var totalCounter = document.querySelector('.total');
-		var okCounter = counters[0];
-		var nokCounter = counters[1];
-		var totalCount = 0;
-		var okCount = 0;
-		var nokCount = 0;
-
-		function updateCounters() {
-			okCounter.innerText = okCount;
-			nokCounter.innerText = nokCount;
-			totalCounter.innerText = totalCount;
-		}
-
-		// Button logic
-		var greenButton = document.querySelector('.green');
-		var redButton = document.querySelector('.red');
-
-		greenButton.addEventListener('click', function() {
-			okCount++;
-			totalCount++;
-			updateCounters();
-		});
-
-		redButton.addEventListener('click', function() {
-			nokCount++;
-			totalCount++;
-			updateCounters();
-		});
-
-		// Form submission logic
-		var form = document.querySelector('form');
-		var locationRadios = form.querySelectorAll('input[name="location"]');
-		var countryRadios = form.querySelectorAll('input[name="country"]');
-
-		form.addEventListener('submit', function(event) {
-			event.preventDefault();
-			var locationValue, countryValue;
-			for (var i = 0; i < locationRadios.length; i++) {
-				if (locationRadios[i].checked) {
-					locationValue = locationRadios[i].value;
-					break;
-				}
-			}
-			for (var i = 0; i < countryRadios.length; i++) {
-				if (countryRadios[i].checked) {
-					countryValue = countryRadios[i].value;
-					break;
-				}
-			}
-			var okRatio = okCount / totalCount;
-			var nokRatio = nokCount / totalCount;
-			alert('Location: ' + locationValue + '\nCountry: ' + countryValue + '\nOK ratio: ' + okRatio + '\nNOK ratio: ' + nokRatio);
-		});
-	</script>
+		<div class="row">
+			<div class="radio-group">
+				<label for="urban">Urban</label>
+				<input type="radio" id="urban" name="area" value="Urban">
+				<label for="city">City</label>
+				<input type="radio" id="city" name="area" value="City">
+				<label for="highway">Highway</label>
+				<input type="radio" id="highway" name="area" value="Highway">
+			</div>
+			<div class="radio-group">
+				<label for="sweden">Sweden</label>
+				<input type="radio" id="sweden" name="country" value="Sweden">
+				<label for="germany">Germany</label>
+				<input type="radio" id="germany" name="country" value="Germany">
+			</div>
+		</div>
+		<div class="row">
+			<div class="button-group">
+				<button class="green" id="ok">+OK</button>
+				<div class="counter" id="ok-counter">0</div>
+			</div>
+			<div class="button-group">
+				<button class="red" id="nok">+NOK</button>
+				<div class="counter" id="nok-counter">0</div>
+			</div>
+		</div>
+		<button class="submit" id="submit-btn">Submit</button>
+		<div class="result" id="result"></div>
+	</div>
+    <script>
+	const okButton = document.getElementById('ok');
+	const nokButton = document.getElementById('nok');
+	const okCounter = document.getElementById('ok-counter');
+	const nokCounter = document.getElementById('nok-counter');
+	const totalCounter = document.querySelector('.total');
+	const submitButton = document.getElementById('submit-btn');
+	const result = document.getElementById('result');
+	
+	let okCount = 0;
+	let nokCount = 0;
+	
+	okButton.addEventListener('click', () => {
+		okCount++;
+		okCounter.textContent = okCount;
+		updateTotal();
+	});
+	
+	nokButton.addEventListener('click', () => {
+		nokCount++;
+		nokCounter.textContent = nokCount;
+		updateTotal();
+	});
+	
+	function updateTotal() {
+		totalCounter.textContent = okCount + nokCount;
+	}
+	
+	submitButton.addEventListener('click', () => {
+		const okRatio = (okCount / (okCount + nokCount)) * 100;
+		const nokRatio = (nokCount / (okCount + nokCount)) * 100;
+		result.textContent = `+OK: ${okRatio.toFixed(2)}% - +NOK: ${nokRatio.toFixed(2)}%`;
+	});
+</script>
 </body>
 </html>
