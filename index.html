@@ -103,14 +103,16 @@
 		<div class="center">
 		<p>🚗CEVT TSI🛑 RAPID TEST🚦</p>
 		</div>
-		<br><br><br>
+		<div><br></div>
+        <div><br></div>
+        <div><br></div>
 		<div class="radio-group">
 			<label for="sweden">Sweden</label>
 			<input type="radio" id="sweden" name="country" value="Sweden">
 			<label for="germany">Germany</label>
 			<input type="radio" id="germany" name="country" value="Germany">
 		</div>
-		<br>
+		<div><br></div>
 		<div class="radio-group">
 			<label for="urban">Urban</label>
 			<input type="radio" id="urban" name="area" value="Urban">
@@ -121,14 +123,13 @@
 		</div>
 		<br><br><br>
 		<div class="total">0</div>
-
 		<div class="row">
 			<div class="button-group">
-				<button class="green" id="ok">+OK</button>
+				<button class="green" id="ok">+TP_D</button>
 				<div class="counter" id="ok-counter">0</div>
 			</div>
 			<div class="button-group">
-				<button class="red" id="nok">+NOK</button>
+				<button class="red" id="nok">+FX_D</button>
 				<div class="counter" id="nok-counter">0</div>
 			</div>
 		</div>
@@ -166,7 +167,7 @@
 	submitButton.addEventListener('click', () => {
 		const okRatio = (okCount / (okCount + nokCount)) * 100;
 		const nokRatio = (nokCount / (okCount + nokCount)) * 100;
-		result.textContent = `+OK: ${okRatio.toFixed(2)}% - +NOK: ${nokRatio.toFixed(2)}%`;
+		result.textContent = `TP_D: ${okRatio.toFixed(2)}% - FX_D: ${nokRatio.toFixed(2)}%`;
 	});
 </script>
 </body>
