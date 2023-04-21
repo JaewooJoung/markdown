@@ -1,50 +1,7 @@
-
-<?php
-// Process form data if submitted
-if (isset($_POST['submit'])) {
-// GitHub API endpoint for creating a new file
-$url = 'https://api.github.com/repos/JaewooJoung/markdown/form-data.log';
-
-// GitHub personal access token with the necessary permissions
-$token = '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';
-
-// Form data
-$data = array(
-    'date' => date('Y-m-d H:i:s'),
-    'count' => $_POST['count'],
-    'number' => $_POST['number'],
-    'status' => $_POST['status'],
-);
-
-// Encode the form data as JSON
-$json = json_encode($data);
-
-// Create a new file in GitHub with the form data
-$ch = curl_init($url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
-curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-    'Authorization: token ' . $token,
-    'Content-Type: application/json',
-    'User-Agent: My-GitHub-App'
-));
-$result = curl_exec($ch);
-curl_close($ch);
-
-// Display a message to the user
-if ($result !== false) {
-    echo 'Form data saved to GitHub successfully.';
-} else {
-  // Display form
-?>
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My Form</title>
-  </head>
-  <body>
-    <form method="post">
+    <title>My Website</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
       * {
@@ -106,10 +63,33 @@ if ($result !== false) {
         cursor: pointer;
       }
     </style>
-      <input type="submit" name="submit" value="Submit">
-    </form>
+  </head>
+  <body>
+    <div class="container">
+      <form action="#" method="post">
+        <button type="button" class="btn" onclick="addPlus()">+</button>
+        <textarea id="count" name="count" rows="1" cols="10" readonly></textarea>
+        <label for="number">Number:</label>
+        <input type="radio" id="number1" name="number" value="1" checked>
+        <label for="number1">1</label>
+        <input type="radio" id="number2" name="number" value="2">
+        <label for="number2">2</label>
+        <input type="radio" id="number3" name="number" value="3">
+        <label for="number3">3</label>
+        <label for="status">Status:</label>
+        <input type="radio" id="ok" name="status" value="ok" checked>
+        <label for="ok">OK</label>
+        <input type="radio" id="nok" name="status" value="nok">
+        <label for="nok">NOK</label>
+        <input type="submit" name="submit" value="Submit">
+      </form>
+    </div>
+    <script>
+      var count = 0;
+      function addPlus() {
+        count++;
+        document.getElementById("count").value = count;
+      }
+    </script>
   </body>
 </html>
-<?php
-}
-?>
