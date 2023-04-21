@@ -1,6 +1,6 @@
 <?php
 // GitHub API endpoint for creating a new file
-$url = 'https://api.github.com/repos/JaewooJoung/markdown/contents/form-data.log';
+$url = 'https://api.github.com/repos/JaewooJoung/markdown/form-data.log';
 
 // GitHub personal access token with the necessary permissions
 $token = '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';
