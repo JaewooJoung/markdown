@@ -1,65 +1,87 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>My GitHub Page</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>My GitHub Page</title>
 	<style>
 		body {
 			font-family: Arial, sans-serif;
-			font-size: 16px;
 			margin: 0;
 			padding: 0;
 		}
 
-		form {
-			max-width: 500px;
-			margin: 0 auto;
-			padding: 20px;
-			border: 1px solid #ccc;
-			border-radius: 10px;
-			background-color: #f5f5f5;
+		.container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+			background-color: #f1f1f1;
 		}
 
-		input[type="radio"],
-		input[type="submit"] {
-			display: block;
-			margin: 10px 0;
-		}
-
-		input[type="submit"] {
+		.button {
+			display: inline-block;
+			padding: 10px;
+			margin: 10px;
 			background-color: #4CAF50;
 			color: white;
 			border: none;
-			padding: 10px 20px;
 			border-radius: 5px;
+			font-size: 16px;
 			cursor: pointer;
 		}
 
-		input[type="submit"]:hover {
-			background-color: #3e8e41;
+		.radio-group {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			margin: 10px;
+		}
+
+		input[type="radio"] {
+			margin-right: 5px;
+		}
+
+		label {
+			margin-right: 10px;
 		}
 	</style>
 </head>
 <body>
-
-	<form action="save.php" method="post">
-		<label for="number">Select a number:</label>
-		<input type="radio" id="number1" name="number" value="1">
-		<label for="number1">1</label>
-		<input type="radio" id="number2" name="number" value="2">
-		<label for="number2">2</label>
-		<input type="radio" id="number3" name="number" value="3">
-		<label for="number3">3</label>
-
-		<label for="status">Select status:</label>
-		<input type="radio" id="ok" name="status" value="ok">
-		<label for="ok">OK</label>
-		<input type="radio" id="nok" name="status" value="nok">
-		<label for="nok">NOK</label>
-
-		<input type="submit" name="submit" value="+">
-		<input type="submit" name="submit" value="Submit">
-	</form>
-
+	<div class="container">
+		<button class="button">+</button>
+		<div class="radio-group">
+			<label for="option1">
+				<input type="radio" name="options" id="option1" value="1">
+				Option 1
+			</label>
+			<label for="option2">
+				 <input type="radio" name="options" id="option2" value="2">
+				Option 2
+			</label>
+			<label for="option3">
+				 <input type="radio" name="options" id="option3" value="3">
+				Option 3
+			</label>
+		</div>
+		<div class="radio-group">
+			<label for="ok">
+				 <input type="radio" name="status" id="ok" value="ok">
+				OK
+			</label>
+			<label for="nok">
+				 <input type="radio" name="status" id="nok" value="nok">
+				NOK
+			</label>
+		</div>
+	</div>
+	<script>
+		var button = document.querySelector('.button');
+		var counter = 0;
+		button.addEventListener('click', function() {
+			counter++;
+			button.innerText = counter;
+		});
+	</script>
 </body>
 </html>
