@@ -31,6 +31,18 @@
 			cursor: pointer;
 		}
 
+		.red-button {
+			display: inline-block;
+			padding: 10px;
+			margin: 50px;
+			background-color: red;
+			color: white;
+			border: none;
+			border-radius: 8px;
+			font-size: 20px;
+			cursor: pointer;
+		}
+
 		.radio-group {
 			display: flex;
 			flex-direction: row;
@@ -56,6 +68,15 @@
 			font-size: 16px;
 			cursor: pointer;
 		}
+
+		.total-counter {
+			font-size: 40px;
+			margin-top: 30px;
+		}
+
+		.number-counter {
+			font-size: 16px;
+		}
 	</style>
 </head>
 <body>
@@ -63,48 +84,71 @@
 		<button class="button">+</button>
 		<div class="radio-group">
 			<label for="option1">
-				 <input type="radio" name="options" id="option1" value="1">
+				<input type="radio" name="options" id="option1" value="1">
 				Option 1
 			</label>
 			<label for="option2">
-				 <input type="radio" name="options" id="option2" value="2">
+				<input type="radio" name="options" id="option2" value="2">
 				Option 2
 			</label>
 			<label for="option3">
-				 <input type="radio" name="options" id="option3" value="3">
+				<input type="radio" name="options" id="option3" value="3">
 				Option 3
 			</label>
 		</div>
 		<div class="radio-group">
 			<label for="ok">
-				 <input type="radio" name="status" id="ok" value="ok">
+				<input type="radio" name="status" id="ok" value="ok">
 				OK
 			</label>
 			<label for="nok">
-				 <input type="radio" name="status" id="nok" value="nok">
+				<input type="radio" name="status" id="nok" value="nok">
 				NOK
 			</label>
 		</div>
+		<button class="red-button">-</button>
+		<div class="total-counter">0</div>
+		<div class="number-counter">0</div>
 		<button class="submit-button">Submit</button>
 	</div>
 	<script>
-		var button = document.querySelector('.button');
-		var counter = 0;
-		button.addEventListener('click', function() {
-			counter++;
-			button.innerText = counter;
-		});
+	  var buttonPlus = document.querySelector('.button-plus');
+	  var buttonMinus = document.querySelector('.button-minus');
+	  var counterPlus = 0;
+	  var counterMinus = 0;
+	  var totalCounter = document.querySelector('.total-counter');
 
-		var submitButton = document.querySelector('.submit-button');
-		submitButton.addEventListener('click', function() {
-			var selectedOption = document.querySelector('input[name="options"]:checked');
-			var selectedStatus = document.querySelector('input[name="status"]:checked');
-			if (selectedOption && selectedStatus) {
-				alert('Option: ' + selectedOption.value + ', Status: ' + selectedStatus.value);
-			} else {
-				alert('Please select an option and a status.');
-			}
-		});
+	  buttonPlus.addEventListener('click', function() {
+	    counterPlus++;
+	    buttonPlus.innerText = '+' + counterPlus;
+	    updateTotalCounter();
+	  });
+
+	  buttonMinus.addEventListener('click', function() {
+	    counterMinus++;
+	    buttonMinus.innerText = '-' + counterMinus;
+	    updateTotalCounter();
+	  });
+
+	  function updateTotalCounter() {
+	    var total = counterPlus - counterMinus;
+	    totalCounter.innerText = total;
+	  }
+
+	  var submitButton = document.querySelector('.submit-button');
+	  submitButton.addEventListener('click', function() {
+	    var selectedOption = document.querySelector('input[name="options"]:checked');
+	    var selectedStatus = document.querySelector('input[name="status"]:checked');
+	    if (selectedOption && selectedStatus) {
+	      var ratioPlus = counterPlus / (counterPlus + counterMinus);
+	      var ratioMinus = counterMinus / (counterPlus + counterMinus);
+	      alert('Option: ' + selectedOption.value + ', Status: ' + selectedStatus.value + '\nRatio of +: ' + ratioPlus.toFixed(2) + ', Ratio of -: ' + ratioMinus.toFixed(2));
+	    } else {
+	      alert('Please select an option and a status.');
+	    }
+	  });
 	</script>
-</body>
+	</body>
 </html>
+
+	
