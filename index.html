@@ -15,8 +15,15 @@
 			flex-direction: column;
 			align-items: center;
 			justify-content: center;
-			height: 100vh;
 			background-color: #f1f1f1;
+			padding: 20px;
+		}
+
+		.counter {
+			font-size: 100px;
+			font-weight: bold;
+			color: #4CAF50;
+			margin-bottom: 20px;
 		}
 
 		.button {
@@ -29,6 +36,10 @@
 			border-radius: 5px;
 			font-size: 16px;
 			cursor: pointer;
+		}
+
+		.button.red {
+			background-color: red;
 		}
 
 		.radio-group {
@@ -60,7 +71,115 @@
 </head>
 <body>
 	<div class="container">
-		<button class="button">+</button>
+		<div class="counter">0</div>
+		<div>
+			<button class="button">+</button>
+			<button class="button red">-</button>
+		</div>
+		<div class="radio-group">
+			<label for="option1">
+				 <input type="radio" name="options" id="option1" value="1">
+				Option 1
+			</label>
+			<label for="option2">
+				 <input type="radio" name="options" id="option2" value="2">
+				Option 2
+			</label>
+			<label for="option3">
+				 <input type="radio" name="options" id="option3" value="3">
+				Option 3
+			</label>
+		</div>
+		<div class="radio-group">
+			<label for="ok">
+				 <input type="radio" name="status" id="ok" value="ok">
+				OK
+			</label>
+			<label for="nok">
+				 <input type="radio" name="status" id="nok" value="nok">
+				NOK
+			</label>
+		</div>
+		<button class="submit-button">Submit</button>
+	</div>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>My GitHub Page</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+
+		.container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			background-color: #f1f1f1;
+			padding: 20px;
+		}
+
+		.counter {
+			font-size: 100px;
+			font-weight: bold;
+			color: #4CAF50;
+			margin-bottom: 20px;
+		}
+
+		.button {
+			display: inline-block;
+			padding: 10px;
+			margin: 10px;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			font-size: 16px;
+			cursor: pointer;
+		}
+
+		.button.red {
+			background-color: red;
+		}
+
+		.radio-group {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			margin: 10px;
+		}
+
+		input[type="radio"] {
+			margin-right: 5px;
+		}
+
+		label {
+			margin-right: 10px;
+		}
+
+		.submit-button {
+			margin-top: 20px;
+			padding: 10px;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			font-size: 16px;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="counter">0</div>
+		<div>
+			<button class="button">+</button>
+			<button class="button red">-</button>
+		</div>
 		<div class="radio-group">
 			<label for="option1">
 				 <input type="radio" name="options" id="option1" value="1">
@@ -88,23 +207,36 @@
 		<button class="submit-button">Submit</button>
 	</div>
 	<script>
-		var button = document.querySelector('.button');
-		var counter = 0;
-		button.addEventListener('click', function() {
-			counter++;
-			button.innerText = counter;
-		});
+	var plusButton = document.querySelector('.button');
+	var minusButton = document.querySelector('.button.red');
+	var counter = 0;
+	var minusCounter = 0;
+	var totalCounter = document.querySelector('.counter');
+	plusButton.addEventListener('click', function() {
+		counter++;
+		totalCounter.innerText = counter - minusCounter;
+	});
 
-		var submitButton = document.querySelector('.submit-button');
-		submitButton.addEventListener('click', function() {
-			var selectedOption = document.querySelector('input[name="options"]:checked');
-			var selectedStatus = document.querySelector('input[name="status"]:checked');
-			if (selectedOption && selectedStatus) {
-				alert('Option: ' + selectedOption.value + ', Status: ' + selectedStatus.value);
-			} else {
-				alert('Please select an option and a status.');
-			}
-		});
-	</script>
-</body>
-</html>
+	minusButton.addEventListener('click', function() {
+		minusCounter++;
+		totalCounter.innerText = counter - minusCounter;
+	});
+
+	var submitButton = document.querySelector('.submit-button');
+	submitButton.addEventListener('click', function() {
+		var option = document.querySelector('input[name="options"]:checked');
+		var status = document.querySelector('input[name="status"]:checked');
+		if (option && status) {
+			var ratio = (counter / (counter + minusCounter)) * 100;
+			alert("Option " + option.value + " selected. Status: " + status.value + ". Ratio of plus votes: " + ratio.toFixed(2) + "%.");
+			counter = 0;
+			minusCounter = 0;
+			totalCounter.innerText = "0";
+			option.checked = false;
+			status.checked = false;
+		} else {
+			alert("Please select an option and a status.");
+		}
+	});
+</script>
+	</html>
