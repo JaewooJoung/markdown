@@ -45,6 +45,17 @@
 		label {
 			margin-right: 10px;
 		}
+
+		.submit-button {
+			margin-top: 20px;
+			padding: 10px;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			font-size: 16px;
+			cursor: pointer;
+		}
 	</style>
 </head>
 <body>
@@ -52,7 +63,7 @@
 		<button class="button">+</button>
 		<div class="radio-group">
 			<label for="option1">
-				<input type="radio" name="options" id="option1" value="1">
+				 <input type="radio" name="options" id="option1" value="1">
 				Option 1
 			</label>
 			<label for="option2">
@@ -74,6 +85,7 @@
 				NOK
 			</label>
 		</div>
+		<button class="submit-button">Submit</button>
 	</div>
 	<script>
 		var button = document.querySelector('.button');
@@ -81,6 +93,17 @@
 		button.addEventListener('click', function() {
 			counter++;
 			button.innerText = counter;
+		});
+
+		var submitButton = document.querySelector('.submit-button');
+		submitButton.addEventListener('click', function() {
+			var selectedOption = document.querySelector('input[name="options"]:checked');
+			var selectedStatus = document.querySelector('input[name="status"]:checked');
+			if (selectedOption && selectedStatus) {
+				alert('Option: ' + selectedOption.value + ', Status: ' + selectedStatus.value);
+			} else {
+				alert('Please select an option and a status.');
+			}
 		});
 	</script>
 </body>
