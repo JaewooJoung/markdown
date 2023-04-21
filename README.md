@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <title>myProfile</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///c:\Users\jaewo\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.6.8\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <style>
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  display: block;
+  width: 100%;
+}
+
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}
+
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
+}
+
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p,html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div{display:inline}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  300px/2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+    </head>
+    <body for="html-export" >
+      <div class="mume markdown-preview  "  >
+      <h1 class="mume-header" id="jaewoo-joung">Jaewoo Joung</h1>
+
+<h4 class="mume-header" id="dob-08-february-1976-div-stylefloat-right-nationality-south-koreadiv">D.O.B: 08 February 1976 <div style="float: right;"> Nationality: South Korea</div></h4>
+
+<h5 class="mume-header" id="address-1102-temperaturgatan-51-418-41-g%C3%B6teborg-sverige">&#x1F3E0;Address: [1102, Temperaturgatan 51, 418 41, G&#xF6;teborg, Sverige]</h5>
+
+<h5 class="mume-header" id="work-jaewoojoungtatatechnologiescommailtojaewoojoungtatatechnologiescom-div-stylefloat-right-private--jaewoojoungoutlookcommailtojaewoojoungoutlookcom-div">Work &#x1F4E8;:<a href="mailto:jaewoo.joung@tatatechnologies.com">jaewoo.joung@tatatechnologies.com</a> <div style="float: right;"> Private &#x1F4E8;: <a href="mailto:jaewoo.joung@outlook.com">jaewoo.joung@outlook.com</a> </div></h5>
+
+<h5 class="mume-header" id="-mobile-a-hreftel46-073-500-327546-073-500-3275a">&#x1F4F2; mobile: <a href="tel:+46-(0)73-500-3275">+46-(0)73-500-3275</a></h5>
+<a href="https://www.paypal.me/jaewoojoung" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>      
+ 
+<hr>
+<h4 class="mume-header" id="font-color6666cc-employment-history-font"><font color="#6666CC"> EMPLOYMENT HISTORY </font></h4>
+
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+Dec.2022~Today: 
+</div>
+<div style="border: 1px;color: #6666FF; float: left;text-align:center; width: 33%;">
+Tata Technologies Nordics AB
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+G&#xF6;teborg, Sverige
+</div></b><br><br>
+<p><br>Mar.2023 ~ Today:</p>
+<ul>
+<li>Customer(Volvo) meetings</li>
+<li>Engineering a better world with customer</li>
+</ul>
+<p><br>Dec.2022 ~ Feb. 2023: ADS Lead Engineer</p>
+<ul>
+<li>Customer(Volvo) meetings</li>
+<li>Customer(IVECO) presentation support</li>
+<li>Customer(Vinfast) supplier function review</li>
+<li>Center Of Excellece(Education,training)</li>
+<li>Tata Mfg Tech Shanghai(Education,training)</li>
+<li>Tata Mfg Tech Shanghai Bussiness Outlook Support</li>
+</ul>
+</div>
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+Jan.2018~Dec.2022: 
+</div>
+<div style="border: 1px;color: #6666FF; float: left;text-align:center; width: 33%;">
+Geely Research Institute
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+Hangzhouwan, Zhejiang, China
+</div></b><br><br>
+<p><br>Jan.2021 ~ Dec.2022: Chief Technology Officer. (600 people)</p>
+<ul>
+<li>Internal SW Development evaluation (ASPICE, SOTIF, ISO26262, Cybersecurity.)</li>
+<li>Function architecture design support.</li>
+<li>Technical board member for incubating start-ups for Geely investments</li>
+<li>Renault &amp; Geely ADAS function development support.</li>
+<li>Benchmark ADAS Products of other company.</li>
+<li>Member of internal vehicle test evaluation.</li>
+</ul>
+<p><br>Jan.2020 ~ Jan. 2021: Function &amp; Scenario Expert. (200 people)</p>
+<ul>
+<li>ADAS SW Quality Assurance(SWQA) check.</li>
+<li>Function owner of ERMD, IRMD, CPD(Child Presence Detection.)</li>
+<li>Geely-CEVT communication support for ADAS function.</li>
+<li>Geely-Volvo communication support for ADAS function.</li>
+<li>Function Process support.</li>
+</ul>
+<p><br>Jan.2018 ~ Dec. 2019: ADAS Expert.(400 people)</p>
+<ul>
+<li>Build current SWQA(Software Quality Assurance) foundation process for Geely.</li>
+<li>Innovation Award for &apos;Swift Method to create a patent&apos;.</li>
+<li>PSS360 leader.</li>
+<li>ADAS Scenario Technical Specialist.</li>
+<li>Parking Solution Specialist.</li>
+<li>SOC (System On Chip) Benchmark</li>
+</ul>
+</div>
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+Aug.2012~Dec.2017: 
+</div>
+<div style="border: 1px;color: #6666FF; float: left;text-align:center; width: 33%;">
+Hyundai Autron
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+Pangyo, Korea 
+</div></b><br><br>
+<p><br>Jan. 2013 ~ Dec.2017: ADAS &amp; New Technology team, ADAS Leader (Managed 25 people.)</p>
+<ul>
+<li>Build &amp; Managed ADAS &amp; New Technology development team (25 people.)</li>
+<li>Responsible for system requirements of AUTOSAR development(cooperated with TTTech Auto.)</li>
+<li>Responsible for Function development of ADAS Domain Controller (LV2/LV3) modeling and embedded SW.</li>
+<li>Developed many advanced systems prototyping of smart glass, intelligent seat, ADAS HMI, etc.</li>
+<li>HKMC Group Technical Road Map committee member for ADAS.</li>
+<li>HKMC Group Automotive Health Care &amp; ADAS Control Transition (HMI) committee member.</li>
+</ul>
+<p><br>Aug. 2012 ~ Dec. 2012: ADAS Expert. (5 people)</p>
+<ul>
+<li>HMKC Group Power Net Architecture committee member as ADAS expert.</li>
+<li>ADAS standardization for Commercial vehicle.</li>
+<li>Support for project coordination and communication with customer and supplier.</li>
+</ul>
+</div>
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+Apr.2009~Jul.2012: 
+</div>
+<div style="border: 1px;color: #6666FF; float: left;text-align:center; width: 33%;">
+Mando Hella Electronics
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+Songdo, Korea 
+</div></b><br><br>
+<p><br>Apr. 2009 ~ Jul.2012 : ADAS Team, System Leader (Managed 10 people)</p>
+<ul>
+<li>Responsible for System Design of BSD/LCA Radar.(Applied vehicles produced in Hyundai)</li>
+<li>Responsible for System Design of USS and Parking function.</li>
+<li>Model based SW development for Ultrasonic BSD.</li>
+<li>Support for project coordination and communication with customer.</li>
+<li>Romania based SW center co-operation.</li>
+</ul>
+</div>
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+Apr.2004~Sep.2007 
+</div>
+<div style="border: 1px;color: #6666FF; float: left;text-align:center; width: 33%;">
+SIEMENS VDO HALLA
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+Sejong, Korea
+</div></b><br><br>
+<p><br>Apr.2004 ~ Sep.2007: Body and Chassis Team, Senior Software Engineer</p>
+<ul>
+<li>Developed Parking Aid System in C++ language.</li>
+<li>Patent for Virtual Sensing Algorithm, the patent reduced 10% of product quality testing fee.</li>
+<li>Developed Parking Aid System for a number of OEM&#x2019;s such as DPCA (Dongfeng Peugeot Citro&#xEB;n Automobiles), Kia, AvtoVAZ, IKCO(Iran Khodro Industrial Group), Smotor(Ssangyong), GM and, Hyundai.(and still there are applied vehicles produced.)</li>
+<li>Developed programs were labeled as CMMI Level 3, and followed MISRA rule book</li>
+<li>Tested software with Vector(CAN and LIN) tools.</li>
+<li>Assembler language PDC(Parking Distance Control) was rewrote in C language.</li>
+<li>Digital Circuit Design with OrCAD and simulated circuit.</li>
+</ul>
+</div>
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+Sep.2002~Mar.2004  
+</div>
+<div style="border: 1px;color: #6666FF; float: left;text-align:center; width: 33%;">
+Military &amp; Space co. 
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+Seoul, Korea
+</div></b><br><br>
+<p><br>Apr.2004 ~ Sep.2007: Body and Chassis Team, Senior Software Engineer</p>
+<ul>
+<li>Developed infrared camera viewer associating with an equipment.</li>
+<li>RF communication ROM writing tool for ESA(ARIANE 5).</li>
+<li>Wav files format reader for VOIP solution.</li>
+<li>Windows MFC used to create the P2P Chat SW.</li>
+</ul>
+</div>
+<hr>
+<h4 class="mume-header" id="font-color6666cc-related-experiences-font"><font color="#6666CC"> RELATED EXPERIENCES </font></h4>
+
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+Dec.2008~Mar.2009 
+</div>
+<div style="border: 1px;color: #6666CC; float: left;text-align:center; width: 33%;">
+TMax Electronics
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+London, U.K.
+</div></b><br><br>
+<ul>
+<li>Internet commerce Front-end design and development with PHP</li>
+<li>Credit card payment system develoment with security algorithms</li>
+</ul>
+</div>
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+Oct.2001~Sep.2002 
+</div>
+<div style="border: 1px;color: #6666CC; float: left;text-align:center; width: 33%;">
+Northwood Health System 
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+West Virginia, U.S.
+</div></b><br><br>
+<ul>
+<li>Created an effective PHP/SQL solution to manage employee Testing service</li>
+<li>UNIX cron and batch programming</li>
+<li>Company offered 5yr contract due to excellence in programming</li>
+</ul>
+</div>
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+May.2000~Sep.2000 
+</div>
+<div style="border: 1px;color: #6666CC; float: left;text-align:center; width: 33%;">
+Alternativas
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+Quetzaltenango, Guatemala 
+</div></b><br><br>
+<ul>
+<li>Supervised the design of network structure</li>
+<li>Taught and trained new employees how to manage computer network</li>
+</ul>
+</div>
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+Oct.1996~Dec.1998 
+</div>
+<div style="border: 1px;color: #6666CC; float: left;text-align:center; width: 33%;">
+Republic Of Korea Army 
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+Gyeonggi-do, Korea
+</div></b><br><br>
+<p>(Compulsory Service for a healthy man in Republic of Korea)</p>
+<ul>
+<li>Used military facilities and operated Virtual Mission System</li>
+<li>Utilized various old UNIX systems</li>
+<li>Translated from English to Korean / Korean to English</li>
+</ul>
+</div>
+<hr>
+<h4 class="mume-header" id="font-color6666cc-education-font"><font color="#6666CC"> EDUCATION </font></h4>
+
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+Sep.2007~Nov.2008
+</div>
+<div style="border: 1px;color: #6666FF; float: left;text-align:center; width: 33%;">
+University of Southampton 
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+Hampshire, UK
+</div></b><br><br>
+<p><br>Master of Science &#x2013; Complexity(AI) Science (Post Graduate Course)</p>
+<ul>
+<li>Over 65% average mark (Overall 3rd in course)</li>
+<li>Intensive and dedicated master&#x2019;s degree in Artificial Intelligence</li>
+<li>Decentralized Programming with C++ and GNU R</li>
+<li>Took main programmer part in Adaptive Robot project</li>
+<li>THESIS PAPER: Design of Adaptive Traffic Light Agent System (2008)</li>
+</ul>
+</div>
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+Jan.2001~Sep.2002
+</div>
+<div style="border: 1px;color: #6666FF; float: left;text-align:center; width: 33%;">
+Microsoft Network Professional
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+Pittsburgh, USA
+</div></b><br><br>
+<p><br>Self-Studied - (Certificate, Weekend course)</p>
+<ul>
+<li>Network specialty and Infrastructure</li>
+<li>Lower level system network analysis</li>
+</ul>
+</div>
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+Sep.1995~May.2002
+</div>
+<div style="border: 1px;color: #6666FF; float: left;text-align:center; width: 33%;">
+Wheeling Jesuit University
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+West Virginia, USA 
+</div></b><br><br>
+<p><br>Bachelor of Arts &amp; Sciences - Computer Science (Undergraduate Course)</p>
+<ul>
+<li>1996 ~1998, served ROKA(Republic Of Korea Army)</li>
+<li>(2.86 / 4.00 GPA) / A grade (Top 10% of the class) for all Computer Science subjects</li>
+</ul>
+</div>
+<br>
+<div style=" 
+border: 1px dashed #eeeeee;
+font-size: 1.0em;
+line-height: 1.2em;
+font-family: Tahoma;
+">
+<b> 
+<div style="border: 1px; float: left; width: 33%;">
+Sep.1992~May.1995 
+</div>
+<div style="border: 1px;color: #6666FF; float: left;text-align:center; width: 33%;">
+Georgetown Preparatory
+</div>
+<div style="border: 1px; float: right; right: 33%;">
+Maryland, USA 
+</div></b><br><br>
+<p><br>High school &#x2013; 4 years, (&gt;3.0 / 4.0 GPA)</p>
+</div>
+<hr>
+<h4 class="mume-header" id="font-color6666cc-awards-font"><font color="#6666CC"> AWARDS </font></h4>
+
+<div style="border: 1px; float: left; width: 50%;">
+&#x2022;   Development of others award 2022
+</div>
+<div style="border: 1px; float: left; right: 50%;">
+&#x2022;   Zhejiang Foreign Talent 2021
+</div>
+<div style="border: 1px; float: left; width: 50%;">
+&#x2022;	Best innovators of 2019
+</div>
+<div style="border: 1px; float: left; right: 50%;">
+&#x2022;  Best Instructor of 2018
+</div>
+<div style="border: 1px; float: left; width: 50%;">
+&#x2022;  Best Interviewer of 2016
+</div>
+<div style="border: 1px; float: left; right: 50%;">
+&#x2022;  Best employee of 2010
+</div>
+<br><br>
+<hr>
+<h4 class="mume-header" id="font-color6666cc-skill-sets-font"><font color="#6666CC"> SKILL SETS </font></h4>
+
+<div style="border: 1px; float: left; width: 50%;">
+&#x2022;   Networking
+</div>
+<div style="border: 1px; float: left; right: 50%;">
+&#x2022;   Embedded C / C++ / Any API related to C
+</div>
+<div style="border: 1px; float: left; width: 50%;">
+&#x2022;   JULIA / PYTHON / MATLAB / QT / PERL / SQL
+</div>
+<div style="border: 1px; float: left; right: 50%;">
+&#x2022;   Window drivers programming
+</div>
+<div style="border: 1px; float: left; width: 50%;">
+&#x2022;   Embedded Assembler  
+</div>
+<div style="border: 1px; float: left; right: 50%;">
+&#x2022;   Microsoft Certified Professional (MCP)
+</div>
+<br><br>
+<hr>
+<h4 class="mume-header" id="font-color6666cc-language-skills-font"><font color="#6666CC"> LANGUAGE SKILLS </font></h4>
+
+<div style="border: 1px; float: left; width: 50%;">
+&#x2022;   English: almost native
+</div>
+<div style="border: 1px; float: left; right: 50%;">
+&#x2022;   Chinese: Basic(listening)
+</div>
+<div style="border: 1px; float: left; width: 50%;">
+&#x2022;   Spanish: Fluent (speaking, reading); intermediate (writing) 
+</div>
+<div style="border: 1px; float: left; right: 50%;">
+&#x2022;   Korean: native language
+</div>
+<br><br>
+<hr>
+<h4 class="mume-header" id="font-color6666cc-patents-font"><font color="#6666CC"> PATENTS </font></h4>
+
+<font size="2">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Classification</th>
+<th style="text-align:center">Patent ID</th>
+<th style="text-align:left">Patent name</th>
+<th style="text-align:center">Enabling Country</th>
+<th style="text-align:center">Owner of patent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Sensor</td>
+<td style="text-align:center">10-1393644</td>
+<td style="text-align:left">Dynamic ultrasonic sensor and sensing method</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Sensor</td>
+<td style="text-align:center">10-1683575</td>
+<td style="text-align:left">Apparatus and method for adjusting angle of auto-mobile side camera</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Sensor</td>
+<td style="text-align:center">10-1512401</td>
+<td style="text-align:left">An apparatus and a method for controlling a ecu of a vehicle, and a system for controlling the ecu of the vehicle with the apparatus</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Sensor</td>
+<td style="text-align:center">10-1527132</td>
+<td style="text-align:left">Adjusting apparatus and method for steering force according to driver&apos;s patterns</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Sensor</td>
+<td style="text-align:center">10-1428296</td>
+<td style="text-align:left">Camera module for vehicle and monitoring system provided with the same</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Sensor</td>
+<td style="text-align:center">US2014/0168438A1</td>
+<td style="text-align:left">Camera module for vehicle and monitoring system provided with the same</td>
+<td style="text-align:center">US</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Human Machine</td>
+<td style="text-align:center">10-1683570</td>
+<td style="text-align:left">System and method for shading using voice recognition</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Interface</td>
+<td style="text-align:center">10-1339833</td>
+<td style="text-align:left">Method and apparatus for providing active user manual by using touch sensor</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Interface</td>
+<td style="text-align:center">10-1364767</td>
+<td style="text-align:left">Head up display, apparatus for compensation double image and method thereof</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Interface</td>
+<td style="text-align:center">10-1683582</td>
+<td style="text-align:left">Method and system for providing information using smart sun visor</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Interface</td>
+<td style="text-align:center">10-1673255</td>
+<td style="text-align:left">Method and apparatus for controlling sun visor</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Interface</td>
+<td style="text-align:center">10-1673257</td>
+<td style="text-align:left">Method and system for providing rear-side image of vehicle, low reflection glass for vehicle</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Interface</td>
+<td style="text-align:center">10-1568248</td>
+<td style="text-align:left">Method and apparatus for displaying operation of remote controller mounted on steering wheel</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Interface</td>
+<td style="text-align:center">10-1362416</td>
+<td style="text-align:left">Steering and gearbox control apparatus using automobile steering wheel</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">ADAS Network</td>
+<td style="text-align:center">10-1558976</td>
+<td style="text-align:left">System and method for transmitting and receiving data using Ethernet network</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">ADAS Network</td>
+<td style="text-align:center">10-1439489</td>
+<td style="text-align:left">Ethernet address allocation method and apparatus in Ethernet network for vehicle</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">ADAS Network</td>
+<td style="text-align:center">10-1481131</td>
+<td style="text-align:left">Packet processing method and apparatus in Ethernet network for vehicle</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">ADAS Network</td>
+<td style="text-align:center">10-1481132</td>
+<td style="text-align:left">Apparatus and method for synchronizing data output time in vehicle network</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">ADAS Network</td>
+<td style="text-align:center">10-1481133</td>
+<td style="text-align:left">Vehicle communication system for transmitting data based on Ethernet and method thereof</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Semiconductor</td>
+<td style="text-align:center">10-1665794</td>
+<td style="text-align:left">Method for designing vehicle controller-only semiconductor based on die and vehicle controller-only semiconductor by the same</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Etc.</td>
+<td style="text-align:center">10-1388465</td>
+<td style="text-align:left">Apparatus for measuring tread abrasion of tire</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">Etc.</td>
+<td style="text-align:center">10-1499519</td>
+<td style="text-align:left">Apparatus for controlling motor torque of MDPS(Motor driven Power Steering) and the method thereof</td>
+<td style="text-align:center">KOREA</td>
+<td style="text-align:center">HYUNDAI</td>
+</tr>
+<tr>
+<td style="text-align:center">AUTOMATED PARKING</td>
+<td style="text-align:center">CN109655073B</td>
+<td style="text-align:left">Map drawing method, device and vehicle in no or weak signal area</td>
+<td style="text-align:center">CHINA</td>
+<td style="text-align:center">GEELY</td>
+</tr>
+<tr>
+<td style="text-align:center">AUTOMATED PARKING</td>
+<td style="text-align:center">CN110321398A</td>
+<td style="text-align:left">Method, device and terminal for establishing parking map in no-signal zone</td>
+<td style="text-align:center">CHINA</td>
+<td style="text-align:center">GEELY</td>
+</tr>
+<tr>
+<td style="text-align:center">AUTOMATED PARKING</td>
+<td style="text-align:center">CN110733497A</td>
+<td style="text-align:left">Parking control method, system, electronic equipment and storage medium</td>
+<td style="text-align:center">CHINA</td>
+<td style="text-align:center">GEELY</td>
+</tr>
+<tr>
+<td style="text-align:center">AUTOMATED PARKING</td>
+<td style="text-align:center">CN110103909A</td>
+<td style="text-align:left">Contact-type vehicle blind area detection device and vehicle</td>
+<td style="text-align:center">CHINA</td>
+<td style="text-align:center">GEELY</td>
+</tr>
+<tr>
+<td style="text-align:center">AUTOMATED PARKING</td>
+<td style="text-align:center">CN111610531A</td>
+<td style="text-align:left">Vehicle driving early warning method, device and storage medium</td>
+<td style="text-align:center">CHINA</td>
+<td style="text-align:center">GEELY</td>
+</tr>
+<tr>
+<td style="text-align:center">ADAS UX</td>
+<td style="text-align:center">2 In process</td>
+<td style="text-align:left">Drone scout system contact system / mapping cloud system</td>
+<td style="text-align:center">CHINA</td>
+<td style="text-align:center">GEELY</td>
+</tr>
+</tbody>
+</table>
+</font>
+      </div>
+      
+  </body>
+  </html>
