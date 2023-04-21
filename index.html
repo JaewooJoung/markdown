@@ -23,7 +23,49 @@
       <input type="radio" name="status" value="ok" checked> OK
       <input type="radio" name="status" value="nok"> NOK
       <br />
-      <input type="submit" value="Submit" />
+      <input type="submit" name="submit" value="Submit" />
     </form>
+    <?php
+      if (isset($_POST['submit'])) {
+        // GitHub API endpoint for creating a new file in the repository
+        $url = 'https://api.github.com/repos/JaewooJoung/markdown/content';
+        
+        // GitHub personal access token with the necessary permissions
+        $token = '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';
+
+        // Form data
+        $count = $_POST['count'];
+        $number = $_POST['number'];
+        $status = $_POST['status'];
+        
+        // File content as a JSON object
+        $content = json_encode(array(
+          'message' => 'Add new form data',
+          'content' => base64_encode("Count: $count\nNumber: $number\nStatus: $status")
+        ));
+
+        // cURL options for the API request
+        $options = array(
+          CURLOPT_URL => $url,
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_POSTFIELDS => $content,
+          CURLOPT_HTTPHEADER => array(
+            'Authorization: token ' . $token,
+            'Content-Type: application/json',
+            'User-Agent: PHP'
+          )
+        );
+
+        // Create a new cURL handle and execute the API request
+        $curl = curl_init();
+        curl_setopt_array($curl, $options);
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        // Print the API response
+        echo '<pre>' . $response . '</pre>';
+      }
+    ?>
   </body>
 </html>
