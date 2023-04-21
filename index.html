@@ -1,33 +1,29 @@
-<?php
-// Process form data if submitted
-if (isset($_POST['submit'])) {
-  // Form processing code goes here
-  // ...
-  // Display success message
-  echo 'Form submitted successfully!';
-} else {
-  // Display form
-?>
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>My Form</title>
-  </head>
-  <body>
-      <!-- Form fields go here -->
-      <form action="save.php" method="POST">
-      <input type="button" value="+" />
-      <label><input type="radio" name="number" value="1">1</label>
-      <label><input type="radio" name="number" value="2">2</label>
-      <label><input type="radio" name="number" value="3">3</label>
-      <br>
-      <label><input type="radio" name="status" value="OK">OK</label>
-      <label><input type="radio" name="status" value="NOK">NOK</label>
-      <br>
-      <input type="submit" name="submit" value="Submit">
-    </form>
-  </body>
+<head>
+	<title>My GitHub Page</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+	<form action="save.php" method="post">
+		<label for="number">Select a number:</label><br>
+		<input type="radio" id="number1" name="number" value="1">
+		<label for="number1">1</label><br>
+		<input type="radio" id="number2" name="number" value="2">
+		<label for="number2">2</label><br>
+		<input type="radio" id="number3" name="number" value="3">
+		<label for="number3">3</label><br><br>
+
+		<label for="status">Select status:</label><br>
+		<input type="radio" id="ok" name="status" value="ok">
+		<label for="ok">OK</label><br>
+		<input type="radio" id="nok" name="status" value="nok">
+		<label for="nok">NOK</label><br><br>
+
+		<input type="submit" name="submit" value="+">
+		<input type="submit" name="submit" value="Submit">
+	</form>
+
+</body>
 </html>
-<?php
-}
-?>
