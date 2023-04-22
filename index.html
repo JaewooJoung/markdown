@@ -4,7 +4,6 @@
     <title>CEVT TIS TEST</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-b6UoJbbU/Tk2QdSL+ie80tcIFAVqHgrG+7V62cWolpX7nJsmRbsaRQ7d2DfZmTwnq3TqT3V7kTK1sXsV7RzPsw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
     <style>
@@ -118,9 +117,9 @@
 	<div class="container">
 		<div class="center">
 		<div><br></div>
-		<p><b>🚗<i class="fas fa-2x">CEVT</i>🚘</b></p>
+		<h1>CEVT 🚧TSI🛑 ⚡RAPID🌠 ⛔TEST🚦<</h1>
+    		<p>NOW: <span id="clock"></span></p>
 		<div><br></div>
-		<p><b>🚧TSI🛑 ⚡RAPID🌠 ⛔TEST🚦</b></p>
 		</div>
 		<div><br></div>
 		<div><br></div>
@@ -192,6 +191,12 @@
 		const nokRatio = (nokCount / (okCount + nokCount)) * 100;
 		result.textContent = `🏁TP_D: ${okRatio.toFixed(2)}%::FX_D: ${nokRatio.toFixed(2)}%`;
 	});
+      function updateTime() {
+        var now = new Date();
+        var time = now.toLocaleTimeString();
+        document.getElementById("clock").innerHTML = time;
+      }
+      setInterval(updateTime, 1000);
 </script>
 </body>
 </html>
