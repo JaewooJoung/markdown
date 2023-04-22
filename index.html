@@ -4,7 +4,7 @@
     <title>CEVT TIS TEST</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-1WV6MOx4C4tiCxSo1X0GzGeL/KvzGwSAhV7Pcoia27RZAtRfHK5J5u5a67XeCq3V7vzAojRfuzVvupNByu+b7w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
     <style>
         html, body {
@@ -85,6 +85,8 @@
         }
         
         .total {
+	    background-color: yellow;
+	    color: blue;
             font-size: 48px;
             font-weight: bold;
             margin: 10px;
@@ -107,11 +109,7 @@
             font-weight: bold;
             margin-top: 20px;
         }
-	 .mark {
-	    background-color: yellow;
-	    font-size: 3.6em;
-	    color: black;
-	  }
+
     </style>
 </head>
 <body>
@@ -137,12 +135,12 @@
 			<input type="radio" id="urban" name="area" value="Urban">
 			<label for="city">/   🏙City</label>
 			<input type="radio" id="city" name="area" value="City">
-			<label for="highway">/   🚳Highway</label>
+			<label for="highway">/   <i class="fas fa-highway"></i>Highway</label>
 			<input type="radio" id="highway" name="area" value="Highway">
 		</div>
 		<br><br><br>
 		<div class="row">
-		<div class="total"><mark>0</mark></div>
+		<div class="total">0</div>
 		<div>Kms</div>
 		</div>
 		<div class="row">
