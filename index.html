@@ -140,7 +140,7 @@
 			<label for="spain">/  <i class="flag-icon flag-icon-es"></i>España</label>
 			<input type="radio" id="spain" name="country" value="spain">
 		</div>
-		<div><br></div>
+		<div class="time" id="location"></div>
 		<div class="radio-group">
 			<label for="urban">🏞Urban</label>
 			<input type="radio" id="urban" name="area" value="Urban">
@@ -200,6 +200,7 @@
 		const nokRatio = (nokCount / (okCount + nokCount)) * 100;
 		result.textContent = `🏁TP_D: ${okRatio.toFixed(2)}%::FX_D: ${nokRatio.toFixed(2)}%`;
 	});
+	    
       function updateTime() {
         var now = new Date();
         var time = now.toLocaleTimeString();
@@ -208,7 +209,20 @@
         document.getElementById("date").innerHTML = date;
       }
       setInterval(updateTime, 1000);
-
+	    
+      function showPosition(position) {
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        document.getElementById("location").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+      }
+      function showError(error) {
+        document.getElementById("location").innerHTML = "Error: " + error.message;
+      }
+      function updateLocation() {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+      }
+      setInterval(updateLocation, 5000); // update location every 5 seconds
+    
 </script>
 </body>
 </html>
