@@ -140,11 +140,11 @@
 		</div>
 		<div class="row">
 			<div class="button-group">
-				<button class="green" id="ok">+TP_D</button>
+				<button class="green" id="ok">+TP_D🆗</button>
 				<div class="counter" id="ok-counter">0</div>
 			</div>
 			<div class="button-group">
-				<button class="red" id="nok">+FX_D</button>
+				<button class="red" id="nok">+FX_D🆖</button>
 				<div class="counter" id="nok-counter">0</div>
 			</div>
 		</div>
@@ -182,7 +182,7 @@
 	submitButton.addEventListener('click', () => {
 		const okRatio = (okCount / (okCount + nokCount)) * 100;
 		const nokRatio = (nokCount / (okCount + nokCount)) * 100;
-		result.textContent = `TP_D: ${okRatio.toFixed(2)}% 🏁 FX_D: ${nokRatio.toFixed(2)}%`;
+		result.textContent = `🆗TP_D: ${okRatio.toFixed(2)}% :🏁:🆖FX_D: ${nokRatio.toFixed(2)}%`;
 	});
 </script>
 </body>
