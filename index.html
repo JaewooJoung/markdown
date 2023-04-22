@@ -127,6 +127,7 @@
 		<div><br></div>
 		<h1>CEVT 🚧TSI🛑 ⚡RAPID🌠 ⛔TEST🚦</h1>
 		<div><br></div>
+		<div class="time" id="date"></div>
     		<div class="time" id="clock"></div>
 		</div>
 		<div class="radio-group">
@@ -200,9 +201,12 @@
       function updateTime() {
         var now = new Date();
         var time = now.toLocaleTimeString();
+        var date = now.toLocaleDateString();
         document.getElementById("clock").innerHTML = time;
+        document.getElementById("date").innerHTML = date;
       }
       setInterval(updateTime, 1000);
+
 </script>
 </body>
 </html>
