@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Phone IMU Sensor Data</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h1>Phone IMU Sensor Data</h1>
+  <canvas id="accel-chart" width="400" height="200"></canvas>
+
+  <script>
+    var accelData = [];
+    var chart = new Chart(document.getElementById('accel-chart').getContext('2d'), {
+      type: 'line',
+      data: {
+        datasets: [{
+          label: 'Accelerometer X',
+          data: accelData,
+          borderColor: 'blue',
+          fill: false,
+        }]
+      },
+      options: {
+        animation: false,
+        scales: {
+          xAxes: [{
+            type: 'realtime',
+            realtime: {
+              duration: 2000, // data in the past 2000 ms will be displayed
+              refresh: 100, // new data will be displayed every 100 ms
+              delay: 1000, // delay in ms before chart starts displaying data
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+            }
+          }]
+        }
+      }
+    });
+
+    window.addEventListener("devicemotion", handleMotion, true);
+
+    function handleMotion(event) {
+      // Get accelerometer data
+      var accelX = event.acceleration.x;
+
+      // Add data to chart
+      var time = new Date().getTime();
+      accelData.push({ x: time, y: accelX });
+      chart.update();
+    }
+  </script>
+</body>
+</html>
