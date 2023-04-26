@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Phone IMU Sensor Data</title>
+</head>
+<body>
+  <h1>Phone IMU Sensor Data</h1>
+  <p>Accelerometer X: <span id="accel-x"></span></p>
+  <p>Accelerometer Y: <span id="accel-y"></span></p>
+  <p>Accelerometer Z: <span id="accel-z"></span></p>
+  <p>Gyroscope X: <span id="gyro-x"></span></p>
+  <p>Gyroscope Y: <span id="gyro-y"></span></p>
+  <p>Gyroscope Z: <span id="gyro-z"></span></p>
+  <button onclick="sendData()">Send Data</button>
+
+  <script>
+    window.addEventListener("devicemotion", handleMotion, true);
+
+    function handleMotion(event) {
+      // Get accelerometer data
+      var accelX = event.acceleration.x;
+      var accelY = event.acceleration.y;
+      var accelZ = event.acceleration.z;
+
+      // Get gyroscope data
+      var gyroX = event.rotationRate.alpha;
+      var gyroY = event.rotationRate.beta;
+      var gyroZ = event.rotationRate.gamma;
+
+      // Update HTML page with sensor data
+      document.getElementById("accel-x").innerHTML = accelX;
+      document.getElementById("accel-y").innerHTML = accelY;
+      document.getElementById("accel-z").innerHTML = accelZ;
+      document.getElementById("gyro-x").innerHTML = gyroX;
+      document.getElementById("gyro-y").innerHTML = gyroY;
+      document.getElementById("gyro-z").innerHTML = gyroZ;
+      
+      // Send the data to the server
+      function sendData() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "store_data.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.send("accelX=" + accelX + "&accelY=" + accelY + "&accelZ=" + accelZ + "&gyroX=" + gyroX + "&gyroY=" + gyroY + "&gyroZ=" + gyroZ);
+      }
+    }
+  </script>
+</body>
+</html>
