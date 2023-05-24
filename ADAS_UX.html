@@ -1,0 +1,792 @@
+<!DOCTYPE html><html><head>
+      <title>ADAS_UX</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///c:\Users\jaewo\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.6.8\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <style>
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  display: block;
+  width: 100%;
+}
+
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}
+
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
+}
+
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p,html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div{display:inline}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  300px/2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview  ">
+      <h5 class="mume-header" id="title--adas-ux">TITLE : ADAS UX</h5>
+
+<h5 class="mume-header" id="author--%EC%A0%95%EC%9E%AC%EC%9A%B0--jaewoo-joung--%E9%83%91%E5%9C%A8%E7%A5%90-aka%E6%B5%B7%E7%BB%B5%E5%AE%9D%E5%AE%9D">AUTHOR : &#xC815;&#xC7AC;&#xC6B0; / Jaewoo Joung / &#x90D1;&#x5728;&#x7950;/ (A.K.A.)&#x6D77;&#x7EF5;&#x5B9D;&#x5B9D;</h5>
+
+<h5 class="mume-header" id="date--2023-05-23">DATE : <code>2023. 05. 23</code></h5>
+
+<h5 class="mume-header" id="target-audience---who-wants-to-know-the-user-experience-in-adas">TARGET AUDIENCE :  Who wants to know the <strong>U</strong>ser e<strong>X</strong>perience in ADAS</h5>
+
+<h5 class="mume-header" id="tip-if-you-are-busy-jump-to-conclusion">TIP: IF YOU ARE BUSY, jump to conclusion</h5>
+
+<h1 class="mume-header" id="measurable-adas-font-color6666ccuxfont">Measurable ADAS <font color="#6666CC">UX</font></h1>
+
+<h2 class="mume-header" id="table-of-contents">Table of Contents</h2>
+
+<ul>
+<li><a href="#measurable-adas-ux">Measurable ADAS UX</a>
+<ul>
+<li><a href="#table-of-contents">Table of Contents</a></li>
+<li><a href="#preface">Preface</a>
+<ul>
+<li><a href="#key-input-human-input-and-gesture">Key Input: Human Input and Gesture</a></li>
+<li><a href="#key-output-carefully-designed-x-y-movement-and-senses">Key Output: Carefully Designed X, Y Movement and Senses</a></li>
+</ul>
+</li>
+<li><a href="#safety-and-confidence">Safety and Confidence</a></li>
+<li><a href="#ease-of-use">Ease of Use</a>
+<ul>
+<li><a href="#intuitive-user-interface">Intuitive User Interface</a></li>
+<li><a href="#clear-and-accessible-controls">Clear and Accessible Controls</a></li>
+<li><a href="#simple-and-understandable-settings">Simple and Understandable Settings</a></li>
+<li><a href="#minimal-driver-distraction">Minimal Driver Distraction</a></li>
+</ul>
+</li>
+<li><a href="#accuracy-and-reliability">Accuracy and Reliability</a>
+<ul>
+<li><a href="#reliable-detection-and-sensing-capabilities">Reliable Detection and Sensing Capabilities</a></li>
+<li><a href="#low-false-alarm-rates">Low False Alarm Rates</a></li>
+<li><a href="#precise-distance-and-speed-measurements">Precise Distance and Speed Measurements</a></li>
+<li><a href="#consistent-performance-across-different-driving-conditions">Consistent Performance Across Different Driving Conditions</a></li>
+</ul>
+</li>
+<li><a href="#customization-and-personalization">Customization and Personalization</a>
+<ul>
+<li><a href="#adjustable-sensitivity-levels">Adjustable Sensitivity Levels</a></li>
+<li><a href="#personalized-warning-thresholds">Personalized Warning Thresholds</a></li>
+<li><a href="#tailored-system-behavior-based-on-driver-preferences">Tailored System Behavior Based on Driver Preferences</a></li>
+<li><a href="#customizable-alert-preferences-visual-auditory-haptic">Customizable Alert Preferences (Visual, Auditory, Haptic)</a></li>
+</ul>
+</li>
+<li><a href="#integration-and-consistency">Integration and Consistency</a>
+<ul>
+<li><a href="#seamless-integration-with-other-vehicle-systems">Seamless Integration with Other Vehicle Systems</a></li>
+<li><a href="#consistent-user-experience-across-different-adas-features">Consistent User Experience across Different ADAS Features</a></li>
+<li><a href="#integration-with-infotainment-systems-and-smartphone-connectivity">Integration with Infotainment Systems and Smartphone Connectivity</a></li>
+<li><a href="#unified-control-interface">Unified Control Interface</a></li>
+</ul>
+</li>
+<li><a href="#education-and-training">Education and Training</a>
+<ul>
+<li><a href="#clear-instructions-and-user-manuals">Clear Instructions and User Manuals</a></li>
+<li><a href="#in-vehicle-tutorials-or-training-modules">In-vehicle Tutorials or Training Modules</a></li>
+<li><a href="#educational-materials-on-adas-capabilities-and-limitations">Educational Materials on ADAS Capabilities and Limitations</a></li>
+<li><a href="#guidance-on-proper-usage-and-best-practices">Guidance on Proper Usage and Best Practices</a></li>
+</ul>
+</li>
+<li><a href="#feedback-and-communication">Feedback and Communication</a>
+<ul>
+<li><a href="#clear-and-timely-visual-alerts-icons-symbols-warnings">Clear and Timely Visual Alerts (Icons, Symbols, Warnings)</a></li>
+<li><a href="#auditory-cues-beeps-tones-spoken-messages">Auditory Cues (Beeps, Tones, Spoken Messages)</a></li>
+<li><a href="#haptic-feedback-vibrations-steering-wheel-resistance">Haptic Feedback (Vibrations, Steering Wheel Resistance)</a></li>
+<li><a href="#voice-prompts-and-instructions">Voice Prompts and Instructions</a></li>
+</ul>
+</li>
+<li><a href="#ethical-considerations">Ethical Considerations</a>
+<ul>
+<li><a href="#prioritizing-human-safety-over-convenience">Prioritizing Human Safety over Convenience</a></li>
+<li><a href="#avoiding-situations-that-may-lead-to-unnecessary-risks">Avoiding Situations that May Lead to Unnecessary Risks</a></li>
+<li><a href="#mitigating-unintended-consequences-of-adas-actions">Mitigating Unintended Consequences of ADAS Actions</a></li>
+<li><a href="#compliance-with-ethical-guidelines-and-regulations">Compliance with Ethical Guidelines and Regulations</a></li>
+</ul>
+</li>
+<li><a href="#coclusion">Coclusion</a>
+<ul>
+<li><a href="#measurements--calculation">Measurements &amp; Calculation</a></li>
+<li><a href="#measurable-matrix">Measurable Matrix</a>
+<ul>
+<li><a href="#measuring-table">Measuring table.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 class="mume-header" id="preface">Preface</h2>
+
+<p>In the world of Advanced Driver Assistance Systems (ADAS), the key factor lies in the input and output. Human input plays a crucial role in enabling ADAS functions to assist drivers effectively. Additionally, the amount and quality of gesture are essential for achieving optimal performance.</p>
+<h3 class="mume-header" id="key-input-human-input-and-gesture">Key Input: Human Input and Gesture</h3>
+
+<p>Human input serves as the foundation for ADAS functionality. It encompasses the actions, decisions, and reactions of drivers. Through various input mechanisms such as steering, acceleration, and braking, drivers communicate their intentions to the vehicle&apos;s ADAS functions.</p>
+<p>Moreover, the amount of gesture involved is a significant factor. The precise and intentional movements made by drivers contribute to the accurate interpretation of their intentions by the ADAS functions. Fine-tuned gestures, whether subtle or explicit, allow the system to respond appropriately, enhancing the overall driving experience.</p>
+<h3 class="mume-header" id="key-output-carefully-designed-x-y-movement-and-senses">Key Output: Carefully Designed X, Y Movement and Senses</h3>
+
+<p>The output of ADAS functions manifests in the carefully designed X, Y movement of vehicles. By analyzing human input and sensor data, ADAS functions can optimize vehicle movement, ensuring smooth and controlled driving. The X, Y movement refers to the coordinated motions in horizontal and vertical directions, facilitating precise positioning, lane keeping, and collision avoidance.</p>
+<p>Furthermore, ADAS functions engage our senses to perceive and interpret the driving environment. These senses include vision, hearing, touch, and even aspects that go beyond traditional senses, such as data analysis and predictive algorithms. Collectively, these senses provide invaluable information to ADAS functions, allowing them to make informed decisions and adapt to changing road conditions.</p>
+<p>In summary, ADAS functions heavily rely on human input, with gesture quantity and quality playing a significant role. The resulting output encompasses the carefully designed X, Y movement of vehicles and the integration of various senses. Understanding and optimizing these key factors contribute to the continuous improvement and evolution of ADAS functions, ultimately enhancing driver safety and the overall driving User eXperience.</p>
+<h2 class="mume-header" id="safety-and-confidence">Safety and Confidence</h2>
+
+<p>Safety and Confidence consist of moving a car the right amount in X, Y. It is as if we are using a handheld fan and moving it with our own hand or using a button to turn on the fan to cool down our skin. Later, we have a fan that maintains the right humidity and desired temperature, which we now call an air conditioner.</p>
+<p>Lane Departure Warning was the cause of many accidents in the 90s due to driver fatigue and loss of focus. To address this, coffee break warnings were introduced, providing passive advice to drivers to reduce fatigue. This has evolved with the help of radar or camera sensors, which now detect unintended lane departures. This technology has further evolved into Lane Keeping. However, it only involves the Y direction, which has limitations in certain cases, such as when another vehicle is approaching.</p>
+<p>Forward collision warning, Adaptive Cruise Control, and Emergency Braking are designed for X-direction control, making the best effort to avoid collisions with other vehicles.</p>
+<p>As we entered the 2010s, we started considering outside users, including pedestrians and cyclists. Now, we even have Child Presence Detection and Human-Machine Interface (HMI) systems to encourage pedestrians not to hesitate when interacting with our vehicles.</p>
+<h2 class="mume-header" id="ease-of-use">Ease of Use</h2>
+
+<p>The ease of use is a critical aspect of any system, and Advanced Driver Assistance Systems (ADAS) are no exception. ADAS technology aims to provide drivers with intuitive and user-friendly interfaces that enhance the overall driving experience. Here are some key elements that contribute to the ease of use in ADAS:</p>
+<h3 class="mume-header" id="intuitive-user-interface">Intuitive User Interface</h3>
+
+<p>ADAS systems strive to have intuitive user interfaces that are easy to understand and navigate. Clear and well-designed graphical elements, icons, and menus help drivers quickly access the desired ADAS functions without confusion or extensive learning curves.</p>
+<h3 class="mume-header" id="clear-and-accessible-controls">Clear and Accessible Controls</h3>
+
+<p>The controls for ADAS features should be conveniently located and easy to access. Physical controls, touchscreens, or steering wheel-mounted buttons should be designed with driver ergonomics in mind, allowing for effortless interaction without causing distraction or discomfort.</p>
+<h3 class="mume-header" id="simple-and-understandable-settings">Simple and Understandable Settings</h3>
+
+<p>ADAS systems often provide customizable settings to accommodate individual driver preferences. It is essential to present these settings in a straightforward and understandable manner. Clear explanations and tooltips can guide drivers in making informed choices without complexity or ambiguity.</p>
+<h3 class="mume-header" id="minimal-driver-distraction">Minimal Driver Distraction</h3>
+
+<p>One of the primary goals of ADAS is to enhance safety, and this includes minimizing driver distraction. ADAS systems should be designed to present information and alerts in a manner that minimizes visual, auditory, and cognitive distractions. Notifications and warnings should be timely, concise, and effectively capture the driver&apos;s attention without overwhelming them.</p>
+<p>Ensuring ease of use in ADAS technology leads to better adoption and utilization by drivers. By prioritizing intuitive interfaces, accessible controls, simple settings, and minimal distraction, ADAS systems can provide drivers with a seamless and user-friendly experience, ultimately enhancing safety and convenience on the road.</p>
+<h2 class="mume-header" id="accuracy-and-reliability">Accuracy and Reliability</h2>
+
+<p>Accuracy and reliability are essential factors in Advanced Driver Assistance Systems (ADAS) to ensure the effectiveness and trustworthiness of the system. ADAS technology relies on precise detection, measurement, and consistent performance across different driving conditions. Here are key aspects related to accuracy and reliability in ADAS:</p>
+<h3 class="mume-header" id="reliable-detection-and-sensing-capabilities">Reliable Detection and Sensing Capabilities</h3>
+
+<p>ADAS systems depend on sensors such as cameras, radar, lidar, and ultrasonic sensors to gather information about the surrounding environment. These sensors must provide reliable and accurate data to the ADAS system to make informed decisions. Regular maintenance and calibration of sensors are necessary to ensure optimal performance.</p>
+<h3 class="mume-header" id="low-false-alarm-rates">Low False Alarm Rates</h3>
+
+<p>False alarms can reduce driver confidence and may lead to complacency or distrust in the ADAS system. Minimizing false alarms is crucial to avoid unnecessary interventions or warnings. ADAS systems should employ sophisticated algorithms and sensor fusion techniques to reduce false alarms while accurately identifying real hazards.</p>
+<h3 class="mume-header" id="precise-distance-and-speed-measurements">Precise Distance and Speed Measurements</h3>
+
+<p>ADAS systems need accurate distance and speed measurements to effectively assess the proximity and relative motion of objects or vehicles. Accurate measurements enable functions like adaptive cruise control, forward collision warning, and automatic emergency braking to react appropriately and provide the desired safety benefits.</p>
+<h3 class="mume-header" id="consistent-performance-across-different-driving-conditions">Consistent Performance Across Different Driving Conditions</h3>
+
+<p>ADAS systems should maintain consistent performance across various driving conditions, including different weather conditions (e.g., rain, snow, fog), lighting conditions (e.g., day, night), and road surfaces. Consistency in performance ensures that the ADAS system can reliably assist the driver regardless of the environment.</p>
+<p>Ensuring accuracy and reliability in ADAS technology is crucial for driver safety and trust in the system. Reliable detection and sensing capabilities, low false alarm rates, precise distance and speed measurements, and consistent performance across different driving conditions contribute to the overall effectiveness of ADAS systems, providing drivers with reliable assistance and enhancing road safety.</p>
+<h2 class="mume-header" id="customization-and-personalization">Customization and Personalization</h2>
+
+<p>Customization and personalization are key aspects of Advanced Driver Assistance Systems (ADAS) that aim to provide drivers with tailored experiences that suit their preferences and needs. ADAS technology offers various customization and personalization features to enhance user satisfaction and usability. Here are some important factors related to customization and personalization in ADAS:</p>
+<h3 class="mume-header" id="adjustable-sensitivity-levels">Adjustable Sensitivity Levels</h3>
+
+<p>ADAS systems often allow drivers to adjust the sensitivity levels of various features. For example, the sensitivity of lane departure warning or forward collision warning can be customized based on individual preferences or driving styles. This flexibility empowers drivers to set the system&apos;s responsiveness according to their comfort level.</p>
+<h3 class="mume-header" id="personalized-warning-thresholds">Personalized Warning Thresholds</h3>
+
+<p>ADAS systems can be personalized to set warning thresholds based on individual preferences. Drivers can specify the distance or time gap for collision warnings or adjust the alert levels for lane departure warnings. This customization ensures that the system aligns with the driver&apos;s preferred safety parameters.</p>
+<h3 class="mume-header" id="tailored-system-behavior-based-on-driver-preferences">Tailored System Behavior Based on Driver Preferences</h3>
+
+<p>ADAS systems can be designed to adapt to driver preferences and behaviors. For instance, adaptive cruise control systems can learn the driver&apos;s preferred following distance and adjust the vehicle&apos;s speed accordingly. This personalization creates a more seamless and intuitive driving experience.</p>
+<h3 class="mume-header" id="customizable-alert-preferences-visual-auditory-haptic">Customizable Alert Preferences (Visual, Auditory, Haptic)</h3>
+
+<p>ADAS systems often provide options for customizing alert preferences. Drivers can choose their preferred mode of alerts, such as visual icons, audible beeps, or haptic feedback (such as steering wheel vibrations). This customization allows drivers to receive warnings in a way that best suits their sensory preferences.</p>
+<p>Customization and personalization features in ADAS technology empower drivers to tailor their driving experience to their liking. By offering adjustable sensitivity levels, personalized warning thresholds, tailored system behavior, and customizable alert preferences, ADAS systems become more user-centric, enhancing driver satisfaction and overall usability.</p>
+<h2 class="mume-header" id="integration-and-consistency">Integration and Consistency</h2>
+
+<p>Integration and consistency are vital aspects of Advanced Driver Assistance Systems (ADAS) that contribute to a seamless and unified user experience. ADAS technology should seamlessly integrate with other vehicle systems, offer consistent functionality across different ADAS features, and provide integration with infotainment systems and smartphone connectivity. Here are key factors related to integration and consistency in ADAS:</p>
+<h3 class="mume-header" id="seamless-integration-with-other-vehicle-systems">Seamless Integration with Other Vehicle Systems</h3>
+
+<p>ADAS systems should seamlessly integrate with other vehicle systems, such as the engine control unit, braking system, and steering system. This integration allows ADAS functions to work harmoniously with other vehicle functionalities, ensuring smooth and coordinated operation.</p>
+<h3 class="mume-header" id="consistent-user-experience-across-different-adas-features">Consistent User Experience across Different ADAS Features</h3>
+
+<p>Consistency in the user experience is crucial when interacting with various ADAS features. The interfaces, controls, and behaviors of different ADAS functions should be designed in a consistent manner, ensuring that drivers can easily understand and operate them without confusion or the need for extensive relearning.</p>
+<h3 class="mume-header" id="integration-with-infotainment-systems-and-smartphone-connectivity">Integration with Infotainment Systems and Smartphone Connectivity</h3>
+
+<p>ADAS technology can be integrated with infotainment systems and smartphone connectivity, offering additional convenience and accessibility. This integration allows drivers to access ADAS features, receive alerts, and adjust settings through the vehicle&apos;s central infotainment display or smartphone applications, providing a unified and convenient user experience.</p>
+<h3 class="mume-header" id="unified-control-interface">Unified Control Interface</h3>
+
+<p>To enhance usability, ADAS systems can provide a unified control interface that allows drivers to access and control various ADAS functions from a central location. This reduces cognitive load and minimizes distraction by consolidating controls and information within a single interface.</p>
+<p>Ensuring seamless integration and consistency in ADAS technology leads to a more user-friendly and efficient driving experience. By integrating with other vehicle systems, providing consistency across ADAS features, offering integration with infotainment systems and smartphone connectivity, and employing a unified control interface, ADAS systems can provide drivers with a cohesive and intuitive user experience, ultimately enhancing safety and convenience on the road.</p>
+<h2 class="mume-header" id="education-and-training">Education and Training</h2>
+
+<p>Education and training play a crucial role in the successful adoption and utilization of Advanced Driver Assistance Systems (ADAS). Providing drivers with clear instructions, in-vehicle tutorials, educational materials, and guidance on ADAS capabilities and limitations is essential for their effective and safe use. Here are key factors related to education and training in ADAS:</p>
+<h3 class="mume-header" id="clear-instructions-and-user-manuals">Clear Instructions and User Manuals</h3>
+
+<p>ADAS systems should come with comprehensive and user-friendly instructions and user manuals. These resources should provide clear explanations of how to operate and interact with the ADAS features, including setup, customization options, and troubleshooting guidance.</p>
+<h3 class="mume-header" id="in-vehicle-tutorials-or-training-modules">In-vehicle Tutorials or Training Modules</h3>
+
+<p>In-vehicle tutorials or training modules can be integrated into the ADAS system to guide drivers on its functionalities. These interactive tutorials can help familiarize drivers with the features, demonstrate their usage, and provide step-by-step instructions on how to utilize them effectively.</p>
+<h3 class="mume-header" id="educational-materials-on-adas-capabilities-and-limitations">Educational Materials on ADAS Capabilities and Limitations</h3>
+
+<p>Providing educational materials, such as brochures or online resources, that explain the capabilities and limitations of ADAS systems is crucial. These materials can help drivers understand the purpose, benefits, and potential limitations of each ADAS feature, enabling them to make informed decisions and use the system appropriately.</p>
+<h3 class="mume-header" id="guidance-on-proper-usage-and-best-practices">Guidance on Proper Usage and Best Practices</h3>
+
+<p>Guidance on proper usage and best practices should be provided to drivers to ensure they are aware of how to maximize the benefits of ADAS and avoid potential pitfalls. This guidance can include tips on maintaining driver attentiveness, appropriate use of ADAS features, and recommended driving behaviors to complement the system&apos;s capabilities.</p>
+<p>Education and training efforts regarding ADAS empower drivers to use the system effectively, maximize its benefits, and understand its limitations. By providing clear instructions, in-vehicle tutorials, educational materials, and guidance on proper usage and best practices, ADAS manufacturers and stakeholders can promote safer and more informed driving experiences.</p>
+<h2 class="mume-header" id="feedback-and-communication">Feedback and Communication</h2>
+
+<p>Feedback and communication are crucial aspects of Advanced Driver Assistance Systems (ADAS) that ensure effective interaction between the system and the driver. ADAS technology should provide clear and timely feedback to drivers through visual, auditory, and haptic cues. Here are key factors related to feedback and communication in ADAS:</p>
+<h3 class="mume-header" id="clear-and-timely-visual-alerts-icons-symbols-warnings">Clear and Timely Visual Alerts (Icons, Symbols, Warnings)</h3>
+
+<p>ADAS systems utilize visual cues to convey important information and warnings to the driver. Clear and easily recognizable icons, symbols, and warnings are used to indicate potential hazards, system status, and other relevant information. Visual alerts should be designed to be easily understood and should not cause visual distraction or confusion.</p>
+<h3 class="mume-header" id="auditory-cues-beeps-tones-spoken-messages">Auditory Cues (Beeps, Tones, Spoken Messages)</h3>
+
+<p>Auditory cues are utilized in ADAS systems to draw the driver&apos;s attention to critical events or warnings. Beeps, tones, or spoken messages can be employed to alert the driver about potential collisions, lane departures, or other safety-related situations. The auditory cues should be distinct, attention-grabbing, and effectively convey the urgency of the situation.</p>
+<h3 class="mume-header" id="haptic-feedback-vibrations-steering-wheel-resistance">Haptic Feedback (Vibrations, Steering Wheel Resistance)</h3>
+
+<p>Haptic feedback, such as vibrations or changes in steering wheel resistance, can be used to provide tactile cues to the driver. These feedback mechanisms can complement visual and auditory alerts, enhancing driver awareness and engagement. The haptic feedback should be subtle yet noticeable enough to effectively convey important information without causing discomfort or distraction.</p>
+<h3 class="mume-header" id="voice-prompts-and-instructions">Voice Prompts and Instructions</h3>
+
+<p>Voice prompts and instructions can be used to communicate important information or provide guidance to the driver. These voice-based communication systems can offer clear and concise instructions for using ADAS features, making it easier for the driver to understand and respond appropriately.</p>
+<p>Effective feedback and communication in ADAS technology facilitate proper understanding and timely response to critical situations. By providing clear and timely visual alerts, auditory cues, haptic feedback, and voice prompts, ADAS systems enhance driver awareness, improve decision-making, and contribute to a safer and more informed driving experience.</p>
+<h2 class="mume-header" id="ethical-considerations">Ethical Considerations</h2>
+
+<p>Ethical considerations are of paramount importance in the development and deployment of Advanced Driver Assistance Systems (ADAS). ADAS technology should prioritize human safety over convenience, avoid unnecessary risks, and mitigate unintended consequences. Here are key factors related to ethical considerations in ADAS:</p>
+<h3 class="mume-header" id="prioritizing-human-safety-over-convenience">Prioritizing Human Safety over Convenience</h3>
+
+<p>The primary objective of ADAS is to enhance road safety and reduce the risk of accidents. Ethical considerations demand that the safety of human lives should always take precedence over convenience or other factors. ADAS systems should be designed and programmed to prioritize actions that minimize harm to human life and well-being.</p>
+<h3 class="mume-header" id="avoiding-situations-that-may-lead-to-unnecessary-risks">Avoiding Situations that May Lead to Unnecessary Risks</h3>
+
+<p>ADAS technology should aim to avoid situations that may lead to unnecessary risks or potentially dangerous scenarios. For example, systems should not encourage or enable aggressive driving behaviors or actions that compromise the safety of pedestrians, cyclists, or other road users. ADAS should promote responsible and safe driving practices.</p>
+<h3 class="mume-header" id="mitigating-unintended-consequences-of-adas-actions">Mitigating Unintended Consequences of ADAS Actions</h3>
+
+<p>ADAS systems should anticipate and mitigate unintended consequences that may arise from their actions. For instance, sudden braking or steering interventions should be carefully designed to minimize the risk of collisions or other hazardous outcomes. ADAS technology should continually evolve to reduce the occurrence of false alarms, system errors, or unintended interventions.</p>
+<h3 class="mume-header" id="compliance-with-ethical-guidelines-and-regulations">Compliance with Ethical Guidelines and Regulations</h3>
+
+<p>ADAS manufacturers and developers should adhere to ethical guidelines and regulations established by governing bodies and industry standards. Compliance with these guidelines ensures that ADAS systems meet safety, privacy, and transparency requirements, fostering trust and confidence among users and society as a whole.</p>
+<p>Ethical considerations guide the responsible development and deployment of ADAS technology. By prioritizing human safety over convenience, avoiding unnecessary risks, mitigating unintended consequences, and complying with ethical guidelines and regulations, ADAS systems can contribute to safer and more ethical driving experiences for all road users.</p>
+<h2 class="mume-header" id="coclusion">Coclusion</h2>
+
+<p>In conclusion, the explained values have been successfully categorized as variables, with each variable assigned a rating from 0 to 5. The variables have been further categorized into two factors, namely Input and Output, based on their respective characteristics. Variables associated with human-to-vehicle input or effort have been classified as Input values, while those related to the benefits that humans derive from the automation have been marked as Output values. This categorization provides a comprehensive understanding of the different aspects and impacts of these variables within the context of human-machine interaction in automated systems.</p>
+<h3 class="mume-header" id="measurements--calculation">Measurements &amp; Calculation</h3>
+
+<p>To measure the value, I have provided a scale ranging from 0 to 5. This scale will be used to distribute the values across the variables listed below:<br>
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Scaled&#xA0;Value</mtext><mo>=</mo><mrow><mo fence="true">(</mo><mfrac><mrow><mtext>Value</mtext><mo>&#xD7;</mo><mtext>Scaling&#xA0;Factor</mtext></mrow><mtext>Total&#xA0;Range</mtext></mfrac><mo fence="true">)</mo></mrow><mo>&#xD7;</mo><mtext>Desired&#xA0;Range</mtext></mrow><annotation encoding="application/x-tex">\text{{Scaled Value}} = \left( \frac{{\text{{Value}} \times \text{{Scaling Factor}}}}{{\text{{Total Range}}}} \right) \times \text{{Desired Range}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord"><span class="mord">Scaled&#xA0;Value</span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.8em;vertical-align:-0.65em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size2">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9322em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight"><span class="mord mtight">Total&#xA0;Range</span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.4461em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight"><span class="mord mtight">Value</span></span></span><span class="mbin mtight">&#xD7;</span><span class="mord text mtight"><span class="mord mtight"><span class="mord mtight">Scaling&#xA0;Factor</span></span></span></span></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.4811em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size2">)</span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">&#xD7;</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord text"><span class="mord"><span class="mord">Desired&#xA0;Range</span></span></span></span></span></span></p>
+<h3 class="mume-header" id="measurable-matrix">Measurable Matrix</h3>
+
+<p>I have given 2 key values of automation to embody true automation: Minimal input and minimal effort of the driver. The genuine sense of being <strong>taken care of</strong> by someone is experienced when minimal effort is required. These essential factors have been carefully considered in the development of vehicle automation, aiming to provide true assistance and a sense of being <strong>taken care of</strong>. This should be tested by local people and with target market. If this is tested with non-local and not targeted market. This has no meaning.</p>
+<h4 class="mume-header" id="measuring-table">Measuring table.</h4>
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Positive Experience  (5)</th>
+<th>Negative Experience (0)</th>
+<th>Maximum value</th>
+<th>Desired weight</th>
+<th>Calculated value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>KG1</td>
+<td>(KG) Minimal Input</td>
+<td>(KN) Too many Input</td>
+<td>5</td>
+<td>2</td>
+<td>10</td>
+</tr>
+<tr>
+<td>KG2</td>
+<td>(KG) Minimal Effort</td>
+<td>(KN) Too much effort</td>
+<td>5</td>
+<td>2</td>
+<td>10</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>IT1</td>
+<td>(I) Intuitive User Interface</td>
+<td>(NI) Complex User Interface</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td>IT2</td>
+<td>(I) Clear and Accessible Controls</td>
+<td>(NI) Confusing Controls</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td>IT3</td>
+<td>(I) Simple and Understandable Settings</td>
+<td>(NI) Complicated and Overwhelming Settings</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td>IT4</td>
+<td>(I) Minimal Driver Distraction</td>
+<td>(NI) High Driver Distraction</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td>IT5</td>
+<td>(I) Adjustable Sensitivity Levels</td>
+<td>(NI) Fixed Sensitivity Levels</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td>IT6</td>
+<td>(I) Personalized Warning Thresholds</td>
+<td>(NI) Generic Warning Thresholds</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td>IT7</td>
+<td>(I) Tailored System Behavior Based on Driver Preferences</td>
+<td>(NI) Standardized System Behavior Not Based on Driver Preferences</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td>IT8</td>
+<td>(I) Customizable Alert Preferences (Visual, Auditory, Haptic)</td>
+<td>(NI) Non-customizable Alert Preferences</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td>IT9</td>
+<td>(I) Unified Control Interface</td>
+<td>(NI) Disjointed Control Interface</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td>IT10</td>
+<td>(I) Clear Instructions and User Manuals</td>
+<td>(NI) Unclear Instructions and User Manuals</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td>IT11</td>
+<td>(I) In-vehicle Tutorials or Training Modules</td>
+<td>(NI) Lack of In-vehicle Tutorials or Training Modules</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td>IT12</td>
+<td>(I) Educational Materials on ADAS Capabilities and Limitations</td>
+<td>(NI) Insufficient Educational Materials on ADAS Capabilities and Limitations</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td>IT13</td>
+<td>(I) Guidance on Proper Usage and Best Practices</td>
+<td>(NI) Lack of Guidance on Proper Usage and Best Practices</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>OT1</td>
+<td>(O) Reliable Detection and Sensing Capabilities</td>
+<td>(NO) Unreliable Detection and Sensing Capabilities</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td>OT2</td>
+<td>(O) Low False Alarm Rates</td>
+<td>(NO) High False Alarm Rates</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td>OT3</td>
+<td>(O) Precise Distance and Speed Measurements</td>
+<td>(NO) Inaccurate Distance and Speed Measurements</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td>OT4</td>
+<td>(O) Consistent Performance Across Different Driving Conditions</td>
+<td>(NO) Inconsistent Performance Across Different Driving Conditions</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td>OT5</td>
+<td>(O) Seamless Integration with Other Vehicle Systems</td>
+<td>(NO) Lack of Integration with Other Vehicle Systems</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td>OT6</td>
+<td>(O) Consistent User Experience across Different ADAS Features</td>
+<td>(NO) Inconsistent User Experience across Different ADAS Features</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td>OT7</td>
+<td>(O) Integration with Infotainment Systems and Smartphone Connectivity</td>
+<td>(NO) Lack of Integration with Infotainment Systems and Smartphone Connectivity</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td>OT8</td>
+<td>(O) Clear and Timely Visual Alerts (Icons, Symbols, Warnings)</td>
+<td>(NO) Unclear or Delayed Visual Alerts (Icons, Symbols, Warnings)</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td>OT9</td>
+<td>(O) Auditory Cues (Beeps, Tones, Spoken Messages)</td>
+<td>(NO) Absence of Auditory Cues (Beeps, Tones, Spoken Messages)</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td>OT10</td>
+<td>(O) Haptic Feedback (Vibrations, Steering Wheel Resistance)</td>
+<td>(NO) Lack of Haptic Feedback (Vibrations, Steering Wheel Resistance)</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td>OT11</td>
+<td>(O) Voice Prompts and Instructions</td>
+<td>(NO) Absence of Voice Prompts and Instructions</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td>OT12</td>
+<td>(O) Prioritizing Human Safety over Convenience</td>
+<td>(NO) Prioritizing Convenience over Human Safety</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td>OT13</td>
+<td>(O) Avoiding Situations that May Lead to Unnecessary Risks</td>
+<td>(NO) Ignoring Situations that May Lead to Unnecessary Risks</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td>OT14</td>
+<td>(O) Mitigating Unintended Consequences of ADAS Actions</td>
+<td>(NO) Exacerbating Unintended Consequences of ADAS Actions</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td>OT15</td>
+<td>(O) Compliance with Ethical Guidelines and Regulations</td>
+<td>(NO) Non-compliance with Ethical Guidelines and Regulations</td>
+<td>5</td>
+<td>0.57142856</td>
+<td>2.8571428</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>In total</td>
+<td>99.9999984000001</td>
+</tr>
+</tbody>
+</table>
+<p>Thank you for reading my opinion.</p>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    </body></html>
