@@ -1,0 +1,1239 @@
+<!DOCTYPE html><html><head>
+      <title>SOA</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///c:\Users\jaewo\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.6.7\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      
+      <link rel="stylesheet" href="file:///c:\Users\jaewo\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.6.7\node_modules\@shd101wyy\mume\dependencies\font-awesome\css\font-awesome.min.css">
+      
+      <script type="text/javascript" src="file:///c:\Users\jaewo\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.6.7\node_modules\@shd101wyy\mume\dependencies\mermaid\mermaid.min.js" charset="UTF-8"></script>
+      
+      
+      
+      
+      
+      <style>
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  display: block;
+  width: 100%;
+}
+
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}
+
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
+}
+
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p,html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div{display:inline}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  300px/2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview  ">
+      <h1 class="mume-header" id="-title--soaservice-oriented-architecture-">TITLE : SOA[Service Oriented Architecture]</h1>
+
+<h1 class="mume-header" id="-author--%EC%A0%95%EC%9E%AC%EC%9A%B0--jaewoo-joung--%E9%83%91%E5%9C%A8%E7%A5%90-aka%E6%B5%B7%E7%BB%B5%E5%AE%9D%E5%AE%9D-">AUTHOR : &#xC815;&#xC7AC;&#xC6B0; / Jaewoo Joung / &#x90D1;&#x5728;&#x7950;/ (A.K.A.)&#x6D77;&#x7EF5;&#x5B9D;&#x5B9D;</h1>
+
+<h1 class="mume-header" id="-date--2023-01-17">DATE : <code>2023. 01. 17</code></h1>
+
+<h1 class="mume-header" id="-target-audience---who-wants-to-know-soa-from-begining--">TARGET AUDIENCE :  Who wants to know SOA from begining</h1>
+
+<h1 class="mume-header" id="-why-we-use-soa-">Why we use SOA?</h1>
+
+<p>Compared to architectures that preceded it, SOA offers significant advantages to the enterprise.</p>
+<ol>
+<li><em>Increased business agility, faster time to market</em>: The efficiency of assembling applications from reusable service interfaces instead of rewriting and re-integrating every new development project allows developers to respond to new business opportunities and build applications much faster. You can.</li>
+<li><em>Ability to leverage legacy capabilities in new markets</em>: A well-crafted SOA allows developers to easily use &apos;locked-in&apos; capabilities on one computing platform or environment and extend them to new environments and markets. For example, many companies are using SOA to expose functionality from their mainframe-based financial systems to the Web to service processes and information that customers previously could only access through direct interaction with the company&apos;s employees or business partners. make it possible.</li>
+<li><em>Better collaboration between business and IT</em>: In SOA, a service can be defined in business terms (eg &apos;generate insurance quote&apos; or &apos;calculate capital equipment ROI&apos;). This allows business analysts to work more efficiently with developers on critical insights that can lead to better outcomes, such as the scope of a business process defined by a service or the business implications of process changes.</li>
+</ol>
+<h1 class="mume-header" id="-1-overview-general-">1. Overview General</h1>
+
+<h2 class="mume-header" id="-11-purpose-">1.1 Purpose</h2>
+
+<p>This documentation defines in detail how to design services in a service-based architecture and guides service designers<br>
+Standardized and unified design services to establish a unified vehicle service platform.</p>
+<h2 class="mume-header" id="-12-scope-of-application-">1.2 Scope of application</h2>
+
+<p>This specification applies to service design, system design, architecture design, software development and other related personnel based on SOA architecture<br>
+refer to.</p>
+<p>Canonical Architecture</p>
+<table>
+<thead>
+<tr>
+<th><strong>Service concept and basic rules</strong></th>
+<th><strong>Service concept and basic rules</strong></th>
+<th><strong>Service concept and basic rules</strong></th>
+<th><strong>Service concept and basic rules</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SOA Concept</td>
+<td>SOA Hierarchy</td>
+<td>SOA Design Target</td>
+<td>Service Design Method</td>
+</tr>
+<tr>
+<td><strong>FLOW</strong></td>
+<td><strong>PRINCIPLES of SERVICE DESIGN</strong></td>
+<td><strong>PRINCIPLES of SERVICE DESIGN</strong></td>
+<td><strong>TOOL</strong></td>
+</tr>
+<tr>
+<td>Design Process</td>
+<td>Principles of service application</td>
+<td>Principle of granualrity classification</td>
+<td>Design TOOL</td>
+</tr>
+<tr>
+<td>Outputs</td>
+<td>Interface definition Process</td>
+<td>Interface parameter definition</td>
+<td>Management Tools</td>
+</tr>
+<tr>
+<td>RASIC</td>
+<td>Naming convention</td>
+<td>Service software deployment</td>
+<td>UML TOOL</td>
+</tr>
+<tr>
+<td>Process Change</td>
+<td>Arbitration mechanism</td>
+<td>functional safety measures for services</td>
+<td></td>
+</tr>
+<tr>
+<td>Deviation from Application Process</td>
+<td>Information Security Measures for services</td>
+<td>Service status Management</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Exception Handling for Services</td>
+<td>Usecase  design principles</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Service Authority Management</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1 class="mume-header" id="-2-definition-and-basic-principles-of-service-">2 Definition and basic principles of service</h1>
+
+<h2 class="mume-header" id="-21-concept-definition-">2.1 Concept Definition</h2>
+
+<h3 class="mume-header" id="-211-soa-">2.1.1 SOA</h3>
+
+<h4 class="mume-header" id="--soa-is-a-service-oriented-software-architecture-and-an-architectural-design-idea-">&#x27A2; SOA is a service-oriented software architecture and an architectural design idea;</h4>
+
+<h4 class="mume-header" id="--soa-is-independent-of-operating-system-programming-language-and-software-architecture-">&#x27A2; SOA is independent of operating system, programming language and software architecture;</h4>
+
+<h4 class="mume-header" id="--meet-the-following-principles-">&#x27A2; Meet the following principles:</h4>
+
+<h5 class="mume-header" id="--has-service-contract-and-service-discovery-eg-someip-sd-">&#x25AA; Has Service contract and Service Discovery (e.g. SOME/IP SD)</h5>
+
+<h5 class="mume-header" id="--loose-coupling-there-is-a-certain-encapsulation-boundary-and-the-service-call-interaction-is-realized-through-the-interface-">&#x25AA; Loose coupling: There is a certain encapsulation boundary, and the service call interaction is realized through the interface</h5>
+
+<h5 class="mume-header" id="--location-transparency-the-consumer-of-the-service-does-not-have-to-care-where-the-service-is-located-">&#x25AA; Location transparency: the consumer of the service does not have to care where the service is located</h5>
+
+<h5 class="mume-header" id="--services-are-stateless-">&#x25AA; Services are stateless</h5>
+
+<h3 class="mume-header" id="-reusable-between-heterogeneous-platforms-">Reusable between heterogeneous platforms</h3>
+
+<div class="mermaid">graph TB
+CA(CLIENT A)-.-&gt;RT[RING TOPOLOGY] 
+CB(CLIENT B)-.-&gt;ST[STAR TOPOLOGY] 
+RT[RING TOPOLOGY]-.-&gt;SC1[Service Component 1]
+RT[RING TOPOLOGY]-.-&gt;SC2[Service Component 2]
+ST[STAR TOPOLOGY]-.-&gt;SC3[Service Component 3]
+ST[STAR TOPOLOGY]-.-&gt;SCn[Service Component n]
+SC1[Service Component 1]-.-&gt;Network[(network)]
+SC2[Service Component 2]-.-&gt;Network[(network)]
+SC3[Service Component 3]-.-&gt;Network[(network)]
+SCn[Service Component n]-.-&gt;Network[(network)]
+subgraph Server
+Network[(network)]-.-&gt;S1(SERVER 1)
+Network[(network)]-.-&gt;S2(SERVER 2)
+end
+</div><h3 class="mume-header" id="-212-services-">2.1.2 Services</h3>
+
+<h4 class="mume-header" id="--a-service-is-an-independently-executable-software-component-of-a-service-with-an-accurately-described-functional-scope-">&#x27A2; A service is an independently executable software component of a service with an accurately described functional scope;</h4>
+
+<h4 class="mume-header" id="--realize-a-complex-function-through-the-interaction-of-different-services-">&#x27A2; Realize a complex function through the interaction of different services;</h4>
+
+<h4 class="mume-header" id="--provide-functions-as-services-to-other-software-components-through-precisely-defined-service-interfaces-">&#x27A2; Provide functions as services to other software components through precisely defined service interfaces</h4>
+
+<h4 class="mume-header" id="--services-may-use-other-services-to-perform-their-functions-">&#x27A2; Services may use other services to perform their functions</h4>
+
+<h3 class="mume-header" id="-213-service-interface-">2.1.3 Service Interface</h3>
+
+<p>A service interface refers to the attributes and methods of a service that can be directly provided to the outside world. Generally, a service has multiple service interfaces.</p>
+<h3 class="mume-header" id="-214-server-server-">2.1.4 Server (server)</h3>
+
+<p>The server refers to a software entity that implements a service, that is, the provider of the service.</p>
+<h3 class="mume-header" id="-215-client-client-">2.1.5 Client (client)</h3>
+
+<p>A client refers to a software entity that invokes a service to implement a functional logic or another service, that is, the consumer of the service.</p>
+<h2 class="mume-header" id="-22-hierarchical-structure-of-services-">2.2 Hierarchical structure of services</h2>
+
+<p><strong>The hierarchical relationship of services is shown in the following figure:</strong></p>
+<div class="mermaid">graph TB
+subgraph APP
+RAm(RemoteAC)
+HSm(HighSpeedMode)
+RSTgm(RestingMode)
+UCm(User customize ...)
+end
+subgraph Combined Service Layer
+RAm(RemoteAC)-.-ISA(Integrated Service API)
+HSm(HighSpeedMode)-.-ISA(Integrated Service API)
+RSTgm(RestingMode)-.-ISA(Integrated Service API)
+UCm(User customize ...)-.-ISA(Integrated Service API)
+Sr1(Read Info Service)
+Sr2(object Service)
+Sr3(Multimedia Service)
+Sr4(Smart Lighting Service)
+Sr5(AC Service)
+Sr6(Weather Service)
+Sr7(..........)
+end
+subgraph Atomic Service API
+Sr1(Read Info Service)-.-ASA(Atomic Service API)
+Sr2(object Service)-.-ASA(Atomic Service API)
+Sr3(Multimedia Service)-.-ASA(Atomic Service API)
+Sr4(Smart Lighting Service)-.-ASA(Atomic Service API)
+Sr5(AC Service)-.-ASA(Atomic Service API)
+Sr6(Weather Service)-.-ASA(Atomic Service API)
+Sr7(..........)-.-ASA(Atomic Service API)
+IMU(IMU Service)
+WIFI(WIFI Service)
+GSTs(Gesture Service)
+GNSs(GNSS Service)
+PWSs(Power Window Service)
+etcs(..........)
+end
+subgraph Device Abstraction Layer
+IMU(IMU Service)-.-DAL(Device Abstraction Layer)
+WIFI(WIFI Service)-.-DAL(Device Abstraction Layer)
+GSTs(Gesture Service)-.-DAL(Device Abstraction Layer)
+GNSs(GNSS Service)-.-DAL(Device Abstraction Layer)
+PWSs(Power Window Service)-.-DAL(Device Abstraction Layer)
+etcs(..........)-.-DAL(Device Abstraction Layer)
+ABSFA(Abstration Layer for Sensor / ECU/ etc..)
+end
+subgraph Cloud API
+ClS[(Cloud Service)]-.-BS1(Cloud OS/BSP)
+end
+subgraph IOT API
+IoS[(IOT Service)]-.-BS2(IoT OS/BSP)
+end
+subgraph OS Layer
+ABSFA(Abstration Layer for Sensor / ECU/ etc..)-.-VOS(Vehicle OS/BSP)
+BS1(Cloud OS/BSP)-.-VOS(Vehicle OS/BSP)
+BS2(IoT OS/BSP)-.-VOS(Vehicle OS/BSP)
+end
+</div><p>Service Hierarchy Diagram</p>
+<h3 class="mume-header" id="-221-hierarchy-definition-">2.2.1 Hierarchy Definition:</h3>
+
+<h4 class="mume-header" id="--application-by-invoking-multiple-combined-services-to-realize-product-functions-in-specific-scenarios-such-as-realizing-a-new-ambient-light-mode-">&#x27A2; Application: by invoking multiple combined services, to realize product functions in specific scenarios, such as realizing a new ambient light mode;</h4>
+
+<h4 class="mume-header" id="--combination-service-based-on-multiple-services-or-other-capabilities-through-a-certain-logic-a-type-of-service-interface-with-universal-capabilities-is-formed-after-combination-and-this-type-of-service-also-has-strong-reusability-">&#x27A2; Combination service: Based on multiple services or other capabilities, through a certain logic, a type of service interface with universal capabilities is formed after combination, and this type of service also has strong reusability;</h4>
+
+<h4 class="mume-header" id="--atomic-service-atomic-service-layer-a-functional-module-that-implements-certain-data-fusion-or-control-logic-as-the-smallest-unit-and-single-execution-entity-of-the-service-it-provides-basic-services-that-can-be-arranged-on-demand-for-the-application-upward-through-the-api-enabling-one-time-development-and-multiple-reuse-and-maximizing-the-development-efficiency-">&#x27A2; Atomic service: Atomic service layer: a functional module that implements certain data fusion or control logic. As the smallest unit and single execution entity of the service, it provides basic services that can be arranged on demand for the application upward through the API, enabling one-time development and multiple reuse, and maximizing the development efficiency;</h4>
+
+<h4 class="mume-header" id="--device-abstraction-layer-abstracts-hardware-resources-such-as-sensors-actuators-and-legacy-ecus-provides-device-access-interfaces-for-services-upward-through-apis-shields-device-function-implementation-differences-hardware-differences--manufacturers-differences-and-reduces-customization-and-duplication-of-labor-">&#x27A2; Device abstraction layer: abstracts hardware resources such as sensors, actuators, and Legacy ECUs, provides device access interfaces for services upward through APIs, shields device function implementation differences (hardware differences &amp; manufacturers differences), and reduces customization and duplication of labor;</h4>
+
+<h3 class="mume-header" id="-222-basic-principles-of-service-layering-">2.2.2 Basic Principles of Service Layering</h3>
+
+<h4 class="mume-header" id="--atomic-services-cannot-call-other-services-">&#x27A2; Atomic services cannot call other services;</h4>
+
+<h4 class="mume-header" id="--the-lower-level-service-cannot-call-the-upper-level-service-">&#x27A2; The lower-level service cannot call the upper-level service;</h4>
+
+<h4 class="mume-header" id="--the-application-should-call-the-composite-service-first-in-principle-the-atomic-service-cannot-be-called-directly-if-necessary-it-needs-to-be-approved-by-the-architect-">&#x27A2; The application should call the composite service first, in principle, the atomic service cannot be called directly (if necessary, it needs to be approved by the architect);</h4>
+
+<h4 class="mume-header" id="--the-api-interface-of-the-atomic-service-layer-should-be-standardized-as-much-as-possible-to-ensure-the-reusability-of-the-upper-layer-composite-services-and-applications-">&#x27A2; The API interface of the atomic service layer should be standardized as much as possible to ensure the reusability of the upper-layer composite services and applications;</h4>
+
+<h4 class="mume-header" id="--the-api-interface-of-the-device-abstraction-layer-should-be-standardized-as-much-as-possible-compatible-with-the-diversity-of-the-sensor-execution-layer-and-reduce-the-impact-of-hardware-changes-on-atomic-services-">&#x27A2; The API interface of the device abstraction layer should be standardized as much as possible, compatible with the diversity of the sensor execution layer, and reduce the impact of hardware changes on atomic services;</h4>
+
+<h2 class="mume-header" id="-23-design-goals-of-soa-">2.3 Design Goals of SOA</h2>
+
+<p><a href="#index">GOAL</a></p>
+<ol>
+<li>Realize the hierarchical decoupling of the architecture through the design of standard service interfaces between layers to meet the needs of rich scene changes;</li>
+<li>Encapsulate according to the capability unit to realize service interface reuse;</li>
+<li>Break through the inter-domain, inter-vehicle-cloud protocol, language and other heterogeneous platform restrictions through standard communication protocols, and realize resource sharing and interconnection.</li>
+<li>Standard interfaces can be used for application development to achieve smooth and seamless deployment of multiple platforms</li>
+<li>Realize the standardization of vehicle data and the standardization of cloud storage data<br>
+2.4 How services are designed<br>
+Service design generally has two methods: Top-Down and  Bottom-Up:</li>
+</ol>
+<h3 class="mume-header" id="-241-top-down-">2.4.1 Top-down</h3>
+
+<h5 class="mume-header" id="-the-top-down-approach-is-called-forward-design-in-the-service-based-architecture-most-complex-cross-domain-functions-such-as-cloud-pipe-terminal-linkage-newly-introduced-system-functions-etc-need-to-be-designed-in-this-way-during-the-development-process-the-gist-of-it-is-as-follows-">The top-down approach is called forward design. In the service-based architecture, most complex cross-domain functions (such as cloud-pipe-terminal linkage), newly introduced system functions, etc., need to be designed in this way during the development process. The gist of it is as follows:</h5>
+
+<h4 class="mume-header" id="--starting-from-requirements-carry-out-logical-disassembly-forward-design-of-system-and-software-architecture-and-services-designed-for-function-realization-">&#x27A2; Starting from requirements, carry out logical disassembly, forward design of system and software architecture, and services designed for function realization.</h4>
+
+<h4 class="mume-header" id="--service-design-follows-logical-architecture-design-so-this-type-of-service-should-be-generated-synchronously-during-system-designsrd-during-logic-design-fo-is-responsible-for-functional-requirement-transformation-and-logic-architecture-design-defining-the-boundaries-and-interaction-of-logic-modules-and-generating-service-requirements-such-as-data-flow-usercase-during-lc-deployment-">&#x27A2; Service design follows logical architecture design, so this type of service should be generated synchronously during system design(SRD). During logic design, FO is responsible for functional requirement transformation and logic architecture design, defining the boundaries and interaction of logic modules, and generating service requirements (such as data flow usercase) during LC deployment.</h4>
+
+<h4 class="mume-header" id="--the-service-designer-checks-in-the-service-library-according-to-the-requirements-if-the-existing-service-in-the-library-can-meet-the-requirements-the-service-will-be-used-if-not-a-new-service-will-be-designed-">&#x27A2; The service designer checks in the service library according to the requirements. If the existing service in the library can meet the requirements, the service will be used. If not, a new service will be designed.</h4>
+
+<h3 class="mume-header" id="-242-bottom-up-">2.4.2 Bottom-up</h3>
+
+<h5 class="mume-header" id="-it-is-applicable-to-the-existing-systems-inherited-in-the-platform-architecture-design-or-the-deployment-of-functions-has-a-clear-conclusion-in-this-case-we-can-abstract-some-services-according-to-the-capabilities-of-existing-domains-ecus-and-subsystems-mainly-from-the-following-aspects-">It is applicable to the existing systems inherited in the platform architecture design, or the deployment of functions has a clear conclusion. In this case, we can abstract some services according to the capabilities of existing domains, ECUs, and subsystems. Mainly from the following aspects:</h5>
+
+<h4 class="mume-header" id="--more-traditional-and-relatively-independent-systems-such-as-windows-seats-air-conditioners-etc-can-have-corresponding-ecus-to-provide-interface-capabilities-and-the-corresponding-domain-controllers-can-reveal-services-">&#x27A2; More traditional and relatively independent systems, such as windows, seats, air conditioners, etc., can have corresponding ECUs to provide interface capabilities, and the corresponding domain controllers can reveal services;</h4>
+
+<h4 class="mume-header" id="--the-power-and-chassis-domains-involve-relatively-high-safety-and-generally-less-control-interfaces-are-designedthe-can-and-lin-capabilities-are-sorted-out-and-the-status-signals-are-represented-which-is-suitable-for-bottom-up-">&#x27A2; The power and chassis domains involve relatively high safety, and generally less control interfaces are designed.The CAN and LIN capabilities are sorted out, and the status signals are represented, which is suitable for bottom-up;</h4>
+
+<h4 class="mume-header" id="--hardware-abstraction-modules-with-independent-hardware-capabilities-such-as-sensors-and-actuators-the-general-interface-is-relatively-simple-and-fixed-and-the-abstraction-of-the-service-interface-can-be-realized-from-the-bottom-up-">&#x27A2; Hardware abstraction, modules with independent hardware capabilities such as sensors and actuators, the general interface is relatively simple and fixed, and the abstraction of the service interface can be realized from the bottom up;</h4>
+
+<h4 class="mume-header" id="--the-independent-algorithm-module-is-also-abstracted-like-the-hardware-module-for-example-the-fatigue-detection-module-outputs-the-fatigue-level-and-thethe-aviation-module-outputs-road-information-etctherefore-in-the-early-stage-of-architecture-design-the-basic-service-can-be-abstracted-in-a-bottom-up-manner-and-then-the-service-library-can-be-supplemented-from-the-top-down-according-to-the-functional-requirements-">&#x27A2; The independent algorithm module is also abstracted like the hardware module. For example, the fatigue detection module outputs the fatigue level, and theThe aviation module outputs road information, etc.Therefore, in the early stage of architecture design, the basic service can be abstracted in a bottom-up manner, and then the service library can be supplemented from the top down according to the functional requirements.</h4>
+
+<h1 class="mume-header" id="-3-development-process-">3 Development process</h1>
+
+<h2 class="mume-header" id="-31-service-design-process-">3.1 Service Design Process</h2>
+
+<h4 class="mume-header" id="--in-the-development-process-of-soa-architecture-it-is-generally-used-to-extract-atomic-services-from-the-bottom-up-and-then-define-the-process-of-combining-services-from-top-to-bottom-according-to-the-business-relationship-">&#x27A2; In the development process of SOA architecture, it is generally used to extract atomic services from the bottom up, and then define the process of combining services from top to bottom according to the business relationship.</h4>
+
+<h4 class="mume-header" id="--the-general-process-of-service-development-is-combined-with-geelys-original-development-process-as-shown-in-the-following-figure-">&#x27A2; The general process of service development is combined with GEELY&apos;s original development process, as shown in the following figure:</h4>
+
+<div class="mermaid">flowchart LR
+
+subgraph Owner Group
+PO(Product Owner)
+FO(Function Owner)
+SO(System Owner)
+SRO(Service Owner)
+SOA(SOA Architect)
+end
+subgraph Design Group
+ALD(Applied Logic Design)
+SSR(Service Software Requirements Design)
+SRD(Service Design)
+end
+SD(Scene Design)
+FRD(Function Requirement Design)
+subgraph Outputs
+FDR[[FDR]]
+FR[[FR]]
+SWA[[Hardware resource abstration, Algorithm, System etc.]]
+SWRS[[SWRS]]
+DP[[Design Principle, Naming Rules, Training]]
+ARXML[[ARXML,ARX,ARXM]]
+end
+PO --&gt; SD
+SD --&gt; FDR
+FO --&gt; FRD
+SO --&gt; ALD
+SRO --&gt; SRD
+FRD ==&gt; SRD
+FRD --&gt; SSR
+SSR -.-&gt;|Attain|SRD
+SRD -.-&gt;|CALL|ALD
+FRD --&gt; FR
+SWA ==&gt; SRD
+SRD --&gt; SWRS
+ALD --&gt; ARXML
+SD --&gt; FRD
+DP -.-&gt; SSR
+SOA --&gt; DP
+</div><p>In the implementation of a specific project, the service development process strategy should be defined by the architect according to the actual state of the project.</p>
+<h4 class="mume-header" id="--definition-of-relevant-roles-in-the-process-">&#x27A2; Definition of relevant roles in the process</h4>
+
+<p><a href="#index">ROLE</a><br>
+<i class="fa fa-bolt" aria-hidden="true"></i> Product Manager: Service definition and acceptance of vehicle function product form, output product definition documents and<br>
+Usecase;<br>
+<i class="fa fa-bolt" aria-hidden="true"></i> Function Owner: Responsible for undertaking specific Usecase requirements, formulating implementation plans, decomposing them to the system, completing the handshake, and outputting functional requirements documents;<br>
+<i class="fa fa-bolt" aria-hidden="true"></i> System Owner: Responsible for undertaking the functional requirements and service requirements of the system, designing software requirements, and outputting software requirements documents;<br>
+<i class="fa fa-bolt" aria-hidden="true"></i> Service Owner: defines all the attributes of the service itself, such as the interface, parameters, and instructions of the service;<br>
+<i class="fa fa-bolt" aria-hidden="true"></i> Architect: Define design principles, design specifications, etc., propose and review SOA implementation plans.</p>
+<h4 class="mume-header" id="--service-output-">&#x27A2; Service output</h4>
+
+<p><i class="fa fa-bolt" aria-hidden="true"></i> ARXML file, including service interface design, parameter design, communication-related parameters, etc.;<br>
+<i class="fa fa-bolt" aria-hidden="true"></i> Service detailed design document (can be placed in SWRS), including service description, Usecase, interface description, sequence diagram, etc.;</p>
+<h2 class="mume-header" id="-32-change-process-of-services-">3.2 Change Process of Services</h2>
+
+<p>See document &quot;SCR Process Description&quot;</p>
+<h2 class="mume-header" id="-33-specification-deviation-process-of-service-design-">3.3 Specification Deviation Process of Service Design</h2>
+
+<p>If there is a situation that violates the definition of this specification during service design, it needs to be reported to the architect for approval before it can be valid.</p>
+<h1 class="mume-header" id="-4-service-design-principles-">4. Service Design Principles</h1>
+
+<div class="mermaid">classDiagram
+Design_Of_Service_Contant -- Communication_Parameters
+Design_Of_Service_Contant -- Service_Deployment
+Design_Of_Service_Contant -- Service_Realization_Design
+Communication_Parameters -- Service_Deployment
+Service_Realization_Design -- Service_Deployment
+  class Design_Of_Service_Contant{
+    Service Define, Usecase m Interface, DataElement, QoS, Discorvery
+    Handle()
+  }
+  class Communication_Parameters{
+    IP Address, WLAN, TP port, Service ID,Interface ID
+    Handle()
+  }
+  class Service_Deployment{
+    Deployment Design
+    Handle()
+  }
+  class Service_Realization_Design{
+    Implementation Design
+    Handle()
+  }
+</div><h4 class="mume-header" id="--service-name-design-service-name-defines-the-name-of-the-service-according-to-the-naming-rules-of-the-service-interface-below-and-the-name-reflects-the-key-capabilities-of-the-service-">&#x27A2; Service name design: Service Name defines the name of the service according to the naming rules of the service interface below, and the name reflects the key capabilities of the service;</h4>
+
+<h4 class="mume-header" id="--service-use-case-design-according-to-the-basic-principles-of-use-case-design-below-extract-the-basic-capability-boundary-and-interaction-granularity-of-the-service-to-form-a-service-usecase-diagram-">&#x27A2; Service use case design: According to the basic principles of use case design below, extract the basic capability boundary and interaction granularity of the service to form a Service Usecase diagram;</h4>
+
+<h4 class="mume-header" id="--service-interface-design-according-to-the-following-interface-design-principles-define-the-data-exchange-method-between-the-service-provider-and-the-consumer-through-different-service-interfaces-">&#x27A2; Service interface design: According to the following interface design principles, define the data exchange method between the service provider and the consumer through different Service interfaces;</h4>
+
+<h4 class="mume-header" id="--parameter-design-according-to-the-following-service-parameter-design-principles-different-dataelement-definitions-are-used-to-meet-the-data-transmission-requirements-of-different-interfaces-">&#x27A2; Parameter design: According to the following service parameter design principles, different DataElement definitions are used to meet the data transmission requirements of different interfaces;</h4>
+
+<h4 class="mume-header" id="--service-interface-timing-define-the-timing-relationship-between-interfaces-through-uml-interface-timing-diagram-">&#x27A2; Service interface timing: define the timing relationship between interfaces through UML interface timing diagram;</h4>
+
+<h4 class="mume-header" id="--service-qos-design-service-reliability-measures-such-as-failure-retry-mechanism-etc-">&#x27A2; Service QoS design: service reliability measures, such as failure Retry mechanism, etc.;</h4>
+
+<h4 class="mume-header" id="--design-of-service-release-and-stop-strategy-define-in-what-state-this-service-can-be-provided-such-as-default-power-on-or-define-other-conditions-to-provide-">&#x27A2; Design of service release and stop strategy, define in what state this service can be provided, such as default power-on, or define other conditions to provide;</h4>
+
+<h4 class="mume-header" id="--design-of-service-interface-failure-handling-strategy-such-as-timeout-of-response-in-r-r-method-mechanism-for-details-please-refer-to-the-service-interface-failure-handling-policy-below-">&#x27A2; Design of service interface failure handling strategy: such as timeout of response in R-R method mechanism For details, please refer to the service interface failure handling policy below.</h4>
+
+<h3 class="mume-header" id="-412-communication-parameter-design-">4.1.2 Communication parameter design</h3>
+
+<h4 class="mume-header" id="--the-parameter-design-of-the-service-itself-such-as-service-id-interface-id-time-group-id-etc-">&#x27A2; The parameter design of the service itself such as service ID, interface ID, time group ID, etc.;</h4>
+
+<h4 class="mume-header" id="--definition-of-network-communication-related-parameters-vlan-ipport-etc-">&#x27A2; Definition of network communication related parameters, VLAN, IP/PORT, etc.;</h4>
+
+<h4 class="mume-header" id="--selection-of-transport-layer-protocol-udp-is-selected-by-default-and-is-selected-when-the-total-length-of-the-payload-exceeds-1440-bytes-tcp-">&#x27A2; Selection of transport layer protocol: UDP is selected by default, and is selected when the total length of the payload exceeds 1440 bytes TCP;</h4>
+
+<h3 class="mume-header" id="-413-service-deployment-design-">4.1.3 Service Deployment Design</h3>
+
+<p>In the system design phase, each service should be deployed on a SC (Service Component) for logic Implementation, and then follow the SC to deploy on the corresponding hardware and implement software.</p>
+<h2 class="mume-header" id="-42-extraction-of-usecase-for-services-">4.2 Extraction of Usecase for Services</h2>
+
+<h4 class="mume-header" id="--the-use-case-of-the-service-defines-how-the-service-is-used-by-the-consumer-and-describes-the-dialogue-between-the-consumer-and-the-service-in-order-to-use-the-functions-provided-by-the-service-">&#x27A2; The use case of the service defines how the service is used by the consumer, and describes the dialogue between the consumer and the service in order to use the functions provided by the service;</h4>
+
+<h4 class="mume-header" id="--the-boundary-definition-of-service-usecase-should-be-within-the-scope-of-business-without-system-restrictions-or-technical-constraints-">&#x27A2; The boundary definition of service Usecase should be within the scope of business, without system restrictions or technical constraints;</h4>
+
+<h4 class="mume-header" id="--the-granularity-of-service-usecase-extraction-should-be-based-on-business-activities-rather-than-specific-implementations-">&#x27A2; The granularity of service Usecase extraction should be based on business activities rather than specific implementations.</h4>
+
+<h2 class="mume-header" id="-43-application-principles-of-services-">4.3 Application principles of services</h2>
+
+<h4 class="mume-header" id="--consider-using-the-service-for-cases-that-do-not-require-high-transmission-timeliness-end-to-end-transmission-delay-tolerance--100ms-this-value-is-an-empirical-value-">&#x27A2; Consider using the service for cases that do not require high transmission timeliness (end-to-end transmission delay tolerance &gt; 100ms, this value is an empirical value);</h4>
+
+<h4 class="mume-header" id="--depends-on-the-function-implemented-by-the-service-and-the-functional-safety-level-of-this-part-of-the-link-is-required-to-be-less-than-or-equal-to-asil-b-">&#x27A2; Depends on the function implemented by the service, and the functional safety level of this part of the link is required to be less than or equal to ASIL B;</h4>
+
+<h2 class="mume-header" id="-44-priority-principles-for-service-extraction-">4.4 Priority Principles for Service Extraction</h2>
+
+<h4 class="mume-header" id="--for-resources-with-strong-reusability-that-is-the-same-resource-may-be-used-in-multiple-places-and-priority-should-be-given-to-the-use-of-services-">&#x27A2; For resources with strong reusability, that is, the same resource may be used in multiple places, and priority should be given to the use of services;</h4>
+
+<h4 class="mume-header" id="--independent-capability-units-hardware-algorithms-etc-are-preferentially-packaged-into-services-">&#x27A2; Independent capability units (hardware, algorithms, etc.) are preferentially packaged into services;</h4>
+
+<h4 class="mume-header" id="--the-resource-types-are-the-same-but-are-provided-in-multiple-places-such-as-cameras-door-locks-etc-which-can-be-prioritized-as-services-and-deployed-in-multiple-places-through-multiple-instantiations-">&#x27A2; The resource types are the same, but are provided in multiple places (such as cameras, door locks, etc.), which can be prioritized as services and deployed in multiple places through multiple instantiations;</h4>
+
+<h4 class="mume-header" id="--in-the-vehicle-cloud-integration-architecture-since-the-cloud-interfaces-restful-and-http-are-also-service-based-it-is-recommended-that-some-cross-vehicle-cloud-information-transfer-services-such-as-fota-account-management-etc-should-be-used-first-">&#x27A2; In the vehicle-cloud integration architecture, since the cloud interfaces restful and Http are also service-based, it is recommended that some cross-vehicle cloud information transfer services, such as Fota, account management, etc., should be used first;</h4>
+
+<h4 class="mume-header" id="--if-someip-communication-is-used-the-service-interface-should-be-based-on-the-status-and-control-interface-the-access-address-of-large-data-audio-and-video-large-files-etc-can-use-the-service-transmission-but-the-transmission-of-big-data-itself-cannot-use-the-service-">&#x27A2; If SOME/IP communication is used, the service interface should be based on the status and control interface. The access address of large data (audio and video, large files, etc.) can use the service transmission, but the transmission of big data itself cannot use the service.</h4>
+
+<h2 class="mume-header" id="-45-principles-of-service-granularity-division-">4.5 Principles of Service Granularity Division</h2>
+
+<p>The service granularity division should follow the following two principles:</p>
+<h4 class="mume-header" id="--the-granularity-of-the-service-should-consider-the-reusability-flexibility-and-performance-of-the-service-as-a-whole-">&#x27A2; The granularity of the service should consider the reusability, flexibility and performance of the service as a whole;</h4>
+
+<h4 class="mume-header" id="--the-key-point-of-atomic-service-is-to-consider-its-reusability-it-should-take-the-service-extraction-object-as-the-unit-and-provide-the-service-with-the-smallest-granularity-">&#x27A2; The key point of atomic service is to consider its reusability. It should take the service extraction object as the unit, and provide the service with the smallest granularity</h4>
+
+<h4 class="mume-header" id="--composite-service-is-the-combination-of-different-atomic-services-and-business-and-should-be-divided-according-to-the-principle-of-business-autonomy-and-provide-services-with-corresponding-granularity-">&#x27A2; Composite service is the combination of different atomic services and business, and should be divided according to the principle of business autonomy, and provide services with corresponding granularity;</h4>
+
+<h2 class="mume-header" id="-46-principles-of-service-interface-definition-">4.6 Principles of Service Interface Definition</h2>
+
+<h3 class="mume-header" id="-461-interface-type-take-someip-as-an-example-">4.6.1 Interface type (take SOME/IP as an example)</h3>
+
+<p>Field (Setter/Getter/Notifier): Represents a property that can be set/read/subscribed;<br>
+Method: Represents a method that is invoked by request/response;<br>
+Fire and forget Method: Indicates a method, only a request, no response;<br>
+Event: Represents an event. Different events can form an event group and complete the call through subscription/notification;</p>
+<h3 class="mume-header" id="-462-selection-principle-of-interface-type-">4.6.2 Selection principle of interface type</h3>
+
+<h4 class="mume-header" id="-4621-control-interface-design-">4.6.2.1 Control interface design</h4>
+
+<p>The control class interface usually selects the RR-Method class interface for transmission. Generally, there are two forms: synchronous and asynchronous:</p>
+<h4 class="mume-header" id="--synchronous-interaction-refers-to-sending-a-request-you-need-to-wait-for-the-return-and-then-you-can-send-the-next-request-there-is-a-waiting-process-you-can-directly-return-parameters-through-the-return-value-of-method-">&#x27A2; Synchronous interaction: refers to sending a request, you need to wait for the return, and then you can send the next request, there is a waiting process; you can directly return parameters through the return value of Method</h4>
+
+<h4 class="mume-header" id="--asynchronous-interaction-refers-to-sending-a-request-without-waiting-for-the-return-and-can-send-the-next-request-at-any-time-that-is-without-waiting-the-asynchronous-interactive-service-provider-can-delay-providing-the-final-result-data-to-the-caller-during-this-period-the-caller-can-release-the-occupied-thread-and-other-resources-to-avoid-blocking-and-wait-until-the-result-is-generated-and-re-acquire-the-thread-for-processing-the-asynchronous-interface-can-use-the-rrevent-method-that-is-the-initial-result-data-is-returned-first-through-response-and-when-the-execution-is-completed-the-final-result-data-is-returned-through-event-">&#x27A2; Asynchronous interaction: refers to sending a request without waiting for the return, and can send the next request at any time, that is, without waiting. The asynchronous interactive service provider can delay providing the final result data to the caller. During this period, the caller can release the occupied thread and other resources to avoid blocking, and wait until the result is generated and re-acquire the thread for processing. The asynchronous interface can use the RR+Event method, that is, the initial result data is returned first through Response, and when the execution is completed, the final result data is returned through Event.</h4>
+
+<h4 class="mume-header" id="--generally-ff-type-interfaces-are-not-selected-">&#x27A2; Generally, F&amp;F type interfaces are not selected.</h4>
+
+<h4 class="mume-header" id="-4622-state-class-interface-design-">4.6.2.2 State class interface design</h4>
+
+<p>The state class interface can use two forms of RR-Method and Event interfaces as needed:</p>
+<h4 class="mume-header" id="--for-those-who-need-periodic-feedback-or-event-broadcast-from-provider-use-the-event-interface-">&#x27A2; For those who need periodic feedback or event broadcast from Provider, use the Event interface;</h4>
+
+<h4 class="mume-header" id="--for-the-state-that-needs-to-be-actively-obtained-by-the-consumer-the-method-interface-is-used-">&#x27A2; For the state that needs to be actively obtained by the Consumer, the Method interface is used;</h4>
+
+<h4 class="mume-header" id="--the-interface-of-the-state-class-needs-to-support-the-above-two-capabilities-at-the-same-time-">&#x27A2; The interface of the state class needs to support the above two capabilities at the same time.</h4>
+
+<h4 class="mume-header" id="-4623-use-of-field-">4.6.2.3 Use of Field</h4>
+
+<p>To simplify the interface, Some/IP defines an interface of type Field, which can be used to represent interface types with multiple functions.</p>
+<h4 class="mume-header" id="--the-function-of-field-setter-is-equivalent-to-the-function-of-the-interface-used-to-control-the-class-in-rr-method-the-main-difference-is-that-the-form-of-carrying-parameters-is-different-field-can-only-carry-one-parameter-">&#x27A2; The function of Field-Setter is equivalent to the function of the interface used to control the class in RR-Method, the main difference is that the form of carrying parameters is different, field can only carry one parameter;</h4>
+
+<h4 class="mume-header" id="--field-setter-is-not-applicable-to-asynchronous-interface-method-should-be-used-">&#x27A2; Field-Setter is not applicable to asynchronous interface, Method should be used;</h4>
+
+<h4 class="mume-header" id="--the-function-of-field-getter-is-equivalent-to-the-function-of-the-interface-for-state-class-in-rr-method-the-main-difference-is-that-the-form-of-carrying-parameters-is-different-field-can-only-carry-one-parameter-">&#x27A2; The function of Field-Getter is equivalent to the function of the interface for state class in RR-Method, the main difference is that the form of carrying parameters is different, field can only carry one parameter;</h4>
+
+<h4 class="mume-header" id="--the-field-notifier-function-is-equivalent-to-the-function-of-the-event-interface-the-main-difference-is-whether-the-initial-value-needs-to-be-set-">&#x27A2; The Field-Notifier function is equivalent to the function of the Event interface, the main difference is whether the initial value needs to be set;</h4>
+
+<h4 class="mume-header" id="-4624-composition-principle-of-eventgroup-">4.6.2.4 Composition principle of EventGroup</h4>
+
+<p>In order to use resources in a targeted manner, several Event/Field-Notifier interfaces in a service should be divided into several EventGroups according to their functional purposes.<br>
+EventGroup design principles are as follows:<br>
+<a href="#index">DESIGN PRINCIPLES</a></p>
+<ol>
+<li>When there is Event or Notify in the service, you need to define an evnetgroup for each Event and Notify</li>
+<li>There can be multiple eventgroups for each service, and an eventgroup containing all Events and Nofity needs to be defined</li>
+<li>For the custom subscription requirements of a specific user, a corresponding eventgroup can be created separately. This design requires the authorization of the architect. For example, if a client only cares about WipingLevel and WipingMode, you can consider packaging the two into one eventgroup.</li>
+</ol>
+<h1 class="mume-header" id="-4-for-the-same-physical-category-it-is-generally-necessary-to-obtain-and-use-at-the-same-time-consider-forming-an-eventgroup-for-example-the-states-of-x-y-and-z-axes-can-be-combined-">4. For the same physical category, it is generally necessary to obtain and use at the same time. Consider forming an eventgroup, for example, the states of X, Y, and Z axes can be combined.</h1>
+
+<h4 class="mume-header" id="-4625-instance-usage-principles-">4.6.2.5 Instance usage principles</h4>
+
+<p>In the whole vehicle system, there are often different resources that provide a capability at the same time, such as multiple cameras of the same model, multiple glass lifts, etc. In this way, when servitizing, for versatility and saving development resources, the same one will be considered. Services are deployed in multiple places through multiple instantiations.</p>
+<h4 class="mume-header" id="--the-id-of-the-instance-is-only-bound-to-the-deployment-location-and-is-not-affected-by-other-factors-">&#x27A2; The ID of the instance is only bound to the deployment location and is not affected by other factors;</h4>
+
+<h4 class="mume-header" id="--instances-of-the-same-service-are-distinguished-by-instance-id-and-multiple-instances-can-be-deployed-on-the-same-ecu-or-on-multiple-ecus-">&#x27A2; Instances of the same service are distinguished by instance ID, and multiple instances can be deployed on the same ECU or on multiple ECUs;</h4>
+
+<h4 class="mume-header" id="--ecus-deploying-multiple-service-instances-should-listen-to-different-ports-of-each-service-instance-because-instanceid-is-not-reflected-in-some-ip-header-it-can-be-distinguished-by-the-combination-of-service-idsocket-ip-tp-type-port--">&#x27A2; ECUs deploying multiple service instances should listen to different ports of each service instance (because instanceID is not reflected in Some /IP Header, it can be distinguished by the combination of service ID+Socket (IP, TP type, port) );</h4>
+
+<h4 class="mume-header" id="--if-the-service-is-deployed-on-multi-core-mpu-or-multi-operating-system-it-should-be-allocated-according-to-the-virtual-host-and-considered-according-to-multiple-ecus-">&#x27A2; If the service is deployed on multi-core MPU or multi-operating system, it should be allocated according to the virtual host and considered according to multiple ECUs.</h4>
+
+<h2 class="mume-header" id="-47-principles-of-interface-transmission-parameters-">4.7 Principles of Interface Transmission Parameters</h2>
+
+<h3 class="mume-header" id="-471-basic-parameter-types-">4.7.1 Basic parameter types</h3>
+
+<p>Several basic data types commonly found in services are as follows:</p>
+<h4 class="mume-header" id="--uintint-">&#x27A2; Uint/Int</h4>
+
+<p>It is only necessary to consider whether the range of shaping meets the requirements. It is relatively simple and common to use. In Ethernet, it is not necessary to define the precision and deviation values like CAN signals. Int8.</p>
+<h4 class="mume-header" id="--float-">&#x27A2; Float</h4>
+
+<p>If you want to describe non-integer physical quantities, such as temperature, length, etc., you can use floating point. It is mainly necessary to consider the range of the data and whether the length is sufficient; the physical value is directly transmitted, and it does not need to be converted like the CAN signal;</p>
+<h4 class="mume-header" id="--string-">&#x27A2; String</h4>
+
+<p>If you need to describe a piece of text, numbers or a file in Json format, String is generally used. Because C++ supports the definition of dynamic-length strings, whether it is fixed or not, the default is variable-length strings;</p>
+<h4 class="mume-header" id="--structure-">&#x27A2; Structure</h4>
+
+<p>Structure is a common data type design method, and all data types can be freely combined in a structure. This method can solve the problem that some service interface types only support one parameter.</p>
+<h4 class="mume-header" id="--array-">&#x27A2; Array</h4>
+
+<p>When multiple data elements of the same type need to be represented, the form of an array can be used, and the data elements only need to be<br>
+It can be the same type, or it can be a set of structures. If the length is fixed, you can use Fix Length<br>
+Array, if the length is not fixed, use Dynamic Array, Dynamic Array needs to be defined on the array limit, as far as possible to ensure that the limit is within 1440 bytes;</p>
+<h4 class="mume-header" id="--union-">&#x27A2; Union</h4>
+
+<p>Deformables are mainly used to indicate that in some cases, you want to use a data to represent different meanings according to different scenes.<br>
+Because this data type has very small usage scenarios and is cumbersome to implement at the application layer, it is not recommended to use it.</p>
+<h3 class="mume-header" id="-472-principles-of-data-type-selection-">4.7.2 Principles of Data Type Selection</h3>
+
+<h4 class="mume-header" id="--when-the-service-interface-carries-the-application-data-type-it-is-necessary-to-consider-the-characteristics-of-the-interface-it-is-stipulated-in-autosar-that-except-method-both-event-and-field-can-only-carry-one-parameter-if-multiple-parameters-are-required-they-can-be-designed-in-the-form-of-struct-">&#x27A2; When the service interface carries the application data type, it is necessary to consider the characteristics of the interface. It is stipulated in AUTOSAR that, except Method, both Event and Field can only carry one parameter. If multiple parameters are required, they can be designed in the form of Struct;</h4>
+
+<h4 class="mume-header" id="--do-not-use-boolean-value-use-uint8-instead-">&#x27A2; Do not use Boolean value, use Uint8 instead;</h4>
+
+<h4 class="mume-header" id="--rr-method-etc-need-to-have-a-unified-return-value-retval-for-the-definition-of-standard-parameters-see-appendix-2-of-the-checklist-">&#x27A2; RR Method, etc. need to have a unified return value RetVal. For the definition of standard parameters, see Appendix 2 of the checklist.</h4>
+
+<h4 class="mume-header" id="--the-return-value-of-all-interface-calls-must-have-an-error-code-and-the-return-value-of-the-get-type-can-be-made-into-a-structure-together-with-retval-">&#x27A2; The return value of all interface calls must have an error code, and the return value of the get type can be made into a structure together with RetVal;</h4>
+
+<h4 class="mume-header" id="--when-enumeration-is-defined-the-abnormal-value-error-or-unknown-state-should-be-defined-as-the-maximum-value-for-example-for-the-parameter-type-of-uint8-the-abnormal-value-should-be-set-from-255-down-that-is-when-there-are-two-abnormal-values-take-255-and-254-">&#x27A2; When enumeration is defined, the abnormal value Error or Unknown state should be defined as the maximum value. For example, for the parameter type of Uint8, the abnormal value should be set from 255 down, that is, when there are two abnormal values, take 255 and 254;;</h4>
+
+<h4 class="mume-header" id="--in-order-to-increase-readability-the-return-value-of-method-should-be-defined-as-the-structure-retvalstruct-">&#x27A2; In order to increase readability, the return value of Method should be defined as the structure RetValStruct;</h4>
+
+<h4 class="mume-header" id="--common-parameter-types-should-be-unified-for-example-time-year-month-day-hour-minute-second-millisecond-should-be-defined-as-uint64-">&#x27A2; Common parameter types should be unified, for example, time (year, month, day, hour, minute, second, millisecond) should be defined as Uint64;</h4>
+
+<h4 class="mume-header" id="--the-parameter-type-of-latitude-and-longitude-coordinates-should-be-defined-as-float-etc-">&#x27A2; The parameter type of latitude and longitude coordinates should be defined as Float, etc.;</h4>
+
+<h4 class="mume-header" id="--for-fixed-length-array-fixarray-type-the-specific-length-should-be-defined-">&#x27A2; For fixed-length array FixArray type, the specific length should be defined;</h4>
+
+<h4 class="mume-header" id="--for-the-dynamic-array-type-dynamicarray-the-upper-limit-of-its-length-needs-to-be-defined-">&#x27A2; For the dynamic array type DynamicArray, the upper limit of its length needs to be defined;</h4>
+
+<h4 class="mume-header" id="--for-the-parameters-of-the-list-type-the-length-often-changes-consider-using-a-dynamic-array-">&#x27A2; For the parameters of the list type, the length often changes, consider using a dynamic array;</h4>
+
+<h2 class="mume-header" id="-48-service-and-interface-naming-guidelines-">4.8 Service and Interface Naming Guidelines</h2>
+
+<p>When designing SOA services, the following naming conventions need to be followed</p>
+<h3 class="mume-header" id="-481-basic-specifications-">4.8.1 Basic Specifications</h3>
+
+<h4 class="mume-header" id="--try-to-use-the-full-name-of-the-word-and-refer-to-the-geely-soa-abbreviation-table-for-abbreviation-after-the-name-is-too-long-">&#x27A2; Try to use the full name of the word, and refer to the &quot;GEELY SOA Abbreviation Table&quot; for abbreviation after the name is too long;</h4>
+
+<h4 class="mume-header" id="--the-name-does-not-contain-special-characters------etc-and-can-be-separated-by-_-">&#x27A2; The name does not contain special characters &quot;,&quot; &quot;.&quot; &quot;/&quot; &quot;&quot; &quot;~&quot;, etc., and can be separated by &quot;_&quot;;</h4>
+
+<h4 class="mume-header" id="--considering-the-reusability-of-services-and-parameters-no-topology-node-information-should-be-included-in-various-names-">&#x27A2; Considering the reusability of services and parameters, no topology node information should be included in various names;</h4>
+
+<h4 class="mume-header" id="--service-name-interface-name-and-parameter-name-cannot-be-repeated-">&#x27A2; Service name, interface name and parameter name cannot be repeated;</h4>
+
+<h4 class="mume-header" id="--the-following-system-keywords-cannot-be-used-in-naming-">&#x27A2; The following system keywords cannot be used in naming:</h4>
+
+<p><a href="#index">naming</a></p>
+<ul>
+<li>skeleton</li>
+<li>proxy</li>
+<li>internal</li>
+<li>resources</li>
+<li>method</li>
+<li>event</li>
+<li>field</li>
+<li>input/output</li>
+<li>amsr</li>
+<li>ara</li>
+<li>com</li>
+<li>someip</li>
+<li>base</li>
+<li>vac</li>
+<li>std</li>
+<li>serialization</li>
+</ul>
+<h4 class="mume-header" id="-4811-service-name-service-name-">4.8.1.1 Service Name Service Name</h4>
+
+<p>The service instance and the service implementation that refers to the definition, if the service is written separately later, it means the service instance</p>
+<h4 class="mume-header" id="--the-service-name-shall-be-capitalized-and-the-name-shall-be-in-english-">&#x27A2; The service name shall be capitalized and the name shall be in English;</h4>
+
+<h4 class="mume-header" id="--the-service-name-cannot-have-an-underscore-">&#x27A2; The service name cannot have an underscore;</h4>
+
+<h4 class="mume-header" id="--the-service-name-suffix-needs-to-end-with-srv-">&#x27A2; The service name suffix needs to end with Srv;</h4>
+
+<p>eg. LedControlSrv</p>
+<h4 class="mume-header" id="-4812-service-interface-name-service-interface-name-">4.8.1.2 Service Interface Name Service Interface Name</h4>
+
+<p>The communication interface between services on the SOA platform has three forms: Event, Method and Field. ServiceInterface is used to define the Event/Method/Field message type and specific namespace, regardless of the specific communication protocol.</p>
+<h4 class="mume-header" id="--the-service-interface-name-should-be-capitalized-with-the-first-letter-of-the-word-camel-case-the-full-english-name-the-gerund-structure-and-be-limited-to-3-words-as-much-as-possible-">&#x27A2; The service interface name should be capitalized with the first letter of the word (camel case), the full English name, the gerund structure, and be limited to 3 words as much as possible;</h4>
+
+<h4 class="mume-header" id="--the-service-interface-name-cannot-have-an-underscore-">&#x27A2; The service interface name cannot have an underscore;</h4>
+
+<h5 class="mume-header" id="--event-">&#x26AB; Event</h5>
+
+<p>The Event interface represents the actual transmitted data, and takes the data as the operation object. As long as the meaning of the data can be clearly expressed, the naming specification follows the basic specification, and the suffix should end with Evt; for example, the Event corresponds to the Method, and the Event represents the asynchronous call of the Method. Feedback, the name should be unified.</p>
+<p>eg. CurrentVleEvt : current value<br>
+eg. GetWiperState and WiperStateEvt : asynchronous call of wiper state</p>
+<h5 class="mume-header" id="--method-">&#x26AB; Method</h5>
+
+<p>The Mehtod interface represents a certain control, and the communication method adopts RPC remote call, usually with verb behavior, such as control, status query, transmission, registration, setting, etc. Among them, Method is further divided into F&amp;F, and<br>
+There are two types of R&amp;R, FF is a single call, no feedback is required, and RR is a request response, which requires feedback.<br>
+The interface name needs to clearly express the meaning of the method. It is recommended to use a gerund for naming, and use camel case.<br>
+The nomenclature, based on the CURD/REST reference, should end with the suffix Mtd. The following basic naming paradigm is designed:<br>
+get get the status set set the status rpt pass the information jdg judge the event<br>
+crt creates threads/processes/dynamic services/files/events, etc. del deletes threads/processes/files, etc.<br>
+eg.<br>
+setSoundOnMtd : sound the horn<br>
+jdgVehMovingMtd : Determine if the vehicle is moving getCarCfgMtd : Get car config value rptComponentStsMtd : Report component status information crtXTaskUsrLightShowSrvMtd : Create user-defined light show service delDebugClass0MsgMtd : Delete all msg debug files with debug level 0</p>
+<h5 class="mume-header" id="--field--">&#x26AB; Field</h5>
+
+<p>Field represents an attribute, usually refers to a state value or some kind of information, and the name should clearly express the content of the attribute<br>
+righteous.<br>
+Field contains the following three types of information: getter : read-only interface, whose prototype is method, obtains server information notifier : read-only interface, whose prototype is event, receives data from the server<br>
+setter : write interface, the prototype is method, set/modify server-side related information<br>
+Field name should be: noun + Fld, the noun is the attribute name.<br>
+eg. VehSpeedFld : Vehicle Movement Control</p>
+<h3 class="mume-header" id="-482-eventgroup-name-event-group-name-">4.8.2 EventGroup name Event group name</h3>
+
+<p>In order to clearly express the meaning of the event group, EventGroup should be named according to the function characteristics of the event group, ending with _EG. Such as MapUpdateSts_EG.</p>
+<h3 class="mume-header" id="-483-parameter-name-">4.8.3 Parameter name</h3>
+
+<h4 class="mume-header" id="--the-parameters-of-the-structure-type-should-be-suffixed-with-struct-such-as-cellstatusstruct-">&#x27A2; The parameters of the structure type should be suffixed with Struct, such as CellStatusStruct;</h4>
+
+<h4 class="mume-header" id="--array-type-parameters-should-be-suffixed-with-arry-such-as-basicstationinfoarry-">&#x27A2; Array type parameters should be suffixed with Arry, such as BasicStationInfoArry;</h4>
+
+<h4 class="mume-header" id="--simple-data-types-can-be-named-with-the-nouns-of-their-own-characteristics-">&#x27A2; Simple data types can be named with the nouns of their own characteristics;</h4>
+
+<h4 class="mume-header" id="--to-increase-readability-you-can-choose-to-add-words-such-as-status-info-opt-ctrl-as-suffixes-">&#x27A2; To increase readability, you can choose to add words such as &quot;status&quot;, &quot;info&quot;, &quot;opt&quot;, &quot;ctrl&quot; as suffixes;</h4>
+
+<h2 class="mume-header" id="-49-service-deployment-principles-">4.9 Service Deployment Principles</h2>
+
+<p>The deployment of services mainly refers to the implementation of services on the application layer SWC. Service deployment is closely related to the software architecture of the application layer, so it needs to be completed by the service designer and the software architecture designer of the corresponding controller. The following are general requirements only:</p>
+<h4 class="mume-header" id="--in-general-services-should-be-deployed-in-loosely-coupled-systems-such-as-adaptive-autosar-and-different-services-should-be-deployed-in-corresponding-apps-according-to-the-definitions-of-their-providers-and-consumers-to-achieve-decoupling-between-application-layers-">&#x27A2; In general, services should be deployed in loosely coupled systems such as Adaptive AUTOSAR, and different services should be deployed in corresponding APPs according to the definitions of their providers and consumers to achieve decoupling between application layers;</h4>
+
+<h4 class="mume-header" id="--atomic-services-can-also-be-deployed-in-systems-with-strong-coupling-at-the-application-layer-such-as-classic-autosar-you-can-choose-a-dedicated-swc-to-centrally-process-the-provision-and-consumption-of-services-which-can-be-implemented-in-the-form-of-sender-receiver-port-">&#x27A2; Atomic services can also be deployed in systems with strong coupling at the application layer such as Classic AUTOSAR. You can choose a dedicated SWC to centrally process the provision and consumption of services, which can be implemented in the form of Sender-Receiver Port;</h4>
+
+<h4 class="mume-header" id="--if-the-same-service-is-deployed-on-different-hardware-or-apps-you-need-to-use-instance-to-distinguish-">&#x27A2; If the same service is deployed on different hardware or APPs, you need to use instance to distinguish.</h4>
+
+<p>4.10 Service Arbitration Mechanism</p>
+<h4 class="mume-header" id="--the-priority-control-of-general-services-should-be-completed-by-the-corresponding-modules-in-the-middleware-such-as-iam-in-the-ap-">&#x27A2; The priority control of general services should be completed by the corresponding modules in the middleware, such as IAM in the AP;</h4>
+
+<h4 class="mume-header" id="--if-the-priority-control-is-not-implemented-in-the-protocol-stack-or-the-special-needs-of-the-business-the-application-processing-method-can-also-be-used-">&#x27A2; If the priority control is not implemented in the protocol stack, or the special needs of the business, the application processing method can also be used.</h4>
+
+<p>formula, the scheme is as follows:</p>
+<p>&#x26AB; Basic principles of arbitration:<br>
+<a href="#index">ARBITRATION PRINCIPLES</a></p>
+<ol>
+<li>Arbitration is conducted by the provider of the service;</li>
+<li>Only the control interfaces of some services need to be arbitrated (continuous actions or actions that need to be maintained);</li>
+<li>Arbitration is based on a class of attributes of the accused object.<br>
+&#x26AB; Arbitration implementation:<br>
+<a href="#index">ARBITRATION IMPLEMENTATION</a></li>
+<li>The server divides the service interface capabilities into several levels according to the importance of the required business (such as security, comfort, entertainment, etc., and several sub-categories can be set in each category), and the higher the level PriorityID can be set, higher priority;</li>
+<li>For different types of actions, the parameter OccupyFlag needs to be passed in at the same time<br>
+(0x0=false, 0x1=true), indicating whether the resource needs to be occupied;</li>
+<li>The presence of OccupyFlag or the &quot;continuous execution period of the action&quot; is regarded as occupied, and the occupancy period needs to be considered<br>
+PriorityID, no need to consider PriorityID;</li>
+<li>For different consumers of the same priority, the later one has priority and interrupts the former;</li>
+<li>High priority interrupts low priority, low priority waits for high priority, and returns the status;</li>
+<li>The priority level ID can be obtained from the priority level table and passed from the consumer to the provider;</li>
+<li>The priority level table is maintained by the corresponding subsystem.</li>
+</ol>
+<div class="mermaid">sequenceDiagram
+Title Example of Arbitration
+Consumer1-&gt;&gt;Server: Req1 = X, Priority = 2, OccupyFlag = 1
+Server-&gt;&gt;Consumer1: RetCod = Succeed
+Consumer2-&gt;&gt;Server: Req1 = Y, Priority = 3, OccupyFlag = 1/0
+Server-&gt;&gt;Consumer2: ?
+Consumer1-&gt;&gt;Server: Req1 = X, Priority = 2, OccupyFlag = Release
+Server-&gt;&gt;Consumer1: RetCod = Succeed
+Consumer2-&gt;&gt;Server: Req1 = Y, Priority = 3, OccupyFlag = 1/0
+Server-&gt;&gt;Consumer2: RetCod = Succeed
+</div><h2 class="mume-header" id="-411-functional-safety-definition-of-services-">4.11 Functional Safety Definition of Services</h2>
+
+<p>The functional safety of a service is uniformly defined by the functional safety team.</p>
+<h2 class="mume-header" id="-412-exception-handling-of-services-">4.12 Exception Handling of Services</h2>
+
+<h3 class="mume-header" id="-4121-consumer-">4.12.1 Consumer</h3>
+
+<h4 class="mume-header" id="--for-the-r-r-method-type-interface-after-the-req-information-is-sent-if-no-resp-feedback-is-received-within-a-period-of-time-if-there-is-no-special-business-requirement-the-default-is-2s-it-is-defined-as-a-communication-timeout-and-the-consumer-should-start-the-next-sequence-retransmission-or-an-error-if-this-phenomenon-occurs-for-n-consecutive-times-defined-by-the-service-diagnosis-policy-within-a-single-power-on-cycle-the-timeout-fault-is-recorded-">&#x27A2; For the R-R method type interface, after the Req information is sent, if no Resp feedback is received within a period of time (if there is no special business requirement, the default is 2S), it is defined as a communication timeout, and the consumer should start the next sequence (retransmission). or an error). If this phenomenon occurs for N consecutive times (defined by the service diagnosis policy) within a single power-on cycle, the timeout fault is recorded;</h4>
+
+<h4 class="mume-header" id="--for-the-event-interface-if-it-is-sent-periodically-the-communication-loss-can-be-judged-according-to-the-can-signal-that-is-if-the-event-message-is-not-received-for-n-consecutive-cycles-the-failure-of-communication-loss-is-recorded-">&#x27A2; For the Event interface, if it is sent periodically, the communication loss can be judged according to the CAN signal, that is, if the Event message is not received for N consecutive cycles, the failure of communication loss is recorded;</h4>
+
+<h3 class="mume-header" id="-4122-server-">4.12.2 Server</h3>
+
+<p>The server cannot dire#### ctly diagnose service exceptions based on the relevant information of service communication, and should record the buried points at the key points of service implementation. The specific scheme should be determined by the business link of the specific service and the log scheme of the server software.</p>
+<h1 class="mume-header" id="-5-development-toolchain-for-services-">5 Development Toolchain for Services</h1>
+
+<h2 class="mume-header" id="-51-design-tool-service-design-is-designed-in-systmweaver-and-system-weaver-generates-software-requirement-specification-swrs-and-service-interface-file-arxml-">5.1 Design Tool Service design is designed in SystmWeaver, and System Weaver generates software requirement specification SWRS and service interface file Arxml.</h2>
+
+<div class="mermaid">  journey
+    title Shared Data Platform(System Weaver)
+    section Function List
+      Function Define: 8: FO
+      Function Realization: 8: FO
+      System Design: 7: SO
+      ECU Service Deployment: 6: SO, EO
+    section Coding
+      VSA: 5: FO, SO, EO, TO
+    section Testing
+      Component Testing: 6: SO, TO
+      Function Test: 7: TO, FO
+      Vehicle Test: 8: TO, FO
+</div><h2 class="mume-header" id="-52-data-structure-service-development-the-overall-data-structure-is-consistent-with-geea_20-service-design-is-integrated-in-the-subsystem-design-level-service-servicecomponent-and-serviceinterface-module-design-is-added-and-service-deployment-is-integrated-in-the-ecu-design--">5.2 Data Structure Service development The overall data structure is consistent with GEEA_2.0, service design is integrated in the subsystem design level, Service, ServiceComponent and ServiceInterface module design is added, and service deployment is integrated in the ECU design.</h2>
+
+<p>In the planning level, add Machine and Process designs to undertake the deployment of service designs;</p>
+<p><a href="#index">Overall data structure diagram</a></p>
+<ul>
+<li>SOA POC
+<ul>
+<li><i class="fa fa-car" aria-hidden="true"></i> Attribute
+<ul>
+<li><i class="fa fa-folder" aria-hidden="true"></i> Function List</li>
+</ul>
+</li>
+<li>functions
+<ul>
+<li><i class="fa fa-folder" aria-hidden="true"></i> visibility</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><i class="fa fa-ship" aria-hidden="true"></i> SOA Architecture
+<ul>
+<li><i class="fa fa-sticky-note" aria-hidden="true"></i> Function Design
+<ul>
+<li><i class="fa fa-folder-open" aria-hidden="true"></i> visibility</li>
+</ul>
+</li>
+<li><i class="fa fa-space-shuttle" aria-hidden="true"></i> SOA Design
+<ul>
+<li>Function Design
+<ul>
+<li><i class="fa fa-folder" aria-hidden="true"></i> Body Domain<br>
+[+] <i class="fa fa-folder-o" aria-hidden="true"></i> ExteriorLight Subsystem<br>
+[+] <i class="fa fa-folder-o" aria-hidden="true"></i> Audio SubSystem<br>
+[+] <i class="fa fa-folder-o" aria-hidden="true"></i> VMM SubSystem<br>
+[+] <i class="fa fa-folder-o" aria-hidden="true"></i> APP SubSystem</li>
+<li><i class="fa fa-folder" aria-hidden="true"></i> ECU Allocated Design<br>
+[+] <i class="fa fa-folder-o" aria-hidden="true"></i> ECU System</li>
+<li><i class="fa fa-folder-open-o" aria-hidden="true"></i> Service List</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><i class="fa fa-star" aria-hidden="true"></i> Service and Service Interface</p>
+<p>Define the interface data of Service and Service, the interface data includes Method, Event and Field data types;</p>
+<p><a href="#index">Service Data Structure Diagram</a></p>
+<ul>
+<li><i class="fa fa-compass" aria-hidden="true"></i> PowerWindowService <i class="fa fa-caret-square-o-right" aria-hidden="true"></i> <font color="#6172FF">Service</font>
+<ul>
+<li><i class="fa fa-lightbulb-o" aria-hidden="true"></i> PowerWindowService <i class="fa fa-caret-square-o-right" aria-hidden="true"></i> <font color="#6172FF">Service Interface</font><br>
+[+] <i class="fa fa-folder-o" aria-hidden="true"></i> GetWinCurrentStatus <i class="fa fa-caret-square-o-right" aria-hidden="true"></i><font color="#6172FF">Method</font><br>
+[+] <i class="fa fa-folder-o" aria-hidden="true"></i> CtrlWinPosition<br>
+[+] <i class="fa fa-folder-o" aria-hidden="true"></i> NotifyWinCurrentStatus <i class="fa fa-caret-square-o-right" aria-hidden="true"></i> <font color="#6172FF">Event</font><br>
+[+] <i class="fa fa-folder-o" aria-hidden="true"></i> WinLiftPosition<br>
+[+] <i class="fa fa-folder-o" aria-hidden="true"></i> WinLockSwitchStatus <i class="fa fa-caret-square-o-right" aria-hidden="true"></i><font color="#6172FF">Field</font></li>
+</ul>
+</li>
+</ul>
+<p>&#x26AB; ServiceComponent<br>
+Define the service application component that implements the function, ProvideService is the service capability provided by the service application component, and ConsumerService is other services that the service application component needs to call to realize the function.<br>
+<a href="#index">ServiceComponent data structure diagram</a></p>
+<ul>
+<li><i class="fa fa-bus" aria-hidden="true"></i> FrontWiperSWSrv <i class="fa fa-caret-square-o-right" aria-hidden="true"></i> <font color="#6172FF">Service Component</font><br>
+[+] <i class="fa fa-sticky-note-o" aria-hidden="true"></i> Requirement <i class="fa fa-caret-square-o-right" aria-hidden="true"></i> <font color="#6172FF">Service Requirement</font>
+<ul>
+<li>[+] <i class="fa fa-sticky-note-o" aria-hidden="true"></i> FrontWiperSWSrv <i class="fa fa-caret-square-o-right" aria-hidden="true"></i> <font color="#6172FF">ProviderService</font>
+<ul>
+<li>[-] <i class="fa fa-lightbulb-o" aria-hidden="true"></i> FrontWiperSWSrv</li>
+</ul>
+</li>
+<li>[+] <i class="fa fa-sticky-note-o" aria-hidden="true"></i> FrontWiperSrv <i class="fa fa-caret-square-o-right" aria-hidden="true"></i> <font color="#6172FF">ConsumerService</font>
+<ul>
+<li>[-] <i class="fa fa-lightbulb-o" aria-hidden="true"></i> FrontWiperSrv</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>&#x26AB; Machine and Process<br>
+Machine defines an entity that the APAUTOSAR software stack runs with the operating system for Deployment implementation Service application components, service components are deployed to different processes.</p>
+<p><a href="#index">Machine and Process data structure diagram</a></p>
+<ul>
+<li><i class="fa fa-server" aria-hidden="true"></i>  CCCMachine<br>
+[-] <i class="fa fa-search-plus" aria-hidden="true"></i> WiperProcess
+<ul>
+<li>[-] <i class="fa fa-arrows-v" aria-hidden="true"></i> FrontWiperSWSrv
+<ul>
+<li>[+] <i class="fa fa-ellipsis-v" aria-hidden="true"></i> Requirement</li>
+<li>[+] <i class="fa fa-dot-circle-o" aria-hidden="true"></i> FrontWiperSWSrv</li>
+<li>[+] <i class="fa fa-check-circle-o" aria-hidden="true"></i> FrontWiperSrv</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>5.3 Service data output<br>
+The output of the service design is the requirement specification document SWRS and the interface file Arxml, which are output through the SystemWeaver tool after receiving and deploying at the ECU layer.<br>
+5.4 UML Design<br>
+In service design, in order to express the activity relationship between services and consumers and the time sequence relationship between interfaces, sequence diagrams and use case diagrams need to be used. UML design tools are used, and Astah or (<a href="https://app.diagrams.net/">draw.io</a>) software is recommended. The specific design method refers to the standard UML modeling method, which is no longer specifically defined in this specification.<br>
+The schematic diagram of the design case is as follows.</p>
+<div class="mermaid">graph LR
+X(fa:fa-user-plus user)--&gt;SETLOP[[Set Electric Tailgate Lock Open Position]]
+X(fa:fa-user-plus user)--&gt;OPLOA[[Obtain the Power tailgate Lock Opening Angles]]
+X(fa:fa-user-plus user)--&gt;NELOPC[[Notify Eeletric tailgate lcok open position change]]
+X(fa:fa-user-plus user)--&gt;OETS[[Obtaining Electric Tailgate Status]]
+X(fa:fa-user-plus user)--&gt;NETS[[Notify the Electric Tailgate Status]]
+subgraph EleTailGateSrv
+SETLOP[[Set Electric Tailgate Lock Open Position]]
+OPLOA[[Obtain the Power tailgate Lock Opening Angles]]
+NELOPC[[Notify Eeletric tailgate lcok open position change]]
+OETS[[Obtaining Electric Tailgate Status]]
+NETS[[Notify the Electric Tailgate Status]]
+end
+</div><div class="mermaid">%% Timing Diagram
+sequenceDiagram
+    autonumber
+    actor A as User
+    participant B as WiperFrServer
+    participant C as VisyWiprWshrMgr
+    
+    A-&gt;&gt;B: StartWiping(WipingMode): RetVal
+    activate A
+    activate B
+    B-&gt;&gt;B: To determine wheather preconditions are met 
+    activate B
+    B-&gt;&gt;C: To determine wheather preconditions are met
+    activate C
+    C-&gt;&gt;C:Excute Port:WipMotF&quot;ntLvrCmdNotSafe&quot; Fibre, signal to excuteinstrument()
+    activate C
+    deactivate C
+    deactivate C
+    deactivate B
+    deactivate B
+    deactivate A
+
+    activate B
+    B-&gt;&gt;B:  Update Wipign mode service interface
+    deactivate B
+    alt :JudgementWiperLeverInputFrntWiprLvrCmd2.FrntWiprLvrCmd1 [! = FrntWprOff] 
+        B-&gt;&gt;A: [Event]WipingMode(FrWipSts=Default)
+        activate A
+        deactivate A
+    else [= FrntWprOff]
+        B-&gt;&gt;A: [Event]WipingMode(FrWipSts)
+        activate A
+        deactivate A
+    end
+
+    loop [Guard]
+    C-&gt;&gt;C: Upload Signal
+    activate C
+    deactivate C
+    C -&gt;&gt; B: RevenuePort:Wipginfoo
+    activate B
+    activate B
+    B-&gt;&gt;B: SiWipingLevel,Wipingsts Service connectionorific
+    B-&gt;&gt;A: [Event] WipingLevel(Wiping Speed)
+    B-&gt;&gt;A: [Event] WipingLevel(Wiping Status)
+    opt JudgementiWipinginfoWipgSpdinfo
+    B-&gt;&gt;B: Updateed Wipinggps outstanding Balla long mouth
+    B-&gt;&gt;A: [Event] WipingSts(Wiping Status = Error)
+    deactivate B
+    activate B
+    activate A
+    end
+    deactivate B
+    deactivate A
+    end
+
+    alt :WipingMode [Signle Stroke] 
+        B-&gt;&gt;C: PortStopWiping()
+        activate B
+        deactivate B
+        activate C
+        activate C
+        C-&gt;&gt;C: PortWiprMofmlCmdNolse, Signal downto 0
+        deactivate C
+        deactivate C
+    else [!Signle Stroke]
+        A-&gt;&gt;B: StartWiping(OFF)
+        activate A
+        activate B
+        B-&gt;&gt;B: Condition Set to 0
+        activate B
+        deactivate B
+        B-&gt;&gt;C: Port StopWiping()
+        deactivate B
+        B--)A: 
+        deactivate A
+        activate C
+        activate C
+        deactivate C
+        C-&gt;&gt;C: AUTOSAR com port: WiprMotFrnLvrCmdNotSafe(OFF)
+        deactivate C
+    end
+</div><h1 class="mume-header" id="-6-design-verification-">6 Design Verification</h1>
+
+<p>Service design acceptance includes service architecture principles, service interface definition principles and service requirements definition principles. In addition, the criteria for software acceptance of SOA services as a sub-item of the service design acceptance criteria will form a separate software acceptance checklist.<br>
+When SOA engineers and system engineers complete the design of service interface and service requirements and conduct design review, they need to check the content according to the specific version of the checklist. The checklist needs to indicate the name of the checked object,<br>
+Version information, author, date, applicable checklist version, and recorded comments should also be included in the checklist.<br>
+Checklist update and release process:</p>
+<div class="mermaid">%%{init:{&apos;theme&apos;:&apos;dark&apos;,&apos;flowchart&apos;:{&apos;primaryColor&apos;:&apos;#6A7FAB&apos;,&apos;primaryTextColor&apos;:&apos;#6172FF&apos;,&apos;primaryBorderColor&apos;:&apos;#6A7FAB&apos;,&apos;secondaryColor&apos;:&apos;#6A7FAB&apos;,&apos;lineColor&apos;:&apos;#6A7FABCC&apos;,&apos;noteTextColor&apos;:&apos;#FAFBF9&apos;,&apos;noteBkgColor&apos;:&apos;#6A7FABBB&apos;,&apos;textColor&apos;:&apos;#6172FF&apos;,&apos;fontSize&apos;:&apos;20px&apos;}}}%%
+flowchart LR
+  subgraph Checklist Updated  &amp; Publishing Flow Chart
+  subgraph SOA Engneer
+  USI([Update Service Interface])
+  SOACCB{SOA CCB Judgement}
+  ODOT((ORANGE))
+  end
+  subgraph System Engineer
+  SRSP(System Review and Services demand principle)
+  end
+  RV(Review)
+  subgraph Software Engneer
+  SRSI(System Review and Services demand Impact)
+  end
+  subgraph Architect
+  ARCHA[Architect&apos;s Approval]
+  RNE([Release of New Edition])
+  end
+USI --&gt; SOACCB
+SOACCB --&gt;|Fail to PASS| ODOT
+SOACCB --&gt;|AMEND| SRSP
+SOACCB --&gt;|AMEND| SRSI
+ODOT --&gt;|AMEND| USI
+SRSP --&gt;RV
+SRSI --&gt;RV
+ARCHA --&gt;|Fail to PASS| ODOT
+ARCHA --&gt; |AMEND|RNE
+ODOT --&gt; |AMEND|RNE
+end
+</div><p>Similarly, changes in service requirements and changes in software acceptance standards must be approved by the corresponding system CCB and software CCB.<br>
+In other cases, the other two parties will be transferred for review and analysis, and after the final approval, the architect will approve and approve.</p>
+<h4 class="mume-header" id="-for-the-specific-content-of-the-checklist-see-the-attached-document-soa-service-development-checklist">For the specific content of the Checklist, see the attached document &quot;SOA Service Development Checklist&quot;.</h4>
+
+
+      </div>
+      
+      
+    
+    
+    <script>
+// config mermaid init call
+// http://knsv.github.io/mermaid/#configuration
+//
+// You can edit the 'MERMAID_CONFIG' variable below.
+MERMAID_CONFIG = {
+  startOnLoad: false
+}
+
+if (window['MERMAID_CONFIG']) {
+  window['MERMAID_CONFIG'].startOnLoad = false
+  window['MERMAID_CONFIG'].cloneCssStyles = false
+  window['MERMAID_CONFIG'].theme = "default"
+}
+mermaid.initialize(window['MERMAID_CONFIG'] || {})
+if (typeof(window['Reveal']) !== 'undefined') {
+  function mermaidRevealHelper(event) {
+    var currentSlide = event.currentSlide
+    var diagrams = currentSlide.querySelectorAll('.mermaid')
+    for (var i = 0; i < diagrams.length; i++) {
+      var diagram = diagrams[i]
+      if (!diagram.hasAttribute('data-processed')) {
+        mermaid.init(null, diagram, ()=> {
+          Reveal.slide(event.indexh, event.indexv)
+        })
+      }
+    }
+  }
+  Reveal.addEventListener('slidechanged', mermaidRevealHelper)
+  Reveal.addEventListener('ready', mermaidRevealHelper)
+} else {
+  mermaid.init(null, document.getElementsByClassName('mermaid'))
+}
+</script>
+    
+    
+    
+    
+    
+  
+    </body></html>
