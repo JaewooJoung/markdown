@@ -5,19 +5,15 @@
   <style>
     table {
       border-collapse: collapse;
-      width: 33.33%;
+      width: 100%;
     }
     th, td {
       border: 1px solid black;
       padding: 5px;
       text-align: center;
     }
-    .calendar {
-      display: inline-block;
-    }
-    h2 {
-      display: inline-block;
-      margin-right: 10px;
+    .wn {
+      background-color: #f0f0f0;
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
@@ -42,21 +38,18 @@
       for (var month = 1; month <= 12; month++) {
         var monthName = moment().month(month - 1).format('MMMM');
         var daysInMonth = moment().year(year).month(month - 1).daysInMonth();
-
-        var h2 = document.createElement("h2");
-        h2.textContent = monthName;
-        h2.classList.add("calendar");
-        calendarContainer.appendChild(h2);
+        var weekDays = ["WN", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
         var table = document.createElement("table");
-        table.classList.add("calendar");
         var thead = document.createElement("thead");
         var tbody = document.createElement("tbody");
 
         var headerRow = document.createElement("tr");
-        var weekdays = ["WN", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-        weekdays.forEach(function(weekday) {
+        weekDays.forEach(function(weekday) {
           var th = document.createElement("th");
+          if (weekday === "WN") {
+            th.classList.add("wn");
+          }
           th.textContent = weekday;
           headerRow.appendChild(th);
         });
@@ -108,6 +101,16 @@
 
         table.appendChild(thead);
         table.appendChild(tbody);
+        
+        if (month % 3 === 1) {
+          var row = document.createElement("tr");
+          var cell = document.createElement("td");
+          cell.setAttribute("colspan", "3");
+          cell.textContent = moment().month(month - 1).format('MMMM');
+          row.appendChild(cell);
+          thead.appendChild(row);
+        }
+
         calendarContainer.appendChild(table);
       }
     }
