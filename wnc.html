@@ -62,7 +62,6 @@
 
         var week = startingWeekNumber;
         var day = 1;
-        if ((week+1) == 53) {    week = 0;  }
 
         while (day <= daysInMonth) {
           var weekRow = document.createElement("tr");
@@ -82,11 +81,18 @@
 
             weekRow.appendChild(td);
           }
-          
+
           tbody.appendChild(weekRow);
-          week++;
-            
-          dayOfWeek = 1; // Start the next week with Monday
+
+          // Increment the week number and adjust for the start of the next week
+          if (day <= daysInMonth) {
+            var nextWeekDate = new Date(year, month - 1, day);
+            week = getISOWeekNumber(nextWeekDate);
+            dayOfWeek = nextWeekDate.getDay();
+            if (dayOfWeek === 0) {
+              dayOfWeek = 7; // Adjust Sunday to be the last day of the week (7) instead of the first (0)
+            }
+          }
         }
 
         table.appendChild(thead);
@@ -95,30 +101,27 @@
       }
     }
 
-    // Get ISO week number
-function getISOWeekNumber(date) {
-  var yearStart = new Date(date.getFullYear(), 0, 1);
-  var daysOffset = (yearStart.getDay() + 6) % 7;
-  var daysOfYear = Math.floor((date - yearStart) / 86400000) + 1;
-  var weekNumber = Math.floor((daysOfYear - daysOffset + 10) / 7);
-  
-  if (weekNumber === 0) {
-    var previousYear = new Date(date.getFullYear() - 1, 0, 1);
-    return getISOWeekNumber(previousYear);
-  }
-  
-  var yearEnd = new Date(date.getFullYear(), 11, 31);
-  var weeksInYear = Math.floor((yearEnd - yearStart) / 86400000 / 7) + 1;
-  
-  if (weekNumber > weeksInYear) {
-    return getISOWeekNumber(new Date(date.getFullYear() + 1, 0, 1));
-  }
-  
-  return weekNumber;
-}
-
-
-
+        // Get ISO week number
+        function getISOWeekNumber(date) {
+            var yearStart = new Date(date.getFullYear(), 0, 1);
+            var daysOffset = (yearStart.getDay() + 6) % 7;
+            var daysOfYear = Math.floor((date - yearStart) / 86400000) + 1;
+            var weekNumber = Math.floor((daysOfYear - daysOffset + 10) / 7);
+            
+            if (weekNumber === 0) {
+                var previousYear = new Date(date.getFullYear() - 1, 0, 1);
+                return getISOWeekNumber(previousYear);
+            }
+            
+            var yearEnd = new Date(date.getFullYear(), 11, 31);
+            var weeksInYear = Math.floor((yearEnd - yearStart) / 86400000 / 7) + 1;
+            
+            if (weekNumber > weeksInYear) {
+                return getISOWeekNumber(new Date(date.getFullYear() + 1, 0, 1));
+            }
+    
+    return weekNumber;
+    }
 
     // Generate the calendar on page load
     generateCalendar();
