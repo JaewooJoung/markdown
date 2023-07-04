@@ -11,11 +11,6 @@
       padding: 5px;
       text-align: center;
     }
-    .calendar-container {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-gap: 20px;
-    }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 </head>
@@ -26,7 +21,7 @@
   <input type="number" id="year" value="2023">
   <button onclick="generateCalendar()">Go</button>
 
-  <div id="calendarContainer" class="calendar-container"></div>
+  <div id="calendarContainer"></div>
 
   <script>
     function generateCalendar() {
@@ -36,23 +31,37 @@
       var calendarContainer = document.getElementById("calendarContainer");
       calendarContainer.innerHTML = "";
 
+      var table = document.createElement("table");
+      var thead = document.createElement("thead");
+      var tbody = document.createElement("tbody");
+
+      var headerRow = document.createElement("tr");
+      var weekdays = ["WN", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+      weekdays.forEach(function(weekday) {
+        var th = document.createElement("th");
+        th.textContent = weekday;
+        headerRow.appendChild(th);
+      });
+
+      thead.appendChild(headerRow);
+      table.appendChild(thead);
+
+      var monthRow, monthCell;
+
       for (var month = 1; month <= 12; month++) {
+        if ((month - 1) % 4 === 0) {
+          monthRow = document.createElement("tr");
+          tbody.appendChild(monthRow);
+        }
+
+        monthCell = document.createElement("td");
+        monthRow.appendChild(monthCell);
+
         var monthName = moment().month(month - 1).format('MMMM');
         var daysInMonth = moment().year(year).month(month - 1).daysInMonth();
 
-        var table = document.createElement("table");
-        var thead = document.createElement("thead");
-        var tbody = document.createElement("tbody");
-
-        var headerRow = document.createElement("tr");
-        var weekdays = ["WN", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-        weekdays.forEach(function(weekday) {
-          var th = document.createElement("th");
-          th.textContent = weekday;
-          headerRow.appendChild(th);
-        });
-
-        thead.appendChild(headerRow);
+        var monthTable = document.createElement("table");
+        var monthTbody = document.createElement("tbody");
 
         var firstDayOfMonth = moment().year(year).month(month - 1).date(1);
         var week = firstDayOfMonth.isoWeek();
@@ -76,7 +85,7 @@
           weekRow.appendChild(td);
 
           if (firstDayOfMonth.isoWeekday() === 7) {
-            tbody.appendChild(weekRow);
+            monthTbody.appendChild(weekRow);
             weekRow = document.createElement("tr");
             week++;
             var weekTd = document.createElement("td");
@@ -95,12 +104,13 @@
           weekRow.appendChild(emptyTd);
         }
 
-        tbody.appendChild(weekRow);
-
-        table.appendChild(thead);
-        table.appendChild(tbody);
-        calendarContainer.appendChild(table);
+        monthTbody.appendChild(weekRow);
+        monthTable.appendChild(monthTbody);
+        monthCell.appendChild(monthTable);
       }
+
+      table.appendChild(tbody);
+      calendarContainer.appendChild(table);
     }
 
     // Generate the calendar on page load
