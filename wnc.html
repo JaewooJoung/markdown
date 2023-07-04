@@ -172,16 +172,15 @@
 <body>
   <h1 id="currentDate"></h1>
   <h2 id="currentTime"></h2>
+  <center><p class="message-box">
+    hur är göteborgsvädret:
   <div id="weatherContainer">
-  <p class="message-box">hur är göteborgsvädret:</p>
-  </div>
+  </div></p>
+  </center>
 
-<center><p class="message-box">
-  <label for="year">Select Year:</label>
-  <input type="number" id="year" value="2023">
-  <button onclick="generateCalendar()">Go</button>
-  </p>
-</center>
+  <p class="message-box"><center>
+  <label for="year">Select Year:</label><input type="number" id="year" value="2023"><button onclick="generateCalendar()">Go</button>
+  </center></p>
   <div id="calendarContainer"></div>
 
   <script>
