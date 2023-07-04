@@ -11,9 +11,10 @@
       padding: 5px;
       text-align: center;
     }
-    .month-table {
-      float: left;
-      margin-right: 20px;
+    .calendar-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 20px;
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
@@ -25,7 +26,7 @@
   <input type="number" id="year" value="2023">
   <button onclick="generateCalendar()">Go</button>
 
-  <div id="calendarContainer"></div>
+  <div id="calendarContainer" class="calendar-container"></div>
 
   <script>
     function generateCalendar() {
@@ -35,80 +36,70 @@
       var calendarContainer = document.getElementById("calendarContainer");
       calendarContainer.innerHTML = "";
 
-      for (var row = 1; row <= 3; row++) {
-        var calendarRow = document.createElement("div");
-        calendarRow.classList.add("calendar-row");
+      for (var month = 1; month <= 12; month++) {
+        var monthName = moment().month(month - 1).format('MMMM');
+        var daysInMonth = moment().year(year).month(month - 1).daysInMonth();
 
-        for (var col = 1; col <= 4; col++) {
-          var monthIndex = (row - 1) * 4 + col;
-          var monthName = moment().month(monthIndex - 1).format('MMMM');
-          var daysInMonth = moment().year(year).month(monthIndex - 1).daysInMonth();
+        var table = document.createElement("table");
+        var thead = document.createElement("thead");
+        var tbody = document.createElement("tbody");
 
-          var monthTable = document.createElement("table");
-          monthTable.classList.add("month-table");
+        var headerRow = document.createElement("tr");
+        var weekdays = ["WN", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+        weekdays.forEach(function(weekday) {
+          var th = document.createElement("th");
+          th.textContent = weekday;
+          headerRow.appendChild(th);
+        });
 
-          var thead = document.createElement("thead");
-          var tbody = document.createElement("tbody");
+        thead.appendChild(headerRow);
 
-          var headerRow = document.createElement("tr");
-          var weekdays = ["WN", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-          weekdays.forEach(function(weekday) {
-            var th = document.createElement("th");
-            th.textContent = weekday;
-            headerRow.appendChild(th);
-          });
+        var firstDayOfMonth = moment().year(year).month(month - 1).date(1);
+        var week = firstDayOfMonth.isoWeek();
+        var day = 1;
 
-          thead.appendChild(headerRow);
+        var weekRow = document.createElement("tr");
+        var weekTd = document.createElement("td");
+        weekTd.textContent = week;
+        weekRow.appendChild(weekTd);
 
-          var firstDayOfMonth = moment().year(year).month(monthIndex - 1).date(1);
-          var week = firstDayOfMonth.isoWeek();
-          var day = 1;
-
-          var weekRow = document.createElement("tr");
-          var weekTd = document.createElement("td");
-          weekTd.textContent = week;
-          weekRow.appendChild(weekTd);
-
-          for (var weekday = 1; weekday < firstDayOfMonth.isoWeekday(); weekday++) {
-            var emptyTd = document.createElement("td");
-            emptyTd.textContent = "";
-            weekRow.appendChild(emptyTd);
-          }
-
-          while (day <= daysInMonth) {
-            var td = document.createElement("td");
-            td.textContent = day;
-
-            weekRow.appendChild(td);
-
-            if (firstDayOfMonth.isoWeekday() === 7) {
-              tbody.appendChild(weekRow);
-              weekRow = document.createElement("tr");
-              week++;
-              var weekTd = document.createElement("td");
-              weekTd.textContent = week;
-              weekRow.appendChild(weekTd);
-            }
-
-            firstDayOfMonth.add(1, 'day');
-            day++;
-          }
-
-          // Add empty cells for the remaining days of the last week
-          for (var weekday = firstDayOfMonth.isoWeekday(); weekday <= 7; weekday++) {
-            var emptyTd = document.createElement("td");
-            emptyTd.textContent = "";
-            weekRow.appendChild(emptyTd);
-          }
-
-          tbody.appendChild(weekRow);
-
-          monthTable.appendChild(thead);
-          monthTable.appendChild(tbody);
-          calendarRow.appendChild(monthTable);
+        for (var weekday = 1; weekday < firstDayOfMonth.isoWeekday(); weekday++) {
+          var emptyTd = document.createElement("td");
+          emptyTd.textContent = "";
+          weekRow.appendChild(emptyTd);
         }
 
-        calendarContainer.appendChild(calendarRow);
+        while (day <= daysInMonth) {
+          var td = document.createElement("td");
+          td.textContent = day;
+
+          weekRow.appendChild(td);
+
+          if (firstDayOfMonth.isoWeekday() === 7) {
+            tbody.appendChild(weekRow);
+            weekRow = document.createElement("tr");
+            week++;
+            var weekTd = document.createElement("td");
+            weekTd.textContent = week;
+            weekRow.appendChild(weekTd);
+          }
+
+          firstDayOfMonth.add(1, 'day');
+          day++;
+        }
+
+        // Add empty cells for the remaining days of the last week
+        for (var weekday = firstDayOfMonth.isoWeekday(); weekday <= 7; weekday++) {
+          var emptyTd = document.createElement("td");
+          emptyTd.textContent = "";
+          weekRow.appendChild(emptyTd);
+        }
+
+        tbody.appendChild(weekRow);
+
+        table.appendChild(thead);
+        table.appendChild(tbody);
+        calendarContainer.appendChild(table);
       }
     }
 
