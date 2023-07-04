@@ -3,8 +3,20 @@
 <head>
   <title>Yearly Calendar with Week Numbers</title>
   <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .calendar-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
     table {
       border-collapse: collapse;
+      width: 30%;
+      margin: 10px;
     }
     th, td {
       border: 1px solid black;
@@ -18,15 +30,51 @@
   </style>
 </head>
 <body>
-  <h1>Yearly Calendar with Week Numbers</h1>
+  <h1 id="currentDate"></h1>
+  <h2 id="currentTime"></h2>
+  <div id="weatherContainer"></div>
 
   <label for="year">Select Year:</label>
   <input type="number" id="year" value="2023">
   <button onclick="generateCalendar()">Go</button>
 
-  <div id="calendarContainer"></div>
+  <div class="calendar-container" id="calendarContainer"></div>
 
   <script>
+    function getWeather() {
+      // Make a request to the weather API to get the weather data
+      // Replace 'YOUR_API_KEY' with your actual API key
+      fetch('https://api.weatherapi.com/v1/current.json?key=ad8caecea06c43d1912181938230407&q=Gothenburg')
+        .then(response => response.json())
+        .then(data => {
+          // Get the weather icon code from the API response
+          var weatherIcon = data.current.condition.icon;
+
+          // Create an <img> element for the weather icon
+          var weatherImg = document.createElement("img");
+          weatherImg.src = "https:" + weatherIcon;
+
+          // Append the weather icon to the weatherContainer div
+          var weatherContainer = document.getElementById("weatherContainer");
+          weatherContainer.appendChild(weatherImg);
+        });
+    }
+
+    // Function to get the current date and time
+    function getCurrentDateTime() {
+      var now = new Date();
+
+      // Create a formatted string for the date and time
+      var dateString = now.toDateString();
+      var timeString = now.toLocaleTimeString();
+
+      // Set the date and time in the page
+      var dateElement = document.getElementById("currentDate");
+      var timeElement = document.getElementById("currentTime");
+      dateElement.textContent = dateString;
+      timeElement.textContent = timeString;
+    }
+
     function generateCalendar() {
       var yearInput = document.getElementById("year");
       var year = parseInt(yearInput.value);
@@ -105,9 +153,12 @@
         table.appendChild(tbody);
         calendarContainer.appendChild(table);
       }
+      // Call the functions to get the current date/time and weather
+      getCurrentDateTime();
+      getWeather();
     }
 
-    // Get ISO week number
+        // Get ISO week number
     function getISOWeekNumber(date) {
       var startOfWeek = new Date(date);
       startOfWeek.setDate(date.getDate() - date.getDay() + 1); // Set the date to the first day of the week (Monday)
@@ -116,8 +167,10 @@
       return weekNumber;
     }
 
-    // Generate the calendar on page load
     generateCalendar();
+
   </script>
 </body>
 </html>
+
+
