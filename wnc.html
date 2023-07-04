@@ -90,7 +90,7 @@
       var firstDayOfYear = new Date(date.getFullYear(), 0, 1);
       var daysOffset = (firstDayOfYear.getDay() + 6) % 7;
       var daysOfYear = Math.floor((date - firstDayOfYear) / 86400000) + 1;
-      var weekNumber = Math.floor((daysOfYear - daysOffset + 10) / 7);
+      var weekNumber = Math.floor((daysOfYear - daysOffset + 10) / 7) + 1;
       return weekNumber;
     }
 
