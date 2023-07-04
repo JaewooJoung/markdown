@@ -53,7 +53,14 @@
 
         thead.appendChild(headerRow);
 
-        var week = getISOWeekNumber(new Date(year, month - 1, 1)); // Get the ISO week number of the first day in the month
+        var firstDayOfMonth = new Date(year, month - 1, 1);
+        var startingWeekNumber = getISOWeekNumber(firstDayOfMonth); // Get the ISO week number of the first day in the month
+        var dayOfWeek = firstDayOfMonth.getDay();
+        if (dayOfWeek === 0) {
+          dayOfWeek = 7; // Adjust Sunday to be the last day of the week (7) instead of the first (0)
+        }
+
+        var week = startingWeekNumber;
         var day = 1;
 
         while (day <= daysInMonth) {
@@ -65,7 +72,7 @@
           for (var weekday = 1; weekday <= 7; weekday++) {
             var td = document.createElement("td");
 
-            if (day > daysInMonth) {
+            if (weekday < dayOfWeek || day > daysInMonth) {
               td.textContent = "";
             } else {
               td.textContent = day;
@@ -77,6 +84,7 @@
 
           tbody.appendChild(weekRow);
           week++;
+          dayOfWeek = 1; // Start the next week with Monday
         }
 
         table.appendChild(thead);
@@ -87,10 +95,10 @@
 
     // Get ISO week number
     function getISOWeekNumber(date) {
-      var firstDayOfYear = new Date(date.getFullYear(), 0, 1);
-      var daysOffset = (firstDayOfYear.getDay() + 6) % 7;
-      var daysOfYear = Math.floor((date - firstDayOfYear) / 86400000) + 1;
-      var weekNumber = Math.floor((daysOfYear - daysOffset + 10) / 7) + 1;
+      var startOfWeek = new Date(date);
+      startOfWeek.setDate(date.getDate() - date.getDay() + 1); // Set the date to the first day of the week (Monday)
+      var yearStart = new Date(startOfWeek.getFullYear(), 0, 1);
+      var weekNumber = Math.ceil(((startOfWeek - yearStart) / 86400000 + 1) / 7);
       return weekNumber;
     }
 
