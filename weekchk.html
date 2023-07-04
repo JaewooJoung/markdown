@@ -44,7 +44,7 @@
         var tbody = document.createElement("tbody");
 
         var headerRow = document.createElement("tr");
-        var weekdays = ["WN", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+        var weekdays = ["WN", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "Mon"]; // Adjusted order of weekdays
         weekdays.forEach(function(weekday) {
           var th = document.createElement("th");
           th.textContent = weekday;
@@ -63,7 +63,7 @@
           weekTd.textContent = week;
           weekRow.appendChild(weekTd);
 
-          for (var weekday = 1; weekday <= 7; weekday++) {
+          for (var weekday = 2; weekday <= 8; weekday++) { // Adjusted range of weekdays
             var td = document.createElement("td");
 
             if (weekday === 2 && day === 1 && date.getDay() > 1) {
