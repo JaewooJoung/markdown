@@ -55,6 +55,8 @@
 
         var week = 1;
         var day = 1;
+        var isFirstWeek = true;
+
         while (day <= daysInMonth) {
           var weekRow = document.createElement("tr");
           var weekTd = document.createElement("td");
@@ -64,21 +66,19 @@
           for (var weekday = 1; weekday <= 7; weekday++) {
             var td = document.createElement("td");
 
-            if (week == 1 && weekday < date.getDay() + 1) {
+            if (isFirstWeek && weekday < date.getDay() + 1) {
+              td.textContent = "";
+            } else if (day > daysInMonth) {
               td.textContent = "";
             } else {
               td.textContent = day;
-
-              if (day == daysInMonth) {
-                break;
-              }
-
               day++;
             }
 
             weekRow.appendChild(td);
           }
 
+          isFirstWeek = false;
           tbody.appendChild(weekRow);
           week++;
         }
