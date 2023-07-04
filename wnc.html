@@ -98,12 +98,17 @@ function getISOWeekNumber(date) {
   var yearStart = new Date(date.getFullYear(), 0, 1);
   var daysOffset = (yearStart.getDay() + 6) % 7;
   var daysOfYear = Math.floor((date - yearStart) / 86400000) + 1;
-  var weekNumber = Math.floor((daysOfYear - (daysOffset + 3)) / 7) + 1;
-  if (weekNumber < 1) {
-    weekNumber = getISOWeekNumber(new Date(date.getFullYear() - 1, 11, 31));
+  var weekNumber = Math.floor((daysOfYear - daysOffset + 10) / 7);
+  
+  if (weekNumber === 0) {
+    var previousYear = date.getFullYear() - 1;
+    var previousYearEnd = new Date(previousYear, 11, 31);
+    return getISOWeekNumber(previousYearEnd);
   }
+  
   return weekNumber;
 }
+
 
 
     // Generate the calendar on page load
