@@ -48,7 +48,7 @@
           // Create an <img> element for the weather icon
           var weatherImg = document.createElement("img");
           weatherImg.src = "https:" + weatherIcon;
-
+          console.log(göteborgsvädret);
           // Append the weather icon to the weatherContainer div
           var weatherContainer = document.getElementById("weatherContainer");
           weatherContainer.appendChild(weatherImg);
@@ -172,15 +172,10 @@
 <body>
   <h1 id="currentDate"></h1>
   <h2 id="currentTime"></h2>
-  <center><p class="message-box">
-    hur är göteborgsvädret:
-  <div id="weatherContainer">
-  </div></p>
-  </center>
-
-  <p class="message-box"><center>
+  <div id="weatherContainer"></div>
+  <center>
   <label for="year">Select Year:</label><input type="number" id="year" value="2023"><button onclick="generateCalendar()">Go</button>
-  </center></p>
+  </center>
   <div id="calendarContainer"></div>
 
   <script>
