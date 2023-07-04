@@ -99,7 +99,7 @@ function getISOWeekNumber(date) {
   var firstDayOfYear = new Date(yearStart.getFullYear(), 0, (yearStart.getDay() || 7));
   var daysOffset = (firstDayOfYear > yearStart ? 7 - (firstDayOfYear - yearStart) / 86400000 : (yearStart - firstDayOfYear) / 86400000) + 1;
   var daysOfYear = Math.floor((date - yearStart) / 86400000) + 1;
-  var weekNumber = Math.floor((daysOfYear - daysOffset + 10) / 7) + 1;
+  var weekNumber = Math.floor((daysOfYear - daysOffset + 10) / 7);
   return weekNumber;
 }
 
