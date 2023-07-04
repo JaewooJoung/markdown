@@ -27,11 +27,6 @@
       font-weight: bold;
       color: blue;
     }
-    .month-title {
-      font-weight: bold;
-      text-align: center;
-      margin-bottom: 10px;
-    }
   </style>
 </head>
 <body>
@@ -78,18 +73,6 @@
       timeElement.textContent = timeString;
     }
 
-       function getCurrentDateTime() {
-      var currentDateElement = document.getElementById("currentDate");
-      var currentTimeElement = document.getElementById("currentTime");
-
-      var now = new Date();
-      var currentDate = now.toLocaleDateString();
-      var currentTime = now.toLocaleTimeString();
-
-      currentDateElement.textContent = "Date: " + currentDate;
-      currentTimeElement.textContent = "Time: " + currentTime;
-    }
-
     function generateCalendar() {
       var yearInput = document.getElementById("year");
       var year = parseInt(yearInput.value);
@@ -97,36 +80,66 @@
       var calendarContainer = document.getElementById("calendarContainer");
       calendarContainer.innerHTML = "";
 
-      var monthNames = [
-        "January", "February", "March", "April", "May", "June", "July",
-        "August", "September", "October", "November", "December"
-      ];
-
       for (var month = 1; month <= 12; month++) {
         var date = new Date(year, month - 1, 1);
-        var monthName = monthNames[date.getMonth()];
+        var monthName = date.toLocaleString('default', { month: 'long' });
+        var daysInMonth = new Date(year, month, 0).getDate();
 
-        // Create the month title row
         var table = document.createElement("table");
         var thead = document.createElement("thead");
         var tbody = document.createElement("tbody");
 
-        var titleRow = document.createElement("tr");
-        var titleCell = document.createElement("th");
-        titleCell.setAttribute("colspan", "8");
-        titleCell.textContent = monthName;
-        titleRow.appendChild(titleCell);
-        tbody.appendChild(titleRow);
-
         var headerRow = document.createElement("tr");
-        var weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+        var monthTitle = document.createElement("th");
+        monthTitle.colSpan = 8;
+        monthTitle.textContent = monthName;
+        headerRow.appendChild(monthTitle);
+        thead.appendChild(headerRow);
+
+        var weekdays = ["WN", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+        var weekdayRow = document.createElement("tr");
         weekdays.forEach(function(weekday) {
           var th = document.createElement("th");
           th.textContent = weekday;
-          headerRow.appendChild(th);
+          weekdayRow.appendChild(th);
         });
+        thead.appendChild(weekdayRow);
 
-        thead.appendChild(headerRow);
+        var firstDayOfMonth = new Date(year, month - 1, 1);
+        var startingWeekNumber = getISOWeekNumber(firstDayOfMonth); // Get the ISO week number of the first day in the month
+        var dayOfWeek = firstDayOfMonth.getDay();
+        if (dayOfWeek === 0) {
+          dayOfWeek = 7; // Adjust Sunday to be the last day of the week (7) instead of the first (0)
+        }
+
+        var week = startingWeekNumber;
+        var day = 1;
+
+        while (day <= daysInMonth) {
+          var weekRow = document.createElement("tr");
+          var weekTd = document.createElement("td");
+          weekTd.textContent = week;
+          weekTd.className = "week-number";
+          weekRow.appendChild(weekTd);
+
+          for (var weekday = 1; weekday <= 7; weekday++) {
+            var td = document.createElement("td");
+
+            if (weekday < dayOfWeek || day > daysInMonth) {
+              td.textContent = "";
+            } else {
+              td.textContent = day;
+              day++;
+            }
+
+            weekRow.appendChild(td);
+          }
+
+          tbody.appendChild(weekRow);
+          week++;
+          dayOfWeek = 1; // Start the next week with Monday
+        }
+
         table.appendChild(thead);
         table.appendChild(tbody);
         calendarContainer.appendChild(table);
@@ -135,6 +148,15 @@
       // Call the functions to get the current date/time and weather
       getCurrentDateTime();
       getWeather();
+    }
+
+    // Get ISO week number
+    function getISOWeekNumber(date) {
+      var startOfWeek = new Date(date);
+      startOfWeek.setDate(date.getDate() - date.getDay() + 1); // Set the date to the first day of the week (Monday)
+      var yearStart = new Date(startOfWeek.getFullYear(), 0, 1);
+      var weekNumber = Math.ceil(((startOfWeek - yearStart) / 86400000 + 1) / 7);
+      return weekNumber;
     }
 
     // Generate the calendar on page load
