@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CEVT 🚧TSI🛑 ⚡RAPID🌠 ⛔TEST🚦</title>
+    <style>
+        /* Add your custom styles here */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: lightgray;
+        }
+    </style>
+</head>
+<body>
+	<div class="container">
+		<div class="center">
+		<div><hr><hr><br></div>
+		<div>CEVT 🚧TSI🛑 ⚡RAPID🌠 ⛔TEST🚦</div>
+		  ME SW
+		  <select name="MESW">
+		    <option value="norem">W/O.REM</option>
+		    <option value="rem">/W.REM</option>
+		    <option value="na">N/A</option>
+		  </select>
+		  Zkr HMI SW
+		  <select name="ZkrHMI">
+		    <option value="1027">1.0.2.7</option>
+		    <option value="1032">1.0.3.2</option>
+		    <option value="na">N/A</option>
+		  </select>
+		<hr>
+		<div class="radio-group">
+			<label for="sun">🌞SUNNY</label>
+			<input type="radio" id="sun" name="clima" value="sun">
+			<label for="rain">/☔RAINNY</label>
+			<input type="radio" id="rain" name="clima" value="rain">
+			<label for="snow">/⛄SNOW</label>
+			<input type="radio" id="snow" name="clima" value="snow">
+		</div>
+		<div class="row">
+			<div class="time" id="date"></div>
+			<div class="time" id="clock"></div>
+		</div>
+		</div>
+		<div class="radio-group">
+			<label for="sweden"><i class="flag-icon flag-icon-se"></i>Sverige</label>
+			<input type="radio" id="sweden" name="country" value="Sweden">
+			<label for="germany">/  <i class="flag-icon flag-icon-de"></i>Germany</label>
+			<input type="radio" id="germany" name="country" value="Germany">
+			<label for="spain">/  <i class="flag-icon flag-icon-es"></i>España</label>
+			<input type="radio" id="spain" name="country" value="spain">
+		</div>
+		<div class="remember" id="location"></div>
+		<div class="radio-group">
+			<label for="urban">🏞Urban</label>
+			<input type="radio" id="urban" name="area" value="Urban">
+			<label for="city">/   🏙City</label>
+			<input type="radio" id="city" name="area" value="City">
+			<label for="highway">/   <i class="fas fa-road"></i>Highway</label>
+			<input type="radio" id="highway" name="area" value="Highway">
+		</div>
+		<div class="row">
+		<div class="total">0</div>
+		<div>Kms</div>
+		</div>
+		<div class="row">
+			<div class="button-group">
+				<button class="green" id="ok">+TP_D🆗</button>
+				<div class="counter" id="ok-counter">0</div>
+			</div>
+			<div class="button-group">
+				<button class="red" id="nok">+FX_D🆖</button>
+				<div class="counter" id="nok-counter">0</div>
+			</div>
+		</div>
+
+		<button class="submit" id="submit-btn">Check Percentage</button>
+		<div class="result" id="result"></div>
+		
+		<div>IMU<hr>
+		<canvas id="accel-chart" width="200" height="400"></canvas>
+		<hr></div>
+	</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Location</th>
+                <th>Type of Road</th>
+                <th>Weather</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="data-table-body"></tbody>
+    </table>
+
+    <script>
+        const okButton = document.getElementById('ok');
+        const nokButton = document.getElementById('nok');
+        const okCounter = document.getElementById('ok-counter');
+        const nokCounter = document.getElementById('nok-counter');
+        const totalCounter = document.querySelector('.total');
+        const submitButton = document.getElementById('submit-btn');
+        const result = document.getElementById('result');
+          
+    var chartData = {
+      labels: [],
+      datasets: [{
+        label: 'Accelerometer X',
+        data: [],
+        borderColor: 'red',
+        fill: false
+      }, {
+        label: 'Accelerometer Y',
+        data: [],
+        borderColor: 'green',
+        fill: false
+      }, {
+        label: 'Accelerometer Z',
+        data: [],
+        borderColor: 'blue',
+        fill: false
+      }]
+    };
+          
+    var chartOptions = {
+      responsive: true,
+      title: {
+        display: true,
+        text: 'Accelerometer Data'
+      },
+      scales: {
+        xAxes: [{
+          display: true,
+          scaleLabel: {
+            display: false,
+            labelString: 'Time'
+          }
+        }],
+        yAxes: [{
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'Acceleration'
+          },
+          ticks: {
+            min: 0,
+            max: 1,
+            stepSize: 0.1
+          }
+        }]
+      }
+    };
+          
+    var accelChart = new Chart(document.getElementById('accel-chart'), {
+      type: 'line',
+      data: chartData,
+      options: chartOptions
+    });
+          
+        let okCount = 0;
+        let nokCount = 0;
+        
+        okButton.addEventListener('click', () => {
+            okCount++;
+            okCounter.textContent = okCount;
+            updateTotal();
+        });
+        
+        nokButton.addEventListener('click', () => {
+            nokCount++;
+            nokCounter.textContent = nokCount;
+            updateTotal();
+        });
+        
+        function updateTotal() {
+            totalCounter.textContent = okCount + nokCount;
+        }
+        
+        submitButton.addEventListener('click', () => {
+            const okRatio = (okCount / (okCount + nokCount)) * 100;
+            const nokRatio = (nokCount / (okCount + nokCount)) * 100;
+            result.textContent = `🏁TP_D: ${okRatio.toFixed(2)}%::FX_D: ${nokRatio.toFixed(2)}%`;
+        });
+            
+          function updateTime() {
+            var now = new Date();
+            var time = now.toLocaleTimeString();
+            var date = now.toLocaleDateString();
+            document.getElementById("clock").innerHTML = time;
+            document.getElementById("date").innerHTML = date;
+          }
+          setInterval(updateTime, 1000);
+            
+          function showPosition(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            document.getElementById("location").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+          }
+          function showError(error) {
+            document.getElementById("location").innerHTML = "Error: " + error.message;
+          }
+          function updateLocation() {
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+          }
+          setInterval(updateLocation, 2300); // update location every 2.3 seconds
+        window.addEventListener('devicemotion', handleMotion, true);
+    
+    function handleMotion(event) {
+      var accelX, accelY, accelZ;
+      if (/(android)/i.test(navigator.userAgent)) {
+        accelX = event.accelerationIncludingGravity.x;
+        accelY = event.accelerationIncludingGravity.y;
+        accelZ = event.accelerationIncludingGravity.z;
+      } else if (/(iphone|ipod|ipad)/i.test(navigator.userAgent)) {
+        accelX = event.acceleration.x;
+        accelY = event.acceleration.y;
+        accelZ = event.acceleration.z;
+      } else {
+        accelX = event.acceleration.x;
+        accelY = event.acceleration.y;
+        accelZ = event.acceleration.z;
+      }
+    
+      // Add new data point to chart
+      accelChart.data.labels.push(new Date().toLocaleTimeString());
+      accelChart.data.datasets[0].data.push(accelX);
+      accelChart.data.datasets[1].data.push(accelY);
+      accelChart.data.datasets[2].data.push(accelZ);
+    
+      // Remove old data points
+      if (accelChart.data.labels.length > 20) {
+        accelChart.data.labels.shift();
+        accelChart.data.datasets[0].data.shift();
+        accelChart.data.datasets[1].data.shift();
+        accelChart.data.datasets[2].data.shift();
+      }
+    
+      // Update chart
+      accelChart.update();
+    }
+    
+        // Function to append a row to the table with the accumulated data
+        function appendDataToTable() {
+            const dataTableBody = document.getElementById('data-table-body');
+
+            // Get the values of the inputs and other elements
+            const time = new Date().toLocaleTimeString();
+            const location = document.getElementById('location').textContent;
+            const roadType = document.querySelector('input[name="area"]:checked').value;
+            const weather = document.querySelector('input[name="clima"]:checked').value;
+            const action = `FX_D: ${nokCounter.textContent}, TP_D: ${okCounter.textContent}`;
+
+            // Create a new row
+            const newRow = document.createElement('tr');
+
+            // Create cells and set their values
+            const timeCell = document.createElement('td');
+            timeCell.textContent = time;
+
+            const locationCell = document.createElement('td');
+            locationCell.textContent = location;
+
+            const roadTypeCell = document.createElement('td');
+            roadTypeCell.textContent = roadType;
+
+            const weatherCell = document.createElement('td');
+            weatherCell.textContent = weather;
+
+            const actionCell = document.createElement('td');
+            actionCell.textContent = action;
+
+            // Append cells to the row
+            newRow.appendChild(timeCell);
+            newRow.appendChild(locationCell);
+            newRow.appendChild(roadTypeCell);
+            newRow.appendChild(weatherCell);
+            newRow.appendChild(actionCell);
+
+            // Append the row to the table body
+            dataTableBody.appendChild(newRow);
+        }
+
+        // Update the total and call the appendDataToTable function when OK or NOK buttons are clicked
+        okButton.addEventListener('click', () => {
+            okCount++;
+            okCounter.textContent = okCount;
+            updateTotal();
+            appendDataToTable();
+        });
+
+        nokButton.addEventListener('click', () => {
+            nokCount++;
+            nokCounter.textContent = nokCount;
+            updateTotal();
+            appendDataToTable();
+        });
+    </script>
+</body>
+</html>
