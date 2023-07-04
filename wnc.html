@@ -47,8 +47,6 @@
 
   <script>
     function getWeather() {
-      // Make a request to the weather API to get the weather data
-      // Replace 'YOUR_API_KEY' with your actual API key
       fetch('https://api.weatherapi.com/v1/current.json?key=ad8caecea06c43d1912181938230407&q=Gothenburg')
         .then(response => response.json())
         .then(data => {
