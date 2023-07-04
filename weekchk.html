@@ -53,9 +53,8 @@
 
         thead.appendChild(headerRow);
 
-        var week = 1;
+        var week = getWeekNumber(new Date(year, month - 1, 1)); // Get the week number of the first day in the month
         var day = 1;
-        var isFirstWeek = true;
 
         while (day <= daysInMonth) {
           var weekRow = document.createElement("tr");
@@ -66,9 +65,7 @@
           for (var weekday = 1; weekday <= 7; weekday++) {
             var td = document.createElement("td");
 
-            if (isFirstWeek && weekday < date.getDay() + 1) {
-              td.textContent = "";
-            } else if (day > daysInMonth) {
+            if (day > daysInMonth) {
               td.textContent = "";
             } else {
               td.textContent = day;
@@ -78,7 +75,6 @@
             weekRow.appendChild(td);
           }
 
-          isFirstWeek = false;
           tbody.appendChild(weekRow);
           week++;
         }
@@ -87,6 +83,13 @@
         table.appendChild(tbody);
         calendarContainer.appendChild(table);
       }
+    }
+
+    // Get ISO week number
+    function getWeekNumber(date) {
+      var yearStart = new Date(date.getFullYear(), 0, 1);
+      var weekNumber = Math.ceil(((date - yearStart) / 86400000 + yearStart.getDay() + 1) / 7);
+      return weekNumber;
     }
 
     // Generate the calendar on page load
