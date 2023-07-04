@@ -1,202 +1,146 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 20px;
+<head>
+  <title>Road Condition Tracker</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h1>Road Condition Tracker</h1>
+  <div>
+    <h3>User Details</h3>
+    <p id="userDetails">User: John Doe</p>
+  </div>
+  <div>
+    <h3>Current Location</h3>
+    <p id="location">Loading...</p>
+  </div>
+  <div>
+    <h3>Actions</h3>
+    <button id="okButton">OK</button>
+    <button id="nokButton">NOK</button>
+  </div>
+  <div>
+    <h3>Counters</h3>
+    <p id="okCount">OK Count: 0</p>
+    <p id="nokCount">NOK Count: 0</p>
+  </div>
+  <div>
+    <h3>Data Table</h3>
+    <table id="dataTable">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Location</th>
+          <th>Road Type</th>
+          <th>Weather</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="dataTableBody"></tbody>
+    </table>
+  </div>
+
+  <script>
+    const locationElement = document.getElementById('location');
+    const okButton = document.getElementById('okButton');
+    const nokButton = document.getElementById('nokButton');
+    const okCountElement = document.getElementById('okCount');
+    const nokCountElement = document.getElementById('nokCount');
+    const dataTableBody = document.getElementById('dataTableBody');
+
+    let okCount = 0;
+    let nokCount = 0;
+
+    function updateCounters() {
+      okCountElement.textContent = `OK Count: ${okCount}`;
+      nokCountElement.textContent = `NOK Count: ${nokCount}`;
+    }
+
+    function updateLocation(latitude, longitude) {
+      locationElement.textContent = `Latitude: ${latitude}, Longitude: ${longitude}`;
+    }
+
+    function appendDataToTable() {
+      const time = new Date().toLocaleTimeString();
+      const location = locationElement.textContent;
+      const roadType = 'Type 1';
+      const weather = 'Sunny';
+      const action = 'OK/NOK';
+
+      const newRow = document.createElement('tr');
+
+      const timeCell = document.createElement('td');
+      timeCell.textContent = time;
+      newRow.appendChild(timeCell);
+
+      const locationCell = document.createElement('td');
+      locationCell.textContent = location;
+      newRow.appendChild(locationCell);
+
+      const roadTypeCell = document.createElement('td');
+      roadTypeCell.textContent = roadType;
+      newRow.appendChild(roadTypeCell);
+
+      const weatherCell = document.createElement('td');
+      weatherCell.textContent = weather;
+      newRow.appendChild(weatherCell);
+
+      const actionCell = document.createElement('td');
+      actionCell.textContent = action;
+      newRow.appendChild(actionCell);
+
+      dataTableBody.appendChild(newRow);
+    }
+
+    function handleOkClick() {
+      okCount++;
+      updateCounters();
+      appendDataToTable();
+    }
+
+    function handleNokClick() {
+      nokCount++;
+      updateCounters();
+      appendDataToTable();
+    }
+
+    okButton.addEventListener('click', handleOkClick);
+    nokButton.addEventListener('click', handleNokClick);
+
+    function getGPSLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function (position) {
+            const latitude = position.coords.latitude.toFixed(6);
+            const longitude = position.coords.longitude.toFixed(6);
+            updateLocation(latitude, longitude);
+          },
+          function (error) {
+            console.log('Error getting GPS location:', error);
+            updateLocation('N/A', 'N/A');
+          }
+        );
+      } else {
+        console.log('Geolocation is not supported by this browser.');
+        updateLocation('N/A', 'N/A');
       }
+    }
 
-      h1 {
-        margin-bottom: 20px;
-      }
-
-      .container {
-        max-width: 800px;
-        margin: 0 auto;
-      }
-
-      .row {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-      }
-
-      label {
-        margin-right: 10px;
-      }
-
-      .button-group {
-        display: flex;
-        margin-top: 10px;
-      }
-
-      button {
-        margin-right: 10px;
-      }
-
-      .counter {
-        margin-right: 20px;
-      }
-
-      .total {
-        margin-top: 20px;
-        font-weight: bold;
-      }
-
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-      }
-
-      th,
-      td {
-        border: 1px solid black;
-        padding: 8px;
-        text-align: center;
-      }
-
-      th {
-        background-color: lightgray;
-      }
-
-      #data-table-body {
-        display: none;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>CEVT 🚧TSI🛑 ⚡RAPID🌠 ⛔TEST🚦</h1>
-      <div class="row">
-        <label>Location:</label>
-        <span id="location">Loading...</span>
-      </div>
-      <div class="row">
-        <div class="counter">
-          OK Count: <span id="okCounter">0</span>
-        </div>
-        <div class="counter">
-          NOK Count: <span id="nokCounter">0</span>
-        </div>
-      </div>
-      <div class="button-group">
-        <button class="green" id="okButton">OK</button>
-        <button class="red" id="nokButton">NOK</button>
-      </div>
-      <div class="total">
-        Total: <span id="total">0</span>
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Time</th>
-            <th>Location (Latitude, Longitude)</th>
-            <th>Type of Road</th>
-            <th>Weather</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="data-table-body"></tbody>
-      </table>
-    </div>
-    <script>
-      let okCount = 0;
-      let nokCount = 0;
-
-      const okCounter = document.getElementById('okCounter');
-      const nokCounter = document.getElementById('nokCounter');
-      const totalCounter = document.getElementById('total');
-      const locationElement = document.getElementById('location');
-      const dataTableBody = document.getElementById('data-table-body');
-
-      const okButton = document.getElementById('okButton');
-      const nokButton = document.getElementById('nokButton');
-
-      function updateTotal() {
-        const total = okCount + nokCount;
-        totalCounter.textContent = total;
-      }
-
-      function updateCounters() {
-        okCounter.textContent = okCount;
-        nokCounter.textContent = nokCount;
-        updateTotal();
-      }
-
-      function updateLocation(latitude, longitude) {
-        locationElement.textContent = `${latitude}, ${longitude}`;
-      }
-
-      function appendDataToTable() {
-        const time = new Date().toLocaleTimeString();
-        const roadType = 'Type 1'; // Example road type
-        const weather = 'Sunny'; // Example weather
-        const action = 'OK/NOK'; // Example action
-
-        const newRow = document.createElement('tr');
-
-        const timeCell = document.createElement('td');
-        timeCell.textContent = time;
-        newRow.appendChild(timeCell);
-
-        const locationCell = document.createElement('td');
-        locationCell.textContent = locationElement.textContent;
-        newRow.appendChild(locationCell);
-
-        const roadTypeCell = document.createElement('td');
-        roadTypeCell.textContent = roadType;
-        newRow.appendChild(roadTypeCell);
-
-        const weatherCell = document.createElement('td');
-        weatherCell.textContent = weather;
-        newRow.appendChild(weatherCell);
-
-        const actionCell = document.createElement('td');
-        actionCell.textContent = action;
-        newRow.appendChild(actionCell);
-
-        dataTableBody.appendChild(newRow);
-      }
-
-      function handleOkClick() {
-        okCount++;
-        updateCounters();
-        appendDataToTable();
-      }
-
-      function handleNokClick() {
-        nokCount++;
-        updateCounters();
-        appendDataToTable();
-      }
-
-      okButton.addEventListener('click', handleOkClick);
-      nokButton.addEventListener('click', handleNokClick);
-
-      // Retrieve GPS location
-      function getGPSLocation() {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            function (position) {
-              const latitude = position.coords.latitude.toFixed(6);
-              const longitude = position.coords.longitude.toFixed(6);
-              updateLocation(latitude, longitude);
-            },
-            function (error) {
-              console.log('Error getting GPS location:', error);
-              updateLocation('N/A', 'N/A');
-            }
-          );
-        } else {
-          console.log('Geolocation is not supported by this browser.');
-          updateLocation('N/A', 'N/A');
-        }
-      }
-
-      getGPSLocation();
-    </script>
-  </body>
+    getGPSLocation();
+  </script>
+</body>
 </html>
