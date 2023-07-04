@@ -57,32 +57,44 @@
         var week = firstDayOfMonth.isoWeek();
         var day = 1;
 
+        var weekRow = document.createElement("tr");
+        var weekTd = document.createElement("td");
+        weekTd.textContent = week;
+        weekRow.appendChild(weekTd);
+
+        for (var weekday = 1; weekday < firstDayOfMonth.isoWeekday(); weekday++) {
+          var emptyTd = document.createElement("td");
+          emptyTd.textContent = "";
+          weekRow.appendChild(emptyTd);
+        }
+
         while (day <= daysInMonth) {
-          var weekRow = document.createElement("tr");
+          var td = document.createElement("td");
+          td.textContent = day;
 
-          var weekTd = document.createElement("td");
-          weekTd.textContent = week;
-          weekRow.appendChild(weekTd);
+          weekRow.appendChild(td);
 
-          for (var weekday = 1; weekday <= 7; weekday++) {
-            var td = document.createElement("td");
-
-            if (weekday === firstDayOfMonth.isoWeekday() && day === 1) {
-              td.textContent = day;
-              day++;
-            } else if (day > daysInMonth) {
-              td.textContent = "";
-            } else {
-              td.textContent = day;
-              day++;
-            }
-
-            weekRow.appendChild(td);
+          if (firstDayOfMonth.isoWeekday() === 7) {
+            tbody.appendChild(weekRow);
+            weekRow = document.createElement("tr");
+            week++;
+            var weekTd = document.createElement("td");
+            weekTd.textContent = week;
+            weekRow.appendChild(weekTd);
           }
 
-          tbody.appendChild(weekRow);
-          week++;
+          firstDayOfMonth.add(1, 'day');
+          day++;
         }
+
+        // Add empty cells for the remaining days of the last week
+        for (var weekday = firstDayOfMonth.isoWeekday(); weekday <= 7; weekday++) {
+          var emptyTd = document.createElement("td");
+          emptyTd.textContent = "";
+          weekRow.appendChild(emptyTd);
+        }
+
+        tbody.appendChild(weekRow);
 
         table.appendChild(thead);
         table.appendChild(tbody);
