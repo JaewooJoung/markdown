@@ -96,13 +96,14 @@
     // Get ISO week number
 function getISOWeekNumber(date) {
   var yearStart = new Date(date.getFullYear(), 0, 1);
-  var firstDayOfYear = new Date(yearStart.getFullYear(), 0, (yearStart.getDay() || 7));
-  var daysOffset = (firstDayOfYear > yearStart ? 7 - (firstDayOfYear - yearStart) / 86400000 : (yearStart - firstDayOfYear) / 86400000) + 1;
+  var daysOffset = (yearStart.getDay() + 6) % 7;
   var daysOfYear = Math.floor((date - yearStart) / 86400000) + 1;
   var weekNumber = Math.floor((daysOfYear - daysOffset + 10) / 7);
+  if (weekNumber === 0) {
+    weekNumber = getISOWeekNumber(new Date(date.getFullYear() - 1, 11, 31));
+  }
   return weekNumber;
 }
-
 
     // Generate the calendar on page load
     generateCalendar();
