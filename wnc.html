@@ -59,7 +59,7 @@
 
         var weekRow = document.createElement("tr");
         var weekTd = document.createElement("td");
-        weekTd.textContent = week === 1 ? 52 : week - 1;
+        weekTd.textContent = week;
         weekRow.appendChild(weekTd);
 
         for (var weekday = 1; weekday < firstDayOfMonth.isoWeekday(); weekday++) {
@@ -78,8 +78,11 @@
             tbody.appendChild(weekRow);
             weekRow = document.createElement("tr");
             week++;
+            if (week === 53 && moment().year(year).month(month - 1).date(7).isoWeek() === 1) {
+              week = 1;
+            }
             var weekTd = document.createElement("td");
-            weekTd.textContent = week === 1 ? 52 : week - 1;
+            weekTd.textContent = week;
             weekRow.appendChild(weekTd);
           }
 
