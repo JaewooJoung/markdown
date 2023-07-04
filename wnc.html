@@ -101,13 +101,20 @@ function getISOWeekNumber(date) {
   var weekNumber = Math.floor((daysOfYear - daysOffset + 10) / 7);
   
   if (weekNumber === 0) {
-    var previousYear = date.getFullYear() - 1;
-    var previousYearEnd = new Date(previousYear, 11, 31);
-    return getISOWeekNumber(previousYearEnd);
+    var previousYear = new Date(date.getFullYear() - 1, 0, 1);
+    return getISOWeekNumber(previousYear);
+  }
+  
+  var yearEnd = new Date(date.getFullYear(), 11, 31);
+  var weeksInYear = Math.floor((yearEnd - yearStart) / 86400000 / 7) + 1;
+  
+  if (weekNumber > weeksInYear) {
+    return getISOWeekNumber(new Date(date.getFullYear() + 1, 0, 1));
   }
   
   return weekNumber;
 }
+
 
 
 
