@@ -62,6 +62,7 @@
 
         var week = startingWeekNumber;
         var day = 1;
+        if (week === 53) {    week = 0;  }
 
         while (day <= daysInMonth) {
           var weekRow = document.createElement("tr");
@@ -81,8 +82,7 @@
 
             weekRow.appendChild(td);
           }
-
-          if (week === 53) {    week = 0;  }
+          
           tbody.appendChild(weekRow);
           week++;
             
