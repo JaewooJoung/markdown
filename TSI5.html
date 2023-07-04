@@ -176,15 +176,27 @@
       okButton.addEventListener('click', handleOkClick);
       nokButton.addEventListener('click', handleNokClick);
 
-      // Simulating GPS coordinates
-      function simulateGPS() {
-        const latitude = Math.random() * 90;
-        const longitude = Math.random() * 180;
-        updateLocation(latitude.toFixed(6), longitude.toFixed(6));
-        setTimeout(simulateGPS, 1000);
+      // Retrieve GPS location
+      function getGPSLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            function (position) {
+              const latitude = position.coords.latitude.toFixed(6);
+              const longitude = position.coords.longitude.toFixed(6);
+              updateLocation(latitude, longitude);
+            },
+            function (error) {
+              console.log('Error getting GPS location:', error);
+              updateLocation('N/A', 'N/A');
+            }
+          );
+        } else {
+          console.log('Geolocation is not supported by this browser.');
+          updateLocation('N/A', 'N/A');
+        }
       }
 
-      simulateGPS();
+      getGPSLocation();
     </script>
   </body>
 </html>
