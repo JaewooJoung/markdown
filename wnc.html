@@ -11,6 +11,10 @@
       padding: 5px;
       text-align: center;
     }
+    .week-number {
+      font-weight: bold;
+      color: blue;
+    }
   </style>
 </head>
 <body>
@@ -44,7 +48,7 @@
         var tbody = document.createElement("tbody");
 
         var headerRow = document.createElement("tr");
-        var weekdays = ["WN", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+        var weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "WN"];
         weekdays.forEach(function(weekday) {
           var th = document.createElement("th");
           th.textContent = weekday;
@@ -65,9 +69,6 @@
 
         while (day <= daysInMonth) {
           var weekRow = document.createElement("tr");
-          var weekTd = document.createElement("td");
-          weekTd.textContent = week;
-          weekRow.appendChild(weekTd);
 
           for (var weekday = 1; weekday <= 7; weekday++) {
             var td = document.createElement("td");
@@ -81,6 +82,11 @@
 
             weekRow.appendChild(td);
           }
+
+          var weekTd = document.createElement("td");
+          weekTd.classList.add("week-number"); // Add the class for styling
+          weekTd.textContent = week;
+          weekRow.appendChild(weekTd);
 
           tbody.appendChild(weekRow);
 
@@ -101,18 +107,14 @@
       }
     }
 
-        // Get ISO week number
-        function getISOWeekNumber(date) {
-        var yearStart = new Date(date.getFullYear(), 0, 1);
-        var daysOffset = (yearStart.getDay() + 6) % 7;
-        var daysOfYear = Math.floor((date - yearStart) / 86400000) + 1;
-        var weekNumber = Math.floor((daysOfYear - daysOffset + 10) / 7);
-        if (weekNumber === 0) {
-            weekNumber = getISOWeekNumber(new Date(date.getFullYear() - 1, 11, 31));
-        }
-        return weekNumber;
-        }
-
+    // Get ISO week number
+    function getISOWeekNumber(date) {
+      var startOfWeek = new Date(date);
+      startOfWeek.setDate(date.getDate() - date.getDay() + 1); // Set the date to the first day of the week (Monday)
+      var yearStart = new Date(startOfWeek.getFullYear(), 0, 1);
+      var weekNumber = Math.ceil(((startOfWeek - yearStart) / 86400000 + 1) / 7);
+      return weekNumber;
+    }
 
     // Generate the calendar on page load
     generateCalendar();
