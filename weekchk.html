@@ -16,71 +16,81 @@
 <body>
   <h1>Yearly Calendar with Week Numbers</h1>
 
-  <form action="" method="get">
-    <label for="year">Select Year:</label>
-    <input type="number" id="year" name="year" value="<?php echo isset($_GET['year']) ? $_GET['year'] : date('Y'); ?>">
-    <input type="submit" value="Go">
-  </form>
+  <label for="year">Select Year:</label>
+  <input type="number" id="year" value="2023">
+  <button onclick="generateCalendar()">Go</button>
 
-  <?php
-    $year = isset($_GET['year']) ? $_GET['year'] : date('Y');
-    $week = 1;
-    $date = new DateTime();
+  <div id="calendarContainer"></div>
 
-    // Loop through each month of the year
-    for ($month = 1; $month <= 12; $month++) {
-      $date->setDate($year, $month, 1);
-      $monthName = $date->format('F');
-      $daysInMonth = $date->format('t');
-  ?>
+  <script>
+    function generateCalendar() {
+      var yearInput = document.getElementById("year");
+      var year = parseInt(yearInput.value);
 
-      <h2><?php echo $monthName; ?></h2>
+      var calendarContainer = document.getElementById("calendarContainer");
+      calendarContainer.innerHTML = "";
 
-      <table>
-        <thead>
-          <tr>
-            <th>Week</th>
-            <th>Mon</th>
-            <th>Tue</th>
-            <th>Wed</th>
-            <th>Thu</th>
-            <th>Fri</th>
-            <th>Sat</th>
-            <th>Sun</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php
-            // Loop through each week of the month
-            while ($week <= 52) {
-              echo '<tr>';
-              echo '<td>' . $week . '</td>';
+      for (var month = 1; month <= 12; month++) {
+        var date = new Date(year, month - 1, 1);
+        var monthName = date.toLocaleString('default', { month: 'long' });
+        var daysInMonth = new Date(year, month, 0).getDate();
 
-              // Loop through each day of the week
-              for ($day = 1; $day <= 7; $day++) {
-                if ($week == 1 && $day < $date->format('N')) {
-                  echo '<td></td>'; // Empty cell for days before the first of the month
-                } else {
-                  $formattedDate = $date->setISODate($year, $week, $day)->format('Y-m-d');
-                  $dayNumber = date('d', strtotime($formattedDate));
-                  if ($dayNumber > $daysInMonth) {
-                    echo '<td></td>'; // Empty cell for days after the last day of the month
-                  } else {
-                    echo '<td>' . $dayNumber . '</td>';
-                  }
-                }
+        var h2 = document.createElement("h2");
+        h2.textContent = monthName;
+        calendarContainer.appendChild(h2);
+
+        var table = document.createElement("table");
+        var thead = document.createElement("thead");
+        var tbody = document.createElement("tbody");
+
+        var headerRow = document.createElement("tr");
+        var weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+        weekdays.forEach(function(weekday) {
+          var th = document.createElement("th");
+          th.textContent = weekday;
+          headerRow.appendChild(th);
+        });
+
+        thead.appendChild(headerRow);
+
+        var week = 1;
+        var day = 1;
+        while (day <= daysInMonth) {
+          var weekRow = document.createElement("tr");
+          var weekTd = document.createElement("td");
+          weekTd.textContent = week;
+          weekRow.appendChild(weekTd);
+
+          for (var weekday = 1; weekday <= 7; weekday++) {
+            var td = document.createElement("td");
+
+            if (week == 1 && weekday < date.getDay() + 1) {
+              td.textContent = "";
+            } else {
+              td.textContent = day;
+
+              if (day == daysInMonth) {
+                break;
               }
 
-              echo '</tr>';
-              $week++;
+              day++;
             }
-          ?>
-        </tbody>
-      </table>
 
-  <?php
+            weekRow.appendChild(td);
+          }
+
+          tbody.appendChild(weekRow);
+          week++;
+        }
+
+        table.appendChild(thead);
+        table.appendChild(tbody);
+        calendarContainer.appendChild(table);
+      }
     }
-  ?>
 
+    // Generate the calendar on page load
+    generateCalendar();
+  </script>
 </body>
 </html>
