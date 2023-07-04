@@ -145,9 +145,7 @@
         calendarTable.appendChild(tbody);
         calendarContainer.appendChild(calendarTable);
       }
-      // Call the functions to get the current date/time and weather
-      getCurrentDateTime();
-      getWeather();
+
     }
 
     // Get ISO week number
@@ -173,6 +171,8 @@
   <div id="calendarContainer"></div>
 
   <script>
+    getCurrentDateTime();
+    getWeather();
     generateCalendar();
   </script>
 </body>
