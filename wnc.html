@@ -5,7 +5,6 @@
   <style>
     table {
       border-collapse: collapse;
-      width: 100%;
     }
     th, td {
       border: 1px solid black;
@@ -16,14 +15,14 @@
       font-weight: bold;
       color: blue;
     }
-    .highlight {
+    .today {
       font-weight: bold;
       color: red;
     }
     .calendar-table {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-gap: 10px;
+      display: inline-block;
+      margin-right: 20px;
+      margin-bottom: 20px;
     }
   </style>
   <script>
@@ -73,13 +72,18 @@
         var monthName = date.toLocaleString('default', { month: 'long' });
         var daysInMonth = new Date(year, month, 0).getDate();
 
-        var h2 = document.createElement("h2");
-        h2.textContent = monthName;
+        var calendarTable = document.createElement("table");
+        calendarTable.classList.add("calendar-table");
 
-        var table = document.createElement("table");
-        table.classList.add("calendar-table");
         var thead = document.createElement("thead");
         var tbody = document.createElement("tbody");
+
+        var monthTitleRow = document.createElement("tr");
+        var monthTitleCell = document.createElement("th");
+        monthTitleCell.textContent = monthName;
+        monthTitleCell.colSpan = 8;
+        monthTitleRow.appendChild(monthTitleCell);
+        thead.appendChild(monthTitleRow);
 
         var headerRow = document.createElement("tr");
         var weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "WN"];
@@ -88,7 +92,6 @@
           th.textContent = weekday;
           headerRow.appendChild(th);
         });
-
         thead.appendChild(headerRow);
 
         var firstDayOfMonth = new Date(year, month - 1, 1);
@@ -111,13 +114,10 @@
               td.textContent = "";
             } else {
               td.textContent = day;
-              day++;
-
-              // Highlight today's date
-              var today = new Date();
-              if (today.getFullYear() === year && today.getMonth() === month - 1 && parseInt(td.textContent) === today.getDate()) {
-                td.classList.add("highlight");
+              if (year === new Date().getFullYear() && month === new Date().getMonth() + 1 && day === new Date().getDate()) {
+                td.classList.add("today"); // Add the class for styling today's date
               }
+              day++;
             }
 
             weekRow.appendChild(td);
@@ -141,14 +141,9 @@
           }
         }
 
-        table.appendChild(thead);
-        table.appendChild(tbody);
-
-        var calendarDiv = document.createElement("div");
-        calendarDiv.appendChild(h2);
-        calendarDiv.appendChild(table);
-
-        calendarContainer.appendChild(calendarDiv);
+        calendarTable.appendChild(thead);
+        calendarTable.appendChild(tbody);
+        calendarContainer.appendChild(calendarTable);
       }
       // Call the functions to get the current date/time and weather
       getCurrentDateTime();
@@ -163,6 +158,7 @@
       var weekNumber = Math.ceil(((startOfWeek - yearStart) / 86400000 + 1) / 7);
       return weekNumber;
     }
+
   </script>
 </head>
 <body>
@@ -177,7 +173,7 @@
   <div id="calendarContainer"></div>
 
   <script>
-     generateCalendar();
+    generateCalendar();
   </script>
 </body>
 </html>
