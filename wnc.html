@@ -74,13 +74,13 @@
     }
 
     function generateCalendar() {
-      var yearInput = document.getElementById("year");
-      var year = parseInt(yearInput.value);
+    var yearInput = document.getElementById("year");
+    var year = parseInt(yearInput.value);
 
-      var calendarContainer = document.getElementById("calendarContainer");
-      calendarContainer.innerHTML = "";
+    var calendarContainer = document.getElementById("calendarContainer");
+    calendarContainer.innerHTML = "";
 
-      for (var month = 1; month <= 12; month++) {
+    for (var month = 1; month <= 12; month++) {
         var date = new Date(year, month - 1, 1);
         var monthName = date.toLocaleString('default', { month: 'long' });
         var daysInMonth = new Date(year, month, 0).getDate();
@@ -96,12 +96,12 @@
         headerRow.appendChild(monthTitle);
         thead.appendChild(headerRow);
 
-        var weekdays = ["WN", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+        var weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "WN"];
         var weekdayRow = document.createElement("tr");
         weekdays.forEach(function(weekday) {
-          var th = document.createElement("th");
-          th.textContent = weekday;
-          weekdayRow.appendChild(th);
+        var th = document.createElement("th");
+        th.textContent = weekday;
+        weekdayRow.appendChild(th);
         });
         thead.appendChild(weekdayRow);
 
@@ -109,41 +109,48 @@
         var startingWeekNumber = getISOWeekNumber(firstDayOfMonth); // Get the ISO week number of the first day in the month
         var dayOfWeek = firstDayOfMonth.getDay();
         if (dayOfWeek === 0) {
-          dayOfWeek = 7; // Adjust Sunday to be the last day of the week (7) instead of the first (0)
+        dayOfWeek = 7; // Adjust Sunday to be the last day of the week (7) instead of the first (0)
         }
 
         var week = startingWeekNumber;
         var day = 1;
 
         while (day <= daysInMonth) {
-          var weekRow = document.createElement("tr");
-          var weekTd = document.createElement("td");
-          weekTd.textContent = week;
-          weekTd.className = "week-number";
-          weekRow.appendChild(weekTd);
+        var weekRow = document.createElement("tr");
 
-          for (var weekday = 1; weekday <= 7; weekday++) {
+        for (var weekday = 1; weekday <= 8; weekday++) {
             var td = document.createElement("td");
 
-            if (weekday < dayOfWeek || day > daysInMonth) {
-              td.textContent = "";
+            if (weekday < dayOfWeek) {
+            td.textContent = "";
             } else {
-              td.textContent = day;
-              day++;
+            if (day <= daysInMonth) {
+                td.textContent = day;
+                day++;
+            }
             }
 
             weekRow.appendChild(td);
-          }
+        }
 
-          tbody.appendChild(weekRow);
-          week++;
-          dayOfWeek = 1; // Start the next week with Monday
+        tbody.appendChild(weekRow);
+        dayOfWeek = 1; // Start the next week with Monday
+        }
+
+        // Update the last seen date to the week number column
+        var rows = tbody.getElementsByTagName("tr");
+        for (var i = 0; i < rows.length; i++) {
+        var row = rows[i];
+        var lastCellIndex = row.cells.length - 1;
+        var lastCell = row.cells[lastCellIndex];
+        lastCell.textContent = week;
+        week++;
         }
 
         table.appendChild(thead);
         table.appendChild(tbody);
         calendarContainer.appendChild(table);
-      }
+    }
 
       // Call the functions to get the current date/time and weather
       getCurrentDateTime();
