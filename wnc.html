@@ -27,6 +27,13 @@
       margin-right: 20px;
       margin-bottom: 20px;
     }
+    .message-box {
+    border: 1px solid black;
+    padding: 10px;
+    width: 200px;
+    text-align: center;
+  }
+
   </style>
   <script>
     function getWeather() {
@@ -169,11 +176,11 @@
   <p class="message-box">hur är göteborgsvädret:</p>
   </div>
 
-<center>
+<center><p class="message-box">
   <label for="year">Select Year:</label>
   <input type="number" id="year" value="2023">
   <button onclick="generateCalendar()">Go</button>
-  <br>
+  </p>
 </center>
   <div id="calendarContainer"></div>
 
