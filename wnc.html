@@ -3,20 +3,8 @@
 <head>
   <title>Yearly Calendar with Week Numbers</title>
   <style>
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .calendar-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
     table {
       border-collapse: collapse;
-      width: 30%;
-      margin: 10px;
     }
     th, td {
       border: 1px solid black;
@@ -28,20 +16,10 @@
       color: blue;
     }
   </style>
-</head>
-<body>
-  <h1 id="currentDate"></h1>
-  <h2 id="currentTime"></h2>
-  <div id="weatherContainer"></div>
-
-  <label for="year">Select Year:</label>
-  <input type="number" id="year" value="2023">
-  <button onclick="generateCalendar()">Go</button>
-
-  <div class="calendar-container" id="calendarContainer"></div>
-
   <script>
     function getWeather() {
+      // Make a request to the weather API to get the weather data
+      // Replace 'YOUR_API_KEY' with your actual API key
       fetch('https://api.weatherapi.com/v1/current.json?key=ad8caecea06c43d1912181938230407&q=Gothenburg')
         .then(response => response.json())
         .then(data => {
@@ -74,84 +52,83 @@
     }
 
     function generateCalendar() {
-    var yearInput = document.getElementById("year");
-    var year = parseInt(yearInput.value);
+      var yearInput = document.getElementById("year");
+      var year = parseInt(yearInput.value);
 
-    var calendarContainer = document.getElementById("calendarContainer");
-    calendarContainer.innerHTML = "";
+      var calendarContainer = document.getElementById("calendarContainer");
+      calendarContainer.innerHTML = "";
 
-    for (var month = 1; month <= 12; month++) {
+      for (var month = 1; month <= 12; month++) {
         var date = new Date(year, month - 1, 1);
         var monthName = date.toLocaleString('default', { month: 'long' });
         var daysInMonth = new Date(year, month, 0).getDate();
+
+        var h2 = document.createElement("h2");
+        h2.textContent = monthName;
+        calendarContainer.appendChild(h2);
 
         var table = document.createElement("table");
         var thead = document.createElement("thead");
         var tbody = document.createElement("tbody");
 
         var headerRow = document.createElement("tr");
-        var monthTitle = document.createElement("th");
-        monthTitle.colSpan = 8;
-        monthTitle.textContent = monthName;
-        headerRow.appendChild(monthTitle);
-        thead.appendChild(headerRow);
-
         var weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "WN"];
-        var weekdayRow = document.createElement("tr");
         weekdays.forEach(function(weekday) {
-        var th = document.createElement("th");
-        th.textContent = weekday;
-        weekdayRow.appendChild(th);
+          var th = document.createElement("th");
+          th.textContent = weekday;
+          headerRow.appendChild(th);
         });
-        thead.appendChild(weekdayRow);
+
+        thead.appendChild(headerRow);
 
         var firstDayOfMonth = new Date(year, month - 1, 1);
         var startingWeekNumber = getISOWeekNumber(firstDayOfMonth); // Get the ISO week number of the first day in the month
         var dayOfWeek = firstDayOfMonth.getDay();
         if (dayOfWeek === 0) {
-        dayOfWeek = 7; // Adjust Sunday to be the last day of the week (7) instead of the first (0)
+          dayOfWeek = 7; // Adjust Sunday to be the last day of the week (7) instead of the first (0)
         }
 
         var week = startingWeekNumber;
         var day = 1;
 
         while (day <= daysInMonth) {
-        var weekRow = document.createElement("tr");
+          var weekRow = document.createElement("tr");
 
-        for (var weekday = 1; weekday <= 8; weekday++) {
+          for (var weekday = 1; weekday <= 7; weekday++) {
             var td = document.createElement("td");
 
-            if (weekday < dayOfWeek) {
-            td.textContent = "";
+            if (weekday < dayOfWeek || day > daysInMonth) {
+              td.textContent = "";
             } else {
-            if (day <= daysInMonth) {
-                td.textContent = day;
-                day++;
-            }
+              td.textContent = day;
+              day++;
             }
 
             weekRow.appendChild(td);
-        }
+          }
 
-        tbody.appendChild(weekRow);
-        dayOfWeek = 1; // Start the next week with Monday
-        }
+          var weekTd = document.createElement("td");
+          weekTd.classList.add("week-number"); // Add the class for styling
+          weekTd.textContent = week;
+          weekRow.appendChild(weekTd);
 
-        // Update the last seen date to the week number column
-        var rows = tbody.getElementsByTagName("tr");
-        for (var i = 0; i < rows.length; i++) {
-        var row = rows[i];
-        var lastCellIndex = row.cells.length - 1;
-        var lastCell = row.cells[lastCellIndex];
-        lastCell.textContent = week;
-        week++;
+          tbody.appendChild(weekRow);
+
+          // Increment the week number and adjust for the start of the next week
+          if (day <= daysInMonth) {
+            var nextWeekDate = new Date(year, month - 1, day);
+            week = getISOWeekNumber(nextWeekDate);
+            dayOfWeek = nextWeekDate.getDay();
+            if (dayOfWeek === 0) {
+              dayOfWeek = 7; // Adjust Sunday to be the last day of the week (7) instead of the first (0)
+            }
+          }
         }
 
         table.appendChild(thead);
         table.appendChild(tbody);
         calendarContainer.appendChild(table);
-    }
-
+      }
       // Call the functions to get the current date/time and weather
       getCurrentDateTime();
       getWeather();
@@ -166,7 +143,20 @@
       return weekNumber;
     }
 
-    // Generate the calendar on page load
+  </script>
+</head>
+<body>
+  <h1 id="currentDate"></h1>
+  <h2 id="currentTime"></h2>
+  <div id="weatherContainer"></div>
+
+  <label for="year">Select Year:</label>
+  <input type="number" id="year" value="2023">
+  <button onclick="generateCalendar()">Go</button>
+
+  <div id="calendarContainer"></div>
+
+  <script>
     generateCalendar();
   </script>
 </body>
