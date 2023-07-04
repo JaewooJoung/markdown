@@ -12,7 +12,6 @@
       text-align: center;
     }
   </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 </head>
 <body>
   <h1>Yearly Calendar with Week Numbers</h1>
@@ -32,8 +31,9 @@
       calendarContainer.innerHTML = "";
 
       for (var month = 1; month <= 12; month++) {
-        var monthName = moment().month(month - 1).format('MMMM');
-        var daysInMonth = moment().year(year).month(month - 1).daysInMonth();
+        var date = new Date(year, month - 1, 1);
+        var monthName = date.toLocaleString('default', { month: 'long' });
+        var daysInMonth = new Date(year, month, 0).getDate();
 
         var h2 = document.createElement("h2");
         h2.textContent = monthName;
@@ -53,48 +53,31 @@
 
         thead.appendChild(headerRow);
 
-        var firstDayOfMonth = moment().year(year).month(month - 1).date(1);
-        var week = firstDayOfMonth.isoWeek();
+        var week = getISOWeekNumber(new Date(year, month - 1, 1)); // Get the ISO week number of the first day in the month
         var day = 1;
 
-        var weekRow = document.createElement("tr");
-        var weekTd = document.createElement("td");
-        weekTd.textContent = week;
-        weekRow.appendChild(weekTd);
-
-        for (var weekday = 1; weekday < firstDayOfMonth.isoWeekday(); weekday++) {
-          var emptyTd = document.createElement("td");
-          emptyTd.textContent = "";
-          weekRow.appendChild(emptyTd);
-        }
-
         while (day <= daysInMonth) {
-          var td = document.createElement("td");
-          td.textContent = day;
+          var weekRow = document.createElement("tr");
+          var weekTd = document.createElement("td");
+          weekTd.textContent = week;
+          weekRow.appendChild(weekTd);
 
-          weekRow.appendChild(td);
+          for (var weekday = 1; weekday <= 7; weekday++) {
+            var td = document.createElement("td");
 
-          if (firstDayOfMonth.isoWeekday() === 7) {
-            tbody.appendChild(weekRow);
-            weekRow = document.createElement("tr");
-            week++;
-            var weekTd = document.createElement("td");
-            weekTd.textContent = week;
-            weekRow.appendChild(weekTd);
+            if (day > daysInMonth) {
+              td.textContent = "";
+            } else {
+              td.textContent = day;
+              day++;
+            }
+
+            weekRow.appendChild(td);
           }
 
-          firstDayOfMonth.add(1, 'day');
-          day++;
+          tbody.appendChild(weekRow);
+          week++;
         }
-
-        // Add empty cells for the remaining days of the last week
-        for (var weekday = firstDayOfMonth.isoWeekday(); weekday <= 7; weekday++) {
-          var emptyTd = document.createElement("td");
-          emptyTd.textContent = "";
-          weekRow.appendChild(emptyTd);
-        }
-
-        tbody.appendChild(weekRow);
 
         table.appendChild(thead);
         table.appendChild(tbody);
@@ -102,5 +85,17 @@
       }
     }
 
+    // Get ISO week number
+    function getISOWeekNumber(date) {
+      var firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+      var daysOffset = (firstDayOfYear.getDay() + 6) % 7;
+      var daysOfYear = Math.floor((date - firstDayOfYear) / 86400000) + 1;
+      var weekNumber = Math.floor((daysOfYear - daysOffset + 10) / 7);
+      return weekNumber;
+    }
+
     // Generate the calendar on page load
     generateCalendar();
+  </script>
+</body>
+</html>
