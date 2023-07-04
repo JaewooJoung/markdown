@@ -15,6 +15,10 @@
       font-weight: bold;
       color: blue;
     }
+    .today {
+      font-weight: bold;
+      color: red;
+    }
   </style>
   <script>
     function getWeather() {
@@ -101,6 +105,13 @@
               td.textContent = "";
             } else {
               td.textContent = day;
+
+              // Highlight today's date
+              var today = new Date();
+              if (today.getFullYear() === year && today.getMonth() + 1 === month && today.getDate() === day) {
+                td.classList.add("today");
+              }
+
               day++;
             }
 
@@ -129,6 +140,7 @@
         table.appendChild(tbody);
         calendarContainer.appendChild(table);
       }
+
       // Call the functions to get the current date/time and weather
       getCurrentDateTime();
       getWeather();
@@ -142,7 +154,6 @@
       var weekNumber = Math.ceil(((startOfWeek - yearStart) / 86400000 + 1) / 7);
       return weekNumber;
     }
-
   </script>
 </head>
 <body>
@@ -157,7 +168,7 @@
   <div id="calendarContainer"></div>
 
   <script>
-    generateCalendar();
+     generateCalendar();
   </script>
 </body>
 </html>
