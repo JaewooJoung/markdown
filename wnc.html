@@ -5,20 +5,19 @@
   <style>
     table {
       border-collapse: collapse;
-      width: 100%;
+      width: 33.33%;
     }
     th, td {
       border: 1px solid black;
       padding: 5px;
       text-align: center;
     }
-    .calendar-container {
-      display: flex;
-      flex-wrap: wrap;
-    }
     .calendar {
-      width: 33.33%;
-      margin-bottom: 20px;
+      display: inline-block;
+    }
+    h2 {
+      display: inline-block;
+      margin-right: 10px;
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
@@ -44,7 +43,13 @@
         var monthName = moment().month(month - 1).format('MMMM');
         var daysInMonth = moment().year(year).month(month - 1).daysInMonth();
 
+        var h2 = document.createElement("h2");
+        h2.textContent = monthName;
+        h2.classList.add("calendar");
+        calendarContainer.appendChild(h2);
+
         var table = document.createElement("table");
+        table.classList.add("calendar");
         var thead = document.createElement("thead");
         var tbody = document.createElement("tbody");
 
@@ -60,12 +65,7 @@
 
         var firstDayOfMonth = moment().year(year).month(month - 1).date(1);
         var week = firstDayOfMonth.isoWeek();
-        var day = firstDayOfMonth.date();
-
-        if (day !== 2) {
-          week--;
-          firstDayOfMonth.subtract(1, 'week');
-        }
+        var day = 1;
 
         var weekRow = document.createElement("tr");
         var weekTd = document.createElement("td");
@@ -108,15 +108,7 @@
 
         table.appendChild(thead);
         table.appendChild(tbody);
-
-        var calendar = document.createElement("div");
-        calendar.className = "calendar";
-        var h2 = document.createElement("h2");
-        h2.textContent = monthName;
-        calendar.appendChild(h2);
-        calendar.appendChild(table);
-
-        calendarContainer.appendChild(calendar);
+        calendarContainer.appendChild(table);
       }
     }
 
