@@ -78,9 +78,6 @@
             tbody.appendChild(weekRow);
             weekRow = document.createElement("tr");
             week++;
-            if (week === 53 && moment().year(year).month(month - 1).date(7).isoWeek() === 1) {
-              week = 1;
-            }
             var weekTd = document.createElement("td");
             weekTd.textContent = week;
             weekRow.appendChild(weekTd);
@@ -107,6 +104,3 @@
 
     // Generate the calendar on page load
     generateCalendar();
-  </script>
-</body>
-</html>
