@@ -1,106 +1,48 @@
 <!DOCTYPE html>
 <html>
-<!-- 📁File 💬 index.html -->
-<!-- 📙Brief 💬 the page that works to test TSI function quickly -->
-<!-- 🧾Details 💬 Also shows time, location, exact location, which type of road and spits the ratio -->
-<!-- 🚩OAuthor 💬 Original Author: Jaewoo Joung/郑在祐(jaewoo.joung@outlook.com) -->
-<!-- 👨‍🔧Company 💬 Submited to: Myself in CEVT (jaewoo.joung@cevt.se) -->
-<!-- 📆LastDate 💬 2023-04-22 🔄Please support to keep update🔄 -->
-<!-- 🏭License 🛑 JSD:Just Simple Distribution (a License made by Jaewoo) -->
-<!-- ✅Guarantee 💬 If you buy me a coffee, I will think about it -->
-<head>
-  <title>CEVT 🚧TSI🛑 ⚡RAPID🌠 ⛔TEST🚦</title>
-</head>
-<body>
   <head>
-    <title>CEVT 🚧TSI🛑 ⚡RAPID🌠 ⛔TEST🚦</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-      html, body {
-        height: 88%;
+      body {
+        font-family: Arial, sans-serif;
         margin: 0;
-        padding: 0;
+        padding: 20px;
       }
 
-      * {
-        box-sizing: border-box;
-        font-family: Arial, sans-serif;
-        font-size: 16px;
-        color: #333;
+      h1 {
+        margin-bottom: 20px;
       }
 
       .container {
-        height: 100%;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        margin: 10px;
+        max-width: 800px;
+        margin: 0 auto;
       }
 
       .row {
         display: flex;
-        flex-direction: row;
         align-items: center;
-        justify-content: center;
-        margin: 10px;
+        margin-bottom: 10px;
       }
 
-      .radio-group {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        margin: 10px;
-      }
-
-      .radio-group label {
+      label {
         margin-right: 10px;
       }
 
       .button-group {
         display: flex;
-        flex-direction: row;
-        align-items: center;
-        margin: 30px;
+        margin-top: 10px;
       }
 
-      .button-group button {
+      button {
         margin-right: 10px;
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        color: #fff;
-        font-size: 16px;
-        font-weight: bold;
-      }
-
-      .green {
-        background-color: green;
-      }
-
-      .red {
-        background-color: red;
       }
 
       .counter {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 24px;
-        font-weight: bold;
-        margin: 10px;
+        margin-right: 20px;
       }
 
       .total {
-        background-color: yellow;
-        padding: 10px;
-        border-radius: 5px;
         margin-top: 20px;
+        font-weight: bold;
       }
 
       table {
@@ -109,7 +51,8 @@
         margin-top: 20px;
       }
 
-      th, td {
+      th,
+      td {
         border: 1px solid black;
         padding: 8px;
         text-align: center;
@@ -118,6 +61,10 @@
       th {
         background-color: lightgray;
       }
+
+      #data-table-body {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -125,21 +72,7 @@
       <h1>CEVT 🚧TSI🛑 ⚡RAPID🌠 ⛔TEST🚦</h1>
       <div class="row">
         <label>Location:</label>
-        <span id="location">Stockholm</span>
-      </div>
-      <div class="radio-group">
-        <label>Type of Road:</label>
-        <label for="highway"><input type="radio" id="highway" name="area" value="Highway" checked> Highway</label>
-        <label for="city"><input type="radio" id="city" name="area" value="City"> City</label>
-      </div>
-      <div class="radio-group">
-        <label>Weather:</label>
-        <label for="sunny"><input type="radio" id="sunny" name="clima" value="Sunny" checked> Sunny</label>
-        <label for="rainy"><input type="radio" id="rainy" name="clima" value="Rainy"> Rainy</label>
-      </div>
-      <div class="button-group">
-        <button class="green" id="okButton">OK</button>
-        <button class="red" id="nokButton">NOK</button>
+        <span id="location">Loading...</span>
       </div>
       <div class="row">
         <div class="counter">
@@ -149,6 +82,10 @@
           NOK Count: <span id="nokCounter">0</span>
         </div>
       </div>
+      <div class="button-group">
+        <button class="green" id="okButton">OK</button>
+        <button class="red" id="nokButton">NOK</button>
+      </div>
       <div class="total">
         Total: <span id="total">0</span>
       </div>
@@ -156,7 +93,7 @@
         <thead>
           <tr>
             <th>Time</th>
-            <th>Location</th>
+            <th>Location (Latitude, Longitude)</th>
             <th>Type of Road</th>
             <th>Weather</th>
             <th>Action</th>
@@ -172,6 +109,8 @@
       const okCounter = document.getElementById('okCounter');
       const nokCounter = document.getElementById('nokCounter');
       const totalCounter = document.getElementById('total');
+      const locationElement = document.getElementById('location');
+      const dataTableBody = document.getElementById('data-table-body');
 
       const okButton = document.getElementById('okButton');
       const nokButton = document.getElementById('nokButton');
@@ -181,14 +120,21 @@
         totalCounter.textContent = total;
       }
 
-      function appendDataToTable() {
-        const dataTableBody = document.getElementById('data-table-body');
+      function updateCounters() {
+        okCounter.textContent = okCount;
+        nokCounter.textContent = nokCount;
+        updateTotal();
+      }
 
+      function updateLocation(latitude, longitude) {
+        locationElement.textContent = `${latitude}, ${longitude}`;
+      }
+
+      function appendDataToTable() {
         const time = new Date().toLocaleTimeString();
-        const location = document.getElementById('location').textContent;
-        const roadType = document.querySelector('input[name="area"]:checked').value;
-        const weather = document.querySelector('input[name="clima"]:checked').value;
-        const action = `FX_D: ${nokCounter.textContent}, TP_D: ${okCounter.textContent}`;
+        const roadType = 'Type 1'; // Example road type
+        const weather = 'Sunny'; // Example weather
+        const action = 'OK/NOK'; // Example action
 
         const newRow = document.createElement('tr');
 
@@ -197,7 +143,7 @@
         newRow.appendChild(timeCell);
 
         const locationCell = document.createElement('td');
-        locationCell.textContent = location;
+        locationCell.textContent = locationElement.textContent;
         newRow.appendChild(locationCell);
 
         const roadTypeCell = document.createElement('td');
@@ -215,12 +161,6 @@
         dataTableBody.appendChild(newRow);
       }
 
-      function updateCounters() {
-        okCounter.textContent = okCount;
-        nokCounter.textContent = nokCount;
-        updateTotal();
-      }
-
       function handleOkClick() {
         okCount++;
         updateCounters();
@@ -235,6 +175,16 @@
 
       okButton.addEventListener('click', handleOkClick);
       nokButton.addEventListener('click', handleNokClick);
+
+      // Simulating GPS coordinates
+      function simulateGPS() {
+        const latitude = Math.random() * 90;
+        const longitude = Math.random() * 180;
+        updateLocation(latitude.toFixed(6), longitude.toFixed(6));
+        setTimeout(simulateGPS, 1000);
+      }
+
+      simulateGPS();
     </script>
   </body>
 </html>
