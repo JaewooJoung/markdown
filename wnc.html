@@ -60,7 +60,12 @@
 
         var firstDayOfMonth = moment().year(year).month(month - 1).date(1);
         var week = firstDayOfMonth.isoWeek();
-        var day = 1;
+        var day = firstDayOfMonth.date();
+
+        if (day !== 2) {
+          week--;
+          firstDayOfMonth.subtract(1, 'week');
+        }
 
         var weekRow = document.createElement("tr");
         var weekTd = document.createElement("td");
