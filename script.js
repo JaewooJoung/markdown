@@ -78,4 +78,7 @@ function errorCallback(error) {
   console.log(error.message);
 }
 
-requestLocationPermission();
+// Execute the code when the DOM is fully loaded
+document.addEventListener("DOMContentLoaded", function () {
+  requestLocationPermission();
+});
