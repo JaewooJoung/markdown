@@ -63,10 +63,18 @@
         }
 
         window.addEventListener('devicemotion', handleMotion, true);
+
+        function updateDateTime() {
+            var currentDateTime = new Date().toLocaleString();
+            document.getElementById("dateTime").innerHTML = currentDateTime;
+        }
+
+        setInterval(updateDateTime, 1000); // update date and time every second
     </script>
 </head>
 <body>
-    <h1>Current City Weather</h1>
+    <h1 id="dateTime"></h1>
+    <h2>Current City Weather</h2>
     <p id="city">Locating...</p>
     <div id="weatherContainer"></div>
     <p id="location"></p>
