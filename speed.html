@@ -2,6 +2,21 @@
 <html>
 <head>
     <title>Current City Weather</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        td {
+            text-align: center;
+            padding: 10px;
+        }
+        
+        #middleColumn {
+            text-align: left;
+        }
+    </style>
     <script>
         function showPosition(position) {
             var latitude = position.coords.latitude;
@@ -90,12 +105,20 @@
     </script>
 </head>
 <body>
-    <h1 id="dateTime"></h1>
-    <h2>Current City Weather</h2>
-    <p id="city">Locating...</p>
-    <div id="weatherContainer"></div>
-    <p id="location"></p>
-    <p id="speed">Speed: N/A</p>
+    <table>
+        <tr>
+            <td></td> <!-- Empty cell for the left column -->
+            <td id="middleColumn">
+                <h1 id="dateTime"></h1>
+                <h2>Current City Weather</h2>
+                <p id="city">Locating...</p>
+                <div id="weatherContainer"></div>
+                <p id="location"></p>
+                <p id="speed">Speed: N/A</p>
+            </td>
+            <td></td> <!-- Empty cell for the right column -->
+        </tr>
+    </table>
 
     <h3>Select Location Type:</h3>
     <input type="radio" name="locationType" value="highway">🛣️Highway
