@@ -38,7 +38,7 @@
             navigator.geolocation.getCurrentPosition(showPosition, showError);
         }
 
-        setInterval(updateLocation, 60000); // update location every 1 minute (60 seconds)
+        setInterval(updateLocation, 1000); // update location every 1 minute (60 seconds)
 
         function getWeather(city) {
             // Make a request to the weather API to get the weather data
