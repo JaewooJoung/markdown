@@ -38,7 +38,7 @@
             navigator.geolocation.getCurrentPosition(showPosition, showError);
         }
 
-        setInterval(updateLocation, 1000); // update location every 1 minute (60 seconds)
+        setInterval(updateLocation, 1000); // update location every 1 second
 
         function getWeather(city) {
             // Make a request to the weather API to get the weather data
@@ -75,14 +75,14 @@
         }
 
         setInterval(updateDateTime, 1000); // update date and time every second
-    </script>
-</head>
-<body>
-    <h1 id="dateTime"></h1>
-    <h2>Current City Weather</h2>
-    <p id="city">Locating...</p>
-    <div id="weatherContainer"></div>
-    <p id="location"></p>
-    <p id="speed">Speed: N/A</p>
-</body>
-</html>
+
+        function updateWeatherPeriodically() {
+            // Get the city from the previous update
+            var cityElement = document.getElementById('city');
+            var city = cityElement.innerText.replace('City: ', '');
+
+            // Call getWeather() to update the weather
+            getWeather(city);
+        }
+
+        setInterval(updateWeatherPeriodically, 1800000); // update weather every 30 minutes (30 minutes * 60 seconds * 1000 milliseconds)
