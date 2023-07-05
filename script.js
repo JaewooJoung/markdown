@@ -18,6 +18,42 @@ function calculateSpeed(initialLat, initialLng, initialTimestamp, currentLat, cu
   return speed;
 }
 
+function showPosition(position) {
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    document.getElementById("location").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+
+    var url = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" + latitude + "&lon=" + longitude;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            var city = data.address.city;
+            if (city) {
+                document.getElementById('city').innerHTML = 'City: ' + city;
+            } else {
+                document.getElementById('city').innerHTML = 'City not found';
+            }
+        })
+        .catch(error => {
+            document.getElementById('city').innerHTML = 'Error: ' + error.message;
+        });
+}
+
+function showError(error) {
+    document.getElementById("location").innerHTML = "Error: " + error.message;
+}
+
+function updateLocation() {
+    navigator.geolocation.getCurrentPosition(showPosition, showError);
+}
+
+setInterval(updateLocation, 2300); // update location every 2.3 seconds
+
+function handleMotion(event) {
+    // Handle device motion events here
+}
+
 // Function to get the weather and display the icon
 function getWeather() {
   // Make a request to the weather API to get the weather data
