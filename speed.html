@@ -3,30 +3,35 @@
 <head>
     <title>Current City Weather</title>
     <script>
-        var previousPosition = null;
-
         function showPosition(position) {
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
-            var speed = null;
-
-            if (previousPosition) {
-                var previousLatitude = previousPosition.coords.latitude;
-                var previousLongitude = previousPosition.coords.longitude;
-                var distance = getDistance(latitude, longitude, previousLatitude, previousLongitude);
-                var timeDifference = position.timestamp - previousPosition.timestamp;
-
-                speed = calculateSpeed(distance, timeDifference);
-            }
+            var speed = position.coords.speed || 0; // Use 0 if speed is not available
 
             document.getElementById("location").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
-            document.getElementById("speed").innerHTML = speed !== null ? "Speed: " + speed.toFixed(2) + " meters per second" : "Speed: N/A";
+            document.getElementById("speed").innerHTML = "Speed: " + speed + " m/s";
 
-            previousPosition = position;
+            var url = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" + latitude + "&lon=" + longitude;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    var city = data.address.city;
+                    if (city) {
+                        document.getElementById('city').innerHTML = 'City: ' + city;
+                        getWeather(city); // Pass the city to the getWeather() function
+                    } else {
+                        document.getElementById('city').innerHTML = 'City not found';
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('city').innerHTML = 'Error: ' + error.message;
+                });
         }
 
         function showError(error) {
             document.getElementById("location").innerHTML = "Error: " + error.message;
+            document.getElementById("speed").innerHTML = "Speed: N/A";
         }
 
         function updateLocation() {
@@ -35,37 +40,49 @@
 
         setInterval(updateLocation, 60000); // update location every 1 minute (60 seconds)
 
-        function getDistance(lat1, lon1, lat2, lon2) {
-            var R = 6371; // Radius of the Earth in km
-            var dLat = toRadians(lat2 - lat1);
-            var dLon = toRadians(lon2 - lon1);
-            var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                    Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
-                    Math.sin(dLon / 2) * Math.sin(dLon / 2);
-            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-            var distance = R * c * 1000; // Convert to meters
-            return distance;
-        }
+        function getWeather(city) {
+            // Make a request to the weather API to get the weather data
+            // Replace 'YOUR_API_KEY' with your actual API key
+            var weatherAPIUrl = 'https://api.weatherapi.com/v1/current.json?key=ad8caecea06c43d1912181938230407&q=' + encodeURIComponent(city);
 
-        function toRadians(degrees) {
-            return degrees * Math.PI / 180;
-        }
+            fetch(weatherAPIUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Get the weather icon code from the API response
+                    var weatherIcon = data.current.condition.icon;
 
-        function calculateSpeed(distance, time) {
-            var speed = distance / time; // Speed in meters per millisecond
-            return speed * 1000; // Convert to meters per second
+                    // Create an <img> element for the weather icon
+                    var weatherImg = document.createElement("img");
+                    weatherImg.src = "https:" + weatherIcon;
+
+                    // Append the weather icon to the weatherContainer div
+                    var weatherContainer = document.getElementById("weatherContainer");
+                    weatherContainer.innerHTML = ''; // Clear previous weather icon, if any
+                    weatherContainer.appendChild(weatherImg);
+                });
         }
 
         function handleMotion(event) {
-            // Handle device motion events here
+            var speed = event.accelerationIncludingGravity && event.accelerationIncludingGravity.z || 0; // Use 0 if speed is not available
+            document.getElementById("speed").innerHTML = "Speed: " + speed + " m/s";
         }
 
         window.addEventListener('devicemotion', handleMotion, true);
+
+        function updateDateTime() {
+            var currentDateTime = new Date().toLocaleString();
+            document.getElementById("dateTime").innerHTML = currentDateTime;
+        }
+
+        setInterval(updateDateTime, 1000); // update date and time every second
     </script>
 </head>
 <body>
-    <h1>Current City Weather</h1>
-    <p id="location">Locating...</p>
+    <h1 id="dateTime"></h1>
+    <h2>Current City Weather</h2>
+    <p id="city">Locating...</p>
+    <div id="weatherContainer"></div>
+    <p id="location"></p>
     <p id="speed">Speed: N/A</p>
 </body>
 </html>
