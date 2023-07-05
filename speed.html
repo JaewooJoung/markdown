@@ -1,68 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Speed Calculation</title>
+  <title>Speed Calculation with Weather</title>
   <script src="script.js"></script>
 </head>
 <body>
   <h1>Speed Calculation</h1>
   <p id="speed">-</p>
-
-  <script>
-    function requestLocationPermission() {
-      navigator.permissions.query({ name: 'geolocation' }).then(function (result) {
-        if (result.state === 'granted') {
-          startTracking();
-        } else if (result.state === 'prompt') {
-          navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
-        } else {
-          console.log('Location permission denied.');
-        }
-      });
-    }
-
-    function startTracking() {
-      navigator.geolocation.watchPosition(
-        function (position) {
-          const initialPosition = position.coords;
-          const initialTimestamp = position.timestamp;
-
-          // Watch for changes in position
-          navigator.geolocation.watchPosition(
-            function (position) {
-              const currentLat = position.coords.latitude;
-              const currentLng = position.coords.longitude;
-              const currentTimestamp = position.timestamp;
-
-              const speed = calculateSpeed(
-                initialPosition.latitude,
-                initialPosition.longitude,
-                initialTimestamp,
-                currentLat,
-                currentLng,
-                currentTimestamp
-              );
-
-              // Update the speed value on the page
-              document.getElementById("speed").textContent = `Speed: ${speed.toFixed(2)} m/s`;
-            },
-            errorCallback
-          );
-        },
-        errorCallback
-      );
-    }
-
-    function successCallback(position) {
-      console.log('Location permission granted.');
-      startTracking();
-    }
-
-    function errorCallback(error) {
-      console.log(error.message);
-    }
-
-    requestLocationPermission();
-  </script>
+  <div id="weatherContainer"></div>
 </body>
 </html>
