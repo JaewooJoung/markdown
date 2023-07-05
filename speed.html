@@ -3,76 +3,48 @@
 <head>
     <title>Current City</title>
     <script>
-        function showLocation(position) {
+        function showPosition(position) {
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
-            
-            var geocoder = new google.maps.Geocoder();
-            var latlng = new google.maps.LatLng(latitude, longitude);
-            
-            geocoder.geocode({ 'latLng': latlng }, function (results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    if (results[0]) {
-                        var city = null;
-                        var address_components = results[0].address_components;
-                        
-                        for (var i = 0; i < address_components.length; i++) {
-                            var types = address_components[i].types;
-                            
-                            if (types.indexOf("locality") != -1) {
-                                city = address_components[i].long_name;
-                                break;
-                            }
-                        }
-                        
-                        if (city != null) {
-                            document.getElementById('city').innerHTML = 'City: ' + city;
-                            document.getElementById('latitude').innerHTML = 'Latitude: ' + latitude;
-                            document.getElementById('longitude').innerHTML = 'Longitude: ' + longitude;
-                        } else {
-                            document.getElementById('city').innerHTML = 'City not found';
-                        }
+            document.getElementById("location").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+
+            var url = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" + latitude + "&lon=" + longitude;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    var city = data.address.city;
+                    if (city) {
+                        document.getElementById('city').innerHTML = 'City: ' + city;
                     } else {
-                        document.getElementById('city').innerHTML = 'No results found';
+                        document.getElementById('city').innerHTML = 'City not found';
                     }
-                } else {
-                    document.getElementById('city').innerHTML = 'Geocoder failed due to: ' + status;
-                }
-            });
+                })
+                .catch(error => {
+                    document.getElementById('city').innerHTML = 'Error: ' + error.message;
+                });
         }
-        
+
         function showError(error) {
-            switch(error.code) {
-                case error.PERMISSION_DENIED:
-                    document.getElementById('city').innerHTML = 'User denied the request for Geolocation.';
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    document.getElementById('city').innerHTML = 'Location information is unavailable.';
-                    break;
-                case error.TIMEOUT:
-                    document.getElementById('city').innerHTML = 'The request to get user location timed out.';
-                    break;
-                case error.UNKNOWN_ERROR:
-                    document.getElementById('city').innerHTML = 'An unknown error occurred.';
-                    break;
-            }
+            document.getElementById("location").innerHTML = "Error: " + error.message;
         }
-        
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showLocation, showError);
-            } else {
-                document.getElementById('city').innerHTML = 'Geolocation is not supported by this browser.';
-            }
+
+        function updateLocation() {
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
         }
+
+        setInterval(updateLocation, 2300); // update location every 2.3 seconds
+
+        function handleMotion(event) {
+            // Handle device motion events here
+        }
+
+        window.addEventListener('devicemotion', handleMotion, true);
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
 </head>
-<body onload="getLocation()">
+<body>
     <h1>Current City</h1>
     <p id="city">Locating...</p>
-    <p id="latitude"></p>
-    <p id="longitude"></p>
+    <p id="location"></p>
 </body>
 </html>
-
