@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Current City</title>
+    <title>Current City Weather</title>
     <script>
         function showPosition(position) {
             var latitude = position.coords.latitude;
@@ -16,6 +16,7 @@
                     var city = data.address.city;
                     if (city) {
                         document.getElementById('city').innerHTML = 'City: ' + city;
+                        getWeather(city); // Pass the city to the getWeather() function
                     } else {
                         document.getElementById('city').innerHTML = 'City not found';
                     }
@@ -33,7 +34,29 @@
             navigator.geolocation.getCurrentPosition(showPosition, showError);
         }
 
-        setInterval(updateLocation, 2300); // update location every 2.3 seconds
+        setInterval(updateLocation, 60000); // update location every 1 minute (60 seconds)
+
+        function getWeather(city) {
+            // Make a request to the weather API to get the weather data
+            // Replace 'YOUR_API_KEY' with your actual API key
+            var weatherAPIUrl = 'https://api.weatherapi.com/v1/current.json?key=ad8caecea06c43d1912181938230407&q=' + encodeURIComponent(city);
+
+            fetch(weatherAPIUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Get the weather icon code from the API response
+                    var weatherIcon = data.current.condition.icon;
+
+                    // Create an <img> element for the weather icon
+                    var weatherImg = document.createElement("img");
+                    weatherImg.src = "https:" + weatherIcon;
+
+                    // Append the weather icon to the weatherContainer div
+                    var weatherContainer = document.getElementById("weatherContainer");
+                    weatherContainer.innerHTML = ''; // Clear previous weather icon, if any
+                    weatherContainer.appendChild(weatherImg);
+                });
+        }
 
         function handleMotion(event) {
             // Handle device motion events here
@@ -43,9 +66,9 @@
     </script>
 </head>
 <body>
-    <h1>Current City</h1>
+    <h1>Current City Weather</h1>
     <p id="city">Locating...</p>
+    <div id="weatherContainer"></div>
     <p id="location"></p>
 </body>
 </html>
-
