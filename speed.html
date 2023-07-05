@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Speed Calculation</title>
+  <script src="script.js"></script>
+</head>
+<body>
+  <h1>Speed Calculation</h1>
+  <p id="speed">-</p>
+
+  <script>
+    // Get the current position using the Geolocation API
+    navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+
+    function successCallback(position) {
+      const initialPosition = position.coords;
+      const initialTimestamp = position.timestamp;
+
+      // Watch for changes in position
+      navigator.geolocation.watchPosition(
+        function (position) {
+          const currentLat = position.coords.latitude;
+          const currentLng = position.coords.longitude;
+          const currentTimestamp = position.timestamp;
+
+          const speed = calculateSpeed(
+            initialPosition.latitude,
+            initialPosition.longitude,
+            initialTimestamp,
+            currentLat,
+            currentLng,
+            currentTimestamp
+          );
+
+          // Update the speed value on the page
+          document.getElementById("speed").textContent = `Speed: ${speed.toFixed(2)} m/s`;
+        },
+        errorCallback
+      );
+    }
+
+    function errorCallback(error) {
+      console.log(error.message);
+    }
+  </script>
+</body>
+</html>
