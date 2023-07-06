@@ -90,7 +90,7 @@
             navigator.geolocation.getCurrentPosition(showPosition, showError);
         }
 
-        setInterval(updateLocation, 60000); // update location every 1 minute (60 seconds)
+        setInterval(updateLocation, 1000); // update location every 1 minute (60 seconds)
 
         function getWeather(city) {
             var weatherAPIKey = 'YOUR_API_KEY'; // Replace 'YOUR_API_KEY' with your actual API key
@@ -182,7 +182,7 @@
     <table>
         <tr>
             <td id="leftColumn">
-                <button class="bigButton orangeButton" onclick="logButton('False Negative')">False Negative</button>
+                <button class="bigButton orangeButton" onclick="logButton('False Negative')"><br><br><br><br><br><br>False Negative<br><br><br><br><br><br></button>
             </td>
             <td id="middleColumn">
                 <h1 id="dateTime"></h1>
@@ -201,7 +201,7 @@
                 <textarea id="textBox" style="width: 30%; margin: 0 auto;" rows="5" placeholder="Enter your text here..."></textarea>
             </td>
             <td id="rightColumn">
-                <button class="bigButton redButton" onclick="logButton('False Positive')">False Positive</button>
+                <button class="bigButton redButton" onclick="logButton('False Positive')"><br><br><br><br><br><br>False Positive<br><br><br><br><br><br></button>
             </td>
         </tr>
     </table>
