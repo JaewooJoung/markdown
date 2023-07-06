@@ -90,101 +90,147 @@
             navigator.geolocation.getCurrentPosition(showPosition, showError);
         }
 
-        setInterval(updateLocation, 3000); // update location every 1 minute (60 seconds)
+        setInterval(updateLocation, 1000); // update location every 1 minute (60 seconds)
 
         function getWeather(city) {
-            var weatherAPIKey = 'ad8caecea06c43d1912181938230407'; // Replace 'YOUR_API_KEY' with your actual API key
-            var weatherAPIUrl = 'https://api.weatherapi.com/v1/current.json?key=' + weatherAPIKey + '&q=' + encodeURIComponent(city);
+            // Make a request to the weather API to get the weather data
+            // Replace 'YOUR_API_KEY' with your actual API key
+            var weatherAPIUrl = 'https://api.weatherapi.com/v1/current.json?key=ad8caecea06c43d1912181938230407&q=' + encodeURIComponent(city);
 
             fetch(weatherAPIUrl)
                 .then(response => response.json())
                 .then(data => {
+                    // Get the weather icon code from the API response
                     var weatherIcon = data.current.condition.icon;
-                    var weatherDescription = data.current.condition.text;
-                    var weatherTemperature = data.current.temp_c;
 
-                    var weatherContainer = document.getElementById("weatherContainer");
-                    weatherContainer.innerHTML = '';
-
+                    // Create an <img> element for the weather icon
                     var weatherImg = document.createElement("img");
                     weatherImg.src = "https:" + weatherIcon;
+
+                    // Append the weather icon to the weatherContainer div
+                    var weatherContainer = document.getElementById("weatherContainer");
+                    weatherContainer.innerHTML = ''; //Clear previous weather icon, if any
+                    weatherContainer.appendChild(weatherImg);
+                });
+        }
+
+        function handleMotion(event) {
+            var speed = event.accelerationIncludingGravity && event.accelerationIncludingGravity.z || 0; // Use 0 if speed is not available
+            document.getElementById("speed").innerHTML = "Speed: " + speed + " m/s";
+        }
+
+        window.addEventListener('devicemotion', handleMotion, true);
+
+        function updateDateTime() {
+            var currentDateTime = new Date().toLocaleString();
+            document.getElementById("dateTime").innerHTML = currentDateTime;
+        }
+
+        setInterval(updateDateTime, 1000); // update date and time every second
+
+        function handleLocationTypeChange() {
+            var locationType = document.querySelector('input[name="locationType"]:checked').value;
+            // Handle the selected location type here
+        }
+
+        function logButton(buttonName) {
+            var date = new Date().toLocaleDateString();
+            var time = new Date().toLocaleTimeString();
+            var latitude = document.getElementById("location").innerHTML.split("<br>")[0].split(": ")[1];
+            var longitude = document.getElementById("location").innerHTML.split("<br>")[1].split(": ")[1];
+            var speed = document.getElementById("speed").innerHTML.split(": ")[1].split(" m/s")[0];
+            var locationType = document.querySelector('input[name="locationType"]:checked').value;
+            var textBoxValue = document.getElementById("textBox").value;
+
+            // Get the current weather information
+            var weatherInfo = document.getElementById("weatherInfo").innerText;
+
+            var logEntry = [buttonName, date, time, latitude, longitude, speed, locationType, weatherInfo, textBoxValue];
+            logTable.push(logEntry);
+
+            displayLogTable();
+        }
+
+        function displayLogTable() {
+        var logTableHTML = "<table><tr><th>No.</th><th>Issue</th><th>Date</th><th>Time</th><th>Latitude</th><th>Longitude</th><th>Speed</th><th>Weather</th><th>Road Type</th><th>Recommendation</th></tr>";
+
+        for (var i = 0; i < logTable.length; i++) {
+            logTableHTML += "<tr>";
+            logTableHTML += "<td>" + (i + 1) + "</td>";
+            for (var j = 0; j < logTable[i].length; j++) {
+                logTableHTML += "<td>" + logTable[i][j] + "</td>";
+            }
+            logTableHTML += "</tr>";
+        }
+
+            logTableHTML += "</table>";
+
+            document.getElementById("logTableContainer").innerHTML = logTableHTML;
+        }
+        function getWeather(city) {
+            var weatherAPIUrl = 'https://api.weatherapi.com/v1/current.json?key=ad8caecea06c43d1912181938230407&q=' + encodeURIComponent(city);
+
+            fetch(weatherAPIUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Get the weather icon code from the API response
+                    var weatherIcon = data.current.condition.icon;
+                    var weatherInfo = data.current.temp_c + "°C, " + data.current.condition.text;
+
+                    // Create an <img> element for the weather icon
+                    var weatherImg = document.createElement("img");
+                    weatherImg.src = "https:" + weatherIcon;
+
+                    // Append the weather icon and information to the weatherContainer div
+                    var weatherContainer = document.getElementById("weatherContainer");
+                    weatherContainer.innerHTML = ''; //Clear previous weather icon, if any
                     weatherContainer.appendChild(weatherImg);
 
-                    var weatherText = document.createElement("p");
-                    weatherText.innerHTML = "Temperature: " + weatherTemperature + "&#8451; - " + weatherContainer.appendChild(weatherText);
+                    // Set the weather information in the hidden element for logging
+                    document.getElementById("weatherInfo").innerText = weatherInfo;
                 })
                 .catch(error => {
                     console.log("Error retrieving weather data:", error);
                 });
+        };
+    </script>
+</head>
+<body>
+    <table>
+        <tr>
+            <td id="leftColumn">
+                <button class="bigButton orangeButton" onclick="logButton('False Negative')"><br><br><br><br><br><br>False Negative<br><br><br><br><br><br></button>
+            </td>
+            <td id="middleColumn">
+                <h1 id="dateTime"></h1>
+                <h2>Current City Weather</h2>
+                <p id="city">Locating...</p>
+                <div id="weatherContainer"></div>
+                <p id="location"></p>
+                <p id="speed">Speed: N/A</p>
+                <div id="radioButtonContainer">
+                    <h3>Select Location Type:</h3>
+                    <input type="radio" name="locationType" value="highway">🛣️Highway
+                    <input type="radio" name="locationType"value="urban">🏞Int.Urban
+                    <input type="radio" name="locationType" value="city">🏙City
+                </div>
+                <br>
+                <textarea id="textBox" style="width: 30%; margin: 0 auto;" rows="5" placeholder="Enter your text here..."></textarea>
+            </td>
+            <td id="rightColumn">
+                <button class="bigButton redButton" onclick="logButton('False Positive')"><br><br><br><br><br><br>False Positive<br><br><br><br><br><br></button>
+            </td>
+        </tr>
+    </table>
 
-                var date = new Date().toLocaleDateString();
-                var time = new Date().toLocaleTimeString();
-                var latitude = document.getElementById("location").innerHTML.split("<br>")[0].split(": ")[1];
-                var longitude = document.getElementById("location").innerHTML.split("<br>")[1].split(": ")[1];
-                var speed = document.getElementById("speed").innerHTML.split(": ")[1].split(" m/s")[0];
-                var locationType = document.querySelector('input[name="locationType"]:checked').value;
-                var textBoxValue = document.getElementById("textBox").value;
-                var weather = weatherTemperature + "&#8451; - " + weatherDescription;
-
-                var logEntry = [buttonName, date, time, latitude, longitude, speed, locationType, textBoxValue, weather];
-                logTable.push(logEntry);
-
-                displayLogTable();
-            }
-
-            function displayLogTable() {
-                var logTableHTML = "<table><tr><th>No.</th><th>Issue</th><th>Date</th><th>Time</th><th>Latitude</th><th>Longitude</th><th>Speed</th><th>Road Type</th><th>Recommendation</th><th>Weather</th></tr>";
-
-                for (var i = 0; i < logTable.length; i++) {
-                    logTableHTML += "<tr>";
-                    logTableHTML += "<td>" + (i + 1) + "</td>";
-                    for (var j = 0; j < logTable[i].length; j++) {
-                        logTableHTML += "<td>" + logTable[i][j] + "</td>";
-                    }
-                    logTableHTML += "</tr>";
-                }
-
-                logTableHTML += "</table>";
-
-                document.getElementById("logTableContainer").innerHTML = logTableHTML;
-            }
-
-            window.addEventListener('DOMContentLoaded', function () {
-                var locationTypeRadios = document.querySelectorAll('input[name="locationType"]');
-                locationTypeRadios.forEach(function (radio) {
-                    radio.addEventListener('change', handleLocationTypeChange, false);
-                });
-            });
-        </script>
-    </head>
-    <body>
-        <table>
-            <tr>
-                <td id="leftColumn">
-                    <button class="bigButton orangeButton" onclick="logButton('False Negative')"><br><br><br><br><br><br>False Negative<br><br><br><br><br><br></button>
-                </td>
-                <td id="middleColumn">
-                    <h1 id="dateTime"></h1>
-                    <h2>Current City Weather</h2>
-                    <p id="city">Locating...</p>
-                    <div id="weatherContainer"></div>
-                    <p id="location"></p>
-                    <p id="speed">Speed: N/A</p>
-                    <div id="radioButtonContainer">
-                        <h3>Select Location Type:</h3>
-                        <input type="radio" name="locationType" value="highway">🛣️Highway
-                        <input type="radio" name="locationType"value="urban">🏞Int.Urban
-                        <input type="radio" name="locationType" value="city">🏙City
-                    </div>
-                    <br>
-                    <textarea id="textBox" style="width: 30%; margin: 0 auto;" rows="5" placeholder="Enter your text here..."></textarea>
-                </td>
-                <td id="rightColumn">
-                    <button class="bigButton redButton" onclick="logButton('False Positive')"><br><br><br><br><br><br>False Positive<br><br><br><br><br><br></button>
-                </td>
-            </tr>
-        </table>
-
-        <div id="logTableContainer"></div>
-    </body>
+    <div id="logTableContainer"></div>
+</body>
 </html>
+
+
+
+
+
+
+
+
