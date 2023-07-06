@@ -5,40 +5,29 @@
     <style>
         table {
             width: 100%;
-            height: 100%;
             border-collapse: collapse;
         }
         
         td {
             text-align: center;
             padding: 10px;
-            position: relative;
         }
         
         #leftColumn {
             text-align: center;
-            height: 100%;
         }
         
         #rightColumn {
             text-align: center;
-            height: 100%;
-        }
-        
-        .bigButtonContainer {
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
         
         .bigButton {
-            display: inline-block;
+            display: block;
+            width: 100%;
             padding: 15px 30px;
             font-size: 18px;
             border-radius: 5px;
             cursor: pointer;
-            text-align: center;
         }
         
         .orangeButton {
@@ -148,15 +137,12 @@
             });
         });
     </script>
-
 </head>
 <body>
     <table>
         <tr>
             <td id="leftColumn">
-                <div class="bigButtonContainer">
-                    <button class="bigButton orangeButton">False Negative</button>
-                </div>
+                <button class="bigButton orangeButton">False Negative</button>
             </td>
             <td id="middleColumn">
                 <h1 id="dateTime"></h1>
@@ -167,9 +153,7 @@
                 <p id="speed">Speed: N/A</p>
             </td>
             <td id="rightColumn">
-                <div class="bigButtonContainer">
-                    <button class="bigButton redButton">False Positive</button>
-                </div>
+                <button class="bigButton redButton">False Positive</button>
             </td>
         </tr>
     </table>
@@ -184,5 +168,3 @@
     <textarea id="textBox" rows="5" placeholder="Enter your text here..."></textarea>
 </body>
 </html>
-
-
