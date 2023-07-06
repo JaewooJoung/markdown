@@ -51,8 +51,15 @@
             font-size: 18px;
             resize: vertical;
         }
+
+        .weatherIcon {
+            width: 50px;
+            height: 50px;
+        }
     </style>
-   <script>
+    <script>
+        var logTable = [];
+
         function showPosition(position) {
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
@@ -104,11 +111,12 @@
                     // Create an <img> element for the weather icon
                     var weatherImg = document.createElement("img");
                     weatherImg.src = "https:" + weatherIcon;
+                    weatherImg.classList.add("weatherIcon");
 
-                    // Append the weather icon to the weatherContainer div
-                    var weatherContainer = document.getElementById("weatherContainer");
-                    weatherContainer.innerHTML = ''; // Clear previous weather icon, if any
-                    weatherContainer.appendChild(weatherImg);
+                    // Append the weather icon to the weatherIconContainer div
+                    var weatherIconContainer = document.getElementById("weatherIconContainer");
+                    weatherIconContainer.innerHTML = ''; // Clear previous weather icon, if any
+                    weatherIconContainer.appendChild(weatherImg);
                 });
         }
 
@@ -131,6 +139,41 @@
             // Handle the selected location type here
         }
 
+        function logButton(buttonName) {
+            var date = new Date().toLocaleDateString();
+            var time = new Date().toLocaleTimeString();
+            var latitude = document.getElementById("location").innerHTML.split("<br>")[0].split(": ")[1];
+            var longitude = document.getElementById("location").innerHTML.split("<br>")[1].split(": ")[1];
+            var speed = document.getElementById("speed").innerHTML.split(": ")[1].split(" m/s")[0];
+            var locationType = document.querySelector('input[name="locationType"]:checked').value;
+            var textBoxValue = document.getElementById("textBox").value;
+
+            var logEntry = [buttonName, date, time, latitude, longitude, speed, locationType, textBoxValue];
+            logTable.push(logEntry);
+
+            displayLogTable();
+        }
+
+        function displayLogTable() {
+            var logTableHTML = "<table><tr><th>No.</th><th>Issue</th><th><span class='weatherIcon'>Weather</span></th><th>Date</th><th>Time</th><th>Latitude</th><th>Longitude</th><th>Speed</th><th>Road Type</th><th>Recommendation</th></tr>";
+
+            for (var i = 0; i < logTable.length; i++) {
+                logTableHTML += "<tr>";
+                logTableHTML += "<td>" + (i + 1) + "</td>";
+                for (var j = 0; j < logTable[i].length; j++) {
+                    if (j === 2) {
+                        logTableHTML += "<td></td>";
+                    }
+                    logTableHTML += "<td>" + logTable[i][j] + "</td>";
+                }
+                logTableHTML += "</tr>";
+            }
+
+            logTableHTML += "</table>";
+
+            document.getElementById("logTableContainer").innerHTML = logTableHTML;
+        }
+
         window.addEventListener('DOMContentLoaded', function () {
             var locationTypeRadios = document.querySelectorAll('input[name="locationType"]');
             locationTypeRadios.forEach(function (radio) {
@@ -138,19 +181,20 @@
             });
         });
     </script>
-
 </head>
 <body>
     <table>
         <tr>
             <td id="leftColumn">
-                <button class="bigButton orangeButton"><br><br><br><br><br><br>False Negative<br><br><br><br><br><br><br></button>
+                <button class="bigButton orangeButton" onclick="logButton('False Negative')">False Negative</button>
             </td>
             <td id="middleColumn">
                 <h1 id="dateTime"></h1>
                 <h2>Current City Weather</h2>
                 <p id="city">Locating...</p>
-                <div id="weatherContainer"></div>
+                <div id="weatherContainer">
+                    <div id="weatherIconContainer"></div>
+                </div>
                 <p id="location"></p>
                 <p id="speed">Speed: N/A</p>
                 <div id="radioButtonContainer">
@@ -163,10 +207,11 @@
                 <textarea id="textBox" style="width: 30%; margin: 0 auto;" rows="5" placeholder="Enter your text here..."></textarea>
             </td>
             <td id="rightColumn">
-                <button class="bigButton redButton"><br><br><br><br><br><br>False Positive<br><br><br><br><br><br></button>
+                <button class="bigButton redButton" onclick="logButton('False Positive')">False Positive</button>
             </td>
         </tr>
     </table>
+
+    <div id="logTableContainer"></div>
 </body>
 </html>
-
