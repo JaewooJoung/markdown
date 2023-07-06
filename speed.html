@@ -142,64 +142,58 @@
             var locationType = document.querySelector('input[name="locationType"]:checked').value;
             var textBoxValue = document.getElementById("textBox").value;
 
-            // Get the current weather information
-            var weatherInfo = document.getElementById("weatherInfo").innerText;
+            getWeather(function(weatherInfo) {
+                var logEntry = [buttonName, date, time, latitude, longitude, speed, weatherInfo, locationType, textBoxValue];
+                logTable.push(logEntry);
 
-            var logEntry = [buttonName, date, time, latitude, longitude, speed, locationType, weatherInfo, textBoxValue];
-            logTable.push(logEntry);
-
-            displayLogTable();
+                displayLogTable();
+            });
         }
 
         function displayLogTable() {
-        var logTableHTML = "<table><tr><th>No.</th><th>Issue</th><th>Date</th><th>Time</th><th>Latitude</th><th>Longitude</th><th>Speed</th><th>Weather</th><th>Road Type</th><th>Recommendation</th></tr>";
+            var logTableHTML = "<table><tr><th>No.</th><th>Issue</th><th>Date</th><th>Time</th><th>Latitude</th><th>Longitude</th><th>Speed</th><th>Weather</th><th>Road Type</th><th>Recommendation</th></tr>";
 
-        for (var i = 0; i < logTable.length; i++) {
-            logTableHTML += "<tr>";
-            logTableHTML += "<td>" + (i + 1) + "</td>";
-            for (var j = 0; j < logTable[i].length; j++) {
-                logTableHTML += "<td>" + logTable[i][j] + "</td>";
+            for (var i = 0; i < logTable.length; i++) {
+                logTableHTML += "<tr>";
+                logTableHTML += "<td>" + (i + 1) + "</td>";
+                for (var j = 0; j < logTable[i].length; j++) {
+                    logTableHTML += "<td>" + logTable[i][j] + "</td>";
+                }
+                logTableHTML += "</tr>";
             }
-            logTableHTML += "</tr>";
-        }
 
             logTableHTML += "</table>";
 
             document.getElementById("logTableContainer").innerHTML = logTableHTML;
         }
-        function getWeather(city) {
+
+        function getWeather(callback) {
+            var city = document.getElementById("city").innerText.split(": ")[1];
+
+            // Make a request to the weather API to get the weather data
+            // Replace 'YOUR_API_KEY' with your actual API key
             var weatherAPIUrl = 'https://api.weatherapi.com/v1/current.json?key=ad8caecea06c43d1912181938230407&q=' + encodeURIComponent(city);
 
             fetch(weatherAPIUrl)
                 .then(response => response.json())
                 .then(data => {
-                    // Get the weather icon code from the API response
-                    var weatherIcon = data.current.condition.icon;
+                    // Get the weather information
                     var weatherInfo = data.current.temp_c + "°C, " + data.current.condition.text;
-
-                    // Create an <img> element for the weather icon
-                    var weatherImg = document.createElement("img");
-                    weatherImg.src = "https:" + weatherIcon;
-
-                    // Append the weather icon and information to the weatherContainer div
-                    var weatherContainer = document.getElementById("weatherContainer");
-                    weatherContainer.innerHTML = ''; //Clear previous weather icon, if any
-                    weatherContainer.appendChild(weatherImg);
-
-                    // Set the weather information in the hidden element for logging
-                    document.getElementById("weatherInfo").innerText = weatherInfo;
+                    callback(weatherInfo);
                 })
                 .catch(error => {
                     console.log("Error retrieving weather data:", error);
+                    callback("N/A"); // Use 'N/A' if weather data cannot be retrieved
                 });
-        };
+        }
+
     </script>
 </head>
 <body>
     <table>
         <tr>
             <td id="leftColumn">
-                <button class="bigButton orangeButton" onclick="logButton('False Negative')"><br><br><br><br><br><br>False Negative<br><br><br><br><br><br></button>
+                <button class="bigButton orangeButton" onclick="logButton('False Negative')">False Negative</button>
             </td>
             <td id="middleColumn">
                 <h1 id="dateTime"></h1>
@@ -218,7 +212,7 @@
                 <textarea id="textBox" style="width: 30%; margin: 0 auto;" rows="5" placeholder="Enter your text here..."></textarea>
             </td>
             <td id="rightColumn">
-                <button class="bigButton redButton" onclick="logButton('False Positive')"><br><br><br><br><br><br>False Positive<br><br><br><br><br><br></button>
+                <button class="bigButton redButton" onclick="logButton('False Positive')">False Positive</button>
             </td>
         </tr>
     </table>
