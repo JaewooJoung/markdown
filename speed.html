@@ -46,12 +46,13 @@
         
         #textBox {
             width: 30%;
+            margin: 0 auto;
             padding: 10px;
             font-size: 18px;
             resize: vertical;
         }
     </style>
-    <script>
+   <script>
         function showPosition(position) {
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
@@ -142,7 +143,7 @@
     <table>
         <tr>
             <td id="leftColumn">
-                <button class="bigButton orangeButton"><br><br><br><br><br><br><br><br>False Negative<br><br><br><br><br><br><br><br><br></button>
+                <button class="bigButton orangeButton"><br><br>False Negative<br><br><br></button>
             </td>
             <td id="middleColumn">
                 <h1 id="dateTime"></h1>
@@ -153,7 +154,7 @@
                 <p id="speed">Speed: N/A</p>
             </td>
             <td id="rightColumn">
-                <button class="bigButton redButton"><br><br><br><br><br><br><br><br>False Positive<br><br><br><br><br><br><br><br></button>
+                <button class="bigButton redButton"><br><br>False Positive<br><br><br></button>
             </td>
         </tr>
     </table>
@@ -164,9 +165,9 @@
         <input type="radio" name="locationType" value="urban">🏞Int.Urban
         <input type="radio" name="locationType" value="city">🏙City
     </div>
-    <div>  
+
     <textarea id="textBox" rows="5" placeholder="Enter your text here..."></textarea>
-    </div>
-   
 </body>
 </html>
+
+ 
