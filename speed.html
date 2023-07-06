@@ -51,11 +51,6 @@
             font-size: 18px;
             resize: vertical;
         }
-
-        .weatherIcon {
-            width: 50px;
-            height: 50px;
-        }
     </style>
     <script>
         var logTable = [];
@@ -95,28 +90,32 @@
             navigator.geolocation.getCurrentPosition(showPosition, showError);
         }
 
-        setInterval(updateLocation, 1000); // update location every 1 minute (60 seconds)
+        setInterval(updateLocation, 60000); // update location every 1 minute (60 seconds)
 
         function getWeather(city) {
-            // Make a request to the weather API to get the weather data
-            // Replace 'YOUR_API_KEY' with your actual API key
-            var weatherAPIUrl = 'https://api.weatherapi.com/v1/current.json?key=ad8caecea06c43d1912181938230407&q=' + encodeURIComponent(city);
+            var weatherAPIKey = 'YOUR_API_KEY'; // Replace 'YOUR_API_KEY' with your actual API key
+            var weatherAPIUrl = 'https://api.weatherapi.com/v1/current.json?key=' + weatherAPIKey + '&q=' + encodeURIComponent(city);
 
             fetch(weatherAPIUrl)
                 .then(response => response.json())
                 .then(data => {
-                    // Get the weather icon code from the API response
                     var weatherIcon = data.current.condition.icon;
+                    var weatherDescription = data.current.condition.text;
+                    var weatherTemperature = data.current.temp_c;
 
-                    // Create an <img> element for the weather icon
+                    var weatherContainer = document.getElementById("weatherContainer");
+                    weatherContainer.innerHTML = '';
+
                     var weatherImg = document.createElement("img");
                     weatherImg.src = "https:" + weatherIcon;
-                    weatherImg.classList.add("weatherIcon");
+                    weatherContainer.appendChild(weatherImg);
 
-                    // Append the weather icon to the weatherIconContainer div
-                    var weatherIconContainer = document.getElementById("weatherIconContainer");
-                    weatherIconContainer.innerHTML = ''; // Clear previous weather icon, if any
-                    weatherIconContainer.appendChild(weatherImg);
+                    var weatherText = document.createElement("p");
+                    weatherText.innerHTML = "Temperature: " + weatherTemperature + "&#8451; - " + weatherDescription;
+                    weatherContainer.appendChild(weatherText);
+                })
+                .catch(error => {
+                    console.log("Error retrieving weather data:", error);
                 });
         }
 
@@ -155,15 +154,12 @@
         }
 
         function displayLogTable() {
-            var logTableHTML = "<table><tr><th>No.</th><th>Issue</th><th><span class='weatherIcon'>Weather</span></th><th>Date</th><th>Time</th><th>Latitude</th><th>Longitude</th><th>Speed</th><th>Road Type</th><th>Recommendation</th></tr>";
+            var logTableHTML = "<table><tr><th>No.</th><th>Issue</th><th>Date</th><th>Time</th><th>Latitude</th><th>Longitude</th><th>Speed</th><th>Road Type</th><th>Recommendation</th></tr>";
 
             for (var i = 0; i < logTable.length; i++) {
                 logTableHTML += "<tr>";
                 logTableHTML += "<td>" + (i + 1) + "</td>";
                 for (var j = 0; j < logTable[i].length; j++) {
-                    if (j === 2) {
-                        logTableHTML += "<td></td>";
-                    }
                     logTableHTML += "<td>" + logTable[i][j] + "</td>";
                 }
                 logTableHTML += "</tr>";
@@ -192,15 +188,13 @@
                 <h1 id="dateTime"></h1>
                 <h2>Current City Weather</h2>
                 <p id="city">Locating...</p>
-                <div id="weatherContainer">
-                    <div id="weatherIconContainer"></div>
-                </div>
+                <div id="weatherContainer"></div>
                 <p id="location"></p>
                 <p id="speed">Speed: N/A</p>
                 <div id="radioButtonContainer">
                     <h3>Select Location Type:</h3>
                     <input type="radio" name="locationType" value="highway">🛣️Highway
-                    <input type="radio" name="locationType" value="urban">🏞Int.Urban
+                    <input type="radio" name="locationType"value="urban">🏞Int.Urban
                     <input type="radio" name="locationType" value="city">🏙City
                 </div>
                 <br>
