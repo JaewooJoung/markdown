@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rune🔁Swedish</title>
+<title>Textöversättning</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -16,13 +16,16 @@
   #container {
     display: flex;
     align-items: center;
+    width: 100%;
+    box-sizing: border-box;
   }
   .pane {
-    width: 40%;
+    flex: 1;
     padding: 10px;
     border: 1px solid #ccc;
     resize: vertical;
     overflow: auto;
+    box-sizing: border-box;
   }
   #buttons {
     margin: 0 20px;
@@ -50,7 +53,7 @@
     const leftPane = document.getElementById('leftPane');
     const rightPane = document.getElementById('rightPane');
     const text = leftPane.innerText.trim();
-    const translatedText = text.replace(/ /g, '_') + '_+';
+    const translatedText = text.replace(/(ch|Ch|CH|cH)/g, '(');
     rightPane.innerText = translatedText;
   }
 
@@ -58,7 +61,7 @@
     const leftPane = document.getElementById('leftPane');
     const rightPane = document.getElementById('rightPane');
     const text = rightPane.innerText.trim();
-    const reversedText = text.replace(/_+/g, ' ');
+    const reversedText = text.replace(/\(/g, 'ch');
     leftPane.innerText = reversedText;
   }
 </script>
