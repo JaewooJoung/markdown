@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rune🔁Swedish</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  #container {
+    display: flex;
+    align-items: center;
+  }
+  .pane {
+    width: 40%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    resize: vertical;
+    overflow: auto;
+  }
+  #buttons {
+    margin: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  button {
+    margin-bottom: 10px;
+  }
+</style>
+</head>
+<body>
+  <div id="container">
+    <div class="pane" id="leftPane" contenteditable="true">Skriv din text här...</div>
+    <div id="buttons">
+      <button onclick="translateText()">Översätt →</button>
+      <button onclick="reverseText()">← Vänd</button>
+    </div>
+    <div class="pane" id="rightPane" contenteditable="true"></div>
+  </div>
+
+<script>
+  function translateText() {
+    const leftPane = document.getElementById('leftPane');
+    const rightPane = document.getElementById('rightPane');
+    const text = leftPane.innerText.trim();
+    const translatedText = text.replace(/ /g, '_') + '_+';
+    rightPane.innerText = translatedText;
+  }
+
+  function reverseText() {
+    const leftPane = document.getElementById('leftPane');
+    const rightPane = document.getElementById('rightPane');
+    const text = rightPane.innerText.trim();
+    const reversedText = text.replace(/_+/g, ' ');
+    leftPane.innerText = reversedText;
+  }
+</script>
+</body>
+</html>
