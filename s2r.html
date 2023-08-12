@@ -49,11 +49,26 @@
   </div>
 
 <script>
+  const reverseTranslations = {
+    '᛫': ' ',
+    'ᛜ': ',',
+    '᛬': '.',
+    'ᚴ': 'ch',
+    'ᚴᚡ': 'qv',
+    'ᛌᚴ': 'sk',
+    'ᛆ': 'a',
+    'x': '?',
+    '+': '!'
+  };
+
   function translateText() {
     const leftPane = document.getElementById('leftPane');
     const rightPane = document.getElementById('rightPane');
     const text = leftPane.innerText.trim();
-    const translatedText = text.replace(/ /g,'᛫').replace(/,/g,'ᛜ').replace(/./g,'᛬').replace(/K|Ck|Ch|k|ck|ch/g,'ᚴ').replace(/QV|qv/g,'ᚴᚡ').replace(/Sk|sk/g,'ᛌᚴ').replace(/A|a/g,'ᛆ').replace(/B|b/g,'ᛒ').replace(/D|d/g,'ᛑ').replace(/E|e/g,'ᛂ').replace(/F|f/g,'ᚠ').replace(/G|g/g,'ᚵ').replace(/H|h/g,'ᛡ').replace(/I|i/g,'ᛁ').replace(/J|j/g,'ᚤ').replace(/K|k/g,'ᛌᚴ').replace(/L|l/g,'ᛚ').replace(/M|m/g,'ᛉ').replace(/N|n/g,'ᚿ').replace(/O|o/g,'ᚮ').replace(/P|p/g,'ᛔ').replace(/R|r/g,'ᚱ').replace(/S|s/g,'ᛋ').replace(/S|s/g,'ᛌ').replace(/T|t/g,'ᛐ').replace(/U|u/g,'ᚢ').replace(/V|v/g,'ᚡ').replace(/W|w/g,'ᚥ').replace(/X|x/g,'ᚴᛋ').replace(/Y|y/g,'ᛍ').replace(/Z|z/g,'ᛪ').replace(/Th|th/g,'ᚦ').replace(/tH|th/g,'ᚧ').replace(/Å|å/g,'ᚰ').replace(/Ä|ä/g,'ᛅ').replace(/Ö|ö/g,'ᚯ').replace(/?/g,'x').replace(/!/g,'+');
+    let translatedText = text;
+    for (const key in reverseTranslations) {
+      translatedText = translatedText.split(key).join(reverseTranslations[key]);
+    }
     rightPane.innerText = translatedText;
   }
 
@@ -61,7 +76,10 @@
     const leftPane = document.getElementById('leftPane');
     const rightPane = document.getElementById('rightPane');
     const text = rightPane.innerText.trim();
-    const reversedText = text.replace(/\(/g, 'ch');
+    let reversedText = text;
+    for (const key in reverseTranslations) {
+      reversedText = reversedText.split(reverseTranslations[key]).join(key);
+    }
     leftPane.innerText = reversedText;
   }
 </script>
