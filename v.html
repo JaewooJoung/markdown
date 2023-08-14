@@ -12,11 +12,13 @@
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
+    flex-wrap: wrap;
   }
   .city-box {
     border: 1px solid #ccc;
     padding: 10px;
     width: 23%;
+    margin-bottom: 20px;
   }
   #output {
     margin-top: 20px;
@@ -35,10 +37,11 @@
       <option value="CNY">CNY</option>
       <option value="SEK">SEK</option>
       <option value="INR">INR</option>
+      <!-- Add more currency options if needed -->
     </select>
     <button onclick="convertCurrency('seoul')">Convert</button>
   </div>
-  <!-- Similar city-box elements for other cities -->
+  <!-- Repeat city-box elements for other cities -->
 </div>
 <div id="output"></div>
 <script>
@@ -68,9 +71,36 @@ async function convertCurrency(city) {
   document.getElementById('output').innerHTML = output;
 }
 
-getCurrentTime('seoul', 'Asia/Seoul');
-// Call getCurrentTime function for other cities
+// Add city names and timezones here
+const cities = [
+  { name: '서울, 한국', timezone: 'Asia/Seoul' },
+  { name: '杭州湾, 中国', timezone: 'Asia/Shanghai' },
+  { name: 'Göteborg, Sverige', timezone: 'Europe/Stockholm' },
+  { name: 'Mumbai, India', timezone: 'Asia/Kolkata' },
+  // Add more cities as needed
+];
 
+// Generate city boxes and fetch current time
+for (const city of cities) {
+  const cityBox = document.createElement('div');
+  cityBox.className = 'city-box';
+  cityBox.innerHTML = `
+    <h2>${city.name}</h2>
+    <p id="${city.name}-time">Loading...</p>
+    <input type="text" id="${city.name}-amount" placeholder="Enter amount">
+    <select id="${city.name}-currency">
+      <option value="KRW">KRW</option>
+      <option value="USD">USD</option>
+      <option value="CNY">CNY</option>
+      <option value="SEK">SEK</option>
+      <option value="INR">INR</option>
+      <!-- Add more currency options if needed -->
+    </select>
+    <button onclick="convertCurrency('${city.name}')">Convert</button>
+  `;
+  document.querySelector('.city-container').appendChild(cityBox);
+  getCurrentTime(city.name, city.timezone);
+}
 </script>
 </body>
 </html>
