@@ -28,7 +28,18 @@
     <h2>서울, 한국</h2>
     <p id="seoul-time">Loading...</p>
   </div>
-  <!-- Repeat city-box elements for other cities -->
+  <div class="city-box">
+    <h2>杭州湾, 中国</h2>
+    <p id="hangzhou-time">Loading...</p>
+  </div>
+  <div class="city-box">
+    <h2>Göteborg, Sverige</h2>
+    <p id="gothenburg-time">Loading...</p>
+  </div>
+  <div class="city-box">
+    <h2>Mumbai, India</h2>
+    <p id="mumbai-time">Loading...</p>
+  </div>
 </div>
 <script>
 async function getCurrentTime(city, timezone) {
@@ -53,10 +64,10 @@ for (const city of cities) {
   cityBox.className = 'city-box';
   cityBox.innerHTML = `
     <h2>${city.name}</h2>
-    <p id="${city.name}-time">Loading...</p>
+    <p id="${city.name.replace(/ /g, '-').replace(/,/g, '').replace(/å/g, 'a').toLowerCase()}-time">Loading...</p>
   `;
   document.querySelector('.city-container').appendChild(cityBox);
-  getCurrentTime(city.name, city.timezone);
+  getCurrentTime(city.name.replace(/ /g, '-').replace(/,/g, '').replace(/å/g, 'a').toLowerCase(), city.timezone);
 }
 </script>
 </body>
