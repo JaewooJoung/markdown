@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>World Clock and Currency Converter</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+  }
+  .city-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  .city-box {
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 23%;
+  }
+  #output {
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+<div class="city-container">
+  <div class="city-box">
+    <h2>서울, 한국</h2>
+    <p id="seoul-time">Loading...</p>
+    <input type="text" id="seoul-amount" placeholder="Enter amount">
+    <select id="seoul-currency">
+      <option value="KRW">KRW</option>
+      <option value="USD">USD</option>
+      <option value="CNY">CNY</option>
+      <option value="SEK">SEK</option>
+      <option value="INR">INR</option>
+    </select>
+    <button onclick="convertCurrency('seoul')">Convert</button>
+  </div>
+  <!-- Similar city-box elements for other cities -->
+</div>
+<div id="output"></div>
+<script>
+async function getCurrentTime(city, timezone) {
+  const response = await fetch(`http://worldtimeapi.org/api/timezone/${timezone}`);
+  const data = await response.json();
+  const datetime = new Date(data.utc_datetime);
+  document.getElementById(city + '-time').textContent = datetime.toLocaleTimeString();
+}
+
+async function convertCurrency(city) {
+  const amount = parseFloat(document.getElementById(city + '-amount').value);
+  const fromCurrency = document.getElementById(city + '-currency').value;
+  const toCurrencies = ['USD', 'CNY', 'SEK', 'INR'];
+  let output = `<h3>Converted Amounts for ${city}</h3>`;
+  
+  for (const toCurrency of toCurrencies) {
+    if (fromCurrency !== toCurrency) {
+      const response = await fetch(`https://api.exchangerate-api.com/v4/latest/${fromCurrency}`);
+      const data = await response.json();
+      const exchangeRate = data.rates[toCurrency];
+      const convertedAmount = (amount * exchangeRate).toFixed(2);
+      output += `<p>${amount} ${fromCurrency} = ${convertedAmount} ${toCurrency}</p>`;
+    }
+  }
+  
+  document.getElementById('output').innerHTML = output;
+}
+
+getCurrentTime('seoul', 'Asia/Seoul');
+// Call getCurrentTime function for other cities
+
+</script>
+</body>
+</html>
