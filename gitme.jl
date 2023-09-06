@@ -17,6 +17,7 @@ run(`git commit -m $commit_message`)
 run(`git pull --rebase`)
 run(`git push --all`)
 
+#change
 #=
 cd C:\JDrive\TATA\GITATA\TATA
 git add .
