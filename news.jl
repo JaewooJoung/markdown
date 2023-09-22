@@ -31,7 +31,7 @@ function chinese(year::Int)
     stemhan    = celestial[stemnumber]
     stempinyin = pinyin[stemhan]
 
-    elementnumber = div(stemnumber, 2) + 1
+    elementnumber = div(stemnumber, 2) 
     element       = elements[elementnumber]
 
     branchnumber = cycleyear % 12 + 1
@@ -160,7 +160,7 @@ function DevHTML()
     Mstr *= initial
 
     FileLog(ML,Mstr)
-    Tfolder = "..\\markdown\\"
+    Tfolder = "/home/jaewoo/Documents/migit/markdown/"
     #Tfolder = "C:\\Users\\jaewo\\Documents\\myproj\\markdown\\"
     # OtSlc = 4 #1:"markdown",2:"md2html",3:"md2tex",4:"pandoc2pdf",5:"md2pdf"] 
     for OtSlc in 1:2
@@ -172,8 +172,8 @@ function DevHTML()
 end
 function SQLIntfce(T1)
     Myday =  string(T1[1],T1[2],T1[3],T1[4],T1[5],T1[6])
-    dbname = "D:\\project\\NewsFeed.db" #static
-    myresult = "D:\\project\\NewsQL.csv"
+    dbname = "/home/jaewoo/Documents/migit/markdown/NewsFeed.db" #static
+    myresult = "/home/jaewoo/Documents/migit/markdown/NewsQL.csv"
     db = SQLite.DB(dbname)
     crtdb = (db,tbname,tbschma) -> SQLite.execute(db, "CREATE TABLE IF NOT EXISTS $tbname($tbschma)")
     sqlinsrt = (db,tbname,tbvalue) -> SQLite.execute(db, "INSERT INTO $tbname VALUES($tbvalue)") 
