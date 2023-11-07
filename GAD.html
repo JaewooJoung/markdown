@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<HTML lang = "en">
+<HEAD>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  
+  
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: { equationNumbers: { autoNumber: "AMS" } }
+    });
+  </script>
+
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+
+  
+<style>
+pre.hljl {
+    border: 1px solid #ccc;
+    margin: 5px;
+    padding: 5px;
+    overflow-x: auto;
+    color: rgb(68,68,68); background-color: rgb(251,251,251); }
+pre.hljl > span.hljl-t { }
+pre.hljl > span.hljl-w { }
+pre.hljl > span.hljl-e { }
+pre.hljl > span.hljl-eB { }
+pre.hljl > span.hljl-o { }
+pre.hljl > span.hljl-k { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kc { color: rgb(59,151,46); font-style: italic; }
+pre.hljl > span.hljl-kd { color: rgb(214,102,97); font-style: italic; }
+pre.hljl > span.hljl-kn { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kp { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kr { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kt { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-n { }
+pre.hljl > span.hljl-na { }
+pre.hljl > span.hljl-nb { }
+pre.hljl > span.hljl-nbp { }
+pre.hljl > span.hljl-nc { }
+pre.hljl > span.hljl-ncB { }
+pre.hljl > span.hljl-nd { color: rgb(214,102,97); }
+pre.hljl > span.hljl-ne { }
+pre.hljl > span.hljl-neB { }
+pre.hljl > span.hljl-nf { color: rgb(66,102,213); }
+pre.hljl > span.hljl-nfm { color: rgb(66,102,213); }
+pre.hljl > span.hljl-np { }
+pre.hljl > span.hljl-nl { }
+pre.hljl > span.hljl-nn { }
+pre.hljl > span.hljl-no { }
+pre.hljl > span.hljl-nt { }
+pre.hljl > span.hljl-nv { }
+pre.hljl > span.hljl-nvc { }
+pre.hljl > span.hljl-nvg { }
+pre.hljl > span.hljl-nvi { }
+pre.hljl > span.hljl-nvm { }
+pre.hljl > span.hljl-l { }
+pre.hljl > span.hljl-ld { color: rgb(148,91,176); font-style: italic; }
+pre.hljl > span.hljl-s { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sa { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sb { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sc { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sd { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sdB { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sdC { color: rgb(201,61,57); }
+pre.hljl > span.hljl-se { color: rgb(59,151,46); }
+pre.hljl > span.hljl-sh { color: rgb(201,61,57); }
+pre.hljl > span.hljl-si { }
+pre.hljl > span.hljl-so { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sr { color: rgb(201,61,57); }
+pre.hljl > span.hljl-ss { color: rgb(201,61,57); }
+pre.hljl > span.hljl-ssB { color: rgb(201,61,57); }
+pre.hljl > span.hljl-nB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nbB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nfB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nh { color: rgb(59,151,46); }
+pre.hljl > span.hljl-ni { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nil { color: rgb(59,151,46); }
+pre.hljl > span.hljl-noB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-oB { color: rgb(102,102,102); font-weight: bold; }
+pre.hljl > span.hljl-ow { color: rgb(102,102,102); font-weight: bold; }
+pre.hljl > span.hljl-p { }
+pre.hljl > span.hljl-c { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-ch { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cm { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cp { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cpB { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cs { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-csB { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-g { }
+pre.hljl > span.hljl-gd { }
+pre.hljl > span.hljl-ge { }
+pre.hljl > span.hljl-geB { }
+pre.hljl > span.hljl-gh { }
+pre.hljl > span.hljl-gi { }
+pre.hljl > span.hljl-go { }
+pre.hljl > span.hljl-gp { }
+pre.hljl > span.hljl-gs { }
+pre.hljl > span.hljl-gsB { }
+pre.hljl > span.hljl-gt { }
+</style>
+
+
+
+  <style type="text/css">
+  @font-face {
+  font-style: normal;
+  font-weight: 300;
+}
+@font-face {
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
+  font-style: normal;
+  font-weight: 600;
+}
+html {
+  font-family: sans-serif; /* 1 */
+  -ms-text-size-adjust: 100%; /* 2 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+body {
+  margin: 0;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+audio,
+canvas,
+progress,
+video {
+  display: inline-block; /* 1 */
+  vertical-align: baseline; /* 2 */
+}
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+[hidden],
+template {
+  display: none;
+}
+a:active,
+a:hover {
+  outline: 0;
+}
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+b,
+strong {
+  font-weight: bold;
+}
+dfn {
+  font-style: italic;
+}
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+mark {
+  background: #ff0;
+  color: #000;
+}
+small {
+  font-size: 80%;
+}
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.25em;
+}
+img {
+  border: 0;
+}
+svg:not(:root) {
+  overflow: hidden;
+}
+figure {
+  margin: 1em 40px;
+}
+hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+pre {
+  overflow: auto;
+}
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit; /* 1 */
+  font: inherit; /* 2 */
+  margin: 0; /* 3 */
+}
+button {
+  overflow: visible;
+}
+button,
+select {
+  text-transform: none;
+}
+button,
+html input[type="button"], /* 1 */
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button; /* 2 */
+  cursor: pointer; /* 3 */
+}
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+input {
+  line-height: normal;
+}
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+input[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box; /* 2 */
+  box-sizing: content-box;
+}
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+legend {
+  border: 0; /* 1 */
+  padding: 0; /* 2 */
+}
+textarea {
+  overflow: auto;
+}
+optgroup {
+  font-weight: bold;
+}
+table {
+  font-family: monospace, monospace;
+  font-size : 0.8em;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+td,
+th {
+  padding: 0;
+}
+thead th {
+    border-bottom: 1px solid black;
+    background-color: white;
+}
+tr:nth-child(odd){
+  background-color: rgb(248,248,248);
+}
+
+
+/*
+* Skeleton V2.0.4
+* Copyright 2014, Dave Gamache
+* www.getskeleton.com
+* Free to use under the MIT license.
+* http://www.opensource.org/licenses/mit-license.php
+* 12/29/2014
+*/
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box; }
+.column,
+.columns {
+  width: 100%;
+  float: left;
+  box-sizing: border-box; }
+@media (min-width: 400px) {
+  .container {
+    width: 85%;
+    padding: 0; }
+}
+@media (min-width: 550px) {
+  .container {
+    width: 80%; }
+  .column,
+  .columns {
+    margin-left: 4%; }
+  .column:first-child,
+  .columns:first-child {
+    margin-left: 0; }
+
+  .one.column,
+  .one.columns                    { width: 4.66666666667%; }
+  .two.columns                    { width: 13.3333333333%; }
+  .three.columns                  { width: 22%;            }
+  .four.columns                   { width: 30.6666666667%; }
+  .five.columns                   { width: 39.3333333333%; }
+  .six.columns                    { width: 48%;            }
+  .seven.columns                  { width: 56.6666666667%; }
+  .eight.columns                  { width: 65.3333333333%; }
+  .nine.columns                   { width: 74.0%;          }
+  .ten.columns                    { width: 82.6666666667%; }
+  .eleven.columns                 { width: 91.3333333333%; }
+  .twelve.columns                 { width: 100%; margin-left: 0; }
+
+  .one-third.column               { width: 30.6666666667%; }
+  .two-thirds.column              { width: 65.3333333333%; }
+
+  .one-half.column                { width: 48%; }
+
+  /* Offsets */
+  .offset-by-one.column,
+  .offset-by-one.columns          { margin-left: 8.66666666667%; }
+  .offset-by-two.column,
+  .offset-by-two.columns          { margin-left: 17.3333333333%; }
+  .offset-by-three.column,
+  .offset-by-three.columns        { margin-left: 26%;            }
+  .offset-by-four.column,
+  .offset-by-four.columns         { margin-left: 34.6666666667%; }
+  .offset-by-five.column,
+  .offset-by-five.columns         { margin-left: 43.3333333333%; }
+  .offset-by-six.column,
+  .offset-by-six.columns          { margin-left: 52%;            }
+  .offset-by-seven.column,
+  .offset-by-seven.columns        { margin-left: 60.6666666667%; }
+  .offset-by-eight.column,
+  .offset-by-eight.columns        { margin-left: 69.3333333333%; }
+  .offset-by-nine.column,
+  .offset-by-nine.columns         { margin-left: 78.0%;          }
+  .offset-by-ten.column,
+  .offset-by-ten.columns          { margin-left: 86.6666666667%; }
+  .offset-by-eleven.column,
+  .offset-by-eleven.columns       { margin-left: 95.3333333333%; }
+
+  .offset-by-one-third.column,
+  .offset-by-one-third.columns    { margin-left: 34.6666666667%; }
+  .offset-by-two-thirds.column,
+  .offset-by-two-thirds.columns   { margin-left: 69.3333333333%; }
+
+  .offset-by-one-half.column,
+  .offset-by-one-half.columns     { margin-left: 52%; }
+
+}
+html {
+  font-size: 62.5%; }
+body {
+  font-size: 1.5em; /* currently ems cause chrome bug misinterpreting rems on body element */
+  line-height: 1.6;
+  font-weight: 400;
+  font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #222; }
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  font-weight: 300; }
+h1 { font-size: 3.6rem; line-height: 1.2;  letter-spacing: -.1rem;}
+h2 { font-size: 3.4rem; line-height: 1.25; letter-spacing: -.1rem; }
+h3 { font-size: 3.2rem; line-height: 1.3;  letter-spacing: -.1rem; }
+h4 { font-size: 2.8rem; line-height: 1.35; letter-spacing: -.08rem; }
+h5 { font-size: 2.4rem; line-height: 1.5;  letter-spacing: -.05rem; }
+h6 { font-size: 1.5rem; line-height: 1.6;  letter-spacing: 0; }
+
+p {
+  margin-top: 0; }
+a {
+  color: #1EAEDB; }
+a:hover {
+  color: #0FA0CE; }
+.button,
+button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+  display: inline-block;
+  height: 38px;
+  padding: 0 30px;
+  color: #555;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 38px;
+  letter-spacing: .1rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: transparent;
+  border-radius: 4px;
+  border: 1px solid #bbb;
+  cursor: pointer;
+  box-sizing: border-box; }
+.button:hover,
+button:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+.button:focus,
+button:focus,
+input[type="submit"]:focus,
+input[type="reset"]:focus,
+input[type="button"]:focus {
+  color: #333;
+  border-color: #888;
+  outline: 0; }
+.button.button-primary,
+button.button-primary,
+input[type="submit"].button-primary,
+input[type="reset"].button-primary,
+input[type="button"].button-primary {
+  color: #FFF;
+  background-color: #33C3F0;
+  border-color: #33C3F0; }
+.button.button-primary:hover,
+button.button-primary:hover,
+input[type="submit"].button-primary:hover,
+input[type="reset"].button-primary:hover,
+input[type="button"].button-primary:hover,
+.button.button-primary:focus,
+button.button-primary:focus,
+input[type="submit"].button-primary:focus,
+input[type="reset"].button-primary:focus,
+input[type="button"].button-primary:focus {
+  color: #FFF;
+  background-color: #1EAEDB;
+  border-color: #1EAEDB; }
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+textarea,
+select {
+  height: 38px;
+  padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
+  background-color: #fff;
+  border: 1px solid #D1D1D1;
+  border-radius: 4px;
+  box-shadow: none;
+  box-sizing: border-box; }
+/* Removes awkward default styles on some inputs for iOS */
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+textarea {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none; }
+textarea {
+  min-height: 65px;
+  padding-top: 6px;
+  padding-bottom: 6px; }
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+  border: 1px solid #33C3F0;
+  outline: 0; }
+label,
+legend {
+  display: block;
+  margin-bottom: .5rem;
+  font-weight: 600; }
+fieldset {
+  padding: 0;
+  border-width: 0; }
+input[type="checkbox"],
+input[type="radio"] {
+  display: inline; }
+label > .label-body {
+  display: inline-block;
+  margin-left: .5rem;
+  font-weight: normal; }
+ul {
+  list-style: circle; }
+ol {
+  list-style: decimal; }
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+  margin: 1.5rem 0 1.5rem 3rem;
+  font-size: 90%; }
+li > p {margin : 0;}
+th,
+td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #E1E1E1; }
+th:first-child,
+td:first-child {
+  padding-left: 0; }
+th:last-child,
+td:last-child {
+  padding-right: 0; }
+button,
+.button {
+  margin-bottom: 1rem; }
+input,
+textarea,
+select,
+fieldset {
+  margin-bottom: 1.5rem; }
+pre,
+blockquote,
+dl,
+figure,
+table,
+p,
+ul,
+ol,
+form {
+  margin-bottom: 1.0rem; }
+.u-full-width {
+  width: 100%;
+  box-sizing: border-box; }
+.u-max-full-width {
+  max-width: 100%;
+  box-sizing: border-box; }
+.u-pull-right {
+  float: right; }
+.u-pull-left {
+  float: left; }
+hr {
+  margin-top: 3rem;
+  margin-bottom: 3.5rem;
+  border-width: 0;
+  border-top: 1px solid #E1E1E1; }
+.container:after,
+.row:after,
+.u-cf {
+  content: "";
+  display: table;
+  clear: both; }
+
+pre {
+  display: block;
+  padding: 9.5px;
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.42857143;
+  word-break: break-all;
+  word-wrap: break-word;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre.hljl {
+  margin: 0 0 10px;
+  display: block;
+  background: #f5f5f5;
+  border-radius: 4px;
+  padding : 5px;
+}
+
+pre.output {
+  background: #ffffff;
+}
+
+pre.code {
+  background: #ffffff;
+}
+
+pre.julia-error {
+  color : red
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-size: 0.9em;
+}
+
+
+@media (min-width: 400px) {}
+@media (min-width: 550px) {}
+@media (min-width: 750px) {}
+@media (min-width: 1000px) {}
+@media (min-width: 1200px) {}
+
+h1.title {margin-top : 20px}
+img {max-width : 100%}
+div.title {text-align: center;}
+
+  </style>
+</HEAD>
+
+<BODY>
+  <div class ="container">
+    <div class = "row">
+      <div class = "col-md-12 twelve columns">
+        <div class="title">
+          
+          
+          
+        </div>
+
+        <h1>ᚵᚯᛐᛂᛒᚮᚱᚵᛌ᛫ᛆᚠᚠᛅᚱᛂᚱ᛫ᛑᛆᚵᛚᛁᚵᛂᚿ &#40;Göteborgs Affärer Dagligen&#41; 📰</h1>
+<p><code>compiled at 2023-11-07T20:26:27.189</code></p>
+<h2>Daily Gothenburg weather report</h2>
+<h3>Air🌬️ <img src="https://cdn.weatherapi.com/weather/64x64/night/302.png" alt="Moderate rain" /></h3>
+<table><tr><th>Current temp&#40;🌡️&#41;</th><th>Carbon Monoxide &#40;CO₂&#41; level</th><th>Nitrogen Dioxide &#40;NO₂&#41; level</th><th>Ozone &#40;O₃&#41; level</th><th>Sulfur dioxide &#40;SO₂&#41; level</th><th>PM 2.5 level</th><th>PM 10 level</th></tr><tr><td>9.0 ℃</td><td>400.5 μg/m³</td><td>28.1  μg/m³</td><td>7.0 μg/m³</td><td>7.3 μg/m³</td><td>3.6 μg/m³</td><td>5.6 μg/m³</td></tr></table>
+<h3>Sun&#40;🌄&#41; &amp; Moon&#40;🌃&#41;</h3>
+<table><tr><th>🌅Sunrise</th><th>🌇Sunset</th><th>moon&#40;🌘&#41; rise</th><th>moon&#40;🌘&#41; set</th><th>moon&#40;🌘&#41; phase</th></tr><tr><td>07:38 AM</td><td>04:12 PM</td><td>No moonrise</td><td>03:10 PM</td><td>Waning Crescent</td></tr></table>
+<h3>Prediction&#40;🏙️🌞&#41;</h3>
+<table><tr><th>Time</th><th>6:00</th><th>7:00</th><th>8:00</th><th>9:00</th><th>10:00</th><th>11:00</th><th>12:00</th><th>13:00</th><th>14:00</th><th>15:00</th></tr><tr><td><strong>Temp&#40;🌡️℃&#41;</strong></td><td>7.8</td><td>7.9</td><td>7.4</td><td>7.8</td><td>8.6</td><td>9.2</td><td>9.4</td><td>9.3</td><td>9.0</td><td>8.1</td></tr><tr><td><strong>Feels&#40;🌡️℃&#41;</strong></td><td>6.5</td><td>6.8</td><td>6.7</td><td>7.3</td><td>8.7</td><td>8.5</td><td>8.1</td><td>7.7</td><td>7.4</td><td>6.7</td></tr><tr><td><strong>Condition</strong></td><td><img src="https://cdn.weatherapi.com/weather/64x64/night/176.png" alt="Patchy rain possible" /></td><td><img src="https://cdn.weatherapi.com/weather/64x64/night/176.png" alt="Patchy rain possible" /></td><td><img src="https://cdn.weatherapi.com/weather/64x64/day/176.png" alt="Patchy rain possible" /></td><td><img src="https://cdn.weatherapi.com/weather/64x64/day/353.png" alt="Light rain shower" /></td><td><img src="https://cdn.weatherapi.com/weather/64x64/day/176.png" alt="Patchy rain possible" /></td><td><img src="https://cdn.weatherapi.com/weather/64x64/day/176.png" alt="Patchy rain possible" /></td><td><img src="https://cdn.weatherapi.com/weather/64x64/day/176.png" alt="Patchy rain possible" /></td><td><img src="https://cdn.weatherapi.com/weather/64x64/day/176.png" alt="Patchy rain possible" /></td><td><img src="https://cdn.weatherapi.com/weather/64x64/day/176.png" alt="Patchy rain possible" /></td><td><img src="https://cdn.weatherapi.com/weather/64x64/day/176.png" alt="Patchy rain possible" /></td></tr><tr><td><strong>Cond. in text</strong></td><td>Patchy rain possible</td><td>Patchy rain possible</td><td>Patchy rain possible</td><td>Light rain shower</td><td>Patchy rain possible</td><td>Patchy rain possible</td><td>Patchy rain possible</td><td>Patchy rain possible</td><td>Patchy rain possible</td><td>Patchy rain possible</td></tr></table>
+<h2>Global 🌐</h2>
+<p><code>compiled at 2023-11-07T20:26:54.941</code></p>
+<h3>Foreign Exchange&#40;💱&#41;</h3>
+<table><tr><th>SEK</th><th>CNY</th><th>EUR</th><th>INR</th><th>MXN</th><th>PKR</th><th>RUB</th><th>KRW</th><th>TRY</th><th>USD</th></tr><tr><td>Buy</td><td>0.668</td><td>0.086</td><td>7.647</td><td>1.609</td><td>25.995</td><td>8.495</td><td>119.365</td><td>2.611</td><td>0.092</td></tr><tr><td>Sell</td><td>1.496</td><td>11.69</td><td>0.131</td><td>0.622</td><td>0.038</td><td>0.118</td><td>0.008</td><td>0.383</td><td>10.893</td></tr></table>
+<h6><code>API does not support:</code> <a href="https://date.nager.at/Country">India &amp; Pakistan</a></h6>
+<table><tr><th>2023-11-07</th><th>中國</th><th>España</th><th>México</th><th>Россия</th><th>한국</th><th>Sverige</th><th>Türkiye</th></tr><tr><td>Local Name</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr><tr><td>English Name</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr></table>
+<h2>AUTO &#40;related&#41; NEWS 🚗💨💨</h2>
+<p><code>compiled at 2023-11-07T20:27:02.546</code></p>
+<h4>&#91;🛣️&#93; <a href="https://www.autonews.com/cartoons/leo-michael-cartoon-nudged-uaw">Leo Michael cartoon: Nudged by the UAW</a></h4>
+<h6>&#91;registered: 2023-11-05&#93;</h6>
+<p><code>Toyota Motor North America will raise hourly wages for its U.S. manufacturing, distribution center and logistics employees. The unexpected move comes as the UAW reached tentative agreements with the Detroit 3 on lucrative new contracts.</code></p>
+<h4>&#91;🛣️&#93; <a href="https://www.autonews.com/daily-drive-podcast/highlights-latest-automotive-news-daily-drive-podcasts-oct-30-nov-2">Highlights from the latest &#39;Daily Drive&#39; podcasts, Oct. 30-Nov. 2</a></h4>
+<h6>&#91;registered: 2023-11-05&#93;</h6>
+<p><code>Here are highlights from the latest episodes of &#39;Daily Drive&#39;, Automotive News&#39; weekday podcast, Oct. 30-Nov. 2, hosted by Jamie Butters with Kellen Walker.</code></p>
+<h4>&#91;🛣️&#93; <a href="https://www.autonews.com/dealers/public-groups-bypass-ineos-first-us-car-dealership-franchises">Ineos Automotive&#39;s U.S. dealership network is private only</a></h4>
+<h6>&#91;registered: 2023-11-05&#93;</h6>
+<p><code>Ineos Automotive has 19 dealerships in the U.S., but none of the fledging automaker&#39;s stores are owned by a publicly traded auto retailer.</code></p>
+<h4>&#91;🛣️&#93; <a href="https://www.autonews.com/guest-commentary/ev-tax-credit-adjustments-give-evs-chance-success">Guest commentary: Tweaks to tax credits give EVs a shot at succeeding</a></h4>
+<h6>&#91;registered: 2023-11-05&#93;</h6>
+<p><code>Are these changes enough to bring more buyers into dealer showrooms?</code></p>
+<h4>&#91;🛣️&#93; <a href="https://www.autonews.com/editorial/uaw-detroit-3-contracts-likely-intensify-affordability-crisis">Editorial: UAW-Detroit 3 contracts likely to intensify affordability crisis</a></h4>
+<h6>&#91;registered: 2023-11-05&#93;</h6>
+<p><code>The contracts, a triumph for workers, squeezed automakers. The pressure could trickle down to consumers.</code></p>
+<h4>&#91;🛣️&#93; <a href="https://www.autonews.com/dealers/dealer-survey-ford-least-trusted-car-dealership-brand">Dealer survey: Ford least, Toyota most trusted brand</a></h4>
+<h6>&#91;registered: 2023-11-05&#93;</h6>
+<p><code>A Kerrigan Dealer Survey shows auto dealers lack trust in some domestic brands, but their outlook on the industry is positive for 2024.</code></p>
+<h4>&#91;🛣️&#93; <a href="https://www.autonews.com/design/volvo-gets-ex30s-face-galaxy-far-far-away">Volvo gets EX30’s face from galaxy far, far away</a></h4>
+<h6>&#91;registered: 2023-11-05&#93;</h6>
+<p><code>Volvo exterior design chief T. Jon Mayer created the EX30’s face based on the helmet worn by bounty hunter Boba Fett in the ‘Star Wars’ movies.</code></p>
+<h4>&#91;🛣️&#93; <a href="https://www.autonews.com/automakers-suppliers/ford-model-t-engineers-detroit-mansion-market-2-million">Model T engineer’s mansion is on market</a></h4>
+<h6>&#91;registered: 2023-11-05&#93;</h6>
+<p><code>The 1928 home was built by Jozsef Galamb, a Hungarian engineer hired by Henry Ford two years after Ford Motor Co. was founded.</code></p>
+<h4>&#91;🛣️&#93; <a href="https://www.autonews.com/manufacturing/uaw-member-drive-reaches-last-frontier">UAW member drive reaches Last Frontier</a></h4>
+<h6>&#91;registered: 2023-11-05&#93;</h6>
+<p><code>About 450 teaching assistants and other graduate student employees at the University of Alaska voted overwhelmingly to join the UAW, which is quickly gaining members in higher education.</code></p>
+<h4>&#91;🛣️&#93; <a href="https://www.autonews.com/executives/carlos-ghosn-ordered-stop-trespassing-lebanon-home">Judge gives Carlos Ghosn eviction order</a></h4>
+<h6>&#91;registered: 2023-11-05&#93;</h6>
+<p><code>The former Nissan and Renault chairman claims the house was purchased to be his residence, but its owner says he&#39;s trespassing.</code></p>
+<h4>&#91;🇨🇳&#93; <a href="https://insideevs.com/">Affordable Chinese EVs Boost Adoption Rates In Asia, South America: Report</a></h4>
+<h6>&#91;registered: 2023-11-06&#93;</h6>
+<p><code>The average retail price of a BEV in China is less than half of the prices in the U.S. and Europe.</code></p>
+<h4>&#91;🇨🇳&#93; <a href="https://insideevs.com/news/694980/affordable-chinese-evs-boost-adoption-rates-asia-south-america/">China Again Massively Increased Plug-In Car Sales In September 2023</a></h4>
+<h6>&#91;registered: 2023-11-06&#93;</h6>
+<p><code>The country&#39;s share of the global rechargeable car sales exceeded 60 percent.</code></p>
+<h4>&#91;🇪🇺📰&#93; <a href="https://www.emcdda.europa.eu/news/2023/new-report-explores-links-between-drug-markets-and-gun-violence-eu_en">New report finds links between drug markets and gun violence in the EU</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>A new report exploring links between drug markets and gun violence in the EU has found that on average in Europe, 28&#37; of firearms are seized in the context of drug trafficking. It is even close to 44&#37; in some EU Member States.</code></p>
+<h4>&#91;🇪🇺📰&#93; <a href="https://www.consilium.europa.eu/en/press/press-releases/2023/11/07/transparency-and-targeting-of-political-advertising-eu-co-legislators-strike-deal-on-new-regulation/">New deal struck on EU political advertising transparency rules</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>EU co-legislators have agreed on new rules on political advertising transparency and targeting, which will make it easier for citizens to recognise political adverts and understand who is behind them. The rules come amid concerns about information manipulation and foreign interference in elections.</code></p>
+<h4>&#91;🇪🇺📰&#93; <a href="https://ec.europa.eu/commission/presscorner/detail/en/ip_23_5528">371 school buses donated to get Ukrainian children safely to school</a></h4>
+<h6>&#91;registered: 2023-11-06&#93;</h6>
+<p><code>Over 370 buses have been delivered to Ukrainian communities to help children make the journey to schools not damaged by Russian missiles. The buses were handed over to representatives of local authorities from the Kyiv, Sumy, Mykolaiv, Dnipropetrovsk, Lviv and Chernihiv regions, during a ceremony.</code></p>
+<h4>&#91;🇪🇺📰&#93; <a href="https://ec.europa.eu/commission/presscorner/detail/en/IP_23_5585">EU increases humanitarian aid to Gaza by €25 million</a></h4>
+<h6>&#91;registered: 2023-11-06&#93;</h6>
+<p><code>As part of the EU&#39;s continued support to people in Gaza, the Commission will provide a further €25 million in humanitarian aid. This quadruples EU humanitarian assistance to over €100 million for Gaza this year. The new assistance will provide life-saving assistance to civilians in Gaza.</code></p>
+<h4>&#91;🇪🇺🚇&#93; <a href="https://transport.ec.europa.eu/news-events/news/european-commission-adopts-new-proposal-combining-transport-modes-more-sustainable-freight-2023-11-07_en">European Commission adopts new proposal on combining transport modes for more sustainable freight</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>The proposal on combined transport aims to make freight transport more sustainable by improving the competitiveness of intermodal freight – the transportation of goods using two or more transport modes – vis-à-vis road-only transport.</code></p>
+<h4>&#91;🇪🇺🚇&#93; <a href="https://transport.ec.europa.eu/news-events/news/commission-proposes-list-principles-boost-cycling-across-europe-2023-10-04_en">Commission proposes list of principles to boost cycling across Europe</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>The proposal for a European Declaration on Cycling recognises cycling as a sustainable, accessible and inclusive, affordable and healthy means of transport, with strong added value for the EU economy.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/renesas-unveils-processor-roadmap-for-next-gen-automotive-socs-and-mcus/">Renesas unveils processor roadmap for next-gen automotive SoCs and MCUs</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>Future offerings to include R-Car SoCs with advanced in-package chiplet integration technology and arm-based automotive MCUs The post Renesas unveils processor roadmap for next-gen automotive SoCs and MCUs appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/toyota-crown-suv-makes-its-debut-november-14/">Toyota Crown SUV makes its debut November 14</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>Come with us to new heights. A bold new adventure with Toyota Crown starts on November 14th at 10 p.m. ET The post Toyota Crown SUV makes its debut November 14 appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/porsche-driver-experience-in-the-new-panamera-with-driver-centred-interior-concept/">Porsche Driver Experience in the new Panamera with driver-centred interior concept</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>The control concept that Porsche is now using in the new Panamera is innovative and intuitive: the Porsche Driver Experience puts the driver at the centre and creates the perfect balance between analogue and digital elements The post Porsche Driver Experience in the new Panamera with driver-centred interior concept appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/tomtoms-road-analytics-products-available-in-microsoft-azure-marketplace/">TomTom’s road analytics products available in Microsoft Azure Marketplace</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>TomTom Junction Analytics is TomTom&#39;s first suite of traffic analytics products available in the Microsoft Azure Marketplace for all Microsoft Azure customers The post TomTom&#39;s road analytics products available in Microsoft Azure Marketplace appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/audi-begins-production-of-electric-motors-for-the-ppe-in-gyor/">Audi begins production of electric motors for the PPE in Győr</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>Newly developed electric drive systems used for the first time in the Audi Q6 e-tron series The post Audi begins production of electric motors for the PPE in Győr appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/stellantis-grows-in-the-european-total-and-electrified-markets-in-the-first-ten-months-of-the-year/">Stellantis grows in the European total and electrified markets in the first ten months of the year</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>Stellantis consolidates its second position in the European &#40;EU29&#41; total market sales rankings, securing a 18.8&#37; market share1 in the first ten months of the year The post Stellantis grows in the European total and electrified markets in the first ten months of the year appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/the-fiat-strada-the-undisputed-market-leader-in-brazil-arrives-in-the-middle-east-and-africa-region/">The Fiat Strada, the undisputed market leader in Brazil, arrives in the Middle East and Africa Region</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>Fiat strengthens its position as a global player and increases its presence by introducing the Brazilian best seller – the Fiat Strada pickup – to the Middle East and Africa Region &#40;MEA&#41; The post The Fiat Strada, the undisputed market leader in Brazil, arrives in the Middle East and Africa Region appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/new-renault-master-a-redesigned-silhouette-for-greater-efficiency/">New Renault Master, a redesigned silhouette for greater efficiency</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>New Renault Master reveals its silhouette The post New Renault Master, a redesigned silhouette for greater efficiency appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/new-models-drive-record-half-year-profits-at-mazda/">New models drive record half year profits at Mazda</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>European region reports strong sales in the first half of the fiscal year The post New models drive record half year profits at Mazda appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/48-volt-drive-from-vitesco-technologies-for-electric-light-motorcycles-and-scooters-is-close-to-market-readiness/">48-volt drive from Vitesco Technologies for electric light motorcycles and scooters is close to market readiness</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>At EICMA, the company is presenting a fully functional demo vehicle with near series components The post 48-volt drive from Vitesco Technologies for electric light motorcycles and scooters is close to market readiness appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/covestro-and-hiphi-launch-joint-laboratory-on-advanced-material-solutions-for-future-mobility/">Covestro and HiPhi launch joint laboratory on advanced material solutions for future mobility</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>Joint laboratory to address key challenges of future mobility The post Covestro and HiPhi launch joint laboratory on advanced material solutions for future mobility appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/all-new-2025-ram-1500-ramcharger-unveiled-with-class-shattering-unlimited-battery-electric-range/">All-new 2025 Ram 1500 Ramcharger unveiled with class-shattering unlimited battery-electric range</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>Ultimate Ram 1500 combines an unprecedented range with new levels of capability and performance The post All-new 2025 Ram 1500 Ramcharger unveiled with class-shattering unlimited battery-electric range appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/three-orders-with-a-total-order-value-in-the-high-double-digit-million-euro-range-for-rheinmetall-from-a-global-automobile-manufacturer/">Three orders with a total order value in the high double-digit million euro range for Rheinmetall from a global automobile manufacturer</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>Rheinmetall has received a total of three orders for various electric coolant pumps from one of the largest automobile manufacturers in the world The post Three orders with a total order value in the high double-digit million euro range for Rheinmetall from a global automobile manufacturer appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/iihs-large-pickups-offer-strong-side-protection-but-falter-in-back-seat-safety/">IIHS: Large pickups offer strong side protection but falter in back seat safety</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>Four large pickups offer strong protection in side crashes but fall short when it comes to protecting passengers in the back seat The post IIHS: Large pickups offer strong side protection but falter in back seat safety appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/fuso-the-tramagal-plant-prepares-an-emobility-focused-partnership-with-the-polytechnic-institute-of-tomar/">Fuso: The Tramagal plant prepares an emobility-focused partnership with the Polytechnic Institute of Tomar</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>The MFTE Tramagal Plant in Portugal is preparing for a partnership to bolster employee training and career opportunities, focusing especially on emobility and production engineering The post Fuso: The Tramagal plant prepares an emobility-focused partnership with the Polytechnic Institute of Tomar appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/mitsubishi-motors-pajero-selected-as-historic-car-by-the-japan-automotive-hall-of-fame/">Mitsubishi Motors: Pajero selected as Historic Car by the Japan Automotive Hall of Fame</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>Mitsubishi Motors Corporation announces that the first generation Pajero, launched in 1982, has been selected by the Japan Automotive Hall of Fame as one of its Historic Cars for its superb contributions to Japanese automotive history The post Mitsubishi Motors: Pajero selected as Historic Car by the Japan Automotive Hall of Fame appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/renault-groups-shareholding-plan-is-a-success-for-the-second-year-in-a-row/">Renault Group’s shareholding plan is a success for the second year in a row</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>For the second year, Renaulution Shareplan 2023 has generated strong interest among eligible employees. The plan ran from September 18 to October 2, 2023 The post Renault Group&#39;s shareholding plan is a success for the second year in a row appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/smmt-britains-new-van-market-rises-again-but-autumn-statement-must-pave-way-for-net-zero-growth/">SMMT: Britain’s new van market rises again but Autumn Statement must pave way for net zero growth</a></h4>
+<h6>&#91;registered: 2023-11-06&#93;</h6>
+<p><code>Britain’s new light commercial vehicle &#40;LCV&#41; registrations increased by 17.7&#37; in October with 26,342 of the very latest vans, pickups and 4x4s joining Britain’s fleets, according to the latest figures published today by the Society of Motor Manufacturers and Traders &#40;SMMT&#41; The post SMMT: Britain’s new van market rises again but Autumn Statement must pave way for net zero growth appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/battery-electric-tevva-truck-set-to-drive-skills-at-mira-technology-institute-mti/">Battery-electric Tevva truck set to drive skills at MIRA Technology Institute &#40;MTI&#41;</a></h4>
+<h6>&#91;registered: 2023-11-06&#93;</h6>
+<p><code>Students and apprentices at the MIRA Technology Institute &#40;MTI&#41; have welcomed the delivery of a brand-new electric truck to help them get to grips with the latest electric vehicle technology The post Battery-electric Tevva truck set to drive skills at MIRA Technology Institute &#40;MTI&#41; appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/production-of-the-all-new-toyota-c-hr-starts-including-a-plug-in-hybrid-variant-using-a-locally-assembled-battery/">Production of the all-new Toyota C-HR starts, including a plug-in hybrid variant using a locally assembled battery</a></h4>
+<h6>&#91;registered: 2023-11-06&#93;</h6>
+<p><code>New bolder Toyota C-HR designed, developed and manufactured in Europe The post Production of the all-new Toyota C-HR starts, including a plug-in hybrid variant using a locally assembled battery appeared first on Automotive World.</code></p>
+<h4>&#91;🚗📰&#93; <a href="https://autotimesnews.com/the-ultimate-audi-q8-2023-review-you-need-to-read-now/">The Ultimate Audi Q8 2023 Review You Need to Read Now&#33;</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>When it comes to luxury SUVs, the Audi Q8 is a force to be reckoned with. The 2023 model is no exception, boasting all the power, style, and technology that Audi is known for. Let&#39;s start with the design. The Q8 is a head-turner, with its sleek and aggressive lines, massive grille, and sharp LED ... Read more</code></p>
+<h4>&#91;🚗📰&#93; <a href="https://autotimesnews.com/unveiling-the-new-2024-mercedes-benz-cle-coupe-meet-the-luxury-vehicle-starting-at-just-46605-in-the-uk/">Unveiling the New 2024 Mercedes-Benz CLE Coupé: Meet the Luxury Vehicle Starting at Just £46,605 in the UK&#33;</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>I&#39;m not one to mince my words, so let&#39;s get straight to the point: the new 2024 Mercedes-Benz CLE Coupé is an absolute beast. Priced from £46,605 in the UK, this stunning machine is not for the faint of heart. First things first, let&#39;s talk about the design. The CLE Coupé is a head-turner, with ... Read more</code></p>
+<h4>&#91;🚗📰&#93; <a href="https://autotimesnews.com/insane-rimac-nevera-smashes-speed-record-going-170mph-in-reverse-you-wont-believe-this-unbelievable-feat/">Insane&#33; Rimac Nevera smashes speed record going 170mph in reverse – you won’t believe this unbelievable feat&#33;</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>Ladies and gentlemen, hold onto your seats because I have some jaw-dropping news for you. The Rimac Nevera, the electric hypercar that has been making waves in the automotive world, has just achieved a mind-boggling feat. It has hit a record-breaking speed of 170mph in reverse. Yes, you heard that right &amp;#8211; in reverse&#33; Now, ... Read more</code></p>
+<h4>&#91;🚗📰&#93; <a href="https://autotimesnews.com/2023-kia-ev9-review-is-this-the-ultimate-electric-vehicle/">2023 Kia EV9 Review: Is This the Ultimate Electric Vehicle?</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>I&#39;ve never been a big fan of electric cars. In my mind, they&#39;ve always been the domain of tree-hugging hippies and environmentalists. But recently, I got the chance to test drive the new Kia EV9, and I have to say, it might just be the car that changes my mind. First off, let&#39;s talk about ... Read more</code></p>
+<h4>&#91;🚗📰&#93; <a href="https://autotimesnews.com/is-the-2023-tesla-model-3-worth-the-hype-find-out-in-this-in-depth-review/">Is the 2023 Tesla Model 3 Worth the Hype? Find Out in This In-Depth Review&#33;</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>Well, it&#39;s been a long time coming, but the Tesla Model 3 has finally landed in 2023. And let me tell you, it&#39;s been well worth the wait. Let&#39;s start with the looks. The Model 3 is a handsome devil, no doubt about it. It&#39;s sleek, modern, and has just the right amount of aggression ... Read more</code></p>
+<h4>&#91;🚗📰&#93; <a href="https://autotimesnews.com/monarchys-bold-move-kings-push-for-faster-adoption-of-self-driving-cars-in-uk/">Monarchy’s Bold Move: King’s Push for Faster Adoption of Self-Driving Cars in UK&#33;</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>Well, well, well. It seems that the King of the road has finally taken notice of the growing demand for autonomous driving in the UK. In a recent announcement, King has pledged to accelerate the laws surrounding autonomous vehicles in a bid to get them on our roads faster than ever before. Now, I don&#39;t ... Read more</code></p>
+<h4>&#91;🚗📰&#93; <a href="https://autotimesnews.com/join-the-race-to-800mph-bloodhound-project-seeks-fearless-driver/">Join the Race to 800mph: Bloodhound Project Seeks Fearless Driver&#33;</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>Ladies and gentlemen, fasten your seatbelts and prepare for a thrilling ride, because the Bloodhound project is on the hunt for a brave new driver&#33; In their relentless pursuit of the land speed record, this audacious team is aiming to push the boundaries of what we humans thought was achievable. And now, with their lead ... Read more</code></p>
+<h4>&#91;🚗📰&#93; <a href="https://autotimesnews.com/kias-game-changing-strategy-driving-towards-electric-domination/">Kia’s Game-Changing Strategy: Driving Towards Electric Domination</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>If there&#39;s one thing Kia has consistently proven over the years, it&#39;s that they&#39;re not afraid to dive headfirst into uncharted territories. Their latest endeavor? Becoming the frontrunner in the electric vehicle &#40;EV&#41; race. Now, you may be thinking, &amp;#8220;Kia? Aren&#39;t they the guys who brought us the adorable Soul and the quirky Stinger?&amp;#8221; Well, ... Read more</code></p>
+<h4>&#91;🚗📰&#93; <a href="https://autotimesnews.com/unlocking-the-secrets-a-deep-dive-into-the-revolutionary-nio-battery-swapping-technology/">Unlocking the Secrets: A Deep Dive into the Revolutionary Nio Battery Swapping Technology&#33;</a></h4>
+<h6>&#91;registered: 2023-11-07&#93;</h6>
+<p><code>When it comes to electric vehicles, range anxiety is a real issue. But there&#39;s one Chinese automaker that seems to have cracked the code to alleviate this concern &amp;#8211; Nio. Yes, the same Nio that produces some of the most futuristic and jaw-dropping electric cars on the market. But it&#39;s not just the cars that ... Read more</code></p>
+<h4>&#91;🚗📰&#93; <a href="https://autotimesnews.com/unveiling-the-future-of-luxury-sedans-get-a-sneak-peek-at-the-game-changing-2024-porsche-panamera-prototype/">Unveiling the Future of Luxury Sedans: Get a Sneak Peek at the Game-Changing 2024 Porsche Panamera Prototype&#33;</a></h4>
+<h6>&#91;registered: 2023-11-06&#93;</h6>
+<p><code>As I sat behind the wheel of the 2024 Porsche Panamera prototype, anticipation coursed through my veins. The legendary German automaker had promised a revolution, a new era in the realm of luxury sedans. And here I was, tasked with unraveling its secrets and deciphering whether it lived up to the hype. So, without further ... Read more</code></p>
+
+
+        <HR/>
+        <div class="footer">
+          <p>
+            Published from <a href="GAD.jmd">GAD.jmd</a>
+            using <a href="http://github.com/JunoLab/Weave.jl">Weave.jl</a> v0.10.12 on 2023-11-07.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</BODY>
+
+</HTML>
