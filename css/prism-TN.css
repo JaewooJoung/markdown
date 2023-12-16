@@ -1,0 +1,278 @@
+// * {border: solid red 1px;}
+html {
+	box-sizing: border-box;
+}
+*,*:before,*:after {
+	box-sizing: inherit;
+}
+body.pen-usage-text {
+	height: 100%;
+	min-height: 100vh;
+	width: 100%;
+	min-width: 100vw;
+	margin: 0 !important;
+	padding: 0 !important;
+	position: relative;
+}
+.pen-usage-text {
+	$plex-sans: "IBM Plex Sans", sans-serif;
+	$plex-mono: "IBM Plex Mono", monospace;
+
+	background: #263238;
+	color: white;
+	*,*::before,*::after {
+		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+			Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+		text-rendering: optimizeLegibility !important;
+		-webkit-font-smoothing: antialiased !important;
+		-moz-osx-font-smoothing: grayscale !important;
+	}
+
+	pre,code,samp,var {
+		font-family: $plex-mono !important;
+		color: mediumslateblue;
+		background: rgba(slategray, 0.125);
+		border-radius: 3px;
+		padding: 0.125em 0.25em;
+		letter-spacing: 1px;
+		font-weight: 600;
+		word-spacing: 1px;
+		margin: 0 0.125em;
+	}
+	
+	
+	strong {
+		font-weight: 700 !important;
+		color: lightblue;
+		padding: 0 16px;
+	}
+
+	* {
+		text-align: center;
+		margin-left: auto;
+		margin-right: auto;
+		line-height: 1.5;
+		&:not(pre),
+		&:not(code),
+		&:not(samp) {
+			font-family: "IBM Plex Sans", sans-serif !important;
+		}
+		h2 {
+			text-transform: uppercase;
+			font-weight: 300;
+			letter-spacing: 4px;
+			color: lightslategray;
+			line-height: 2;
+		}
+		h3 {
+			font-weight: normal;
+			text-align: center;
+			margin: 1em auto;
+		}
+	}
+
+	text-align: center;
+
+	display: flex !important;
+	flex-direction: column;
+	align-items: center;
+	align-content: center;
+	justify-content: center;
+	height: 100% !important;
+	min-height: 100vh !important;
+	width: 100vw;
+	
+	
+	
+	
+	#usage-instructions {
+		text-align: center;
+		margin: 2em auto;
+		padding: 1em 2em;
+		background: #222222;
+		max-width: 768px;
+		border-radius: 8px;
+		color: slategray;
+		line-height: 1.75 !important;
+		p, ol li {
+			line-height: 1.75 !important;
+			color: cyan;
+			font-weight: 400;
+			letter-spacing: 1px;
+			font-size: small;
+			font-family: "IBM Plex Mono", sans-serif !important;
+		}
+		ol li {
+			text-align: left;
+			margin-bottom: 1em;
+		}
+		
+		ol {
+			pre, samp {
+				text-align: left !important;
+				font-family: $plex-mono !important;
+				font-weight: normal;
+				font-size: smaller !important;
+			}
+		}
+		
+		pre, code, samp {
+			&:not(#uri-snippet), &:not(#uri-snippet-wrapper) {
+				background: #121212;
+				padding: 0.5em 1em;
+				line-height: 1.5 !important;
+				margin: 1em 0 1em;
+				color: white;
+			}
+		}
+	}
+	
+	
+	#uri-snippet {
+		font-size: 18px;
+		color: lightgreen !important;;
+		font-family: $plex-mono !important;
+		letter-spacing: normal;
+		transition: all 200ms ease-in;
+		padding: 0 !important;
+	}
+	#uri-snippet-wrapper {
+		cursor: pointer;
+		margin: 2em 0 !important;;
+		background: #111111 !important;
+		border: rgba(limegreen, 0.35) solid 2px !important;;
+		transition: all 200ms ease-in;
+		padding: 1.5em !important;
+		
+		&:hover {
+			border: rgba(limegreen, 0.9) solid 2px !important;;
+			box-shadow: 0 0 12px  rgba(lightgreen, 0.125) !important;;
+			background: #000000 !important;
+			
+			code {
+				color: darken(lightgreen, 10%) !important;;
+			}
+		}
+	}
+}
+
+
+// ===========================================
+
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #ccc;
+	background: none;
+	font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: 0.5em 0;
+	overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #2d2d2d;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: 0.1em;
+	border-radius: 0.3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.block-comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #999;
+}
+
+.token.punctuation {
+	color: #ccc;
+}
+
+.token.tag,
+.token.attr-name,
+.token.namespace,
+.token.deleted {
+	color: #e2777a;
+}
+
+.token.function-name {
+	color: #6196cc;
+}
+
+.token.boolean,
+.token.number,
+.token.function {
+	color: #f08d49;
+}
+
+.token.property,
+.token.class-name,
+.token.constant,
+.token.symbol {
+	color: #f8c555;
+}
+
+.token.selector,
+.token.important,
+.token.atrule,
+.token.keyword,
+.token.builtin {
+	color: #cc99cd;
+}
+
+.token.string,
+.token.char,
+.token.attr-value,
+.token.regex,
+.token.variable {
+	color: #7ec699;
+}
+
+.token.operator,
+.token.entity,
+.token.url {
+	color: #67cdcc;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+
+.token.inserted {
+	color: green;
+}
