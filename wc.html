@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Real Time Clock</title>
+    </head>
+    <body>
+        <div id="Sweden"></div>
+        <div id="Spain"></div>
+        <div id="Mexico"></div>
+        <div id="Russia"></div>
+        <div id="SouthKorea"></div>
+        <div id="NorthKorea"></div>
+        <div id="China"></div>
+        <div id="Turkey"></div>
+
+        <script>
+            function updateClock(location, timeZone) {
+                let now = new Date();
+                let options = { 
+                    timeZone: timeZone,
+                    hour: 'numeric', 
+                    minute: 'numeric', 
+                    second: 'numeric', 
+                    weekday: 'long' 
+                };
+                let formatted = new Intl.DateTimeFormat('default', options).format(now);
+                document.getElementById(location).innerText = formatted;
+            }
+
+            setInterval(() => {
+                updateClock('Sweden', 'Europe/Stockholm');
+                updateClock('Spain', 'Europe/Madrid');
+                updateClock('Mexico', 'America/Mexico_City');
+                updateClock('Russia', 'Europe/Moscow');
+                updateClock('SouthKorea', 'Asia/Seoul');
+                updateClock('NorthKorea', 'Asia/Pyongyang');
+                updateClock('China', 'Asia/Shanghai');
+                updateClock('Turkey', 'Europe/Istanbul');
+            }, 1000);
+        </script>
+    </body>
+</html>
