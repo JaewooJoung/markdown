@@ -1,17 +1,37 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Real Time Clock</title>
+        <title>World Clock</title>
     </head>
     <body>
-        <div id="Sweden"></div>
-        <div id="Spain"></div>
-        <div id="Mexico"></div>
-        <div id="Russia"></div>
-        <div id="SouthKorea"></div>
-        <div id="NorthKorea"></div>
-        <div id="China"></div>
-        <div id="Turkey"></div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Week</th>
+                    <th>Sverige</th>
+                    <th>España</th>
+                    <th>México</th>
+                    <th>Россия</th>
+                    <th>대한민국</th>
+                    <th>북조선</th>
+                    <th>中國</th>
+                    <th>Türkiye</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="week"></td>
+                    <td id="Sweden"></td>
+                    <td id="Spain"></td>
+                    <td id="Mexico"></td>
+                    <td id="Russia"></td>
+                    <td id="SouthKorea"></td>
+                    <td id="NorthKorea"></td>
+                    <td id="China"></td>
+                    <td id="Turkey"></td>
+                </tr>
+            </tbody>
+        </table>
 
         <script>
             function updateClock(location, timeZone) {
@@ -27,7 +47,18 @@
                 document.getElementById(location).innerText = formatted;
             }
 
+            function getWeekNumber(d) {
+                d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+                d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+                var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+                var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+                return weekNo;
+            }
+
             setInterval(() => {
+                var now = new Date();
+                document.getElementById('week').innerText = "Week " + getWeekNumber(now);
+
                 updateClock('Sweden', 'Europe/Stockholm');
                 updateClock('Spain', 'Europe/Madrid');
                 updateClock('Mexico', 'America/Mexico_City');
