@@ -2,8 +2,8 @@
 <html>
 <body>
 
-<div style="display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column;">
-    <h2>Enter your values in Second :</h2>
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <div style="margin: 0 20px;">
 <label for="tp">TP:</label><br>
 <input type="number" id="tp" name="tp" value="0"><br>
 <label for="tn">TN:</label><br>
@@ -15,8 +15,9 @@
 <label for="totalTime">Total Time:</label><br>
 <input type="number" id="totalTime" name="totalTime" value="0"><br><br>
 <button onclick="calculate()">Calculate</button>
+    </div>
 
-<h2>Results:</h2>
+    <div style="margin: 0 20px;">
 <table id="confusionMatrix">
     <thead>
         <tr>
