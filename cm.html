@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<table id="confusionMatrix">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Positive</th>
+            <th>Negative</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>True</th>
+            <td id="tp">TP</td>
+            <td id="fn">FN</td>
+        </tr>
+        <tr>
+            <th>False</th>
+            <td id="fp">FP</td>
+            <td id="tn">TN</td>
+        </tr>
+    </tbody>
+</table>
+
+<p id="sensitivity"></p>
+<p id="specificity"></p>
+<p id="fpr"></p>
+<p id="fnr"></p>
+<p id="precision"></p>
+<p id="npv"></p>
+<p id="accuracy"></p>
+<p id="balancedAccuracy"></p>
+<p id="f1score"></p>
+<p id="mcc"></p>
+
+<script>
+// Replace these with actual values
+var tp = 100, tn = 50, fp = 30, fn = 20;
+
+document.getElementById("tp").innerHTML = tp;
+document.getElementById("fn").innerHTML = fn;
+document.getElementById("fp").innerHTML = fp;
+document.getElementById("tn").innerHTML = tn;
+
+document.getElementById("sensitivity").innerHTML = "Sensitivity: " + (tp/(tp+fn));
+document.getElementById("specificity").innerHTML = "Specificity: " + (tn/(tn+fp));
+document.getElementById("fpr").innerHTML = "False Positive Rate: " + (fp/(fp+tn));
+document.getElementById("fnr").innerHTML = "False Negative Rate: " + (fn/(fn+tp));
+document.getElementById("precision").innerHTML = "Precision: " + (tp/(tp+fp));
+document.getElementById("npv").innerHTML = "Negative Prediction Value: " + (tn/(tn+fn));
+document.getElementById("accuracy").innerHTML = "Accuracy: " + ((tp+tn)/(tp+tn+fp+fn));
+document.getElementById("balancedAccuracy").innerHTML = "Balanced Accuracy: " + ((tp/(tp+fn) + tn/(tn+fp))/2);
+document.getElementById("f1score").innerHTML = "F1-Score: " + (2 * ((tp/(tp+fn) * tp/(tp+fp)) / (tp/(tp+fn) + tp/(tp+fp))));
+document.getElementById("mcc").innerHTML = "Matthews Correlation Coefficient: " + ((tp*tn - fp*fn) / Math.sqrt((tp+fp) * (tp+fn) * (tn+fp) * (tn+fn)));
+</script>
+
+</body>
+</html>
