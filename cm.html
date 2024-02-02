@@ -62,6 +62,7 @@ function calculate() {
     var fp = document.getElementById("fp").value;
     var fn = document.getElementById("fn").value;
     var totalTime = parseInt(tp) + parseInt(tn) + parseInt(fp) + parseInt(fn);
+    var failures = parseInt(fp) + parseInt(fn);
 
     document.getElementById("tpValue").innerHTML = tp;
     document.getElementById("fnValue").innerHTML = fn;
@@ -87,6 +88,11 @@ function calculate() {
 
     document.getElementById("totalTime").innerHTML = "Total Time: " + totalTime + " seconds";
 }
+        if (failures != 0) {
+        document.getElementById("mtbf").innerHTML = "Mean Time Between Failures: " + ((totalTime / failures) * 100).toFixed(2) + "%";
+    } else {
+        document.getElementById("mtbf").innerHTML = "Mean Time Between Failures: No Failures 100%";
+    }
 </script>
 
 </body>
