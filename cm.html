@@ -66,20 +66,20 @@ function calculate() {
     document.getElementById("mtbf").innerHTML = "Mean Time Between Failures: " + (totalTime / (fp + fn));
 
 
-    document.getElementById("sensitivity").innerHTML = "Sensitivity: " + (tp/(tp+fn));
-    document.getElementById("specificity").innerHTML = "Specificity: " + (tn/(tn+fp));
-    document.getElementById("fpr").innerHTML = "False Positive Rate: " + (fp/(fp+tn));
-    document.getElementById("fnr").innerHTML = "False Negative Rate: " + (fn/(fn+tp));
-    document.getElementById("precision").innerHTML = "Precision: " + (tp/(tp+fp));
-    document.getElementById("npv").innerHTML = "Negative Prediction Value: " + (tn/(tn+fn));
-    document.getElementById("accuracy").innerHTML = "Accuracy: " + ((tp+tn)/(tp+tn+fp+fn));
-    document.getElementById("balancedAccuracy").innerHTML = "Balanced Accuracy: " + ((tp/(tp+fn) + tn/(tn+fp))/2);
-    document.getElementById("f1score").innerHTML = "F1-Score: " + (2 * ((tp/(tp+fn) * tp/(tp+fp)) / (tp/(tp+fn) + tp/(tp+fp))));
-    document.getElementById("mcc").innerHTML = "Matthews Correlation Coefficient: " + ((tp*tn - fp*fn) / Math.sqrt((tp+fp) * (tp+fn) * (tn+fp) * (tn+fn)));
+    document.getElementById("sensitivity").innerHTML = "Sensitivity: " + (tp/(tp+fn)* 100).toFixed(2) + "%";
+    document.getElementById("specificity").innerHTML = "Specificity: " + (tn/(tn+fp)* 100).toFixed(2) + "%";
+    document.getElementById("fpr").innerHTML = "False Positive Rate: " + (fp/(fp+tn)* 100).toFixed(2) + "%";
+    document.getElementById("fnr").innerHTML = "False Negative Rate: " + (fn/(fn+tp)* 100).toFixed(2) + "%";
+    document.getElementById("precision").innerHTML = "Precision: " + (tp/(tp+fp)* 100).toFixed(2) + "%";
+    document.getElementById("npv").innerHTML = "Negative Prediction Value: " + (tn/(tn+fn)* 100).toFixed(2) + "%";
+    document.getElementById("accuracy").innerHTML = "Accuracy: " + ((tp+tn)/(tp+tn+fp+fn)* 100).toFixed(2) + "%";
+    document.getElementById("balancedAccuracy").innerHTML = "Balanced Accuracy: " + ((tp/(tp+fn) + tn/(tn+fp))/2 * 100).toFixed(2) + "%";
+    document.getElementById("f1score").innerHTML = "F1-Score: " + (2 * ((tp/(tp+fn) * tp/(tp+fp)) / (tp/(tp+fn) + tp/(tp+fp)))* 100).toFixed(2) + "%";
+    document.getElementById("mcc").innerHTML = "Matthews Correlation Coefficient: " + ((tp*tn - fp*fn) / Math.sqrt((tp+fp) * (tp+fn) * (tn+fp) * (tn+fn))* 100).toFixed(2) + "%";
     if (failures != 0) {
-        document.getElementById("mtbf").innerHTML = "Mean Time Between Failures: " + (totalTime / failures);
+        document.getElementById("mtbf").innerHTML = "Mean Time Between Failures: " + (totalTime / failures* 100).toFixed(2) + "%";
     } else {
-        document.getElementById("mtbf").innerHTML = "Mean Time Between Failures: No Failures";
+        document.getElementById("mtbf").innerHTML = "Mean Time Between Failures: No Failures 100%";
     }
 }
 </script>
