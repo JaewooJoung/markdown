@@ -2,6 +2,18 @@
 <html>
 <body>
 
+<h2>Enter your values:</h2>
+<label for="tp">TP:</label><br>
+<input type="number" id="tp" name="tp" value="0"><br>
+<label for="tn">TN:</label><br>
+<input type="number" id="tn" name="tn" value="0"><br>
+<label for="fp">FP:</label><br>
+<input type="number" id="fp" name="fp" value="0"><br>
+<label for="fn">FN:</label><br>
+<input type="number" id="fn" name="fn" value="0"><br><br>
+<button onclick="calculate()">Calculate</button>
+
+<h2>Results:</h2>
 <table id="confusionMatrix">
     <thead>
         <tr>
@@ -13,13 +25,13 @@
     <tbody>
         <tr>
             <th>True</th>
-            <td id="tp">TP</td>
-            <td id="fn">FN</td>
+            <td id="tpValue"></td>
+            <td id="fnValue"></td>
         </tr>
         <tr>
             <th>False</th>
-            <td id="fp">FP</td>
-            <td id="tn">TN</td>
+            <td id="fpValue"></td>
+            <td id="tnValue"></td>
         </tr>
     </tbody>
 </table>
@@ -36,24 +48,28 @@
 <p id="mcc"></p>
 
 <script>
-// Replace these with actual values
-var tp = 100, tn = 50, fp = 30, fn = 20;
+function calculate() {
+    var tp = document.getElementById("tp").value;
+    var tn = document.getElementById("tn").value;
+    var fp = document.getElementById("fp").value;
+    var fn = document.getElementById("fn").value;
 
-document.getElementById("tp").innerHTML = tp;
-document.getElementById("fn").innerHTML = fn;
-document.getElementById("fp").innerHTML = fp;
-document.getElementById("tn").innerHTML = tn;
+    document.getElementById("tpValue").innerHTML = tp;
+    document.getElementById("fnValue").innerHTML = fn;
+    document.getElementById("fpValue").innerHTML = fp;
+    document.getElementById("tnValue").innerHTML = tn;
 
-document.getElementById("sensitivity").innerHTML = "Sensitivity: " + (tp/(tp+fn));
-document.getElementById("specificity").innerHTML = "Specificity: " + (tn/(tn+fp));
-document.getElementById("fpr").innerHTML = "False Positive Rate: " + (fp/(fp+tn));
-document.getElementById("fnr").innerHTML = "False Negative Rate: " + (fn/(fn+tp));
-document.getElementById("precision").innerHTML = "Precision: " + (tp/(tp+fp));
-document.getElementById("npv").innerHTML = "Negative Prediction Value: " + (tn/(tn+fn));
-document.getElementById("accuracy").innerHTML = "Accuracy: " + ((tp+tn)/(tp+tn+fp+fn));
-document.getElementById("balancedAccuracy").innerHTML = "Balanced Accuracy: " + ((tp/(tp+fn) + tn/(tn+fp))/2);
-document.getElementById("f1score").innerHTML = "F1-Score: " + (2 * ((tp/(tp+fn) * tp/(tp+fp)) / (tp/(tp+fn) + tp/(tp+fp))));
-document.getElementById("mcc").innerHTML = "Matthews Correlation Coefficient: " + ((tp*tn - fp*fn) / Math.sqrt((tp+fp) * (tp+fn) * (tn+fp) * (tn+fn)));
+    document.getElementById("sensitivity").innerHTML = "Sensitivity: " + (tp/(tp+fn));
+    document.getElementById("specificity").innerHTML = "Specificity: " + (tn/(tn+fp));
+    document.getElementById("fpr").innerHTML = "False Positive Rate: " + (fp/(fp+tn));
+    document.getElementById("fnr").innerHTML = "False Negative Rate: " + (fn/(fn+tp));
+    document.getElementById("precision").innerHTML = "Precision: " + (tp/(tp+fp));
+    document.getElementById("npv").innerHTML = "Negative Prediction Value: " + (tn/(tn+fn));
+    document.getElementById("accuracy").innerHTML = "Accuracy: " + ((tp+tn)/(tp+tn+fp+fn));
+    document.getElementById("balancedAccuracy").innerHTML = "Balanced Accuracy: " + ((tp/(tp+fn) + tn/(tn+fp))/2);
+    document.getElementById("f1score").innerHTML = "F1-Score: " + (2 * ((tp/(tp+fn) * tp/(tp+fp)) / (tp/(tp+fn) + tp/(tp+fp))));
+    document.getElementById("mcc").innerHTML = "Matthews Correlation Coefficient: " + ((tp*tn - fp*fn) / Math.sqrt((tp+fp) * (tp+fn) * (tn+fp) * (tn+fn)));
+}
 </script>
 
 </body>
