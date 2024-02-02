@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chinese Year Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .result {
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+        }
+        .color {
+            height: 50px;
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chinese Year Calculator</h1>
+    <form id="yearForm">
+        <label for="year">Enter a year:</label>
+        <input type="number" id="year" name="year">
+        <input type="submit" value="Calculate">
+    </form>
+    <div id="result" class="result" style="display: none;">
+        <h2>Results:</h2>
+        <p>Color of the year: <span id="colorName"></span></p>
+        <div id="colorBox" class="color"></div>
+        <p>Animal of the year: <span id="animal"></span></p>
+        <p>Aspect of the year: <span id="aspect"></span></p>
+    </div>
+
+    <script>
+        document.getElementById('yearForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var year = document.getElementById('year').value;
+            // perform your calculations here - the following are placeholder values
+            var color = 'red'; // replace with calculated color
+            var animal = 'rat'; // replace with calculated animal
+            var aspect = 'positive'; // replace with calculated aspect
+            document.getElementById('colorName').textContent = color;
+            document.getElementById('colorBox').style.backgroundColor = color;
+            document.getElementById('animal').textContent = animal;
+            document.getElementById('aspect').textContent = aspect;
+            document.getElementById('result').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
