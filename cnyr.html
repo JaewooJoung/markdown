@@ -55,28 +55,29 @@
             var terrestrial = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
             var aspects = ["Positive(➕)", "Negative(➖)"];
             var base = 4;
-
+        
             var cycleyear = year - base;
-
-            var stemnumber = cycleyear % 10 + 1;
+        
+            var stemnumber = cycleyear % 10;
             var stemhan = celestial[stemnumber];
             var stempinyin = pinyin[stemhan];
-
-            var elementnumber = Math.floor(stemnumber / 2) + 1;
-            var element = (elementnumber >= 5) ? elements[4] : elements[elementnumber - 1];
-
+        
+            var elementnumber = Math.floor(stemnumber / 2);
+            var element = (elementnumber >= 4) ? elements[4] : elements[elementnumber];
+        
             var branchnumber = cycleyear % 12;
             var branchhan = terrestrial[branchnumber];
             var branchpinyin = pinyin[branchhan];
             var animal = animals[branchnumber];
-
+        
             var aspectnumber = cycleyear % 2;
             var aspect = aspects[aspectnumber];
-
+        
             var index = cycleyear % 60 + 1;
-
+        
             return `${year} year is [${stemhan}${branchhan}] year (${stempinyin} : ${branchpinyin} year, ${element} ${animal}; ${aspect} year and the ${index} year of 60(Sexagenary) cycle`;
         }
+
 
         document.getElementById('yearForm').addEventListener('submit', function(e) {
             e.preventDefault();
