@@ -11,6 +11,8 @@
 <input type="number" id="fp" name="fp" value="0"><br>
 <label for="fn">FN:</label><br>
 <input type="number" id="fn" name="fn" value="0"><br><br>
+<label for="totalTime">Total Time:</label><br>
+<input type="number" id="totalTime" name="totalTime" value="0"><br><br>
 <button onclick="calculate()">Calculate</button>
 
 <h2>Results:</h2>
@@ -46,7 +48,8 @@
 <p id="balancedAccuracy"></p>
 <p id="f1score"></p>
 <p id="mcc"></p>
-
+<p id="mtbf"></p>
+    
 <script>
 function calculate() {
     var tp = document.getElementById("tp").value;
@@ -69,6 +72,7 @@ function calculate() {
     document.getElementById("balancedAccuracy").innerHTML = "Balanced Accuracy: " + ((tp/(tp+fn) + tn/(tn+fp))/2);
     document.getElementById("f1score").innerHTML = "F1-Score: " + (2 * ((tp/(tp+fn) * tp/(tp+fp)) / (tp/(tp+fn) + tp/(tp+fp))));
     document.getElementById("mcc").innerHTML = "Matthews Correlation Coefficient: " + ((tp*tn - fp*fn) / Math.sqrt((tp+fp) * (tp+fn) * (tn+fp) * (tn+fn)));
+    document.getElementById("mtbf").innerHTML = "Mean Time Between Failures: " + (totalTime / (fp + fn));
 }
 </script>
 
