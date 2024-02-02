@@ -2,7 +2,8 @@
 <html>
 <body>
 
-<h2>Enter your values:</h2>
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column;">
+    <h2>Enter your values in Second :</h2>
 <label for="tp">TP:</label><br>
 <input type="number" id="tp" name="tp" value="0"><br>
 <label for="tn">TN:</label><br>
@@ -49,7 +50,7 @@
 <p id="f1score"></p>
 <p id="mcc"></p>
 <p id="mtbf"></p>
-    
+</div>   
 <script>
 function calculate() {
     var tp = document.getElementById("tp").value;
