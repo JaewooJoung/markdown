@@ -26,10 +26,7 @@
     </form>
     <div id="result" class="result" style="display: none;">
         <h2>Results:</h2>
-        <p>Color of the year: <span id="colorName"></span></p>
-        <div id="colorBox" class="color"></div>
-        <p>Animal of the year: <span id="animal"></span></p>
-        <p>Aspect of the year: <span id="aspect"></span></p>
+        <p id="fullResult"></p>
     </div>
 
     <script>
@@ -68,16 +65,12 @@
             e.preventDefault();
             var year = document.getElementById('year').value;
             var result = chinese(year);
-            // parse result to extract color, animal, and aspect
-            var color = result.split(",")[1].split(" ")[1]; // replace with actual color parsing
-            var animal = result.split(",")[1].split(" ")[2]; // replace with actual animal parsing
-            var aspect = result.split(",")[2].split(" ")[1]; // replace with actual aspect parsing
-            document.getElementById('colorName').textContent = color;
-            document.getElementById('colorBox').style.backgroundColor = color;
-            document.getElementById('animal').textContent = animal;
-            document.getElementById('aspect').textContent = aspect;
+            document.getElementById('fullResult').textContent = result;
             document.getElementById('result').style.display = 'block';
         });
     </script>
 </body>
 </html>
+
+
+
