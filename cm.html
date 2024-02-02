@@ -4,68 +4,69 @@
 
 <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
     <div style="margin: 0 20px;">
-<label for="tp">TP:</label>
-<input type="number" id="tp" name="tp" value="0"><br>
-<label for="tn">TN:</label>
-<input type="number" id="tn" name="tn" value="0"><br>
-<label for="fp">FP:</label>
-<input type="number" id="fp" name="fp" value="0"><br>
-<label for="fn">FN:</label>
-<input type="number" id="fn" name="fn" value="0"><br><br>
-<label for="totalTime">Total Time:</label>
-<input type="number" id="totalTime" name="totalTime" value="0"><br><br>
-<button onclick="calculate()">Calculate</button>
+        <h2>Enter your values (in seconds):</h2>
+        <label for="tp">TP:</label>
+        <input type="number" id="tp" name="tp" value="0"><br>
+        <label for="tn">TN:</label>
+        <input type="number" id="tn" name="tn" value="0"><br>
+        <label for="fp">FP:</label>
+        <input type="number" id="fp" name="fp" value="0"><br>
+        <label for="fn">FN:</label>
+        <input type="number" id="fn" name="fn" value="0"><br><br>
+        <button onclick="calculate()">Calculate</button>
     </div>
 
     <div style="margin: 0 20px;">
-<table id="confusionMatrix">
-    <thead>
-        <tr>
-            <th></th>
-            <th>Positive</th>
-            <th>Negative</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th>True</th>
-            <td id="tpValue"></td>
-            <td id="fnValue"></td>
-        </tr>
-        <tr>
-            <th>False</th>
-            <td id="fpValue"></td>
-            <td id="tnValue"></td>
-        </tr>
-    </tbody>
-</table>
+        <h2>Results:</h2>
+        <table id="confusionMatrix">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Positive</th>
+                    <th>Negative</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>True</th>
+                    <td id="tpValue"></td>
+                    <td id="fnValue"></td>
+                </tr>
+                <tr>
+                    <th>False</th>
+                    <td id="fpValue"></td>
+                    <td id="tnValue"></td>
+                </tr>
+            </tbody>
+        </table>
 
-<p id="sensitivity"></p>
-<p id="specificity"></p>
-<p id="fpr"></p>
-<p id="fnr"></p>
-<p id="precision"></p>
-<p id="npv"></p>
-<p id="accuracy"></p>
-<p id="balancedAccuracy"></p>
-<p id="f1score"></p>
-<p id="mcc"></p>
-<p id="mtbf"></p>
-</div>   
+        <p id="sensitivity"></p>
+        <p id="specificity"></p>
+        <p id="fpr"></p>
+        <p id="fnr"></p>
+        <p id="precision"></p>
+        <p id="npv"></p>
+        <p id="accuracy"></p>
+        <p id="balancedAccuracy"></p>
+        <p id="f1score"></p>
+        <p id="mcc"></p>
+        <p id="mtbf"></p>
+        <p id="totalTime"></p>
+    </div>   
+</div>
+
 <script>
 function calculate() {
     var tp = document.getElementById("tp").value;
     var tn = document.getElementById("tn").value;
     var fp = document.getElementById("fp").value;
     var fn = document.getElementById("fn").value;
-    var failures = fp + fn;
-    
+    var totalTime = parseInt(tp) + parseInt(tn) + parseInt(fp) + parseInt(fn);
+
     document.getElementById("tpValue").innerHTML = tp;
     document.getElementById("fnValue").innerHTML = fn;
     document.getElementById("fpValue").innerHTML = fp;
     document.getElementById("tnValue").innerHTML = tn;
-    document.getElementById("mtbf").innerHTML = "Mean Time Between Failures: " + (totalTime / (fp + fn));
-
 
     document.getElementById("sensitivity").innerHTML = "Sensitivity: " + (tp/(tp+fn)* 100).toFixed(2) + "%";
     document.getElementById("specificity").innerHTML = "Specificity: " + (tn/(tn+fp)* 100).toFixed(2) + "%";
@@ -77,11 +78,14 @@ function calculate() {
     document.getElementById("balancedAccuracy").innerHTML = "Balanced Accuracy: " + ((tp/(tp+fn) + tn/(tn+fp))/2 * 100).toFixed(2) + "%";
     document.getElementById("f1score").innerHTML = "F1-Score: " + (2 * ((tp/(tp+fn) * tp/(tp+fp)) / (tp/(tp+fn) + tp/(tp+fp)))* 100).toFixed(2) + "%";
     document.getElementById("mcc").innerHTML = "Matthews Correlation Coefficient: " + ((tp*tn - fp*fn) / Math.sqrt((tp+fp) * (tp+fn) * (tn+fp) * (tn+fn))* 100).toFixed(2) + "%";
-    if (failures != 0) {
-        document.getElementById("mtbf").innerHTML = "Mean Time Between Failures: " + (totalTime / failures* 100).toFixed(2) + "%";
+
+    if ((fp + fn) != 0) {
+        document.getElementById("mtbf").innerHTML = "Mean Time Between Failures: " + ((totalTime / (fp + fn)) * 100).toFixed(2) + "%";
     } else {
         document.getElementById("mtbf").innerHTML = "Mean Time Between Failures: No Failures 100%";
     }
+
+    document.getElementById("totalTime").innerHTML = "Total Time: " + totalTime + " seconds";
 }
 </script>
 
