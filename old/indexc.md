@@ -1,13 +1,9 @@
 ---
-title : My CV
-author : 정재우 / Jaewoo Joung / 郑在祐/ (A.K.A.)海绵宝宝
-date: `j using Dates; Dates.Date(Dates.now())`
-weave_options:
-  out_width : 99%
-  out_path: /media/crux/a48b9489-1886-47de-bfd7-0c9bef45a8f9/markdown/old/
-  term: true
-  wrap: true
+author: "정재우 / Jaewoo Joung / 郑在祐/ (A.K.A.)海绵宝宝"
+title: "My CV"
+date: "2024-05-10"
 ---
+
 
 # Jaewoo Joung
 
