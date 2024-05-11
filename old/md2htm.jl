@@ -16,5 +16,5 @@ function FileLog(Filename::String,logme::String) #not using traditional logging 
 end
 
 
-weaving("/media/crux/a48b9489-1886-47de-bfd7-0c9bef45a8f9/markdown/old/indexc.html","/media/crux/a48b9489-1886-47de-bfd7-0c9bef45a8f9/markdown/old/indexd.jmd",2)
+weaving("/media/crux/a48b9489-1886-47de-bfd7-0c9bef45a8f9/markdown/old/","/media/crux/a48b9489-1886-47de-bfd7-0c9bef45a8f9/markdown/old/indexe.jmd",5)
 
