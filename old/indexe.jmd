@@ -6,25 +6,26 @@ weave_options:
   out_width : 99%
   out_path: /media/crux/a48b9489-1886-47de-bfd7-0c9bef45a8f9/markdown/old/
   #doctype: md2html
-  term: true
-  wrap: true
+  term: false
+  wrap: false
 ---
 
 ##### Nationality: South Korean
-##### 🏠 Address: [1301, Bangatan 36, 414 64, Göteborg, Sverige] 
-##### 📨 E-mail : [jaewoo.joung@outlook.com](mailto:jaewoo.joung@outlook.com)
-##### 📲 mobile:  [+46-(0)73-500-3275](+46-(0)73-500-3275)
-> Linkedin: [https://www.linkedin.com/in/jaewoo-joung/](https://www.linkedin.com/in/jaewoo-joung/)
-
+##### Address: [1301, Bangatan 36, 414 64, Göteborg, Sverige] 
+##### E-mail : [jaewoo.joung@outlook.com](mailto:jaewoo.joung@outlook.com)
+##### mobile:  [+46-(0)73-500-3275](tel:+46-(0)73-500-3275)
+##### Linkedin: [https://www.linkedin.com/in/jaewoo-joung/](https://www.linkedin.com/in/jaewoo-joung/)
+>
 --- 
 # SUMMARY 
-> +20 years of ADAS functions, Sensors, Automotive SW(OS, Middle-Ware, ASW including C++ and simulink), Innovative function design, SW programming, Function Quality, Testing, and real-time embedded systems. 2 equipped managing power: Understand the customer-concentric experience satisfaction with fast decisions to use which product to use. Deliverer of fast and innovative achievements on time. 2+ major work ethics: Good Technical Coach of experts. Support all engineer’s ideas. 8 aspects of managing experience: Global Team & Dept. lead, Advanced but modest, Process driven but flexible, Insight of empathy, Enthusiasm and diligence, Safety with UX, Good Function architect, always listens to suggestions. Lastly, willing to relocate anywhere with my passion for ADAS.
+> 18.2 years of ADAS functions, Sensors, Automotive SW(OS, Middle-Ware, ASW including C++ and simulink), Innovative function design, SW programming, Function Quality, Testing, and real-time embedded systems. 2 equipped managing power: Understand the customer-concentric experience satisfaction with fast decisions to use which product to use. Deliverer of fast and innovative achievements on time. 2+ major work ethics: Good Technical Coach of experts. Support all engineer’s ideas. 8 aspects of managing experience: Global Team & Dept. lead, Advanced but modest, Process driven but flexible, Insight of empathy, Enthusiasm and diligence, Safety with UX, Good Function architect, always listens to suggestions. Lastly, willing to relocate anywhere with my passion for ADAS.
 ---
 
 # EMPLOYMENT HISTORY 
 
-## Dec.2022~Today: Tata Technologies Nordics AB [Göteborg, Sverige]
-+ Mar.2023 ~ Today: ADAS / ADS Head (Consulting @ Zeekr Tech EU)
+## Dec.2022~Today: Tata Technologies Nordics AB 
+### Göteborg, Sverige: [`j using Dates; println(round((Date(today()) - Date(2022, 12, 1)).value / 365.25, digits=1), " years.")`]
++ Mar.2023 ~ Today: ADAS / ADS Head (Consultant @ Zeekr Tech EU)
   * Conducted interviews to measure the ADAS capabilities of internal
   * Engaged in new project sourcing and development 
   * As a Zeekr Tech EU consultant: (Apr. 2023 ~ Present)
@@ -32,7 +33,7 @@ weave_options:
       - Attribute Lead 
       - Product Feature Engineer 
       - Support of ADAS-related EU-Homologation
-      - Support of ADAS-related EU-NCAP (pre-) testing
+      - Support of ADAS-related EU-NCAP (pre-)testing
       - ADAS V&V Roadmap development
       - Supervising ADAS validation and homologation activities
 + Dec.2022 ~ Feb. 2023: ADS Lead Engineer 
@@ -43,7 +44,8 @@ weave_options:
   * Tata Mfg Tech Shanghai(Education,training)
   * Tata Mfg Tech Shanghai Bussiness Outlook Support
 
-## Jan.2018~Dec.2022: Geely Research Institute [Hangzhouwan, Zhejiang, China]
+## Jan.2018~Dec.2022: Geely Research Institute 
+### Hangzhouwan, Zhejiang, China: [`j using Dates; println(round((Date(2022, 12, 1) - Date(2018, 1, 1)).value / 365.25, digits=1), " years.")`]
 + Jan.2021 ~ Dec.2022: Chief Technology Officer. (600 people)
   * Internal SW Development evaluation (ASPICE, SOTIF, ISO26262, Cybersecurity.)
   * Function architecture design support.
@@ -67,7 +69,8 @@ weave_options:
   * Parking Solution Specialist.
   * SOC (System On Chip) Benchmark
 
-## Aug.2012~Dec.2017: Hyundai Autron [Pangyo, Korea]
+## Aug.2012~Dec.2017: Hyundai Autron 
+### Pangyo, Korea: [`j using Dates; println(round((Date(2017, 12, 1) - Date(2012, 8, 1)).value / 365.25, digits=1), " years.")`]
 + Jan. 2013 ~ Dec.2017: ADAS & New Technology team, ADAS Leader (Managed 25 people.)
   * Build & Managed ADAS & New Technology development team (25 people.)
   * Responsible for system requirements of AUTOSAR development(cooperated with TTTech Auto.)
@@ -81,7 +84,8 @@ weave_options:
   * ADAS standardization for Commercial vehicle.
   * Support for project coordination and communication with customer and supplier.
 
-## Apr.2009~Jul.2012: Mando Hella Electronics [Songdo, Korea] 
+## Apr.2009~Jul.2012: Mando Hella Electronics 
+### Songdo, Korea: [`j using Dates; println(round((Date(2012, 7, 1) - Date(2009, 4, 1)).value / 365.25, digits=1), " years.")`]
 + Apr. 2009 ~ Jul.2012 : ADAS Team, System Leader (Managed 10 people)
   * Responsible for System Design of BSD/LCA Radar.(Applied vehicles produced in Hyundai)
   * Responsible for System Design of USS and Parking function.
@@ -89,7 +93,8 @@ weave_options:
   * Support for project coordination and communication with customer.
   * Romania based SW center co-operation.
 
-## Apr.2004~Sep.2007: SIEMENS VDO HALLA [Sejong, Korea]
+## Apr.2004~Sep.2007: SIEMENS VDO HALLA 
+### Sejong, Korea: [`j using Dates; println(round((Date(2007, 9, 1) - Date(2004, 4, 1)).value / 365.25, digits=1), " years.")`]
 + Apr.2004 ~ Sep.2007: Body and Chassis Team, Senior Software Engineer
   *  Developed Parking Aid System in C++ language.
   *  Patent for Virtual Sensing Algorithm, the patent reduced 10% of product quality testing fee.
@@ -99,7 +104,8 @@ weave_options:
   *  Assembler language PDC(Parking Distance Control) was rewrote in C language.
   *  Digital Circuit Design with OrCAD and simulated circuit.
 
-## Sep.2002~Mar.2004: Military & Space co. [Seoul, Korea]
+## Sep.2002~Mar.2004: Military & Space co. 
+### Seoul, Korea: [`j using Dates; println(round((Date(2004, 3, 1) - Date(2002, 9, 1)).value / 365.25, digits=1), " years.")`]
 + Apr.2004 ~ Sep.2007: Body and Chassis Team, Senior Software Engineer
   * Developed infrared camera viewer associating with an equipment.
   * RF communication ROM writing tool for ESA(ARIANE 5).
@@ -109,20 +115,24 @@ weave_options:
 ---
 # RELATED EXPERIENCES 
 
-## Dec.2008~Mar.2009, TMax Electronics, London, U.K.
+## Dec.2008~Mar.2009, TMax Electronics
+### London, U.K.: [`j using Dates; println(round((Date(2009, 3, 1) - Date(2008, 12, 1)).value / 365.25, digits=1), " years.")`]
 + Internet commerce Front-end design and development with PHP
 + Credit card payment system develoment with security algorithms
 
-## Oct.2001~Sep.2002, Northwood Health System, West Virginia, U.S.
+## Oct.2001~Sep.2002, Northwood Health System
+### West Virginia, U.S.: [`j using Dates; println(round((Date(2002, 9, 1) - Date(2001, 10, 1)).value / 365.25, digits=1), " years.")`]
 + Created an effective PHP/SQL solution to manage employee Testing service
 + UNIX cron and batch programming
 + Company offered 5yr contract due to excellence in programming
 
-## May.2000~Sep.2000, Alternativas, Quetzaltenango, Guatemala 
+## May.2000~Sep.2000, Alternativas
+### Quetzaltenango, Guatemala: [`j using Dates; println(round((Date(2000, 9, 1) - Date(2000, 5, 1)).value / 365.25, digits=1), " years.")`] 
 + Supervised the design of network structure
 + Taught and trained new employees how to manage computer network
 
-## Oct.1996~Dec.1998, Republic Of Korea Army, Gyeonggi-do, Korea
+## Oct.1996~Dec.1998, Republic Of Korea Army
+### Gyeonggi-do, Korea: [`j using Dates; println(round((Date(1998, 12, 1) - Date(1996, 10, 1)).value / 365.25, digits=1), " years.")`]
 + (Compulsory Service for a healthy man in Republic of Korea)
   * Used military facilities and operated Virtual Mission System
   * Utilized various old UNIX systems
@@ -131,7 +141,8 @@ weave_options:
 ---
 # EDUCATION  
 
-## Sep.2007~Nov.2008, University of Southampton, Hampshire, UK
+## Sep.2007~Nov.2008, University of Southampton
+### Hampshire, UK: [`j using Dates; println(round((Date(2008, 11, 1) - Date(2007, 9, 1)).value / 365.25, digits=1), " years.")`]
 + Master of Science: Complexity(AI) Science (Post Graduate Course)
   * Over 65% average mark (Overall 3rd in course)
   * Intensive and dedicated master’s degree in Artificial Intelligence
@@ -139,17 +150,20 @@ weave_options:
   * Took main programmer part in Adaptive Robot project
   * THESIS PAPER: Design of Adaptive Traffic Light Agent System (2008)
 
-## Jan.2001~Sep.2002, Microsoft Network Professional, Pittsburgh, USA
+## Jan.2001~Sep.2002, Microsoft Network Professional
+### Pittsburgh, USA: [`j using Dates; println(round((Date(2002, 9, 1) - Date(2001, 1, 1)).value / 365.25, digits=1), " years.")`]
 + Self-Studied: (Certificate, Weekend course)
   * Network specialty and Infrastructure
   * Lower level system network analysis
 
-## Sep.1995~May.2002, Wheeling Jesuit University, West Virginia, USA 
+## Sep.1995~May.2002, Wheeling Jesuit University
+### West Virginia, USA: [`j using Dates; println(round((Date(2002, 5, 1) - Date(1995, 9, 1)).value / 365.25, digits=1), " years.")`]
 + Bachelor of Arts & Sciences: Computer Science (Undergraduate Course)
   * 1996 ~1998, served ROKA(Republic Of Korea Army) 
   * (2.86 / 4.00 GPA) / A grade (Top 10% of the class) for all Computer Science subjects
 
-## Sep.1992~May.1995, Georgetown Preparatory Maryland, USA 
+## Sep.1991~May.1995, Georgetown Preparatory
+### Maryland, USA: [`j using Dates; println(round((Date(1995, 5, 1) - Date(1991, 9, 1)).value / 365.25, digits=1), " years.")`]
 + High school: 4 years, (3.0 / 4.0 GPA)
 
 ---
@@ -179,23 +193,22 @@ weave_options:
 
 ---
 # PATENTS  
-
 |Classification|Patent ID|Enabling Country|Owner of patent|
 |:--:|:--:|:--:|:--:|
-|Sensor|10-1393644|KOREA|HYUNDAI|
-|Sensor|10-1683575|KOREA|HYUNDAI|
-|Sensor|10-1512401|KOREA|HYUNDAI|
-|Sensor|10-1527132|KOREA|HYUNDAI|
-|Sensor|10-1428296|KOREA|HYUNDAI|
-|Sensor|US2014/0168438A1|US|HYUNDAI|
-|Human Machine|10-1683570|KOREA|HYUNDAI|
-|Interface|10-1339833|KOREA|HYUNDAI|
-|Interface|10-1364767|KOREA|HYUNDAI|
-|Interface|10-1683582|KOREA|HYUNDAI|
-|Interface|10-1673255|KOREA|HYUNDAI|
-|Interface|10-1673257|KOREA|HYUNDAI|
-|Interface|10-1568248|KOREA|HYUNDAI|
-|Interface|10-1362416|KOREA|HYUNDAI|
+|ADAS Sensor|10-1393644|KOREA|HYUNDAI|
+|ADAS Sensor|10-1683575|KOREA|HYUNDAI|
+|ADAS Sensor|10-1512401|KOREA|HYUNDAI|
+|ADAS Sensor|10-1527132|KOREA|HYUNDAI|
+|ADAS Sensor|10-1428296|KOREA|HYUNDAI|
+|ADAS Sensor|US2014/0168438A1|US|HYUNDAI|
+|ADAS MHI|10-1683570|KOREA|HYUNDAI|
+|ADAS MHI|10-1339833|KOREA|HYUNDAI|
+|ADAS MHI|10-1364767|KOREA|HYUNDAI|
+|ADAS MHI|10-1683582|KOREA|HYUNDAI|
+|ADAS MHI|10-1673255|KOREA|HYUNDAI|
+|ADAS MHI|10-1673257|KOREA|HYUNDAI|
+|ADAS MHI|10-1568248|KOREA|HYUNDAI|
+|ADAS MHI|10-1362416|KOREA|HYUNDAI|
 |ADAS Network|10-1558976|KOREA|HYUNDAI|
 |ADAS Network|10-1439489|KOREA|HYUNDAI|
 |ADAS Network|10-1481131|KOREA|HYUNDAI|
@@ -209,6 +222,4 @@ weave_options:
 |AUTOMATED PARKING|CN110733497A|CHINA|GEELY|
 |AUTOMATED PARKING|CN110103909A|CHINA|GEELY|
 |AUTOMATED PARKING|CN111610531A|CHINA|GEELY|
-|ADAS UX|3 In process|EU|Zeekr|
-
-
+|ADAS General|3 In process|EU|Zeekr|

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023/Debian) (preloaded format=xelatex 2024.5.11)  11 MAY 2024 12:23
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023/Debian) (preloaded format=xelatex 2024.5.11)  11 MAY 2024 15:59
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -557,47 +557,30 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-Missing character: There is no 🏠 (U+1F3E0) in font [lmroman12-bold]:mapping=tex
--text;!
-Missing character: There is no 📨 (U+1F4E8) in font [lmroman12-bold]:mapping=tex
--text;!
-Missing character: There is no 📲 (U+1F4F2) in font [lmroman12-bold]:mapping=tex
--text;!
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 138.
+(Font)              <12> on input line 137.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 138.
+(Font)              <8> on input line 137.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 138.
-[1
+(Font)              <6> on input line 137.
+ [1
 
 ] [2] [3]
-Overfull \hbox (2.28777pt too wide) in paragraph at lines 391--391
-[]\TU/lmr/bx/n/14.4 May.2000~Sep.2000, Alternativas, Quetzaltenango, Guatemala 
-
- []
-
-[4]
-Overfull \hbox (13.82216pt too wide) in paragraph at lines 437--437
-[]\TU/lmr/bx/n/14.4 Jan.2001~Sep.2002, Microsoft Network Professional, Pittsbur
-gh,
- []
-
-[5] [6] [7] (./indexe.aux)
+[4] [5] [6] [7] [8] (./indexe.aux)
  ***********
 LaTeX2e <2023-06-01>
 L3 programming layer <2023-06-05>
  ***********
 Package rerunfilecheck Info: File `indexe.out' has not changed.
-(rerunfilecheck)             Checksum: 9F8175C53B6FB761034221EA343F468B;6018.
+(rerunfilecheck)             Checksum: 6F0AE8EE3139CDB19E7DA6C521F87408;7827.
  ) 
 Here is how much of TeX's memory you used:
- 13545 strings out of 476387
- 209760 string characters out of 5798473
+ 13559 strings out of 476387
+ 209984 string characters out of 5798473
  1859390 words of memory out of 5000000
- 33889 multiletter control sequences out of 15000+600000
+ 33903 multiletter control sequences out of 15000+600000
  559722 words of font info for 91 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 72i,6n,79p,1003b,492s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 72i,6n,79p,1003b,490s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on indexe.pdf (7 pages).
+Output written on indexe.pdf (8 pages).
