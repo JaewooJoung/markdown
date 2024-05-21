@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Jaewoo's quick calendar</title>
+  <style>
+    h1 {text-align: center;}
+    h2 {text-align: center;}
+    div {text-align: center;}
+    table {
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 5px;
+      text-align: center;
+    }
+    .week-number {
+      font-weight: bold;
+      color: blue;
+    }
+    .today {
+      font-weight: bold;
+      color: red;
+    }
+    .calendar-table {
+      display: inline-block;
+      margin-right: 20px;
+      margin-bottom: 20px;
+    }
+    .message-box {
+      border: 1px solid black;
+      padding: 10px;
+      width: 200px;
+      text-align: center;
+    }
+  </style>
+  <script>
+    function getWeather() {
+      // Make a request to the weather API to get the weather data
+      // Replace 'YOUR_API_KEY' with your actual API key
+      fetch('https://api.weatherapi.com/v1/current.json?key=ad8caecea06c43d1912181938230407&q=Gothenburg')
+        .then(response => response.json())
+        .then(data => {
+          // Get the weather icon code from the API response
+          var weatherIcon = data.current.condition.icon;
+
+          // Create an <img> element for the weather icon
+          var weatherImg = document.createElement("img");
+          weatherImg.src = "https:" + weatherIcon;
+          
+          // Append the weather icon to the weatherContainer div
+          var weatherContainer = document.getElementById("weatherContainer");
+          weatherContainer.appendChild(weatherImg);
+        });
+    }
+    // Function to get the current date and time
+    function getCurrentDateTime() {
+      var now = new Date();
+
+      // Create a formatted string for the date and time
+      var dateString = now.toDateString();
+      var timeString = now.toLocaleTimeString();
+
+      // Set the date and time in the page
+      var dateElement = document.getElementById("currentDate");
+      var timeElement = document.getElementById("currentTime");
+      dateElement.textContent = dateString;
+      timeElement.textContent = timeString;
+    }
+
+    function generateCalendar() {
+      var yearInput = document.getElementById("year");
+      var year = parseInt(yearInput.value);
+
+      var calendarContainer = document.getElementById("calendarContainer");
+      calendarContainer.innerHTML = "";
+
+      for (var month = 1; month <= 12; month++) {
+        var date = new Date(year, month - 1, 1);
+        var monthName = date.toLocaleString('default', { month: 'long' });
+        var daysInMonth = new Date(year, month, 0).getDate();
+
+        var calendarTable = document.createElement("table");
+        calendarTable.classList.add("calendar-table");
+
+        var thead = document.createElement("thead");
+        var tbody = document.createElement("tbody");
+
+        var monthTitleRow = document.createElement("tr");
+        var monthTitleCell = document.createElement("th");
+        monthTitleCell.textContent = monthName;
+        monthTitleCell.colSpan = 8;
+        monthTitleRow.appendChild(monthTitleCell);
+        thead.appendChild(monthTitleRow);
+
+        var headerRow = document.createElement("tr");
+        var weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "WN"];
+        weekdays.forEach(function(weekday) {
+          var th = document.createElement("th");
+          th.textContent = weekday;
+          headerRow.appendChild(th);
+        });
+        thead.appendChild(headerRow);
+
+        var firstDayOfMonth = new Date(year, month - 1, 1);
+        var dayOfWeek = firstDayOfMonth.getDay();
+        if (dayOfWeek === 0) {
+          dayOfWeek = 7; // Adjust Sunday to be the last day of the week (7) instead of the first (0)
+        }
+
+        var week = getWeekNumber(firstDayOfMonth); // Get the week number using our custom function
+        var day = 1;
+
+        while (day <= daysInMonth) {
+          var weekRow = document.createElement("tr");
+
+          for (var weekday = 1; weekday <= 7; weekday++) {
+            var td = document.createElement("td");
+
+            if (weekday < dayOfWeek || day > daysInMonth) {
+              td.textContent = "";
+            } else {
+              td.textContent = day;
+              if (year === new Date().getFullYear() && month === new Date().getMonth() + 1 && day === new Date().getDate()) {
+                td.classList.add("today"); // Add the class for styling today's date
+              }
+              day++;
+            }
+
+            weekRow.appendChild(td);
+          }
+
+          var weekTd = document.createElement("td");
+          weekTd.classList.add("week-number"); // Add the class for styling
+          weekTd.textContent = week;
+          weekRow.appendChild(weekTd);
+
+          tbody.appendChild(weekRow);
+
+          // Increment the week number and adjust for the start of the next week
+          if (day <= daysInMonth) {
+            var nextWeekDate = new Date(year, month - 1, day);
+            week = getWeekNumber(nextWeekDate);
+            dayOfWeek = nextWeekDate.getDay();
+            if (dayOfWeek === 0) {
+              dayOfWeek = 7; // Adjust Sunday to be the last day of the week (7) instead of the first (0)
+            }
+          }
+        }
+
+        calendarTable.appendChild(thead);
+        calendarTable.appendChild(tbody);
+        calendarContainer.appendChild(calendarTable);
+      }
+    }
+
+    // Custom function to get the week number starting from 1 for each year
+    function getWeekNumber(date) {
+      var januaryFirst = new Date(date.getFullYear(), 0, 1);
+      var daysSinceJanuaryFirst = Math.floor((date - januaryFirst) / 86400000);
+      return Math.ceil((daysSinceJanuaryFirst + januaryFirst.getDay() + 1) / 7);
+    }
+  </script>
+</head>
+<body>
+  <h1 id="currentDate"></h1>
+  <h2 id="currentTime"></h2>
+  <div id="weatherContainer">Göteborgsvädret<br></div>
+  <center>
+  <label for="year">Select Year:</label><input type="number" id="year" value="2023"><button onclick="generateCalendar()">Go</button>
+  </center>
+  <div id="calendarContainer"></div>
+
+  <script>
+    getCurrentDateTime();
+    generateCalendar();
+  </script>
+</body>
+</html>
