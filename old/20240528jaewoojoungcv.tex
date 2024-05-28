@@ -1,0 +1,565 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[a4paper,text={16.5cm,25.2cm},centering]{geometry}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1.2ex}
+
+\hypersetup
+       {   pdfauthor = {  },
+           pdftitle={ JAEWOO JOUNG },
+           colorlinks=TRUE,
+           linkcolor=black,
+           citecolor=blue,
+           urlcolor=blue
+       }
+
+\title{ JAEWOO JOUNG }
+
+
+\date{ Compiled on [2024-05-28] }
+
+\usepackage{upquote}
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    upquote=true,
+    breaklines=true,
+    breakindent=0pt,
+    keepspaces=true,
+    showspaces=false,
+    columns=fullflexible,
+    showtabs=false,
+    showstringspaces=false,
+    escapeinside={(*@}{@*)},
+    extendedchars=true,
+}
+\newcommand{\HLJLt}[1]{#1}
+\newcommand{\HLJLw}[1]{#1}
+\newcommand{\HLJLe}[1]{#1}
+\newcommand{\HLJLeB}[1]{#1}
+\newcommand{\HLJLo}[1]{#1}
+\newcommand{\HLJLk}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkc}[1]{\textcolor[RGB]{59,151,46}{\textit{#1}}}
+\newcommand{\HLJLkd}[1]{\textcolor[RGB]{214,102,97}{\textit{#1}}}
+\newcommand{\HLJLkn}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkp}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkr}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkt}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLn}[1]{#1}
+\newcommand{\HLJLna}[1]{#1}
+\newcommand{\HLJLnb}[1]{#1}
+\newcommand{\HLJLnbp}[1]{#1}
+\newcommand{\HLJLnc}[1]{#1}
+\newcommand{\HLJLncB}[1]{#1}
+\newcommand{\HLJLnd}[1]{\textcolor[RGB]{214,102,97}{#1}}
+\newcommand{\HLJLne}[1]{#1}
+\newcommand{\HLJLneB}[1]{#1}
+\newcommand{\HLJLnf}[1]{\textcolor[RGB]{66,102,213}{#1}}
+\newcommand{\HLJLnfm}[1]{\textcolor[RGB]{66,102,213}{#1}}
+\newcommand{\HLJLnp}[1]{#1}
+\newcommand{\HLJLnl}[1]{#1}
+\newcommand{\HLJLnn}[1]{#1}
+\newcommand{\HLJLno}[1]{#1}
+\newcommand{\HLJLnt}[1]{#1}
+\newcommand{\HLJLnv}[1]{#1}
+\newcommand{\HLJLnvc}[1]{#1}
+\newcommand{\HLJLnvg}[1]{#1}
+\newcommand{\HLJLnvi}[1]{#1}
+\newcommand{\HLJLnvm}[1]{#1}
+\newcommand{\HLJLl}[1]{#1}
+\newcommand{\HLJLld}[1]{\textcolor[RGB]{148,91,176}{\textit{#1}}}
+\newcommand{\HLJLs}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsa}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsb}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsc}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsd}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsdB}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsdC}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLse}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLsh}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsi}[1]{#1}
+\newcommand{\HLJLso}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsr}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLss}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLssB}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLnB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnbB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnfB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnh}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLni}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnil}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnoB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLoB}[1]{\textcolor[RGB]{102,102,102}{\textbf{#1}}}
+\newcommand{\HLJLow}[1]{\textcolor[RGB]{102,102,102}{\textbf{#1}}}
+\newcommand{\HLJLp}[1]{#1}
+\newcommand{\HLJLc}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLch}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcm}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcp}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcpB}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcs}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcsB}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLg}[1]{#1}
+\newcommand{\HLJLgd}[1]{#1}
+\newcommand{\HLJLge}[1]{#1}
+\newcommand{\HLJLgeB}[1]{#1}
+\newcommand{\HLJLgh}[1]{#1}
+\newcommand{\HLJLgi}[1]{#1}
+\newcommand{\HLJLgo}[1]{#1}
+\newcommand{\HLJLgp}[1]{#1}
+\newcommand{\HLJLgs}[1]{#1}
+\newcommand{\HLJLgsB}[1]{#1}
+\newcommand{\HLJLgt}[1]{#1}
+
+
+\begin{document}
+
+\maketitle
+
+\subparagraph{Address: [1301, Bangatan 36, 414 64, Göteborg, Sweden]}
+\subparagraph{E-mail : \href{mailto:jaewoo.joung@outlook.com}{jaewoo.joung@outlook.com}}
+\subparagraph{mobile:  \href{tel:+46-(0)73-500-3275}{+46-(0)73-500-3275}}
+\subparagraph{Linkedin: \href{https://www.linkedin.com/in/jaewoo-joung/}{https://www.linkedin.com/in/jaewoo-joung/}}
+\begin{quote}
+\end{quote}
+\rule{\textwidth}{1pt}
+\section{SUMMARY}
+\begin{quote}
+18.2 years of ADAS functions, Sensors, Automotive SW(OS, Middle-Ware, ASW including C++ and simulink), Innovative function design, SW programming, Function Quality, Testing, and real-time embedded systems. 2 equipped managing power: Understand the customer-concentric experience satisfaction with fast decisions to use which product to use. Deliverer of fast and innovative achievements on time. 2+ major work ethics: Good Technical Coach of experts. Support all engineer\ensuremath{\rq}s ideas. 8 aspects of managing experience: Global Team \& Dept. lead, Advanced but modest, Process driven but flexible, Insight of empathy, Enthusiasm and diligence, Safety with UX, Good Function architect, always listens to suggestions. Lastly, willing to relocate anywhere with my passion for ADAS.
+
+\end{quote}
+\rule{\textwidth}{1pt}
+\section{EMPLOYMENT HISTORY}
+\subsection{Dec.2022{\textasciitilde}Today: Tata Technologies Nordics AB}
+\subsubsection{Göteborg, Sweden: [1.5 years]}
+\begin{itemize}
+\item Mar.2023 {\textasciitilde} Today: ADAS / ADS Head (Consultant @ Zeekr Tech EU)
+
+\begin{itemize}
+\item Conducted interviews to measure the ADAS capabilities of internal
+
+
+\item Engaged in new project sourcing and development 
+
+
+\item As a Zeekr Tech EU consultant: (Apr. 2023 {\textasciitilde} Present)
+
+\begin{itemize}
+\item ADAS Product Coordinator 
+
+
+\item Attribute Lead 
+
+
+\item Product Feature Engineer 
+
+
+\item Support of ADAS-related EU-Homologation
+
+
+\item Support of ADAS-related EU-NCAP (pre-)testing
+
+
+\item ADAS V\&V Roadmap development
+
+
+\item Supervising ADAS validation and homologation activities
+
+\end{itemize}
+\end{itemize}
+
+\item Dec.2022 {\textasciitilde} Feb. 2023: ADS Lead Engineer 
+
+\begin{itemize}
+\item Customer(Volvo) meetings
+
+
+\item Customer(IVECO) presentation support
+
+
+\item Customer(Vinfast) supplier function review
+
+
+\item Center Of Excellece(Education,training)
+
+
+\item Tata Mfg Tech Shanghai(Education,training)
+
+
+\item Tata Mfg Tech Shanghai Bussiness Outlook Support
+
+\end{itemize}
+\end{itemize}
+\subsection{Jan.2018{\textasciitilde}Dec.2022: Geely Research Institute}
+\subsubsection{Hangzhou Bay, Zhejiang, China: [4.9 years]}
+\begin{itemize}
+\item Jan.2021 {\textasciitilde} Dec.2022: Chief Technology Officer. (600 people)
+
+\begin{itemize}
+\item Internal SW Development evaluation (ASPICE, SOTIF, ISO26262, Cybersecurity.)
+
+
+\item Function architecture design support.
+
+
+\item Technical board member for incubating start-ups for Geely investments
+
+
+\item Renault \& Geely ADAS function development support.
+
+
+\item Benchmark ADAS Products of other company.
+
+
+\item Member of internal vehicle test evaluation.
+
+\end{itemize}
+
+\item Jan.2020 {\textasciitilde} Jan. 2021: Function \& Scenario Expert. (200 people)
+
+\begin{itemize}
+\item ADAS SW Quality Assurance(SWQA) check.
+
+
+\item Function owner of ERMD, IRMD, CPD(Child Presence Detection.)
+
+
+\item Geely-CEVT communication support for ADAS function.
+
+
+\item Geely-Volvo communication support for ADAS function.
+
+
+\item Function Process support. 
+
+\end{itemize}
+
+\item Jan.2018 {\textasciitilde} Dec. 2019: ADAS Expert.(400 people)
+
+\begin{itemize}
+\item Build current SWQA(Software Quality Assurance) foundation process for Geely.
+
+
+\item Innovation Award for `Swift Method to create a patent'.
+
+
+\item PSS360 leader.
+
+
+\item ADAS Scenario Technical Specialist.
+
+
+\item Parking Solution Specialist.
+
+
+\item SOC (System On Chip) Benchmark
+
+\end{itemize}
+\end{itemize}
+\subsection{Aug.2012{\textasciitilde}Dec.2017: Hyundai Autron}
+\subsubsection{Pangyo, Korea: [5.3 years]}
+\begin{itemize}
+\item Jan. 2013 {\textasciitilde} Dec.2017: ADAS \& New Technology team, ADAS Leader (Managed 25 people.)
+
+\begin{itemize}
+\item Build \& Managed ADAS \& New Technology development team (25 people.)
+
+
+\item Responsible for system requirements of AUTOSAR development(cooperated with TTTech Auto.)
+
+
+\item Responsible for Function development of ADAS Domain Controller (LV2/LV3) modeling and embedded SW.
+
+
+\item Developed many advanced systems prototyping of smart glass, intelligent seat, ADAS HMI, etc.
+
+
+\item HKMC Group Technical Road Map committee member for ADAS.
+
+
+\item HKMC Group Automotive Health Care \& ADAS Control Transition (HMI) committee member.
+
+\end{itemize}
+
+\item Aug. 2012 {\textasciitilde} Dec. 2012: ADAS Expert. (5 people)
+
+\begin{itemize}
+\item HMKC Group Power Net Architecture committee member as ADAS expert.
+
+
+\item ADAS standardization for Commercial vehicle.
+
+
+\item Support for project coordination and communication with customer and supplier.
+
+\end{itemize}
+\end{itemize}
+\subsection{Apr.2009{\textasciitilde}Jul.2012: Mando Hella Electronics}
+\subsubsection{Songdo, Korea: [3.2 years]}
+\begin{itemize}
+\item Apr. 2009 {\textasciitilde} Jul.2012 : ADAS Team, System Leader (Managed 10 people)
+
+\begin{itemize}
+\item Responsible for System Design of BSD/LCA Radar.(Applied vehicles produced in Hyundai)
+
+
+\item Responsible for System Design of USS and Parking function.
+
+
+\item Model based SW development for Ultrasonic BSD.
+
+
+\item Support for project coordination and communication with customer.
+
+
+\item Romania based SW center co-operation.
+
+\end{itemize}
+\end{itemize}
+\subsection{Apr.2004{\textasciitilde}Sep.2007: SIEMENS VDO HALLA}
+\subsubsection{Sejong, Korea: [3.4 years]}
+\begin{itemize}
+\item Apr.2004 {\textasciitilde} Sep.2007: Body and Chassis Team, Senior Software Engineer
+
+\begin{itemize}
+\item Developed Parking Aid System in C++ language.
+
+
+\item Patent for Virtual Sensing Algorithm, the patent reduced 10\% of product quality testing fee.
+
+
+\item Developed Parking Aid System for a number of OEM\ensuremath{\rq}s such as DPCA (Dongfeng Peugeot Citroën Automobiles), Kia, AvtoVAZ, IKCO(Iran Khodro Industrial Group), Smotor(Ssangyong), GM and, Hyundai.(and still there are applied vehicles produced.)
+
+
+\item Developed programs were labeled as CMMI Level 3, and followed MISRA rule book
+
+
+\item Tested software with Vector(CAN and LIN) tools.
+
+
+\item Assembler language PDC(Parking Distance Control) was rewrote in C language.
+
+
+\item Digital Circuit Design with OrCAD and simulated circuit.
+
+\end{itemize}
+\end{itemize}
+\subsection{Sep.2002{\textasciitilde}Mar.2004: Military \& Space co.}
+\subsubsection{Seoul, Korea: [1.5 years]}
+\begin{itemize}
+\item Sep.2002{\textasciitilde}Mar.2004: Junior Software Engineer
+
+\begin{itemize}
+\item Developed infrared camera viewer associating with an equipment.
+
+
+\item RF communication ROM writing tool for ESA(ARIANE 5).
+
+
+\item Wav files format reader for VOIP solution.
+
+
+\item Windows MFC used to create the P2P Chat SW. 
+
+\end{itemize}
+\end{itemize}
+\rule{\textwidth}{1pt}
+\section{RELATED EXPERIENCES}
+\subsection{Dec.2008{\textasciitilde}Mar.2009, TMax Electronics}
+\subsubsection{London, U.K.: [3.0 months]}
+\begin{itemize}
+\item Internet commerce Front-end design and development with PHP
+
+
+\item Credit card payment system develoment with security algorithms
+
+\end{itemize}
+\subsection{Oct.2001{\textasciitilde}Sep.2002, Northwood Health System}
+\subsubsection{West Virginia, U.S.: [11.0 months]}
+\begin{itemize}
+\item Created an effective PHP/SQL solution to manage employee Testing service
+
+
+\item UNIX cron and batch programming
+
+
+\item Company offered 5yr contract due to excellence in programming
+
+\end{itemize}
+\subsection{May.2000{\textasciitilde}Sep.2000, Alternativas}
+\subsubsection{Quetzaltenango, Guatemala: [4.0 months]}
+\begin{itemize}
+\item Supervised the design of network structure
+
+
+\item Taught and trained new employees how to manage computer network
+
+\end{itemize}
+\subsection{Oct.1996{\textasciitilde}Dec.1998, Republic Of Korea Army}
+\subsubsection{Gyeonggi-do, Korea: [2.2 years]}
+\begin{itemize}
+\item (Compulsory Service for a healthy man in Republic of Korea)
+
+\begin{itemize}
+\item Used military facilities and operated Virtual Mission System
+
+
+\item Utilized various old UNIX systems
+
+
+\item Translated from English to Korean / Korean to English
+
+\end{itemize}
+\end{itemize}
+\rule{\textwidth}{1pt}
+\section{EDUCATION}
+\subsection{Sep.2007{\textasciitilde}Nov.2008, University of Southampton}
+\subsubsection{Hampshire, UK: [1.2 years]}
+\begin{itemize}
+\item Master of Science: Complexity(AI) Science (Post Graduate Course)
+
+\begin{itemize}
+\item Over 65\% average mark (Overall 3rd in course)
+
+
+\item Intensive and dedicated master\ensuremath{\rq}s degree in Artificial Intelligence
+
+
+\item Decentralized Programming with C++ and GNU R
+
+
+\item Took main programmer part in Adaptive Robot project
+
+
+\item THESIS PAPER: Design of Adaptive Traffic Light Agent System (2008)
+
+\end{itemize}
+\end{itemize}
+\subsection{Jan.2001{\textasciitilde}Sep.2002, Microsoft Network Professional}
+\subsubsection{Pittsburgh, USA: [1.7 years]}
+\begin{itemize}
+\item Self-Studied: (Certificate, Weekend course)
+
+\begin{itemize}
+\item Network specialty and Infrastructure
+
+
+\item Lower level system network analysis
+
+\end{itemize}
+\end{itemize}
+\subsection{Sep.1995{\textasciitilde}May.2002, Wheeling Jesuit University}
+\subsubsection{West Virginia, USA: [6.7 years]}
+\begin{itemize}
+\item Bachelor of Arts \& Sciences: Computer Science (Undergraduate Course)
+
+\begin{itemize}
+\item 1996 {\textasciitilde}1998, served ROKA(Republic Of Korea Army) 
+
+
+\item (2.86 / 4.00 GPA) / A grade (Top 10\% of the class) for all Computer Science subjects
+
+\end{itemize}
+\end{itemize}
+\rule{\textwidth}{1pt}
+\section{AWARDS}
+\begin{itemize}
+\item Development of others award 2022
+
+
+\item Zhejiang Foreign Talent 2021
+
+
+\item Best innovators of 2019
+
+
+\item Best Instructor of 2018
+
+
+\item Best Interviewer of 2016
+
+
+\item Best employee of 2010
+
+\end{itemize}
+\rule{\textwidth}{1pt}
+\section{SKILL SETS}
+\begin{itemize}
+\item Networking
+
+
+\item Embedded C / C++ / Any API related to C
+
+
+\item JULIA / PYTHON / MATLAB / QT / PERL / SQL
+
+
+\item Window drivers programming
+
+
+\item Embedded Assembler  
+
+
+\item Microsoft Certified Professional (MCP)
+
+\end{itemize}
+\rule{\textwidth}{1pt}
+\section{LANGUAGE SKILLS}
+\begin{itemize}
+\item English: Fluent
+
+
+\item Chinese: Elementary
+
+
+\item Spanish: Intermediate
+
+
+\item Korean: Native
+
+\end{itemize}
+\rule{\textwidth}{1pt}
+\section{PATENTS}
+\begin{tabular}
+{c | c | c | c}
+Classification & Patent ID & Enabling Country & Owner of patent \\
+\hline
+ADAS Sensor & 10-1393644 & KOREA & HYUNDAI \\
+ADAS Sensor & 10-1683575 & KOREA & HYUNDAI \\
+ADAS Sensor & 10-1512401 & KOREA & HYUNDAI \\
+ADAS Sensor & 10-1527132 & KOREA & HYUNDAI \\
+ADAS Sensor & 10-1428296 & KOREA & HYUNDAI \\
+ADAS Sensor & US2014/0168438A1 & US & HYUNDAI \\
+ADAS MHI & 10-1683570 & KOREA & HYUNDAI \\
+ADAS MHI & 10-1339833 & KOREA & HYUNDAI \\
+ADAS MHI & 10-1364767 & KOREA & HYUNDAI \\
+ADAS MHI & 10-1683582 & KOREA & HYUNDAI \\
+ADAS MHI & 10-1673255 & KOREA & HYUNDAI \\
+ADAS MHI & 10-1673257 & KOREA & HYUNDAI \\
+ADAS MHI & 10-1568248 & KOREA & HYUNDAI \\
+ADAS MHI & 10-1362416 & KOREA & HYUNDAI \\
+ADAS Network & 10-1558976 & KOREA & HYUNDAI \\
+ADAS Network & 10-1439489 & KOREA & HYUNDAI \\
+ADAS Network & 10-1481131 & KOREA & HYUNDAI \\
+ADAS Network & 10-1481132 & KOREA & HYUNDAI \\
+ADAS Network & 10-1481133 & KOREA & HYUNDAI \\
+Semiconductor & 10-1665794 & KOREA & HYUNDAI \\
+Etc. & 10-1388465 & KOREA & HYUNDAI \\
+Etc. & 10-1499519 & KOREA & HYUNDAI \\
+AUTOMATED PARKING & CN109655073B & CHINA & GEELY \\
+AUTOMATED PARKING & CN110321398A & CHINA & GEELY \\
+AUTOMATED PARKING & CN110733497A & CHINA & GEELY \\
+AUTOMATED PARKING & CN110103909A & CHINA & GEELY \\
+AUTOMATED PARKING & CN111610531A & CHINA & GEELY \\
+ADAS General & 3 In process & EU & Zeekr \\
+\end{tabular}
+
+
+\end{document}
