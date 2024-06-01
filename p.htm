@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LOGIN NECESSARY</title>
+</head>
+<body>
+    <h2>Project Page</h2>
+    <input type="password" id="passwordInput" placeholder="enter your password"/>
+    <button onclick="checkPassword()">Submit</button>
+    <p id="message"></p>
+
+    <script>
+        function checkPassword() {
+            var password = document.getElementById("passwordInput").value;
+            var correctPassword = "1234"; // 이 부분은 실제 비밀번호로 변경하세요.
+
+            if(password == correctPassword) {
+                // 비밀번호가 맞을 경우, 다른 페이지로 리다이렉트.
+                window.location.href = "pp.html"; // 리다이렉트할 페이지 주소를 입력하세요.
+            } else {
+                // 비밀번호가 틀릴 경우, 메시지 표시.
+                document.getElementById("message").textContent = "Wrong password";
+            }
+        }
+    </script>
+</body>
+</html>
