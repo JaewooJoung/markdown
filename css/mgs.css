@@ -1,8 +1,15 @@
+/* mgs.css */
+
 body {
-    background-color: white; /* 배경색을 흰색으로 설정 */
-    font-size: 16px; /* 기본 텍스트 크기를 16px로 설정, 필요에 따라 조정 */
+    background-color: transparent; /* 배경색을 투명하게 설정 */
 }
 
 .mermaid {
-    font-size: 20px; /* Mermaid 차트 내의 텍스트 크기를 더 크게 설정 */
+    background-color: transparent; /* Mermaid 차트의 배경색을 투명하게 설정 */
+}
+
+/* 체크박스 스타일 조정 예시 (체크박스의 배경색을 조정하고 싶은 경우) */
+input[type="checkbox"] {
+    background-color: transparent; /* 체크박스의 배경색을 투명하게 설정 */
+    /* 추가적인 스타일 속성 */
 }
