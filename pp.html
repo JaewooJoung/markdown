@@ -15,7 +15,7 @@ gantt
     dateFormat  YYYY-MM-DD
     axisFormat  %yW%V
     excludes    weekends
-    title       Adding GANTT diagram functionality to mermaid
+    title       DVM DEADLINES
 
     section Vehicle milestones
     FHG             :milestone, cxfhg, 2024-06-12, 0d
@@ -23,6 +23,16 @@ gantt
     J1              :milestone, cxj1, 2025-01-17, 0d
     OKtB            :milestone, oktb, 2025-01-25, 0d
     
+    section FO TASK Prio1
+    Legal DVM  :crit, active, 2024-06-11, 2024-07-22
+    Performace DVM  :crit, active, 2024-07-22, 2024-09-30
+
+    section FO TASK Prio2
+    VP3 test : active, 2024-06-10, 2024-06-18
+
+    section TT1 arrival
+    TT1   :crit,milestone, 2024-07-22, 1d
+
     section Vehicle TT1-1
     Vehicle reception + safety checks  :active, 2024-07-29, 2024-08-02
 
@@ -53,6 +63,9 @@ gantt
     section Vehicle TT1-10
     Q Test                             :active, 2024-11-11, 2024-12-13
 
+    section TT2 arrival
+    TT1   :crit,milestone, 2024-07-26, 1d
+
     section Vehicle TT2-1
     Vehicle reception + safety checks :active, 2024-08-05, 2024-08-09
 
@@ -75,6 +88,9 @@ gantt
     Euro NCAP AD Pretest :active, 2024-09-23, 2024-10-18
     section Vehicle TT2-8
     DVP :active, 2024-10-21, 2024-12-13
+
+    section TT3-5 arrival
+    TT1   :crit,milestone, 2024-08-06, 1d
 
     section Vehicle TT3-1
     Vehicle reception + safety checks :active, 2024-08-19, 2024-08-23
