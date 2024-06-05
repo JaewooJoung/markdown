@@ -1,47 +1,8 @@
-.grid .tick {
-  stroke: lightgrey;
-  opacity: 0.3;
-  shape-rendering: crispEdges;
-}
-.grid path {
-  stroke-width: 0;
+body {
+    background-color: white; /* 배경색을 흰색으로 설정 */
+    font-size: 16px; /* 기본 텍스트 크기를 16px로 설정, 필요에 따라 조정 */
 }
 
-#tag {
-  color: white;
-  background: #fa283d;
-  width: 150px;
-  position: absolute;
-  display: none;
-  padding: 3px 6px;
-  margin-left: -80px;
-  font-size: 11px;
-}
-
-#tag:before {
-  border: solid transparent;
-  content: ' ';
-  height: 0;
-  left: 50%;
-  margin-left: -5px;
-  position: absolute;
-  width: 0;
-  border-width: 10px;
-  border-bottom-color: #fa283d;
-  top: -20px;
-}
-
-.taskText {
-  fill: white;
-  text-anchor: middle;
-}
-
-.taskTextOutsideRight {
-  fill: black;
-  text-anchor: start;
-}
-
-.taskTextOutsideLeft {
-  fill: black;
-  text-anchor: end;
+.mermaid {
+    font-size: 20px; /* Mermaid 차트 내의 텍스트 크기를 더 크게 설정 */
 }
