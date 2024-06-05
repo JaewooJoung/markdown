@@ -2,6 +2,11 @@ document.addEventListener('DOMContentLoaded', function () {
   mermaid.initialize({
     startOnLoad: true,
     securityLevel: 'loose',
+    theme: 'default', // or 'base', 'forest', etc., depending on the theme you're using
+    themeVariables: {
+      ganttBarColor: '#f00', // Example: Sets the Gantt chart bars to red
+      // Other theme variables can be set here as well
+    },
     gantt: {
       titleTopMargin: 25,
       barHeight: 20,
