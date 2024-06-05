@@ -5,11 +5,11 @@ document.addEventListener('DOMContentLoaded', function () {
     gantt: {
       titleTopMargin: 25,
       barHeight: 20,
-      barGap: 5,
+      barGap: 10,
       topPadding: 75,
       rightPadding: 75,
       leftPadding: 75,
-      gridLineStartPadding: 10,
+      gridLineStartPadding: 20,
       fontSize: 16,
       sectionFontSize: 24,
       numberSectionStyles: 2,
