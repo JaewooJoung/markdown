@@ -23,6 +23,8 @@ document.addEventListener('DOMContentLoaded', function () {
       topAxis: true,
       displayMode: 'compact',
       weekday: 'sunday',
+      todayMarker: false, // 오늘 막대를 비활성화합니다.
+
     },
   });
 });
