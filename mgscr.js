@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
       rightPadding: 75,
       leftPadding: 75,
       gridLineStartPadding: 10,
-      fontSize: 12,
+      fontSize: 16,
       sectionFontSize: 24,
       numberSectionStyles: 2,
       axisFormat: '%d/%m',
