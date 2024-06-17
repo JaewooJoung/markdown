@@ -1,1 +1,57 @@
-pp.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programmable Project Management</title>
+<link rel="stylesheet" href="/css/mgs.css"> 
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script src="mgscr.js"></script> 
+</head>
+<body>
+<button onclick="window.print()">Print this page</button>
+<pre class="mermaid">
+gantt
+    dateFormat  YYYY-MM-DD
+    axisFormat  %Y-%m
+    excludes    weekends
+    todayMarker off
+    title       CX1e EU test plan
+
+    section CX1e 
+    LS              :milestone, cxls, 2024-06-18, 0d
+    J1              :milestone, cxj1, 2025-01-17, 0d
+    OKtB            :milestone, oktb, 2025-01-25, 0d
+    
+    section TT1 arrival
+    TT1   :done,milestone, 2024-07-22, 1d
+    TT1(+2W) :crit,milestone, 2024-08-08, 1d
+  
+    section TT2 arrival
+    TT2   :done,milestone, 2024-07-26, 1d
+    TT1(+2W) :crit,milestone, 2024-08-10, 1d
+  
+    section TT3 arrival
+    TT3  :milestone, 2024-08-06, 1d
+  
+     section TT4 arrival
+    TT4  :milestone, 2024-08-06, 1d
+    
+    section TT5 arrival
+    TT5  :milestone, 2024-08-06, 1d   
+    
+    section ME SW deadline
+    Legal FN    :crit,milestone, 2024-07-12, 1d
+    Rest FN   :crit,milestone, 2024-08-10, 1d
+  
+    section IDIADA PLAN
+    Pre Homologation  :active, 2024-07-29, 2024-09-06
+    Vehicle preparation (with robot)   :active, 2024-08-05, 2024-08-09
+    Euro NCAP Pretest                  :active, 2024-09-16, 2024-10-18
+    DVP                                :active, 2024-10-21, 2024-11-08
+    Q Test                             :active, 2024-11-11, 2024-12-13
+
+    
+</pre>
+</body>
+</html>
