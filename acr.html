@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acronym Finder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #searchBox {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #searchButton {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Acronym Finder</h1>
+    <input type="text" id="searchBox" placeholder="Enter an acronym">
+    <button id="searchButton">Find Definition</button>
+    <div id="result"></div>
+
+    <script>
+        // Acronym dictionary
+        const acronyms = {
+            "HTML": "Hypertext Markup Language",
+            "CSS": "Cascading Style Sheets",
+            "JS": "JavaScript",
+            "API": "Application Programming Interface",
+            "SQL": "Structured Query Language"
+        };
+
+        const searchBox = document.getElementById('searchBox');
+        const searchButton = document.getElementById('searchButton');
+        const result = document.getElementById('result');
+
+        searchButton.addEventListener('click', findDefinition);
+
+        function findDefinition() {
+            const acronym = searchBox.value.toUpperCase();
+            if (acronyms[acronym]) {
+                result.textContent = `${acronym}: ${acronyms[acronym]}`;
+            } else {
+                result.textContent = `Definition for "${acronym}" not found.`;
+            }
+        }
+
+        // Add autocomplete functionality
+        searchBox.addEventListener('input', function() {
+            const input = this.value.toUpperCase();
+            const matches = Object.keys(acronyms).filter(key => key.startsWith(input));
+            
+            if (matches.length > 0) {
+                this.setAttribute('list', 'acronym-list');
+                const dataList = document.getElementById('acronym-list') || document.createElement('datalist');
+                dataList.id = 'acronym-list';
+                dataList.innerHTML = matches.map(match => `<option value="${match}">`).join('');
+                document.body.appendChild(dataList);
+            } else {
+                this.removeAttribute('list');
+            }
+        });
+    </script>
+</body>
+</html>
