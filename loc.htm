@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordinate Lookup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        label, input, button {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input, button {
+            width: 100%;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Enter Coordinates</h1>
+    <form id="coordinateForm">
+        <label for="longitude">Longitude:</label>
+        <input type="text" id="longitude" name="longitude" required>
+        
+        <label for="latitude">Latitude:</label>
+        <input type="text" id="latitude" name="latitude" required>
+        
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('coordinateForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            var longitude = document.getElementById('longitude').value;
+            var latitude = document.getElementById('latitude').value;
+            
+            var url = `https://www.google.com/maps/place/${latitude}N+${longitude}E`;
+            
+            window.location.href = url;
+        });
+    </script>
+</body>
+</html>
