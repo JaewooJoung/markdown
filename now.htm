@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Math&display=swap" rel="stylesheet">
     <title>Check time now ⚗</title>
     <style>
         body {
@@ -64,9 +65,11 @@
         const base52Symbols = "◌①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳㉑㉒㉓㉈㉉㉊㉋㉌㉍㉎㉏㉝㉞㉟㊱㊲㊳㊴㊵㊶㊷㊸㊹㊺㊻㊼㊽㊾㊿㊀㊁";
 
         const vigesimalMap = {
-            0: "ⵚ", 1: "𝋡", 2: "𝋢", 3: "𝋣", 4: "𝋤", 5: "𝋥", 6: "𝋦", 7: "𝋧", 8: "𝋨", 9: "𝋩",
-            10: "𝋪", 11: "𝋫", 12: "𝋬", 13: "𝋭", 14: "𝋮", 15: "𝋯", 16: "𝋰", 17: "𝋱", 18: "𝋲", 19: "𝋳"
-        };
+    0: "ⵚ", 1: "\u{1D361}", 2: "\u{1D362}", 3: "\u{1D363}", 4: "\u{1D364}", 5: "\u{1D365}", 
+    6: "\u{1D366}", 7: "\u{1D367}", 8: "\u{1D368}", 9: "\u{1D369}", 10: "\u{1D36A}", 
+    11: "\u{1D36B}", 12: "\u{1D36C}", 13: "\u{1D36D}", 14: "\u{1D36E}", 15: "\u{1D36F}", 
+    16: "\u{1D370}", 17: "\u{1D371}", 18: "\u{1D372}", 19: "\u{1D373}"
+};
 
         function convertToBase(num, base, symbols) {
             if (num === 0) return symbols[0];
