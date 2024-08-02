@@ -3,18 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>오늘의 날짜 정보</title>
+    <title>Check time now ⚗</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
             background-color: #f0f0f0;
         }
-        .date-info {
+        .container {
+            display: flex;
+            gap: 20px;
+        }
+        .date-info, .mayan-clock {
             background-color: white;
             padding: 20px;
             border-radius: 10px;
@@ -28,16 +33,27 @@
             margin: 10px 0;
             font-size: 18px;
         }
+        #mayan-time {
+            font-size: 60px;
+            text-align: center;
+            line-height: 1.2;
+        }
     </style>
 </head>
 <body>
-    <div class="date-info">
-        <h1>오늘의 날짜 정보</h1>
-        <p id="year"></p>
-        <p id="month"></p>
-        <p id="day"></p>
-        <p id="weekday"></p>
-        <p id="week"></p>
+    <div class="container">
+        <div class="date-info">
+            <h1>오늘의 날짜 정보</h1>
+            <p id="year"></p>
+            <p id="month"></p>
+            <p id="day"></p>
+            <p id="weekday"></p>
+            <p id="week"></p>
+        </div>
+        <div class="mayan-clock">
+            <h1>마야 시계</h1>
+            <div id="mayan-time"></div>
+        </div>
     </div>
 
     <script>
@@ -46,6 +62,11 @@
         const base10Symbols = "◌०१२३४५६७८९";
         const base8Symbols = "◌⚀⚁⚂⚃⚄⚆⚇";
         const base52Symbols = "◌①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳㉑㉒㉓㉈㉉㉊㉋㉌㉍㉎㉏㉝㉞㉟㊱㊲㊳㊴㊵㊶㊷㊸㊹㊺㊻㊼㊽㊾㊿㊀㊁";
+
+        const vigesimalMap = {
+            0: "ⵚ", 1: "𝋡", 2: "𝋢", 3: "𝋣", 4: "𝋤", 5: "𝋥", 6: "𝋦", 7: "𝋧", 8: "𝋨", 9: "𝋩",
+            10: "𝋪", 11: "𝋫", 12: "𝋬", 13: "𝋭", 14: "𝋮", 15: "𝋯", 16: "𝋰", 17: "𝋱", 18: "𝋲", 19: "𝋳"
+        };
 
         function convertToBase(num, base, symbols) {
             if (num === 0) return symbols[0];
@@ -56,6 +77,12 @@
             }
             return result || symbols[0];
         }
+주차
+        function toVigesimal(n) {
+            const quotient = Math.floor(n / 20);
+            const remainder = n % 20;
+            return [vigesimalMap[quotient], vigesimalMap[remainder]];
+        }
 
         function updateDate() {
             const now = new Date();
@@ -65,11 +92,25 @@
             const weekday = now.getDay();
             const weekNumber = getWeekNumber(now);
 
-            document.getElementById('year').textContent = `년도 (255진수): ${convertToBase(year, 255, base255Symbols)}`;
-            document.getElementById('month').textContent = `월 (12진수): ${convertToBase(month, 12, base12Symbols)}`;
-            document.getElementById('day').textContent = `일 (10진수): ${convertToBase(day, 10, base10Symbols)}`;
-            document.getElementById('weekday').textContent = `요일 (8진수): ${base8Symbols[weekday]}`;
-            document.getElementById('week').textContent = `주차 (52진수): ${convertToBase(weekNumber, 52, base52Symbols)}`;
+            document.getElementById('year').textContent = `U+2C021: &#x2C021; (b255): ${convertToBase(year, 255, base255Symbols)}`;
+            document.getElementById('month').textContent = `U+20087: &#x20087; (b12): ${convertToBase(month, 12, base12Symbols)}`;
+            document.getElementById('day').textContent = `U+20089: &#x20089; (b10): ${convertToBase(day, 10, base10Symbols)}`;
+            document.getElementById('weekday').textContent = `U+20593: &#x20593; (b8): ${base8Symbols[weekday]}`;
+            document.getElementById('week').textContent = `U+20593: &#x20593; (b53): ${convertToBase(weekNumber, 52, base52Symbols)}`;
+        }
+
+        function updateMayanClock() {
+            const now = new Date();
+            const hour = now.getHours();
+            const minute = now.getMinutes();
+            const second = now.getSeconds();
+
+            const vigHour = toVigesimal(hour);
+            const vigMinute = toVigesimal(minute);
+            const vigSecond = toVigesimal(second);
+
+            const mayanTime = `${vigHour[0]} ⡇${vigMinute[0]} ⡇${vigSecond[0]}<br>${vigHour[1]} ⡇${vigMinute[1]} ⡇${vigSecond[1]}`;
+            document.getElementById('mayan-time').innerHTML = mayanTime;
         }
 
         function getWeekNumber(d) {
@@ -79,8 +120,13 @@
             return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
         }
 
-        updateDate();
-        setInterval(updateDate, 1000);
+        function updateAll() {
+            updateDate();
+            updateMayanClock();
+        }
+
+        updateAll();
+        setInterval(updateAll, 1000);
     </script>
 </body>
 </html>
