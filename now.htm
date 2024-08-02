@@ -77,7 +77,6 @@
             }
             return result || symbols[0];
         }
-주차
         function toVigesimal(n) {
             const quotient = Math.floor(n / 20);
             const remainder = n % 20;
@@ -91,12 +90,12 @@
             const day = now.getDate();
             const weekday = now.getDay();
             const weekNumber = getWeekNumber(now);
-
-            document.getElementById('year').textContent = `U+2C021: &#x2C021; (b255)[ ${convertToBase(year, 255, base255Symbols)}]`;
-            document.getElementById('month').textContent = `U+20087: &#x20087; (b12)[ ${convertToBase(month, 12, base12Symbols)}]`;
-            document.getElementById('day').textContent = `U+20089: &#x20089; (b10)[ ${convertToBase(day, 10, base10Symbols)}]`;
-            document.getElementById('weekday').textContent = `U+20593: &#x20593; (b8)[ ${base8Symbols[weekday]}]`;
-            document.getElementById('week').textContent = `U+20593: &#x20593; (b53)[ ${convertToBase(weekNumber, 52, base52Symbols)}]`;
+        
+            document.getElementById('year').textContent = `𬀡 (b255)[ ${convertToBase(year, 255, base255Symbols)}]`;
+            document.getElementById('month').textContent = `𠂇 (b12)[ ${convertToBase(month, 12, base12Symbols)}]`;
+            document.getElementById('day').textContent = `𠂉 (b10)[ ${convertToBase(day, 10, base10Symbols)}]`;
+            document.getElementById('weekday').textContent = `𠖓 (b8)[ ${base8Symbols[weekday]}]`;
+            document.getElementById('week').textContent = `𠖓 (b52)[ ${convertToBase(weekNumber, 52, base52Symbols)}]`;
         }
 
         function updateMayanClock() {
