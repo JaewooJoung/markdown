@@ -253,7 +253,7 @@ function getCountryCode(countryName) {
         }
 
         function sortTableByPopMedalRatio() {
-            data.sort((a, b) => (a[5] / (a[2] + a[3] + a[4])) - (b[5] / (b[2] + b[3] + b[4])));
+            data.sort((a, b) => (a[5] / a[4]) - (b[5] / b[4]));
             document.getElementById("medalTableBody").innerHTML = "";
             populateTable();
         }
