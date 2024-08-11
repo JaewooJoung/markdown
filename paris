@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Olympic Medals Table</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .flag-icon {
+            width: 30px;
+            height: 20px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Olympic Medals Table</h1>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Country</th>
+                    <th>Gold</th>
+                    <th>Silver</th>
+                    <th>Bronze</th>
+                    <th>Total</th>
+                    <th>Population</th>
+                    <th>Pop/Medal Ratio</th>
+                </tr>
+            </thead>
+            <tbody id="medalTableBody">
+                <!-- Table rows will be inserted here by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const data = [
+    ["China", 39, 27, 24, 90, 1439323776],
+    ["United States", 38, 42, 42, 122, 331002651],
+    ["Australia", 18, 18, 14, 50, 25499884],
+    ["Japan", 18, 12, 13, 43, 126476461],
+    ["France", 16, 24, 22, 62, 65273511],
+    ["Great Britain", 14, 22, 27, 63, 67886011],
+    ["South Korea", 13, 8, 9, 30, 51269185],
+    ["Netherlands", 13, 7, 12, 32, 17134872],
+    ["Germany", 12, 11, 8, 31, 83783942],
+    ["Italy", 11, 13, 15, 39, 60461826],
+    ["Canada", 9, 7, 11, 27, 37742154],
+    ["New Zealand", 9, 7, 2, 18, 4822233],
+    ["Uzbekistan", 8, 2, 3, 13, 33469203],
+    ["Hungary", 5, 7, 6, 18, 9660351],
+    ["Spain", 5, 4, 8, 17, 46754778],
+    ["Sweden", 4, 4, 3, 11, 10099265],
+    ["Kenya", 4, 2, 4, 10, 53771296],
+    ["Norway", 4, 1, 3, 8, 5421241],
+    ["Ireland", 4, 0, 3, 7, 4937786],
+    ["Brazil", 3, 7, 10, 20, 212559417],
+    ["Ukraine", 3, 5, 4, 12, 43733762],
+    ["Iran", 3, 5, 2, 10, 83992949],
+    ["Romania", 3, 4, 1, 8, 19237691],
+    ["Georgia", 3, 2, 1, 6, 3989167],
+    ["Belgium", 3, 1, 6, 10, 11589623],
+    ["Bulgaria", 3, 1, 3, 7, 6948445],
+    ["Czechia", 3, 0, 2, 5, 10708981],
+    ["Azerbaijan", 2, 2, 6, 10, 10139177],
+    ["Cuba", 2, 1, 5, 8, 11326616],
+    ["Croatia", 2, 1, 3, 6, 4105267],
+    ["Serbia", 2, 1, 1, 4, 8737371],
+    ["Slovenia", 2, 1, 0, 3, 2078938],
+    ["Chinese Taipei", 2, 0, 5, 7, 23816775],
+    ["Austria", 2, 0, 3, 5, 9006398],
+    ["Hong Kong, China", 2, 0, 2, 4, 7496981],
+    ["Philippines", 2, 0, 2, 4, 109581078],
+    ["Algeria", 2, 0, 1, 3, 43851044],
+    ["Indonesia", 2, 0, 1, 3, 273523615],
+    ["Israel", 1, 5, 1, 7, 8655535],
+    ["Poland", 1, 3, 5, 9, 37846611],
+    ["Kazakhstan", 1, 3, 3, 7, 18776707],
+    ["Jamaica", 1, 3, 2, 6, 2961167],
+    ["South Africa", 1, 3, 2, 6, 59308690],
+    ["Thailand", 1, 3, 2, 6, 69799978],
+    ["Denmark", 1, 2, 5, 8, 5792202],
+    ["Switzerland", 1, 2, 5, 8, 8654622],
+    ["Ecuador", 1, 2, 2, 5, 17643054],
+    ["Portugal", 1, 2, 1, 4, 10196709],
+    ["Ethiopia", 1, 2, 0, 3, 114963588],
+    ["Greece", 1, 1, 6, 8, 10423054],
+    ["Argentina", 1, 1, 1, 3, 45195774],
+    ["Bahrain", 1, 1, 1, 3, 1701575],
+    ["Egypt", 1, 1, 1, 3, 102334404],
+    ["Tunisia", 1, 1, 1, 3, 11818619],
+    ["Botswana", 1, 1, 0, 2, 2351627],
+    ["Chile", 1, 1, 0, 2, 19116201],
+    ["Saint Lucia", 1, 1, 0, 2, 183627],
+    ["Uganda", 1, 1, 0, 2, 45741007],
+    ["Dominican Republic", 1, 0, 2, 3, 10847910],
+    ["Guatemala", 1, 0, 1, 2, 17915568],
+    ["Morocco", 1, 0, 1, 2, 36910560],
+    ["Dominica", 1, 0, 0, 1, 71986],
+    ["Pakistan", 1, 0, 0, 1, 220892340],
+    ["Türkiye", 0, 3, 5, 8, 84339067],
+    ["Mexico", 0, 3, 2, 5, 128932753],
+    ["Armenia", 0, 3, 1, 4, 2963243],
+    ["Colombia", 0, 3, 0, 3, 50882891],
+    ["Kyrgyzstan", 0, 2, 4, 6, 6524195],
+    ["North Korea", 0, 2, 4, 6, 25778816],
+    ["Lithuania", 0, 2, 2, 4, 2722289],
+    ["India", 0, 1, 5, 6, 1380004385],
+    ["Republic of Moldova", 0, 1, 3, 4, 4033963],
+    ["Kosovo", 0, 1, 1, 2, 1873160],
+    ["Cyprus", 0, 1, 0, 1, 1207359],
+    ["Fiji", 0, 1, 0, 1, 896445],
+    ["Jordan", 0, 1, 0, 1, 10203134],
+    ["Mongolia", 0, 1, 0, 1, 3278290],
+    ["Panama", 0, 1, 0, 1, 4314767],
+    ["Tajikistan", 0, 0, 3, 3, 9537645],
+    ["Grenada", 0, 0, 2, 2, 112523],
+    ["Malaysia", 0, 0, 2, 2, 32365999],
+    ["Albania", 0, 0, 1, 1, 2877797],
+    ["Côte d'Ivoire", 0, 0, 1, 1, 26378274],
+    ["Cape Verde", 0, 0, 1, 1, 555987],
+    ["Refugee Olympic Team", 0, 0, 1, 1, 0],
+    ["Peru", 0, 0, 1, 1, 32971854],
+    ["Puerto Rico", 0, 0, 1, 1, 3194034],
+    ["Qatar", 0, 0, 1, 1, 2881053],
+    ["Singapore", 0, 0, 1, 1, 5850342],
+    ["Slovakia", 0, 0, 1, 1, 5459642],
+    ["Zambia", 0, 0, 1, 1, 18383955]
+];
+
+function getCountryCode(countryName) {
+    // 국가 코드 매핑
+    const map = {
+        "China": "CN",
+        "United States": "US",
+        "Australia": "AU",
+        "Japan": "JP",
+        "France": "FR",
+        "Great Britain": "GB",
+        "South Korea": "KR",
+        "Netherlands": "NL",
+        "Germany": "DE",
+        "Italy": "IT",
+        "Canada": "CA",
+        "New Zealand": "NZ",
+        "Uzbekistan": "UZ",
+        "Hungary": "HU",
+        "Spain": "ES",
+        "Sweden": "SE",
+        "Kenya": "KE",
+        "Norway": "NO",
+        "Ireland": "IE",
+        "Brazil": "BR",
+        "Ukraine": "UA",
+        "Iran": "IR",
+        "Romania": "RO",
+        "Georgia": "GE",
+        "Belgium": "BE",
+        "Bulgaria": "BG",
+        "Czechia": "CZ",
+        "Azerbaijan": "AZ",
+        "Cuba": "CU",
+        "Croatia": "HR",
+        "Serbia": "RS",
+        "Slovenia": "SI",
+        "Chinese Taipei": "TW",
+        "Austria": "AT",
+        "Hong Kong, China": "HK",
+        "Philippines": "PH",
+        "Algeria": "DZ",
+        "Indonesia": "ID",
+        "Israel": "IL",
+        "Poland": "PL",
+        "Kazakhstan": "KZ",
+        "Jamaica": "JM",
+        "South Africa": "ZA",
+        "Thailand": "TH",
+        "Denmark": "DK",
+        "Switzerland": "CH",
+        "Ecuador": "EC",
+        "Portugal": "PT",
+        "Ethiopia": "ET",
+        "Greece": "GR",
+        "Argentina": "AR",
+        "Bahrain": "BH",
+        "Egypt": "EG",
+        "Tunisia": "TN",
+        "Botswana": "BW",
+        "Chile": "CL",
+        "Saint Lucia": "LC",
+        "Uganda": "UG",
+        "Dominican Republic": "DO",
+        "Guatemala": "GT",
+        "Morocco": "MA",
+        "Dominica": "DM",
+        "Pakistan": "PK",
+        "Türkiye": "TR",
+        "Mexico": "MX",
+        "Armenia": "AM",
+        "Colombia": "CO",
+        "Kyrgyzstan": "KG",
+        "North Korea": "KP",
+        "Lithuania": "LT",
+        "India": "IN",
+        "Republic of Moldova": "MD",
+        "Kosovo": "XK",
+        "Cyprus": "CY",
+        "Fiji": "FJ",
+        "Jordan": "JO",
+        "Mongolia": "MN",
+        "Panama": "PA",
+        "Tajikistan": "TJ",
+        "Grenada": "GD",
+        "Malaysia": "MY",
+        "Albania": "AL",
+        "Côte d'Ivoire": "CI",
+        "Cape Verde": "CV",
+        "Refugee Olympic Team": "ROT",
+        "Peru": "PE",
+        "Puerto Rico": "PR",
+        "Qatar": "QA",
+        "Singapore": "SG",
+        "Slovakia": "SK",
+        "Zambia": "ZM"
+    };
+            return map[countryName] || "UN";  // Return UN flag if country code not found
+        }
+
+        function populateTable() {
+            const tableBody = document.getElementById("medalTableBody");
+            data.forEach((row, index) => {
+                const [country, gold, silver, bronze, total, population] = row;
+                const popMedalRatio = population / total;
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>
+                        <img src="https://www.countryflagicons.com/FLAT/24/${getCountryCode(country)}.png" alt="${country} flag" class="flag-icon">
+                        ${country}
+                    </td>
+                    <td>${gold}</td>
+                    <td>${silver}</td>
+                    <td>${bronze}</td>
+                    <td>${total}</td>
+                    <td>${population.toLocaleString()}</td>
+                    <td>${Math.round(popMedalRatio).toLocaleString()}</td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        function sortTableByPopMedalRatio() {
+            data.sort((a, b) => (a[5] / (a[2] + a[3] + a[4])) - (b[5] / (b[2] + b[3] + b[4])));
+            document.getElementById("medalTableBody").innerHTML = "";
+            populateTable();
+        }
+
+        populateTable();
+        sortTableByPopMedalRatio();
+    </script>
+</body>
+</html>
