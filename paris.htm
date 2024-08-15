@@ -126,8 +126,7 @@ const data = [
     ["Zambia", 0, 0, 1, 1, 18383955]
 ];
 
-    const countryCodes = {
-            // 국가 코드 매핑
+    const getCountryCode = {
     const map = {
     "Albania": "AL",
     "Algeria": "DZ",
@@ -257,21 +256,25 @@ const data = [
         tableBody.innerHTML = "";
         tableBody.appendChild(fragment);
     }
-
-    function sortTable(columnIndex) {
-        data.sort((a, b) => {
-            const valueA = columnIndex === 7 ? a[5] / a[4] : (a[1] > 0 ? a[5] / a[1] : Infinity);
-            const valueB = columnIndex === 7 ? b[5] / b[4] : (b[1] > 0 ? b[5] / b[1] : Infinity);
-            return (valueA - valueB) * sortDirection;
-        });
-        sortDirection *= -1;
-        populateTable();
-    }
-
-    document.getElementById("popMedalHeader").addEventListener("click", () => sortTable(7));
-    document.getElementById("popGoldHeader").addEventListener("click", () => sortTable(8));
-
+        
+function sortTable(columnIndex) {
+    data.sort((a, b) => {
+        let valueA, valueB;
+        if (columnIndex === 7) { // Pop/Medal Ratio
+            valueA = a[5] / a[4];
+            valueB = b[5] / b[4];
+        } else if (columnIndex === 8) { // Pop/Gold Ratio
+            valueA = a[1] > 0 ? a[5] / a[1] : Infinity;
+            valueB = b[1] > 0 ? b[5] / b[1] : Infinity;
+        } else {
+            valueA = a[columnIndex];
+            valueB = b[columnIndex];
+        }
+        return (valueA - valueB) * sortDirection;
+    });
+    sortDirection *= -1;
     populateTable();
+}
     sortTable(8); // Default sort by Gold/Medal Ratio
     </script>
 </body>
