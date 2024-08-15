@@ -18,13 +18,13 @@
                 <tr>
                     <th>Rank</th>
                     <th>Country</th>
-                    <th>Gold</th>
-                    <th>Silver</th>
-                    <th>Bronze</th>
-                    <th>Total</th>
-                    <th>Population</th>
-                    <th id="popMedalHeader">Pop/Medal Ratio</th>
-                    <th id="popGoldHeader">Pop/Gold Ratio</th>
+                    <th onclick="sortTable(2)">Gold</th>
+                    <th onclick="sortTable(3)">Silver</th>
+                    <th onclick="sortTable(4)">Bronze</th>
+                    <th onclick="sortTable(5)">Total</th>
+                    <th onclick="sortTable(6)">Population</th>
+                    <th id="popMedalHeader" onclick="sortTable(7)">Pop/Medal Ratio</th>
+                    <th id="popGoldHeader" onclick="sortTable(8)">Pop/Gold Ratio</th>
                 </tr>
             </thead>
             <tbody id="medalTableBody"></tbody>
@@ -32,193 +32,120 @@
     </div>
 
     <script>
-const data = [
-    ["United States", 40, 44, 42, 126, 331002651],
-    ["China", 40, 27, 24, 91, 1439323776],
-    ["Japan", 20, 12, 13, 45, 126476461],
-    ["Australia", 18, 19, 16, 53, 25499884],
-    ["France", 16, 26, 22, 64, 65273511],
-    ["Netherlands", 15, 7, 12, 34, 17134872],
-    ["Great Britain", 14, 22, 29, 65, 67886011],
-    ["South Korea", 13, 9, 10, 32, 51269185],
-    ["Italy", 12, 13, 15, 40, 60461826],
-    ["Germany", 12, 13, 8, 33, 83783942],
-    ["New Zealand", 10, 7, 3, 20, 4822233],
-    ["Canada", 9, 7, 11, 27, 37742154],
-    ["Uzbekistan", 8, 2, 3, 13, 33469203],
-    ["Hungary", 6, 7, 6, 19, 9660351],
-    ["Spain", 5, 4, 9, 18, 46754778],
-    ["Sweden", 4, 4, 3, 11, 10099265],
-    ["Kenya", 4, 2, 5, 11, 53771296],
-    ["Norway", 4, 1, 3, 8, 5421241],
-    ["Ireland", 4, 0, 3, 7, 4937786],
-    ["Brazil", 3, 7, 10, 20, 212559417],
-    ["Iran", 3, 6, 3, 12, 83992949],
-    ["Ukraine", 3, 5, 4, 12, 43733762],
-    ["Romania", 3, 4, 2, 9, 19237691],
-    ["Georgia", 3, 3, 1, 7, 3989167],
-    ["Belgium", 3, 1, 6, 10, 11589623],
-    ["Bulgaria", 3, 1, 3, 7, 6948445],
-    ["Serbia", 3, 1, 1, 5, 8737371],
-    ["Czechia", 3, 0, 2, 5, 10708981],
-    ["Denmark", 2, 2, 5, 9, 5792202],
-    ["Azerbaijan", 2, 2, 3, 7, 10139177],
-    ["Croatia", 2, 2, 3, 7, 4105267],
-    ["Cuba", 2, 1, 6, 9, 11326616],
-    ["Bahrain", 2, 1, 1, 4, 1701575],
-    ["Slovenia", 2, 1, 0, 3, 2078938],
-    ["Chinese Taipei", 2, 0, 5, 7, 23816775],
-    ["Austria", 2, 0, 3, 5, 9006398],
-    ["Hong Kong, China", 2, 0, 2, 4, 7496981],
-    ["Philippines", 2, 0, 2, 4, 109581078],
-    ["Algeria", 2, 0, 1, 3, 43851044],
-    ["Indonesia", 2, 0, 1, 3, 273523615],
-    ["Israel", 1, 5, 1, 7, 8655535],
-    ["Poland", 1, 4, 5, 10, 37846611],
-    ["Kazakhstan", 1, 3, 3, 7, 18776707],
-    ["Jamaica", 1, 3, 2, 6, 2961167],
-    ["South Africa", 1, 3, 2, 6, 59308690],
-    ["Thailand", 1, 3, 2, 6, 69799978],
-    ["Ethiopia", 1, 3, 0, 4, 114963588],
-    ["Switzerland", 1, 2, 5, 8, 8654622],
-    ["Ecuador", 1, 2, 2, 5, 17643054],
-    ["Portugal", 1, 2, 1, 4, 10196709],
-    ["Greece", 1, 1, 6, 8, 10423054],
-    ["Argentina", 1, 1, 1, 3, 45195774],
-    ["Egypt", 1, 1, 1, 3, 102334404],
-    ["Tunisia", 1, 1, 1, 3, 11818619],
-    ["Botswana", 1, 1, 0, 2, 2351627],
-    ["Chile", 1, 1, 0, 2, 19116201],
-    ["Saint Lucia", 1, 1, 0, 2, 183627],
-    ["Uganda", 1, 1, 0, 2, 45741007],
-    ["Dominican Republic", 1, 0, 2, 3, 10847910],
-    ["Guatemala", 1, 0, 1, 2, 17915568],
-    ["Morocco", 1, 0, 1, 2, 36910560],
-    ["Dominica", 1, 0, 0, 1, 71986],
-    ["Pakistan", 1, 0, 0, 1, 220892340],
-    ["Türkiye", 0, 3, 5, 8, 84339067],
-    ["Mexico", 0, 3, 2, 5, 128932753],
-    ["Armenia", 0, 3, 1, 4, 2963243],
-    ["Colombia", 0, 3, 1, 4, 50882891],
-    ["Kyrgyzstan", 0, 2, 4, 6, 6524195],
-    ["North Korea", 0, 2, 4, 6, 25778816],
-    ["Lithuania", 0, 2, 2, 4, 2722289],
-    ["India", 0, 1, 5, 6, 1380004385],
-    ["Republic of Moldova", 0, 1, 3, 4, 4033963],
-    ["Kosovo", 0, 1, 1, 2, 1873160],
-    ["Cyprus", 0, 1, 0, 1, 1207359],
-    ["Fiji", 0, 1, 0, 1, 896445],
-    ["Jordan", 0, 1, 0, 1, 10203134],
-    ["Mongolia", 0, 1, 0, 1, 3278290],
-    ["Panama", 0, 1, 0, 1, 4314767],
-    ["Tajikistan", 0, 0, 3, 3, 9537645],
-    ["Albania", 0, 0, 2, 2, 2877797],
-    ["Grenada", 0, 0, 2, 2, 112523],
-    ["Malaysia", 0, 0, 2, 2, 32365999],
-    ["Puerto Rico", 0, 0, 2, 2, 3194034],
-    ["Côte d'Ivoire", 0, 0, 1, 1, 26378274],
-    ["Cape Verde", 0, 0, 1, 1, 555987],
-    ["Refugee Olympic Team", 0, 0, 1, 1, 37],
-    ["Peru", 0, 0, 1, 1, 32971854],
-    ["Qatar", 0, 0, 1, 1, 2881053],
-    ["Singapore", 0, 0, 1, 1, 5850342],
-    ["Slovakia", 0, 0, 1, 1, 5459642],
-    ["Zambia", 0, 0, 1, 1, 18383955]
-];
+    const data = [
+        ["United States", 40, 44, 42, 126, 331002651],
+        ["China", 40, 27, 24, 91, 1439323776],
+        ["Japan", 20, 12, 13, 45, 126476461],
+        ["Australia", 18, 19, 16, 53, 25499884],
+        ["France", 16, 26, 22, 64, 65273511],
+        ["Netherlands", 15, 7, 12, 34, 17134872],
+        ["Great Britain", 14, 22, 29, 65, 67886011],
+        ["South Korea", 13, 9, 10, 32, 51269185],
+        ["Italy", 12, 13, 15, 40, 60461826],
+        ["Germany", 12, 13, 8, 33, 83783942],
+        ["New Zealand", 10, 7, 3, 20, 4822233],
+        ["Canada", 9, 7, 11, 27, 37742154],
+        ["Uzbekistan", 8, 2, 3, 13, 33469203],
+        ["Hungary", 6, 7, 6, 19, 9660351],
+        ["Spain", 5, 4, 9, 18, 46754778],
+        ["Sweden", 4, 4, 3, 11, 10099265],
+        ["Kenya", 4, 2, 5, 11, 53771296],
+        ["Norway", 4, 1, 3, 8, 5421241],
+        ["Ireland", 4, 0, 3, 7, 4937786],
+        ["Brazil", 3, 7, 10, 20, 212559417],
+        ["Iran", 3, 6, 3, 12, 83992949],
+        ["Ukraine", 3, 5, 4, 12, 43733762],
+        ["Romania", 3, 4, 2, 9, 19237691],
+        ["Georgia", 3, 3, 1, 7, 3989167],
+        ["Belgium", 3, 1, 6, 10, 11589623],
+        ["Bulgaria", 3, 1, 3, 7, 6948445],
+        ["Serbia", 3, 1, 1, 5, 8737371],
+        ["Czechia", 3, 0, 2, 5, 10708981],
+        ["Denmark", 2, 2, 5, 9, 5792202],
+        ["Azerbaijan", 2, 2, 3, 7, 10139177],
+        ["Croatia", 2, 2, 3, 7, 4105267],
+        ["Cuba", 2, 1, 6, 9, 11326616],
+        ["Bahrain", 2, 1, 1, 4, 1701575],
+        ["Slovenia", 2, 1, 0, 3, 2078938],
+        ["Chinese Taipei", 2, 0, 5, 7, 23816775],
+        ["Austria", 2, 0, 3, 5, 9006398],
+        ["Hong Kong, China", 2, 0, 2, 4, 7496981],
+        ["Philippines", 2, 0, 2, 4, 109581078],
+        ["Algeria", 2, 0, 1, 3, 43851044],
+        ["Indonesia", 2, 0, 1, 3, 273523615],
+        ["Israel", 1, 5, 1, 7, 8655535],
+        ["Poland", 1, 4, 5, 10, 37846611],
+        ["Kazakhstan", 1, 3, 3, 7, 18776707],
+        ["Jamaica", 1, 3, 2, 6, 2961167],
+        ["South Africa", 1, 3, 2, 6, 59308690],
+        ["Thailand", 1, 3, 2, 6, 69799978],
+        ["Ethiopia", 1, 3, 0, 4, 114963588],
+        ["Switzerland", 1, 2, 5, 8, 8654622],
+        ["Ecuador", 1, 2, 2, 5, 17643054],
+        ["Portugal", 1, 2, 1, 4, 10196709],
+        ["Greece", 1, 1, 6, 8, 10423054],
+        ["Argentina", 1, 1, 1, 3, 45195774],
+        ["Egypt", 1, 1, 1, 3, 102334404],
+        ["Tunisia", 1, 1, 1, 3, 11818619],
+        ["Botswana", 1, 1, 0, 2, 2351627],
+        ["Chile", 1, 1, 0, 2, 19116201],
+        ["Saint Lucia", 1, 1, 0, 2, 183627],
+        ["Uganda", 1, 1, 0, 2, 45741007],
+        ["Dominican Republic", 1, 0, 2, 3, 10847910],
+        ["Guatemala", 1, 0, 1, 2, 17915568],
+        ["Morocco", 1, 0, 1, 2, 36910560],
+        ["Dominica", 1, 0, 0, 1, 71986],
+        ["Pakistan", 1, 0, 0, 1, 220892340],
+        ["Türkiye", 0, 3, 5, 8, 84339067],
+        ["Mexico", 0, 3, 2, 5, 128932753],
+        ["Armenia", 0, 3, 1, 4, 2963243],
+        ["Colombia", 0, 3, 1, 4, 50882891],
+        ["Kyrgyzstan", 0, 2, 4, 6, 6524195],
+        ["North Korea", 0, 2, 4, 6, 25778816],
+        ["Lithuania", 0, 2, 2, 4, 2722289],
+        ["India", 0, 1, 5, 6, 1380004385],
+        ["Republic of Moldova", 0, 1, 3, 4, 4033963],
+        ["Kosovo", 0, 1, 1, 2, 1873160],
+        ["Cyprus", 0, 1, 0, 1, 1207359],
+        ["Fiji", 0, 1, 0, 1, 896445],
+        ["Jordan", 0, 1, 0, 1, 10203134],
+        ["Mongolia", 0, 1, 0, 1, 3278290],
+        ["Panama", 0, 1, 0, 1, 4314767],
+        ["Tajikistan", 0, 0, 3, 3, 9537645],
+        ["Albania", 0, 0, 2, 2, 2877797],
+        ["Grenada", 0, 0, 2, 2, 112523],
+        ["Malaysia", 0, 0, 2, 2, 32365999],
+        ["Puerto Rico", 0, 0, 2, 2, 3194034],
+        ["Côte d'Ivoire", 0, 0, 1, 1, 26378274],
+        ["Cape Verde", 0, 0, 1, 1, 555987],
+        ["Refugee Olympic Team", 0, 0, 1, 1, 37],
+        ["Peru", 0, 0, 1, 1, 32971854],
+        ["Qatar", 0, 0, 1, 1, 2881053],
+        ["Singapore", 0, 0, 1, 1, 5850342],
+        ["Slovakia", 0, 0, 1, 1, 5459642],
+        ["Zambia", 0, 0, 1, 1, 18383955]
+    ];
 
-    const getCountryCode = {
-    const map = {
-    "Albania": "AL",
-    "Algeria": "DZ",
-    "Argentina": "AR",
-    "Armenia": "AM",
-    "Australia": "AU",
-    "Austria": "AT",
-    "Azerbaijan": "AZ",
-    "Bahrain": "BH",
-    "Belgium": "BE",
-    "Botswana": "BW",
-    "Brazil": "BR",
-    "Bulgaria": "BG",
-    "Canada": "CA",
-    "Cape Verde": "CV",
-    "Chile": "CL",
-    "China": "CN",
-    "Chinese Taipei": "TW",
-    "Colombia": "CO",
-    "Croatia": "HR",
-    "Cuba": "CU",
-    "Cyprus": "CY",
-    "Czechia": "CZ",
-    "Denmark": "DK",
-    "Dominica": "DM",
-    "Dominican Republic": "DO",
-    "Ecuador": "EC",
-    "Egypt": "EG",
-    "Ethiopia": "ET",
-    "Fiji": "FJ",
-    "France": "FR",
-    "Georgia": "GE",
-    "Germany": "DE",
-    "Greece": "GR",
-    "Grenada": "GD",
-    "Great Britain": "GB",
-    "Guatemala": "GT",
-    "Hong Kong, China": "HK",
-    "Hungary": "HU",
-    "India": "IN",
-    "Indonesia": "ID",
-    "Iran": "IR",
-    "Ireland": "IE",
-    "Israel": "IL",
-    "Italy": "IT",
-    "Jamaica": "JM",
-    "Japan": "JP",
-    "Jordan": "JO",
-    "Kazakhstan": "KZ",
-    "Kenya": "KE",
-    "Kosovo": "XK",
-    "Kyrgyzstan": "KG",
-    "Lithuania": "LT",
-    "Malaysia": "MY",
-    "Mexico": "MX",
-    "Mongolia": "MN",
-    "Morocco": "MA",
-    "Netherlands": "NL",
-    "New Zealand": "NZ",
-    "North Korea": "KP",
-    "Norway": "NO",
-    "Pakistan": "PK",
-    "Panama": "PA",
-    "Peru": "PE",
-    "Philippines": "PH",
-    "Poland": "PL",
-    "Portugal": "PT",
-    "Puerto Rico": "PR",
-    "Qatar": "QA",
-    "Refugee Olympic Team": "UN",
-    "Republic of Moldova": "MD",
-    "Romania": "RO",
-    "Saint Lucia": "LC",
-    "Serbia": "RS",
-    "Singapore": "SG",
-    "Slovakia": "SK",
-    "Slovenia": "SI",
-    "South Africa": "ZA",
-    "South Korea": "KR",
-    "Spain": "ES",
-    "Sweden": "SE",
-    "Switzerland": "CH",
-    "Tajikistan": "TJ",
-    "Thailand": "TH",
-    "Tunisia": "TN",
-    "Türkiye": "TR",
-    "Uganda": "UG",
-    "Ukraine": "UA",
-    "United States": "US",
-    "Uzbekistan": "UZ",
-    "Zambia": "ZM",
-    "Côte d'Ivoire": "CI"
+    const countryCodes = {
+        "Albania": "AL", "Algeria": "DZ", "Argentina": "AR", "Armenia": "AM", "Australia": "AU",
+        "Austria": "AT", "Azerbaijan": "AZ", "Bahrain": "BH", "Belgium": "BE", "Botswana": "BW",
+        "Brazil": "BR", "Bulgaria": "BG", "Canada": "CA", "Cape Verde": "CV", "Chile": "CL",
+        "China": "CN", "Chinese Taipei": "TW", "Colombia": "CO", "Croatia": "HR", "Cuba": "CU",
+        "Cyprus": "CY", "Czechia": "CZ", "Denmark": "DK", "Dominica": "DM", "Dominican Republic": "DO",
+        "Ecuador": "EC", "Egypt": "EG", "Ethiopia": "ET", "Fiji": "FJ", "France": "FR",
+        "Georgia": "GE", "Germany": "DE", "Greece": "GR", "Grenada": "GD", "Great Britain": "GB",
+        "Guatemala": "GT", "Hong Kong, China": "HK", "Hungary": "HU", "India": "IN", "Indonesia": "ID",
+        "Iran": "IR", "Ireland": "IE", "Israel": "IL", "Italy": "IT", "Jamaica": "JM",
+        "Japan": "JP", "Jordan": "JO", "Kazakhstan": "KZ", "Kenya": "KE", "Kosovo": "XK",
+        "Kyrgyzstan": "KG", "Lithuania": "LT", "Malaysia": "MY", "Mexico": "MX", "Mongolia": "MN",
+        "Morocco": "MA", "Netherlands": "NL", "New Zealand": "NZ", "North Korea": "KP", "Norway": "NO",
+        "Pakistan": "PK", "Panama": "PA", "Peru": "PE", "Philippines": "PH", "Poland": "PL",
+        "Portugal": "PT", "Puerto Rico": "PR", "Qatar": "QA", "Refugee Olympic Team": "UN",
+        "Republic of Moldova": "MD", "Romania": "RO", "Saint Lucia": "LC", "Serbia": "RS",
+        "Singapore": "SG", "Slovakia": "SK", "Slovenia": "SI", "South Africa": "ZA",
+        "South Korea": "KR", "Spain": "ES", "Sweden": "SE", "Switzerland": "CH", "Tajikistan": "TJ",
+        "Thailand": "TH", "Tunisia": "TN", "Türkiye": "TR", "Uganda": "UG", "Ukraine": "UA",
+        "United States": "US", "Uzbekistan": "UZ", "Zambia": "ZM", "Côte d'Ivoire": "CI"
     };
 
     let sortDirection = 1;
@@ -257,25 +184,27 @@ const data = [
         tableBody.appendChild(fragment);
     }
         
-function sortTable(columnIndex) {
-    data.sort((a, b) => {
-        let valueA, valueB;
-        if (columnIndex === 7) { // Pop/Medal Ratio
-            valueA = a[5] / a[4];
-            valueB = b[5] / b[4];
-        } else if (columnIndex === 8) { // Pop/Gold Ratio
-            valueA = a[1] > 0 ? a[5] / a[1] : Infinity;
-            valueB = b[1] > 0 ? b[5] / b[1] : Infinity;
-        } else {
-            valueA = a[columnIndex];
-            valueB = b[columnIndex];
-        }
-        return (valueA - valueB) * sortDirection;
-    });
-    sortDirection *= -1;
-    populateTable();
-}
-    sortTable(8); // Default sort by Gold/Medal Ratio
+    function sortTable(columnIndex) {
+        data.sort((a, b) => {
+            let valueA, valueB;
+            if (columnIndex === 7) { // Pop/Medal Ratio
+                valueA = a[5] / a[4];
+                valueB = b[5] / b[4];
+            } else if (columnIndex === 8) { // Pop/Gold Ratio
+                valueA = a[1] > 0 ? a[5] / a[1] : Infinity;
+                valueB = b[1] > 0 ? b[5] / b[1] : Infinity;
+            } else {
+                valueA = a[columnIndex - 1];
+                valueB = b[columnIndex - 1];
+            }
+            return (valueA - valueB) * sortDirection;
+        });
+        sortDirection *= -1;
+        populateTable();
+    }
+
+    // Initial sort by Pop/Gold Ratio
+    sortTable(8);
     </script>
 </body>
 </html>
