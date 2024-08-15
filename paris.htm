@@ -245,7 +245,7 @@ function getCountryCode(countryName) {
             data.forEach((row, index) => {
                 const [country, gold, silver, bronze, total, population] = row;
                 const popMedalRatio = population / total;
-                const popGoldRatio = population / gold;
+                const popGoldRatio = gold > 0 ? population / gold : Infinity;
                 const tr = document.createElement("tr");
                 tr.innerHTML = `
                     <td>${index + 1}</td>
@@ -266,14 +266,14 @@ function getCountryCode(countryName) {
         }
 
         function sortTable(columnIndex) {
-            data.sort((a, b) => {
-                const valueA = columnIndex === 7 ? a[5] / a[4] : a[5] / a[1];
-                const valueB = columnIndex === 7 ? b[5] / b[4] : b[5] / b[1];
-                return (valueA - valueB) * sortDirection;
-            });
-            sortDirection *= -1; // Toggle the sort direction for the next click
-            populateTable();
-        }
+    data.sort((a, b) => {
+        const valueA = columnIndex === 7 ? a[5] / a[4] : (a[1] > 0 ? a[5] / a[1] : Infinity);
+        const valueB = columnIndex === 7 ? b[5] / b[4] : (b[1] > 0 ? b[5] / b[1] : Infinity);
+        return (valueA - valueB) * sortDirection;
+    });
+    sortDirection *= -1;
+    populateTable();
+}
 
         document.getElementById("popMedalHeader").addEventListener("click", () => sortTable(7));
         document.getElementById("popGoldHeader").addEventListener("click", () => sortTable(8));
