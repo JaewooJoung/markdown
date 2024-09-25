@@ -65,11 +65,27 @@
         const base8Symbols = "◌⚀⚁⚂⚃⚄⚆⚇";
         const base52Symbols = "◌①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳㉑㉒㉓㉈㉉㉊㉋㉌㉍㉎㉏㉝㉞㉟㊱㊲㊳㊴㊵㊶㊷㊸㊹㊺㊻㊼㊽㊾㊿㊀㊁";
         const vigesimalMap = {
-                0: "ⵚ", 1: "\u{1D2E1}", 2: "\u{1D2E2}", 3: "\u{1D2E3}", 4: "\u{1D2E4}", 
-                5: "\u{1D2E5}", 6: "\u{1D2E6}", 7: "\u{1D2E7}", 8: "\u{1D2E8}", 9: "\u{1D2E9}", 
-                10: "\u{1D2EA}", 11: "\u{1D2EB}", 12: "\u{1D2EC}", 13: "\u{1D2ED}", 14: "\u{1D2EE}", 
-                15: "\u{1D2EF}", 16: "\u{1D2F0}", 17: "\u{1D2F1}", 18: "\u{1D2F2}", 19: "\u{1D2F3}"
-            };
+            0: '<span id="char-node" style="font-family:u1d000">ⵚ</span>',
+            1: '<span id="char-node" style="font-family:u1d000">\u{1D2E1}</span>',
+            2: '<span id="char-node" style="font-family:u1d000">\u{1D2E2}</span>',
+            3: '<span id="char-node" style="font-family:u1d000">\u{1D2E3}</span>',
+            4: '<span id="char-node" style="font-family:u1d000">\u{1D2E4}</span>',
+            5: '<span id="char-node" style="font-family:u1d000">\u{1D2E5}</span>',
+            6: '<span id="char-node" style="font-family:u1d000">\u{1D2E6}</span>',
+            7: '<span id="char-node" style="font-family:u1d000">\u{1D2E7}</span>',
+            8: '<span id="char-node" style="font-family:u1d000">\u{1D2E8}</span>',
+            9: '<span id="char-node" style="font-family:u1d000">\u{1D2E9}</span>',
+            10: '<span id="char-node" style="font-family:u1d000">\u{1D2EA}</span>',
+            11: '<span id="char-node" style="font-family:u1d000">\u{1D2EB}</span>',
+            12: '<span id="char-node" style="font-family:u1d000">\u{1D2EC}</span>',
+            13: '<span id="char-node" style="font-family:u1d000">\u{1D2ED}</span>',
+            14: '<span id="char-node" style="font-family:u1d000">\u{1D2EE}</span>',
+            15: '<span id="char-node" style="font-family:u1d000">\u{1D2EF}</span>',
+            16: '<span id="char-node" style="font-family:u1d000">\u{1D2F0}</span>',
+            17: '<span id="char-node" style="font-family:u1d000">\u{1D2F1}</span>',
+            18: '<span id="char-node" style="font-family:u1d000">\u{1D2F2}</span>',
+            19: '<span id="char-node" style="font-family:u1d000">\u{1D2F3}</span>'
+        };
 
         function convertToBase(num, base, symbols) {
             if (num === 0) return symbols[0];
