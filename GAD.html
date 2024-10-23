@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<HTML lang = "en">
+<HEAD>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  
+  
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: { equationNumbers: { autoNumber: "AMS" } }
+    });
+  </script>
+
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+
+  
+<style>
+pre.hljl {
+    border: 1px solid #ccc;
+    margin: 5px;
+    padding: 5px;
+    overflow-x: auto;
+    color: rgb(68,68,68); background-color: rgb(251,251,251); }
+pre.hljl > span.hljl-t { }
+pre.hljl > span.hljl-w { }
+pre.hljl > span.hljl-e { }
+pre.hljl > span.hljl-eB { }
+pre.hljl > span.hljl-o { }
+pre.hljl > span.hljl-k { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kc { color: rgb(59,151,46); font-style: italic; }
+pre.hljl > span.hljl-kd { color: rgb(214,102,97); font-style: italic; }
+pre.hljl > span.hljl-kn { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kp { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kr { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kt { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-n { }
+pre.hljl > span.hljl-na { }
+pre.hljl > span.hljl-nb { }
+pre.hljl > span.hljl-nbp { }
+pre.hljl > span.hljl-nc { }
+pre.hljl > span.hljl-ncB { }
+pre.hljl > span.hljl-nd { color: rgb(214,102,97); }
+pre.hljl > span.hljl-ne { }
+pre.hljl > span.hljl-neB { }
+pre.hljl > span.hljl-nf { color: rgb(66,102,213); }
+pre.hljl > span.hljl-nfm { color: rgb(66,102,213); }
+pre.hljl > span.hljl-np { }
+pre.hljl > span.hljl-nl { }
+pre.hljl > span.hljl-nn { }
+pre.hljl > span.hljl-no { }
+pre.hljl > span.hljl-nt { }
+pre.hljl > span.hljl-nv { }
+pre.hljl > span.hljl-nvc { }
+pre.hljl > span.hljl-nvg { }
+pre.hljl > span.hljl-nvi { }
+pre.hljl > span.hljl-nvm { }
+pre.hljl > span.hljl-l { }
+pre.hljl > span.hljl-ld { color: rgb(148,91,176); font-style: italic; }
+pre.hljl > span.hljl-s { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sa { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sb { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sc { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sd { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sdB { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sdC { color: rgb(201,61,57); }
+pre.hljl > span.hljl-se { color: rgb(59,151,46); }
+pre.hljl > span.hljl-sh { color: rgb(201,61,57); }
+pre.hljl > span.hljl-si { }
+pre.hljl > span.hljl-so { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sr { color: rgb(201,61,57); }
+pre.hljl > span.hljl-ss { color: rgb(201,61,57); }
+pre.hljl > span.hljl-ssB { color: rgb(201,61,57); }
+pre.hljl > span.hljl-nB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nbB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nfB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nh { color: rgb(59,151,46); }
+pre.hljl > span.hljl-ni { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nil { color: rgb(59,151,46); }
+pre.hljl > span.hljl-noB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-oB { color: rgb(102,102,102); font-weight: bold; }
+pre.hljl > span.hljl-ow { color: rgb(102,102,102); font-weight: bold; }
+pre.hljl > span.hljl-p { }
+pre.hljl > span.hljl-c { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-ch { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cm { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cp { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cpB { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cs { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-csB { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-g { }
+pre.hljl > span.hljl-gd { }
+pre.hljl > span.hljl-ge { }
+pre.hljl > span.hljl-geB { }
+pre.hljl > span.hljl-gh { }
+pre.hljl > span.hljl-gi { }
+pre.hljl > span.hljl-go { }
+pre.hljl > span.hljl-gp { }
+pre.hljl > span.hljl-gs { }
+pre.hljl > span.hljl-gsB { }
+pre.hljl > span.hljl-gt { }
+</style>
+
+
+
+  <style type="text/css">
+  @font-face {
+  font-style: normal;
+  font-weight: 300;
+}
+@font-face {
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
+  font-style: normal;
+  font-weight: 600;
+}
+html {
+  font-family: sans-serif; /* 1 */
+  -ms-text-size-adjust: 100%; /* 2 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+body {
+  margin: 0;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+audio,
+canvas,
+progress,
+video {
+  display: inline-block; /* 1 */
+  vertical-align: baseline; /* 2 */
+}
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+[hidden],
+template {
+  display: none;
+}
+a:active,
+a:hover {
+  outline: 0;
+}
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+b,
+strong {
+  font-weight: bold;
+}
+dfn {
+  font-style: italic;
+}
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+mark {
+  background: #ff0;
+  color: #000;
+}
+small {
+  font-size: 80%;
+}
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.25em;
+}
+img {
+  border: 0;
+}
+svg:not(:root) {
+  overflow: hidden;
+}
+figure {
+  margin: 1em 40px;
+}
+hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+pre {
+  overflow: auto;
+}
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit; /* 1 */
+  font: inherit; /* 2 */
+  margin: 0; /* 3 */
+}
+button {
+  overflow: visible;
+}
+button,
+select {
+  text-transform: none;
+}
+button,
+html input[type="button"], /* 1 */
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button; /* 2 */
+  cursor: pointer; /* 3 */
+}
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+input {
+  line-height: normal;
+}
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+input[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box; /* 2 */
+  box-sizing: content-box;
+}
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+legend {
+  border: 0; /* 1 */
+  padding: 0; /* 2 */
+}
+textarea {
+  overflow: auto;
+}
+optgroup {
+  font-weight: bold;
+}
+table {
+  font-family: monospace, monospace;
+  font-size : 0.8em;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+td,
+th {
+  padding: 0;
+}
+thead th {
+    border-bottom: 1px solid black;
+    background-color: white;
+}
+tr:nth-child(odd){
+  background-color: rgb(248,248,248);
+}
+
+
+/*
+* Skeleton V2.0.4
+* Copyright 2014, Dave Gamache
+* www.getskeleton.com
+* Free to use under the MIT license.
+* http://www.opensource.org/licenses/mit-license.php
+* 12/29/2014
+*/
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box; }
+.column,
+.columns {
+  width: 100%;
+  float: left;
+  box-sizing: border-box; }
+@media (min-width: 400px) {
+  .container {
+    width: 85%;
+    padding: 0; }
+}
+@media (min-width: 550px) {
+  .container {
+    width: 80%; }
+  .column,
+  .columns {
+    margin-left: 4%; }
+  .column:first-child,
+  .columns:first-child {
+    margin-left: 0; }
+
+  .one.column,
+  .one.columns                    { width: 4.66666666667%; }
+  .two.columns                    { width: 13.3333333333%; }
+  .three.columns                  { width: 22%;            }
+  .four.columns                   { width: 30.6666666667%; }
+  .five.columns                   { width: 39.3333333333%; }
+  .six.columns                    { width: 48%;            }
+  .seven.columns                  { width: 56.6666666667%; }
+  .eight.columns                  { width: 65.3333333333%; }
+  .nine.columns                   { width: 74.0%;          }
+  .ten.columns                    { width: 82.6666666667%; }
+  .eleven.columns                 { width: 91.3333333333%; }
+  .twelve.columns                 { width: 100%; margin-left: 0; }
+
+  .one-third.column               { width: 30.6666666667%; }
+  .two-thirds.column              { width: 65.3333333333%; }
+
+  .one-half.column                { width: 48%; }
+
+  /* Offsets */
+  .offset-by-one.column,
+  .offset-by-one.columns          { margin-left: 8.66666666667%; }
+  .offset-by-two.column,
+  .offset-by-two.columns          { margin-left: 17.3333333333%; }
+  .offset-by-three.column,
+  .offset-by-three.columns        { margin-left: 26%;            }
+  .offset-by-four.column,
+  .offset-by-four.columns         { margin-left: 34.6666666667%; }
+  .offset-by-five.column,
+  .offset-by-five.columns         { margin-left: 43.3333333333%; }
+  .offset-by-six.column,
+  .offset-by-six.columns          { margin-left: 52%;            }
+  .offset-by-seven.column,
+  .offset-by-seven.columns        { margin-left: 60.6666666667%; }
+  .offset-by-eight.column,
+  .offset-by-eight.columns        { margin-left: 69.3333333333%; }
+  .offset-by-nine.column,
+  .offset-by-nine.columns         { margin-left: 78.0%;          }
+  .offset-by-ten.column,
+  .offset-by-ten.columns          { margin-left: 86.6666666667%; }
+  .offset-by-eleven.column,
+  .offset-by-eleven.columns       { margin-left: 95.3333333333%; }
+
+  .offset-by-one-third.column,
+  .offset-by-one-third.columns    { margin-left: 34.6666666667%; }
+  .offset-by-two-thirds.column,
+  .offset-by-two-thirds.columns   { margin-left: 69.3333333333%; }
+
+  .offset-by-one-half.column,
+  .offset-by-one-half.columns     { margin-left: 52%; }
+
+}
+html {
+  font-size: 62.5%; }
+body {
+  font-size: 1.5em; /* currently ems cause chrome bug misinterpreting rems on body element */
+  line-height: 1.6;
+  font-weight: 400;
+  font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #222; }
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  font-weight: 300; }
+h1 { font-size: 3.6rem; line-height: 1.2;  letter-spacing: -.1rem;}
+h2 { font-size: 3.4rem; line-height: 1.25; letter-spacing: -.1rem; }
+h3 { font-size: 3.2rem; line-height: 1.3;  letter-spacing: -.1rem; }
+h4 { font-size: 2.8rem; line-height: 1.35; letter-spacing: -.08rem; }
+h5 { font-size: 2.4rem; line-height: 1.5;  letter-spacing: -.05rem; }
+h6 { font-size: 1.5rem; line-height: 1.6;  letter-spacing: 0; }
+
+p {
+  margin-top: 0; }
+a {
+  color: #1EAEDB; }
+a:hover {
+  color: #0FA0CE; }
+.button,
+button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+  display: inline-block;
+  height: 38px;
+  padding: 0 30px;
+  color: #555;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 38px;
+  letter-spacing: .1rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: transparent;
+  border-radius: 4px;
+  border: 1px solid #bbb;
+  cursor: pointer;
+  box-sizing: border-box; }
+.button:hover,
+button:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+.button:focus,
+button:focus,
+input[type="submit"]:focus,
+input[type="reset"]:focus,
+input[type="button"]:focus {
+  color: #333;
+  border-color: #888;
+  outline: 0; }
+.button.button-primary,
+button.button-primary,
+input[type="submit"].button-primary,
+input[type="reset"].button-primary,
+input[type="button"].button-primary {
+  color: #FFF;
+  background-color: #33C3F0;
+  border-color: #33C3F0; }
+.button.button-primary:hover,
+button.button-primary:hover,
+input[type="submit"].button-primary:hover,
+input[type="reset"].button-primary:hover,
+input[type="button"].button-primary:hover,
+.button.button-primary:focus,
+button.button-primary:focus,
+input[type="submit"].button-primary:focus,
+input[type="reset"].button-primary:focus,
+input[type="button"].button-primary:focus {
+  color: #FFF;
+  background-color: #1EAEDB;
+  border-color: #1EAEDB; }
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+textarea,
+select {
+  height: 38px;
+  padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
+  background-color: #fff;
+  border: 1px solid #D1D1D1;
+  border-radius: 4px;
+  box-shadow: none;
+  box-sizing: border-box; }
+/* Removes awkward default styles on some inputs for iOS */
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+textarea {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none; }
+textarea {
+  min-height: 65px;
+  padding-top: 6px;
+  padding-bottom: 6px; }
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+  border: 1px solid #33C3F0;
+  outline: 0; }
+label,
+legend {
+  display: block;
+  margin-bottom: .5rem;
+  font-weight: 600; }
+fieldset {
+  padding: 0;
+  border-width: 0; }
+input[type="checkbox"],
+input[type="radio"] {
+  display: inline; }
+label > .label-body {
+  display: inline-block;
+  margin-left: .5rem;
+  font-weight: normal; }
+ul {
+  list-style: circle; }
+ol {
+  list-style: decimal; }
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+  margin: 1.5rem 0 1.5rem 3rem;
+  font-size: 90%; }
+li > p {margin : 0;}
+th,
+td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #E1E1E1; }
+th:first-child,
+td:first-child {
+  padding-left: 0; }
+th:last-child,
+td:last-child {
+  padding-right: 0; }
+button,
+.button {
+  margin-bottom: 1rem; }
+input,
+textarea,
+select,
+fieldset {
+  margin-bottom: 1.5rem; }
+pre,
+blockquote,
+dl,
+figure,
+table,
+p,
+ul,
+ol,
+form {
+  margin-bottom: 1.0rem; }
+.u-full-width {
+  width: 100%;
+  box-sizing: border-box; }
+.u-max-full-width {
+  max-width: 100%;
+  box-sizing: border-box; }
+.u-pull-right {
+  float: right; }
+.u-pull-left {
+  float: left; }
+hr {
+  margin-top: 3rem;
+  margin-bottom: 3.5rem;
+  border-width: 0;
+  border-top: 1px solid #E1E1E1; }
+.container:after,
+.row:after,
+.u-cf {
+  content: "";
+  display: table;
+  clear: both; }
+
+pre {
+  display: block;
+  padding: 9.5px;
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.42857143;
+  word-break: break-all;
+  word-wrap: break-word;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre.hljl {
+  margin: 0 0 10px;
+  display: block;
+  background: #f5f5f5;
+  border-radius: 4px;
+  padding : 5px;
+}
+
+pre.output {
+  background: #ffffff;
+}
+
+pre.code {
+  background: #ffffff;
+}
+
+pre.julia-error {
+  color : red
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-size: 0.9em;
+}
+
+
+@media (min-width: 400px) {}
+@media (min-width: 550px) {}
+@media (min-width: 750px) {}
+@media (min-width: 1000px) {}
+@media (min-width: 1200px) {}
+
+h1.title {margin-top : 20px}
+img {max-width : 100%}
+div.title {text-align: center;}
+
+  </style>
+</HEAD>
+
+<BODY>
+  <div class ="container">
+    <div class = "row">
+      <div class = "col-md-12 twelve columns">
+        <div class="title">
+          
+          
+          
+        </div>
+
+        <h1>ᚵᚯᛐᛂᛒᚮᚱᚵᛌ᛫ᛆᚠᚠᛅᚱᛂᚱ᛫ᛑᛆᚵᛚᛁᚵᛂᚿ &#40;Göteborgs Affärer Dagligen&#41; 📰</h1>
+<p><code>compiled at 2024-10-23T06:15:05.975</code></p>
+<h2>Daily Gothenburg weather report</h2>
+<h3>Air🌬 <img src="https://cdn.weatherapi.com/weather/64x64/night/116.png" alt="Partly cloudy" /></h3>
+<table><tr><th>Current temp&#40;🌡&#41;</th><th>Carbon Monoxide &#40;CO₂&#41; level</th><th>Nitrogen Dioxide &#40;NO₂&#41; level</th><th>Ozone &#40;O₃&#41; level</th><th>Sulfur dioxide &#40;SO₂&#41; level</th><th>PM 2.5 level</th><th>PM 10 level</th></tr><tr><td>9.4 ℃</td><td>273.8 μg/m³</td><td>4.995  μg/m³</td><td>75.0 μg/m³</td><td>1.85 μg/m³</td><td>10.545 μg/m³</td><td>19.055 μg/m³</td></tr></table>
+<h3>Sun&#40;🌄&#41; &amp; Moon&#40;🌃&#41;</h3>
+<table><tr><th>🌅Sunrise</th><th>🌇Sunset</th><th>moon&#40;🌖&#41; rise</th><th>moon&#40;🌖&#41; set</th><th>moon&#40;🌖&#41; phase</th></tr><tr><td>08:05 AM</td><td>05:47 PM</td><td>09:31 PM</td><td>04:09 PM</td><td>Waning Gibbous</td></tr></table>
+<h3>Prediction&#40;🏙🌞&#41;</h3>
+<table><tr><th>Time</th><th>6:00</th><th>7:00</th><th>8:00</th><th>9:00</th><th>10:00</th><th>11:00</th><th>12:00</th><th>13:00</th><th>14:00</th><th>15:00</th></tr><tr><td><strong>Temp&#40;🌡℃&#41;</strong></td><td>9.4</td><td>9.9</td><td>10.2</td><td>10.6</td><td>10.9</td><td>11.0</td><td>11.8</td><td>11.9</td><td>12.2</td><td>11.9</td></tr><tr><td><strong>Feels&#40;🌡℃&#41;</strong></td><td>6.2</td><td>6.7</td><td>7.1</td><td>7.7</td><td>8.2</td><td>8.3</td><td>9.2</td><td>9.4</td><td>9.8</td><td>9.6</td></tr><tr><td><strong>Condition</strong></td><td><img src="https://cdn.weatherapi.com/weather/64x64/night/116.png" alt="Partly cloudy" /></td><td><img src="https://cdn.weatherapi.com/weather/64x64/night/113.png" alt="Clear " /></td><td><img src="https://cdn.weatherapi.com/weather/64x64/night/113.png" alt="Clear " /></td><td><img src="https://cdn.weatherapi.com/weather/64x64/day/116.png" alt="Partly Cloudy " /></td><td><img src="https://cdn.weatherapi.com/weather/64x64/day/113.png" alt="Sunny" /></td><td><img src="https://cdn.weatherapi.com/weather/64x64/day/176.png" alt="Patchy rain nearby" /></td><td><img src="https://cdn.weatherapi.com/weather/64x64/day/176.png" alt="Patchy rain nearby" /></td><td><img src="https://cdn.weatherapi.com/weather/64x64/day/116.png" alt="Partly Cloudy " /></td><td><img src="https://cdn.weatherapi.com/weather/64x64/day/116.png" alt="Partly Cloudy " /></td><td><img src="https://cdn.weatherapi.com/weather/64x64/day/116.png" alt="Partly Cloudy " /></td></tr><tr><td><strong>Cond. in text</strong></td><td>Partly cloudy</td><td>Clear</td><td>Clear</td><td>Partly Cloudy</td><td>Sunny</td><td>Patchy rain nearby</td><td>Patchy rain nearby</td><td>Partly Cloudy</td><td>Partly Cloudy</td><td>Partly Cloudy</td></tr></table>
+<h2>Global 🌐</h2>
+<p><code>compiled at 2024-10-23T06:15:39.942</code></p>
+<h3>Foreign Exchange&#40;💱&#41;</h3>
+<table><tr><th>SEK</th><th>CNY</th><th>EUR</th><th>INR</th><th>MXN</th><th>PKR</th><th>RUB</th><th>KRW</th><th>TRY</th><th>USD</th></tr><tr><td>Buy</td><td>0.676</td><td>0.088</td><td>7.976</td><td>1.89</td><td>26.414</td><td>9.123</td><td>130.842</td><td>3.249</td><td>0.095</td></tr><tr><td>Sell</td><td>1.479</td><td>11.391</td><td>0.125</td><td>0.529</td><td>0.038</td><td>0.11</td><td>0.008</td><td>0.308</td><td>10.543</td></tr></table>
+<h3>Is today Holiday anywhere in the world&#40;🌐&#41;❓ &#40;🫂&#41;</h3>
+<h6><code>API does not support:</code> <a href="https://date.nager.at/Country">India &amp; Pakistan</a></h6>
+<table><tr><th>2024-10-23</th><th>Sverige</th><th>España</th><th>México</th><th>Россия</th><th>한국</th><th>中國</th><th>Türkiye</th></tr><tr><td>Local Name</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr><tr><td>English Name</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr></table>
+<h2>AUTO &#40;related&#41; NEWS 🚗💨💨</h2>
+<p><code>compiled at 2024-10-23T06:15:47.817</code></p>
+<h4>&#91;🛣&#93; <a href="https://www.autonews.com/cars-concepts/2025-bentley-continental-gt-speed-5-cool-things">2025 Bentley Continental GT Speed: 5 cool things </a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>The Continental GT is the Bentley that embraces and oozes the brand&#39;s hallmarks — racing inspired performance, posh comfort and rarified luxury.</code></p>
+<h4>&#91;🛣&#93; <a href="https://www.autonews.com/guest-commentary/return-17-million-annual-car-sales-possible">Guest commentary: New strategies make the road back to 17 million SAAR possible</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>The industry must be willing to take a disciplined approach to sales, inventory management and pricing.</code></p>
+<h4>&#91;🇨🇳 &#93; <a href="https://insideevs.com/">China&#39;s Auto Industry Has The World On Notice. Here, It&#39;s Already Winning</a></h4>
+<h6>&#91;registered: 2024-10-21&#93;</h6>
+<p><code>As Europe reckons with intensifying EV competition, China Inc. is making much bigger moves elsewhere.</code></p>
+<h4>&#91;🇪🇺NCAP&#93; <a href="https://euroncap.newsmarket.com/latest-release/euro-ncap-to-launch-new-assisted-driving-results/s/5bd94f22-652b-4a5f-8529-2505c987ab4f">Euro NCAP to Launch New Assisted Driving Results</a></h4>
+<h6>&#91;registered: 2024-10-21&#93;</h6>
+<p><code>WhatLatest Euro NCAP Assisted Driving Results published online and via soical media. &amp;#160; WhenWednesday 23 October - 11.00 a.m CEST &amp;#160; WhereGo to&amp;#160;Euro NCAP&amp;#39;s Press Releases&amp;#160;or access videos and...</code></p>
+<h4>&#91;🇪🇺&#93; <a href="https://joint-research-centre.ec.europa.eu/jrc-news-and-updates/urgent-action-needed-reverse-soil-degradation-europe-2024-10-22_en">Report calls for urgent action to reverse soil degradation in Europe</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>A new report shows alarming trends in soil degradation in Europe and highlights the need for immediate action to reverse them. Soil degradation, which threatens food security, agricultural productivity, biodiversity, and resilience to climate change, has reportedly got much worse in recent years.</code></p>
+<h4>&#91;🇪🇺&#93; <a href="https://www.europarl.europa.eu/news/en/press-room/20241017IPR24734/european-parliament-approves-more-efficient-and-greener-eu-airspace">New rules make for more efficient and greener flights</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>The European Parliament has approved new rules that will create more efficient air traffic control and management and reduce costs and emissions through shorter and safer flights. The rules, which have binding targets and incentives to make flights greener, will support climate neutrality.</code></p>
+<h4>&#91;🇪🇺&#93; <a href="https://health.ec.europa.eu/latest-updates/commissions-study-shows-how-help-cancer-patients-and-persons-history-cancer-remain-and-return-work-2024-10-21_en">Helping cancer patients and survivors to remain in and return to work</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>A new Commission study maps policies and good practices in Europe that help cancer patients and those with a history of cancer to remain in and return to work. This study is one of the key deliverables of Europe’s Beating Cancer Plan to support job retention.</code></p>
+<h4>&#91;🇪🇺&#93; <a href="https://ec.europa.eu/commission/presscorner/detail/en/ip_24_5381">EU invests over €380 million in new projects to support the green transition</a></h4>
+<h6>&#91;registered: 2024-10-21&#93;</h6>
+<p><code>133 new projects across Europe will receive funding under the LIFE Programme for environment and climate action. The selected projects focus on areas such as the circular economy, quality of life, biodiversity, the clean energy transition, and climate resilience.</code></p>
+<h4>&#91;🇪🇺&#93; <a href="https://europe.autonews.com/automakers/china-deports-vw-exec-jochen-sengpiehl-alleged-cannabis-use">VW China marketing chief Jochen Sengpiehl deported after drugs test</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>Veteran marketing executive Jochen Sengpiehl&#39;s future at VW is uncertain. The automaker has launched an internal investigation after he was deported to Germany from China.</code></p>
+<h4>&#91;🇪🇺&#93; <a href="https://europe.autonews.com/automakers/china-ev-shipments-europe-soar-ahead-planned-eu-tariffs">EV shipments to Europe soar ahead of planned EU tariffs</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>Automakers from Asia’s biggest economy shipped 60,517 EVs to the 27 nations in the European trade bloc last month, up 61 percent from last year.</code></p>
+<h4>&#91;🇪🇺&#93; <a href="https://europe.autonews.com/suppliers/zf-quits-project-build-german-chip-plant-rival-wolfspeed">ZF to quit Wolfspeed&#39;s German 3B chip project, reports say</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>The rethink follows Wolfspeed&#39;s decision to put the project on hold because of weaker than expected semiconductor demand and doubts whether its entry into the European market would be worthwhile.</code></p>
+<h4>&#91;🇪🇺&#93; <a href="https://europe.autonews.com/automakers/vw-finance-unit-fined-uk-unfairly-treating-customers">VW unit fined by U.K. watchdog for unfairly treating customers</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>VW took cars away from vulnerable customers without considering other options, the U.K.&#39;s Financial Conduct Authority said.</code></p>
+<h4>&#91;🇪🇺&#93; <a href="https://europe.autonews.com/sales-segment/europe-car-sales-see-first-sales-slump-more-2-years">Automakers are mired in first Europe sales slump in two years</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>Stellantis posted one of the biggest drops as new-car sales fell for the second consecutive month in September. Gains in EV sales were not enough to offset declines for combustion-engine models.</code></p>
+<h4>&#91;🇪🇺&#93; <a href="https://europe.autonews.com/cars-concepts/have-chinese-car-gimmicks-gone-too-far">Have Chinese car gimmicks gone too far?</a></h4>
+<h6>&#91;registered: 2024-10-21&#93;</h6>
+<p><code>A new Zeekr campaign, pitching hotpots in cars, underscores the lengths EV makers are going to to stand out in an ultra-competitive market bruised by a price war.</code></p>
+<h4>&#91;🇪🇺&#93; <a href="https://europe.autonews.com/automakers/musk-sued-over-blade-runner-imagery">Musk sued over &#39;Blade Runner&#39; imagery during robotaxi unveiling</a></h4>
+<h6>&#91;registered: 2024-10-21&#93;</h6>
+<p><code>Elon Musk has been sued over ‘Blade Runner’ imagery. The production company filed a lawsuit accusing Tesla CEO Elon Musk of copyright infringement, saying it specifically declined to grant permission to use the images.</code></p>
+<h4>&#91;🇪🇺&#93; <a href="https://europe.autonews.com/automakers/volkswagen-use-id-buzz-electric-vehicle-autonomous-taxi">VW has big plans for ID Buzz as its global robotaxi platform</a></h4>
+<h6>&#91;registered: 2024-10-21&#93;</h6>
+<p><code>Volkswagen&#39;s ID Buzz electric van represents the company&#39;s global robotaxi platform. It&#39;s undergoing both hardware and software updates as the company works toward a 2026 launch of commercial service.</code></p>
+<h4>&#91;🇪🇺&#93; <a href="https://europe.autonews.com/suppliers/forvias-q3-sales-fall-23-china-demand-drops">Forvia posts slightly lower Q3 sales as Chinese demand falls</a></h4>
+<h6>&#91;registered: 2024-10-21&#93;</h6>
+<p><code>Forvia said it underperformed the local automotive production in China due to “customer mix evolution and start of productions delayed from 2024 to 2025.”</code></p>
+<h4>&#91;🇪🇺&#93; <a href="https://europe.autonews.com/automakers/biggest-5-eu-countries-subsidize-ice-company-cars-billions">Major EU countries spend €42B subsidizing fossil-fuel company cars, study says</a></h4>
+<h6>&#91;registered: 2024-10-21&#93;</h6>
+<p><code>Germany, Italy, France, Poland and Spain spend the money annually subsidizing fossil-fuel company cars, according to a study commissioned by environmental group Transport &amp; Environment &#40;T&amp;E&#41;, which called for more subsidies for EVs instead.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/celebrating-35-years-with-stories-from-the-early-years-the-pioneering-infiniti-fx/">Celebrating 35 years with stories from the early years – The pioneering Infiniti FX</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>In honor of Infiniti’s 35th anniversary, today we look back on the FX, sharing lesser-known details about the model that helped create the coupe-crossover segment The post Celebrating 35 years with stories from the early years – The pioneering Infiniti FX appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/bmw-group-all-1066-pillars-of-the-high-voltage-battery-assembly-plant-are-in-place/">BMW Group: All 1066 pillars of the high-voltage battery assembly plant are in place</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>Construction of the new assembly plant for high-voltage batteries in Lower Bavaria is progressing rapidly The post BMW Group: All 1066 pillars of the high-voltage battery assembly plant are in place appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/workhorse-group-standardizes-on-siemens-xcelerator-as-a-service-for-sustainable-last-mile-delivery-electric-trucks/">Workhorse Group standardizes on Siemens Xcelerator as a Service for sustainable last mile delivery electric trucks</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>Electric vehicle &#40;EV&#41; startup standardizes on Teamcenter X and NX to reduce IT overhead, enhance accessibility across development teams and supply chain The post Workhorse Group standardizes on Siemens Xcelerator as a Service for sustainable last mile delivery electric trucks appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/scania-touring-lbg-lng-wins-sustainable-bus-award-2025/">Scania Touring LBG/LNG wins Sustainable Bus Award 2025</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>Scania is delighted to receive the Sustainable Bus Award 2025 in the coach category for the Scania Touring LBG/LNG, recognising its commitment to setting new standards in sustainable transport and pioneering a greener future in people mobility The post Scania Touring LBG/LNG wins Sustainable Bus Award 2025 appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/green-steel-for-sustainable-mobility-thyssenkrupp-steel-and-volkswagen-groups-new-collaboration/">Green steel for sustainable mobility: Thyssenkrupp Steel and Volkswagen Group’s new collaboration</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>Volkswagen Group and Thyssenkrupp Steel have signed an MoU for the supply of low-carbon steel from the future direct reduction plant The post Green steel for sustainable mobility: Thyssenkrupp Steel and Volkswagen Group’s new collaboration appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/molex-drives-intelligent-supply-chain-collaboration-with-sap-solutions/">Molex drives intelligent supply chain collaboration with SAP solutions </a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>Molex partners with SAP to enhance supply chain efficiency and transparency, driving innovation and improving customer service through advanced digital solutions The post Molex drives intelligent supply chain collaboration with SAP solutions  appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/tata-motors-advances-green-mobility-begins-delivery-of-lng-powered-trucks-to-clean-green-fuel-and-logistics-pvt-ltd/">Tata Motors advances green mobility, begins delivery of LNG-powered trucks to Clean Green Fuel and Logistics Pvt. Ltd</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>Signs MoU to supply 350 more Tata Prima 5530.S LNG trucks The post Tata Motors advances green mobility, begins delivery of LNG-powered trucks to Clean Green Fuel and Logistics Pvt. Ltd appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/db-schenker-pilots-stoneridges-mirroreye-camera-monitor-system-on-north-american-fleet/">DB Schenker pilots Stoneridge’s MirrorEye® Camera Monitor System on North American fleet</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>Stoneridge, Inc. today announced that DB Schenker, a global leader in supply chain management and logistics, is piloting its MirrorEye® Camera Monitor System &#40;CMS&#41; on its North American fleet The post DB Schenker pilots Stoneridge’s MirrorEye® Camera Monitor System on North American fleet appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/daf-xf-wins-prestigious-field-test-for-lowest-operating-costs/">DAF XF wins prestigious field test for lowest operating costs</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>3-year ETM-Fehrenkötter practical test completed The post DAF XF wins prestigious field test for lowest operating costs appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/paccar-achieves-excellent-quarterly-revenues-and-profits-2/">Paccar achieves excellent quarterly revenues and profits</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>Paccar achieved net income of &#36;972.1 million &#40;&#36;1.85 per diluted share&#41; in the third quarter of this year compared to &#36;1.23 billion &#40;&#36;2.34 per diluted share&#41; earned in the same period last year The post Paccar achieves excellent quarterly revenues and profits appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/hyzon-secures-first-hydrogen-powered-fuel-cell-electric-refuse-truck-order-in-north-america-from-waste-industry-pioneer-greenwaste/">Hyzon secures first hydrogen powered fuel cell electric refuse truck order in North America from waste industry pioneer GreenWaste</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>First-ever fuel cell refuse vehicle order in North America The post Hyzon secures first hydrogen powered fuel cell electric refuse truck order in North America from waste industry pioneer GreenWaste appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/ads-tec-energy-and-paragon-mobility-have-signed-a-partnership-and-deployed-the-first-series-of-ultra-fast-battery-buffered-ev-charging-stations-in-france/">ADS-TEC Energy and Paragon Mobility have signed a partnership and deployed the first series of ultra-fast, battery-buffered EV charging stations in France</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>With a focus on serving the market for high-quality optimized charging infrastructure, Paragon Mobility has developed a sustainable business model for a highly flexible, high-intensity, fast charging infrastructure in France The post ADS-TEC Energy and Paragon Mobility have signed a partnership and deployed the first series of ultra-fast, battery-buffered EV charging stations in France appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/bentley-efficient-engaging-and-extraordinary-the-new-continental-gt-demonstrates-efuels/">Bentley: Efficient, engaging and extraordinary – The new Continental GT demonstrates eFuels</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>Bentley delivers world-first eFuel-powered Global Media Drive  The post Bentley: Efficient, engaging and extraordinary – The new Continental GT demonstrates eFuels appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/gm-releases-2024-third-quarter-results-and-updates-full-year-guidance/">GM releases 2024 third-quarter results and updates full-year guidance</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>General Motors today reported third-quarter 2024 revenue of &#36;48.8 billion, net income attributable to stockholders of &#36;3.1 billion, and EBIT-adjusted of &#36;4.1 billion The post GM releases 2024 third-quarter results and updates full-year guidance appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/modine-selected-as-thermal-solutions-supplier-for-gillig-hybrid-electric-bus-platform/">Modine selected as thermal solutions supplier for GILLIG hybrid-electric bus platform</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>Modine EVantage™ Thermal Management Systems, optimize battery and power electronics thermal performance, increasing system efficiency of hybrid bus The post Modine selected as thermal solutions supplier for GILLIG hybrid-electric bus platform appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/iveco-bus-showcases-its-multi-energy-approach-at-fiaa-2024/">Iveco Bus showcases its multi-energy approach at FIAA 2024</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>Iveco Bus is participating in the international bus and coach fair FIAA 2024, held in Madrid, Spain, from October 2 to 25. Present with a display of six models’ representative of its extensive multi-energy and multi-missions offering, Iveco Bus is confirming its commitment to sustainability in passenger transport The post Iveco Bus showcases its multi-energy approach at FIAA 2024 appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/jato-dynamics-stellantis-year-on-year-volumes-drop-by-25-driving-european-new-car-registrations-down-by-3-in-september/">JATO Dynamics: Stellantis Year-on-year volumes drop by 25&#37;, driving European new car registrations down by 3&#37; in September</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>Volkswagen Group and Tesla drove growth in the BEV segment last month The post JATO Dynamics: Stellantis Year-on-year volumes drop by 25&#37;, driving European new car registrations down by 3&#37; in September appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/webfleet-launches-ev-charger-monitoring-to-boost-fleet-readiness-and-reliability/">Webfleet launches EV Charger Monitoring to boost fleet readiness and reliability</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>Fleet managers can monitor private chargers across multiple sites and their vehicles on the same platform, regardless of charger brand or management system The post Webfleet launches EV Charger Monitoring to boost fleet readiness and reliability appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/sap-joins-gireve-to-boost-its-e-mobility-strategy/">SAP joins Gireve to boost its e-mobility strategy</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>SAP is taking a bold step forward in the pursuit of sustainable, emissions-free mobility by extending their partnership with Gireve The post SAP joins Gireve to boost its e-mobility strategy appeared first on Automotive World.</code></p>
+<h4>&#91;🚘🌎&#93; <a href="https://www.automotiveworld.com/news-releases/solaris-bus-coach-receives-another-prestigious-award/">Solaris Bus &amp; Coach receives another prestigious award&#33;</a></h4>
+<h6>&#91;registered: 2024-10-22&#93;</h6>
+<p><code>Solaris has been honored with another prestigious award for zero-emission buses The post Solaris Bus &amp;#038; Coach receives another prestigious award&#33; appeared first on Automotive World.</code></p>
+
+
+        <HR/>
+        <div class="footer">
+          <p>
+            Published from <a href="GAD.jmd">GAD.jmd</a>
+            using <a href="http://github.com/JunoLab/Weave.jl">Weave.jl</a> v0.10.12 on 2024-10-23.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</BODY>
+
+</HTML>
