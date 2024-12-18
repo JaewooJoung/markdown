@@ -12,7 +12,7 @@ EFI_PART="${DEVICE}p1"
 SWAP_PART="${DEVICE}p2"
 ROOT_PART="${DEVICE}p3"
 
-echo "WARNING: This will erase all data on ${DEVICE}. Are you sure? (y/N)"
+echo "WARNING: This will COMPLETELY ERASE all data on ${DEVICE}. Are you sure? (y/N)"
 read confirm
 if [ "$confirm" != "y" ]; then
     echo "Aborted"
@@ -20,11 +20,24 @@ if [ "$confirm" != "y" ]; then
 fi
 
 # Unmount existing partitions and disable swap
+echo "Unmounting all partitions and disabling swap..."
 swapoff -a
 umount -R /mnt 2>/dev/null
+umount -R ${DEVICE}* 2>/dev/null
 
-# Clear disk signatures
+# Complete disk cleanup
+echo "Thoroughly cleaning the disk..."
+# Delete all partition tables and signatures
+dd if=/dev/zero of=${DEVICE} bs=512 count=2048
+dd if=/dev/zero of=${DEVICE} bs=512 count=2048 seek=$(( $(blockdev --getsz ${DEVICE}) - 2048 ))
+
+# Clear any remaining signatures
 wipefs -a ${DEVICE}
+
+# Force kernel to reread partition table
+echo "Forcing kernel to re-read partition table..."
+partprobe ${DEVICE}
+sleep 2
 
 # Create partitions
 echo "Creating partitions..."
@@ -52,7 +65,9 @@ echo w    # Write changes
 ) | fdisk ${DEVICE}
 
 # Wait for kernel to update partition table
-sleep 3
+echo "Waiting for partition table update..."
+partprobe ${DEVICE}
+sleep 5
 
 # Format partitions
 echo "Formatting partitions..."
@@ -98,13 +113,13 @@ locale-gen
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
 
 # Set hostname
-echo "archlinux" > /etc/hostname
+echo "lia" > /etc/hostname
 
 # Configure hosts
 cat > /etc/hosts <<HOSTS
 127.0.0.1   localhost
 ::1         localhost
-127.0.1.1   archlinux.localdomain archlinux
+127.0.1.1   lia.localdomain lia
 HOSTS
 
 # Set root password
