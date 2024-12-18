@@ -71,7 +71,7 @@ lsblk ${DEVICE}
 
 # 기본 시스템 및 KDE Plasma 설치
 echo "Installing base system and KDE Plasma..."
-pacstrap /mnt/arch base linux linux-firmware base-devel networkmanager vim sudo \
+pacstrap /mnt base linux linux-firmware base-devel networkmanager vim sudo \
     xorg plasma plasma-wayland-session kde-applications \
     sddm firefox konsole dolphin kate \
     pulseaudio pulseaudio-alsa alsa-utils \
@@ -80,17 +80,17 @@ pacstrap /mnt/arch base linux linux-firmware base-devel networkmanager vim sudo 
 
 # fstab 생성
 echo "Generating fstab..."
-genfstab -U /mnt/arch >> /mnt/arch/etc/fstab
+genfstab -U /mnt >> /mnt/etc/fstab
 
 # chroot 설정 스크립트 생성
-cat > /mnt/arch/setup.sh <<EOF
+cat > /mnt/setup.sh <<EOF
 #!/bin/bash
 
 # 시간대 설정
 ln -sf /usr/share/zoneinfo/Europe/Stockholm /etc/localtime
 hwclock --systohc
 
-# 로케일 설정 부분을 다음과 같이 수정
+# 로케일 설정
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 echo "ko_KR.UTF-8 UTF-8" >> /etc/locale.gen
 locale-gen
@@ -105,14 +105,14 @@ echo "::1       localhost" >> /etc/hosts
 echo "127.0.1.1 archlinux.localdomain archlinux" >> /etc/hosts
 
 # root 비밀번호 설정
-echo "1234" | chpasswd
+echo "root:1234" | chpasswd
 
-# 일반 사용자 생성 (crux)
+# 일반 사용자 생성
 useradd -m -G wheel -s /bin/bash crux
 echo "crux:1234" | chpasswd
 
 # sudo 설정
-echo "%wheel ALL=(ALL) ALL" > /etc/sudoers.d/wheel
+echo "%wheel ALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel
 
 # 부트로더 설치
 pacman -S --noconfirm grub efibootmgr
@@ -127,32 +127,27 @@ systemctl enable cups
 # 드라이버 설치
 pacman -S --noconfirm xf86-video-vesa xf86-video-intel xf86-video-amdgpu xf86-video-nouveau
 
-# 추가 KDE 설정
-# 터미널 폰트 설정
-mkdir -p /usr/share/fonts/TTF
-pacman -S --noconfirm ttf-dejavu ttf-liberation noto-fonts
-
-# 한글 폰트 추가
-pacman -S --noconfirm noto-fonts-cjk
+# 폰트 설치
+pacman -S --noconfirm ttf-dejavu ttf-liberation noto-fonts noto-fonts-cjk
 
 # initramfs 생성
 mkinitcpio -P
-
 EOF
 
 # 스크립트에 실행 권한 부여
-chmod +x /mnt/arch/setup.sh
+chmod +x /mnt/setup.sh
 
 # chroot로 진입하여 설정 스크립트 실행
 echo "Entering chroot and running setup script..."
-arch-chroot /mnt/arch ./setup.sh
+arch-chroot /mnt ./setup.sh
 
 # 정리
 echo "Cleaning up..."
-rm /mnt/arch/setup.sh
-umount -R /mnt/arch
+rm /mnt/setup.sh
+umount -R /mnt
 
-echo "Installation complete! You can now move the SSD to another notebook and boot it."
+echo "Installation complete!"
 echo "Login credentials:"
 echo "Username: crux"
 echo "Password: 1234"
+​​​​​​​​​​​​​​​​
