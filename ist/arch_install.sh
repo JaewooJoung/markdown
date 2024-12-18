@@ -19,6 +19,13 @@ if [ "$confirm" != "y" ]; then
     exit 1
 fi
 
+# 기존 파티션 언마운트 및 스왑 비활성화
+swapoff -a
+umount -R /mnt 2>/dev/null
+
+# 디스크 시그니처 제거
+wipefs -a ${DEVICE}
+
 # 파티션 생성
 echo "Creating partitions..."
 (
@@ -26,7 +33,7 @@ echo g
 echo n
 echo 1
 echo
-echo +512M
+echo +1G
 echo n
 echo 2
 echo
@@ -44,7 +51,7 @@ echo 19
 echo w
 ) | fdisk ${DEVICE}
 
-sleep 3  # 파티션 테이블이 업데이트될 때까지 대기
+sleep 3
 
 # 파티션 포맷
 echo "Formatting partitions..."
@@ -54,11 +61,13 @@ mkfs.ext4 ${ROOT_PART}
 
 # 마운트
 echo "Mounting partitions..."
-mkdir -p /mnt/arch
-mount ${ROOT_PART} /mnt/arch
-mkdir -p /mnt/arch/boot
-mount ${EFI_PART} /mnt/arch/boot
+mount ${ROOT_PART} /mnt
+mkdir -p /mnt/boot
+mount ${EFI_PART} /mnt/boot
 swapon ${SWAP_PART}
+
+echo "Partitioning and mounting completed successfully"
+lsblk ${DEVICE}
 
 # 기본 시스템 및 KDE Plasma 설치
 echo "Installing base system and KDE Plasma..."
