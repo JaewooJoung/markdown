@@ -41,10 +41,45 @@ export XMODIFIERS="@im=nimf"
 nimf &
 EOL
 
-# Install Korean fonts
+# Install Korean fonts from official repos
 sudo pacman -S --noconfirm \
-    noto-fonts-cjk \
     adobe-source-han-sans-kr-fonts \
+    noto-fonts-cjk \
     ttf-baekmuk
+
+# Install Korean fonts from AUR
+cd /tmp
+git clone https://aur.archlinux.org/spoqa-han-sans.git
+cd spoqa-han-sans
+makepkg -si --noconfirm
+cd ..
+
+git clone https://aur.archlinux.org/ttf-d2coding.git
+cd ttf-d2coding
+makepkg -si --noconfirm
+cd ..
+
+git clone https://aur.archlinux.org/ttf-nanum.git
+cd ttf-nanum
+makepkg -si --noconfirm
+cd ..
+
+git clone https://aur.archlinux.org/ttf-nanumgothic_coding.git
+cd ttf-nanumgothic_coding
+makepkg -si --noconfirm
+cd ..
+
+git clone https://aur.archlinux.org/ttf-kopub.git
+cd ttf-kopub
+makepkg -si --noconfirm
+cd ..
+
+git clone https://aur.archlinux.org/ttf-kopubworld.git
+cd ttf-kopubworld
+makepkg -si --noconfirm
+cd ..
+
+# Refresh font cache
+fc-cache -fv
 
 echo "Setup complete. Please log out and log back in."
