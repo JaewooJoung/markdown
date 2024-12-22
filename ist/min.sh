@@ -7,7 +7,7 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 # Disk setup
-DEVICE="/dev/nvme1n1"
+DEVICE="/dev/nvme0n1"
 EFI_PART="${DEVICE}p1"
 SWAP_PART="${DEVICE}p2"
 ROOT_PART="${DEVICE}p3"
