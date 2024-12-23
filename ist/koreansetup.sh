@@ -1,36 +1,87 @@
 #!/bin/bash
 
-# Base dependencies
-sudo pacman -S --needed base-devel git
-
-# Required packages from official repos
-sudo pacman -S --noconfirm \
-    gobject-introspection \
-    vala \
-    mono \
-    perl-xml-libxml \
-    gtk-sharp-3
-
-# Install cmake-extras from AUR
-cd /tmp
-git clone https://aur.archlinux.org/cmake-extras.git
-cd cmake-extras
-makepkg -si --noconfirm
-cd ..
-
-# First install wget
-sudo pacman -S --noconfirm wget
-
-# Download nimf package
-wget https://github.com/hamonikr/nimf/releases/download/v1.3.8/nimf-1.3.8-1-any.pkg.tar.zst
-
-# Install nimf
-sudo pacman -U ./nimf-1.3.8-1-any.pkg.tar.zst --noconfirm
-
-# Install Korean fonts
-sudo pacman -S --noconfirm \
+# Install required dependencies including Qt and fonts
+sudo pacman -S --needed --noconfirm \
+    base-devel \
+    gcc \
+    glib2 \
+    gtk3 \
+    gtk2 \
+    qt5-base \
+    qt4 \
+    qt5-tools \
+    libappindicator-gtk3 \
+    libhangul \
+    anthy \
+    gtk-doc \
+    intltool \
+    git \
+    automake \
+    autoconf \
+    libtool \
+    pkg-config \
     noto-fonts-cjk \
-    adobe-source-han-sans-kr-fonts
+    adobe-source-han-sans-kr-fonts \
+    ttf-baekmuk
+
+# Create directory for AUR packages
+cd
+rm -rf tmp-build  # Clean any previous build
+mkdir -p tmp-build
+cd tmp-build
+
+# Install Korean fonts from AUR
+echo "Installing Korean fonts from AUR..."
+
+# Function to install AUR package
+install_aur_package() {
+    local package_name="$1"
+    echo "Installing $package_name..."
+    rm -rf "$package_name"
+    git clone "https://aur.archlinux.org/$package_name.git"
+    cd "$package_name"
+    makepkg -si --noconfirm
+    cd ..
+}
+
+# Install fonts from AUR
+AUR_FONTS=(
+    "spoqa-han-sans"
+    "ttf-d2coding"
+    "ttf-nanum"
+    "ttf-nanumgothic_coding"
+    "ttf-kopub"
+    "ttf-kopubworld"
+)
+
+for font in "${AUR_FONTS[@]}"; do
+    install_aur_package "$font"
+done
+
+# Download nimf source
+wget https://gitlab.com/nimf-i18n/nimf/-/archive/master/nimf-master.tar.gz
+tar zxf nimf-master.tar.gz
+cd nimf-master
+
+# Configure with specific options
+./autogen.sh --disable-nimf-anthy --disable-nimf-m17n --disable-nimf-rime || {
+    echo "Configure failed"
+    exit 1
+}
+
+# Build
+make || {
+    echo "Make failed"
+    exit 1
+}
+
+# Install
+sudo make install || {
+    echo "Make install failed"
+    exit 1
+}
+
+sudo ldconfig
 
 # Configure input method settings
 cat > ~/.xprofile << 'EOL'
@@ -41,53 +92,12 @@ export XMODIFIERS="@im=nimf"
 nimf &
 EOL
 
-# Start nimf
-nimf &
-sleep 1
-nimf-settings --gapplication-service &
-
-# Cleanup downloaded package
-rm nimf-1.3.8-1-any.pkg.tar.zst
-
-# Install Korean fonts from official repos
-sudo pacman -S --noconfirm \
-    adobe-source-han-sans-kr-fonts \
-    noto-fonts-cjk \
-    ttf-baekmuk
-
-# Install Korean fonts from AUR
-cd /tmp
-git clone https://aur.archlinux.org/spoqa-han-sans.git
-cd spoqa-han-sans
-makepkg -si --noconfirm
-cd ..
-
-git clone https://aur.archlinux.org/ttf-d2coding.git
-cd ttf-d2coding
-makepkg -si --noconfirm
-cd ..
-
-git clone https://aur.archlinux.org/ttf-nanum.git
-cd ttf-nanum
-makepkg -si --noconfirm
-cd ..
-
-git clone https://aur.archlinux.org/ttf-nanumgothic_coding.git
-cd ttf-nanumgothic_coding
-makepkg -si --noconfirm
-cd ..
-
-git clone https://aur.archlinux.org/ttf-kopub.git
-cd ttf-kopub
-makepkg -si --noconfirm
-cd ..
-
-git clone https://aur.archlinux.org/ttf-kopubworld.git
-cd ttf-kopubworld
-makepkg -si --noconfirm
-cd ..
-
-# Refresh font cache
+# Update font cache
 fc-cache -fv
 
-echo "Setup complete. Please log out and log back in."
+echo "==== Installation Complete ===="
+echo "Please log out and log back in."
+echo "After logging back in:"
+echo "1. Run 'nimf --debug &' to start nimf with debugging"
+echo "2. Run 'nimf-settings --gapplication-service &' to start the settings service"
+echo "3. Use Shift+Space to switch to Korean input"
