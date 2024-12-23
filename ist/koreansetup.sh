@@ -18,21 +18,21 @@ cd cmake-extras
 makepkg -si --noconfirm
 cd ..
 
-# Install libayatana-appindicator
-cd /tmp
-git clone https://aur.archlinux.org/libayatana-appindicator.git
-cd libayatana-appindicator
-makepkg -si --noconfirm
-cd ..
+# First install wget
+sudo pacman -S --noconfirm wget
+
+# Download nimf package
+wget https://github.com/hamonikr/nimf/releases/download/v1.3.8/nimf-1.3.8-1-any.pkg.tar.zst
 
 # Install nimf
-cd /tmp
-git clone https://aur.archlinux.org/nimf.git
-cd nimf
-makepkg -si --noconfirm
-cd ..
+sudo pacman -U ./nimf-1.3.8-1-any.pkg.tar.zst --noconfirm
 
-# Add Korean input configuration to .xprofile
+# Install Korean fonts
+sudo pacman -S --noconfirm \
+    noto-fonts-cjk \
+    adobe-source-han-sans-kr-fonts
+
+# Configure input method settings
 cat > ~/.xprofile << 'EOL'
 export GTK_IM_MODULE=nimf
 export QT4_IM_MODULE="nimf"
@@ -40,6 +40,14 @@ export QT_IM_MODULE=nimf
 export XMODIFIERS="@im=nimf"
 nimf &
 EOL
+
+# Start nimf
+nimf &
+sleep 1
+nimf-settings --gapplication-service &
+
+# Cleanup downloaded package
+rm nimf-1.3.8-1-any.pkg.tar.zst
 
 # Install Korean fonts from official repos
 sudo pacman -S --noconfirm \
