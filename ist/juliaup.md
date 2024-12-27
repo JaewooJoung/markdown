@@ -23,4 +23,5 @@ juliaup add release  # installs the latest stable Julia release
 juliaup default release  # sets it as the default version
 ```
 
-Would you like me to help you with any of these steps or explain how to use juliaup after installation?
+just do this.. this will do everything
+curl -fsSL https://install.julialang.org | sh
