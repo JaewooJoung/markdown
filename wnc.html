@@ -21,6 +21,12 @@
     .today {
       font-weight: bold;
       color: red;
+      border-radius: 50%;
+      display: inline-block;
+      width: 25px;
+      height: 25px;
+      line-height: 25px;
+      text-align: center;
     }
     .calendar-table {
       display: inline-block;
@@ -28,50 +34,46 @@
       margin-bottom: 20px;
     }
     .message-box {
-    border: 1px solid black;
-    padding: 10px;
-    width: 200px;
-    text-align: center;
-  }
-
+      border: 1px solid black;
+      padding: 10px;
+      width: 200px;
+      text-align: center;
+    }
   </style>
   <script>
     function getWeather() {
-      // Make a request to the weather API to get the weather data
-      // Replace 'YOUR_API_KEY' with your actual API key
       fetch('https://api.weatherapi.com/v1/current.json?key=ad8caecea06c43d1912181938230407&q=Gothenburg')
         .then(response => response.json())
         .then(data => {
-          // Get the weather icon code from the API response
           var weatherIcon = data.current.condition.icon;
-
-          // Create an <img> element for the weather icon
           var weatherImg = document.createElement("img");
           weatherImg.src = "https:" + weatherIcon;
-          
-          // Append the weather icon to the weatherContainer div
           var weatherContainer = document.getElementById("weatherContainer");
           weatherContainer.appendChild(weatherImg);
         });
     }
-    // Function to get the current date and time
+
     function getCurrentDateTime() {
       var now = new Date();
-
-      // Create a formatted string for the date and time
       var dateString = now.toDateString();
       var timeString = now.toLocaleTimeString();
-
-      // Set the date and time in the page
       var dateElement = document.getElementById("currentDate");
       var timeElement = document.getElementById("currentTime");
       dateElement.textContent = dateString;
       timeElement.textContent = timeString;
     }
 
+    function updateTitle(year) {
+      document.title = `Jaewoo's quick calendar - ${year}`;
+      document.getElementById('pageTitle').textContent = `Jaewoo's quick calendar - ${year}`;
+    }
+
     function generateCalendar() {
       var yearInput = document.getElementById("year");
       var year = parseInt(yearInput.value);
+      
+      // Update the title with the selected year
+      updateTitle(year);
 
       var calendarContainer = document.getElementById("calendarContainer");
       calendarContainer.innerHTML = "";
@@ -106,10 +108,10 @@
         var firstDayOfMonth = new Date(year, month - 1, 1);
         var dayOfWeek = firstDayOfMonth.getDay();
         if (dayOfWeek === 0) {
-          dayOfWeek = 7; // Adjust Sunday to be the last day of the week (7) instead of the first (0)
+          dayOfWeek = 7;
         }
 
-        var week = getWeekNumber(firstDayOfMonth); // Get the week number using our custom function
+        var week = getWeekNumber(firstDayOfMonth);
         var day = 1;
 
         while (day <= daysInMonth) {
@@ -122,8 +124,11 @@
               td.textContent = "";
             } else {
               td.textContent = day;
-              if (year === new Date().getFullYear() && month === new Date().getMonth() + 1 && day === new Date().getDate()) {
-                td.classList.add("today"); // Add the class for styling today's date
+              var today = new Date();
+              if (year === today.getFullYear() && month === today.getMonth() + 1 && day === today.getDate()) {
+                td.classList.add("today");
+                td.style.backgroundColor = "#ffebee";
+                td.style.borderRadius = "50%";
               }
               day++;
             }
@@ -132,19 +137,18 @@
           }
 
           var weekTd = document.createElement("td");
-          weekTd.classList.add("week-number"); // Add the class for styling
+          weekTd.classList.add("week-number");
           weekTd.textContent = week;
           weekRow.appendChild(weekTd);
 
           tbody.appendChild(weekRow);
 
-          // Increment the week number and adjust for the start of the next week
           if (day <= daysInMonth) {
             var nextWeekDate = new Date(year, month - 1, day);
             week = getWeekNumber(nextWeekDate);
             dayOfWeek = nextWeekDate.getDay();
             if (dayOfWeek === 0) {
-              dayOfWeek = 7; // Adjust Sunday to be the last day of the week (7) instead of the first (0)
+              dayOfWeek = 7;
             }
           }
         }
@@ -155,7 +159,6 @@
       }
     }
 
-    // Custom function to get the week number starting from 1 for each year
     function getWeekNumber(date) {
       var januaryFirst = new Date(date.getFullYear(), 0, 1);
       var daysSinceJanuaryFirst = Math.floor((date - januaryFirst) / 86400000);
@@ -164,15 +167,20 @@
   </script>
 </head>
 <body>
+  <h1 id="pageTitle">Jaewoo's quick calendar - 2024</h1>
   <h1 id="currentDate"></h1>
   <h2 id="currentTime"></h2>
   <div id="weatherContainer">Göteborgsvädret<br></div>
   <center>
-  <label for="year">Select Year:</label><input type="number" id="year" value="2024"><button onclick="generateCalendar()">Go</button>
+    <label for="year">Select Year:</label>
+    <input type="number" id="year" onchange="generateCalendar()">
+    <button onclick="generateCalendar()">Go</button>
   </center>
   <div id="calendarContainer"></div>
 
   <script>
+    // Set initial year to current year
+    document.getElementById('year').value = new Date().getFullYear();
     getCurrentDateTime();
     getWeather();
     generateCalendar();
