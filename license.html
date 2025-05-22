@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Source License Categorization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            border-bottom: 3px solid #007acc;
+            padding-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #007acc;
+            color: white;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f0f8ff;
+        }
+        .category {
+            font-weight: bold;
+            color: #007acc;
+        }
+        .high-risk {
+            background-color: #ffe6e6;
+        }
+        .medium-risk {
+            background-color: #fff3cd;
+        }
+        .low-risk {
+            background-color: #e6f7e6;
+        }
+        .risk-indicator {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .high { background-color: #dc3545; color: white; }
+        .medium { background-color: #fd7e14; color: white; }
+        .low { background-color: #28a745; color: white; }
+        .code {
+            font-family: 'Courier New', monospace;
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        .note {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e7f3ff;
+            border-left: 4px solid #007acc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Open Source License Categorization for Contract Compliance</h1>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>License Name</th>
+                    <th>License Keyword</th>
+                    <th>Category</th>
+                    <th>Copyleft Risk</th>
+                    <th>Disclosure Required</th>
+                    <th>Commercial Impact</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- STRONG COPYLEFT - HIGH RISK -->
+                <tr class="high-risk">
+                    <td>GNU General Public License v2.0</td>
+                    <td class="code">GPL-2.0</td>
+                    <td class="category">Strong Copyleft</td>
+                    <td><span class="risk-indicator high">HIGH</span></td>
+                    <td>✅ Yes</td>
+                    <td>Requires source disclosure</td>
+                    <td>Forces derivative works to be GPL</td>
+                </tr>
+                <tr class="high-risk">
+                    <td>GNU General Public License v3.0</td>
+                    <td class="code">GPL-3.0</td>
+                    <td class="category">Strong Copyleft</td>
+                    <td><span class="risk-indicator high">HIGH</span></td>
+                    <td>✅ Yes</td>
+                    <td>Requires source disclosure</td>
+                    <td>Forces derivative works to be GPL</td>
+                </tr>
+                <tr class="high-risk">
+                    <td>GNU Affero General Public License v3.0</td>
+                    <td class="code">AGPL-3.0</td>
+                    <td class="category">Strong Copyleft</td>
+                    <td><span class="risk-indicator high">HIGH</span></td>
+                    <td>✅ Yes</td>
+                    <td>Network copyleft</td>
+                    <td>Extends GPL to network use</td>
+                </tr>
+                
+                <!-- WEAK COPYLEFT - MEDIUM RISK -->
+                <tr class="medium-risk">
+                    <td>GNU Lesser General Public License v2.1</td>
+                    <td class="code">LGPL-2.1</td>
+                    <td class="category">Weak Copyleft</td>
+                    <td><span class="risk-indicator medium">MEDIUM</span></td>
+                    <td>✅ Yes</td>
+                    <td>Library linking allowed</td>
+                    <td>Modifications must be LGPL</td>
+                </tr>
+                <tr class="medium-risk">
+                    <td>GNU Lesser General Public License v3.0</td>
+                    <td class="code">LGPL-3.0</td>
+                    <td class="category">Weak Copyleft</td>
+                    <td><span class="risk-indicator medium">MEDIUM</span></td>
+                    <td>✅ Yes</td>
+                    <td>Library linking allowed</td>
+                    <td>Modifications must be LGPL</td>
+                </tr>
+                <tr class="medium-risk">
+                    <td>Mozilla Public License 2.0</td>
+                    <td class="code">MPL-2.0</td>
+                    <td class="category">Weak Copyleft</td>
+                    <td><span class="risk-indicator medium">MEDIUM</span></td>
+                    <td>✅ Yes</td>
+                    <td>File-level copyleft</td>
+                    <td>Only modified files must be MPL</td>
+                </tr>
+                <tr class="medium-risk">
+                    <td>Eclipse Public License 1.0</td>
+                    <td class="code">EPL-1.0</td>
+                    <td class="category">Weak Copyleft</td>
+                    <td><span class="risk-indicator medium">MEDIUM</span></td>
+                    <td>✅ Yes</td>
+                    <td>Commercial friendly</td>
+                    <td>Modifications must be EPL</td>
+                </tr>
+                <tr class="medium-risk">
+                    <td>Eclipse Public License 2.0</td>
+                    <td class="code">EPL-2.0</td>
+                    <td class="category">Weak Copyleft</td>
+                    <td><span class="risk-indicator medium">MEDIUM</span></td>
+                    <td>✅ Yes</td>
+                    <td>Commercial friendly</td>
+                    <td>Modifications must be EPL</td>
+                </tr>
+                <tr class="medium-risk">
+                    <td>European Union Public License 1.1</td>
+                    <td class="code">EUPL-1.1</td>
+                    <td class="category">Weak Copyleft</td>
+                    <td><span class="risk-indicator medium">MEDIUM</span></td>
+                    <td>✅ Yes</td>
+                    <td>EU government use</td>
+                    <td>Compatible with other copyleft</td>
+                </tr>
+                
+                <!-- PERMISSIVE - LOW RISK -->
+                <tr class="low-risk">
+                    <td>MIT</td>
+                    <td class="code">MIT</td>
+                    <td class="category">Permissive</td>
+                    <td><span class="risk-indicator low">LOW</span></td>
+                    <td>⚠️ Attribution</td>
+                    <td>Commercial friendly</td>
+                    <td>Only requires attribution</td>
+                </tr>
+                <tr class="low-risk">
+                    <td>Apache license 2.0</td>
+                    <td class="code">Apache-2.0</td>
+                    <td class="category">Permissive</td>
+                    <td><span class="risk-indicator low">LOW</span></td>
+                    <td>⚠️ Attribution</td>
+                    <td>Patent protection</td>
+                    <td>Includes patent grant</td>
+                </tr>
+                <tr class="low-risk">
+                    <td>BSD 2-clause "Simplified" license</td>
+                    <td class="code">BSD-2-Clause</td>
+                    <td class="category">Permissive</td>
+                    <td><span class="risk-indicator low">LOW</span></td>
+                    <td>⚠️ Attribution</td>
+                    <td>Very permissive</td>
+                    <td>Simple attribution requirement</td>
+                </tr>
+                <tr class="low-risk">
+                    <td>BSD 3-clause "New" or "Revised" license</td>
+                    <td class="code">BSD-3-Clause</td>
+                    <td class="category">Permissive</td>
+                    <td><span class="risk-indicator low">LOW</span></td>
+                    <td>⚠️ Attribution</td>
+                    <td>Commercial friendly</td>
+                    <td>No endorsement clause</td>
+                </tr>
+                <tr class="low-risk">
+                    <td>BSD 3-clause Clear license</td>
+                    <td class="code">BSD-3-Clause-Clear</td>
+                    <td class="category">Permissive</td>
+                    <td><span class="risk-indicator low">LOW</span></td>
+                    <td>⚠️ Attribution</td>
+                    <td>Patent clarity</td>
+                    <td>Explicit patent disclaimer</td>
+                </tr>
+                <tr class="low-risk">
+                    <td>BSD 4-clause "Original" or "Old" license</td>
+                    <td class="code">BSD-4-Clause</td>
+                    <td class="category">Permissive</td>
+                    <td><span class="risk-indicator low">LOW</span></td>
+                    <td>⚠️ Attribution</td>
+                    <td>Advertising clause</td>
+                    <td>Requires acknowledgment in ads</td>
+                </tr>
+                <tr class="low-risk">
+                    <td>BSD Zero-Clause license</td>
+                    <td class="code">0BSD</td>
+                    <td class="category">Permissive</td>
+                    <td><span class="risk-indicator low">LOW</span></td>
+                    <td>❌ No</td>
+                    <td>Public domain like</td>
+                    <td>No requirements at all</td>
+                </tr>
+                <tr class="low-risk">
+                    <td>ISC</td>
+                    <td class="code">ISC</td>
+                    <td class="category">Permissive</td>
+                    <td><span class="risk-indicator low">LOW</span></td>
+                    <td>⚠️ Attribution</td>
+                    <td>Very simple</td>
+                    <td>Similar to MIT</td>
+                </tr>
+                <tr class="low-risk">
+                    <td>Boost Software License 1.0</td>
+                    <td class="code">BSL-1.0</td>
+                    <td class="category">Permissive</td>
+                    <td><span class="risk-indicator low">LOW</span></td>
+                    <td>⚠️ Attribution</td>
+                    <td>C++ libraries</td>
+                    <td>No attribution in binaries</td>
+                </tr>
+                <tr class="low-risk">
+                    <td>Academic Free License v3.0</td>
+                    <td class="code">AFL-3.0</td>
+                    <td class="category">Permissive</td>
+                    <td><span class="risk-indicator low">LOW</span></td>
+                    <td>⚠️ Attribution</td>
+                    <td>Patent grant</td>
+                    <td>Academic focused</td>
+                </tr>
+                <tr class="low-risk">
+                    <td>Educational Community License v2.0</td>
+                    <td class="code">ECL-2.0</td>
+                    <td class="category">Permissive</td>
+                    <td><span class="risk-indicator low">LOW</span></td>
+                    <td>⚠️ Attribution</td>
+                    <td>Educational use</td>
+                    <td>Based on Apache 2.0</td>
+                </tr>
+                <tr class="low-risk">
+                    <td>University of Illinois/NCSA Open Source License</td>
+                    <td class="code">NCSA</td>
+                    <td class="category">Permissive</td>
+                    <td><span class="risk-indicator low">LOW</span></td>
+                    <td>⚠️ Attribution</td>
+                    <td>University origin</td>
+                    <td>MIT/BSD hybrid</td>
+                </tr>
+                <tr class="low-risk">
+                    <td>Microsoft Public License</td>
+                    <td class="code">MS-PL</td>
+                    <td class="category">Permissive</td>
+                    <td><span class="risk-indicator low">LOW</span></td>
+                    <td>⚠️ Attribution</td>
+                    <td>Microsoft OSS</td>
+                    <td>Source must stay MS-PL</td>
+                </tr>
+                <tr class="low-risk">
+                    <td>PostgreSQL License</td>
+                    <td class="code">PostgreSQL</td>
+                    <td class="category">Permissive</td>
+                    <td><span class="risk-indicator low">LOW</span></td>
+                    <td>⚠️ Attribution</td>
+                    <td>Database focused</td>
+                    <td>Similar to MIT</td>
+                </tr>
+                <tr class="low-risk">
+                    <td>zLib License</td>
+                    <td class="code">Zlib</td>
+                    <td class="category">Permissive</td>
+                    <td><span class="risk-indicator low">LOW</span></td>
+                    <td>⚠️ Attribution</td>
+                    <td>Library use</td>
+                    <td>Very permissive</td>
+                </tr>
+                <tr class="low-risk">
+                    <td>The Unlicense</td>
+                    <td class="code">Unlicense</td>
+                    <td class="category">Public Domain</td>
+                    <td><span class="risk-indicator low">LOW</span></td>
+                    <td>❌ No</td>
+                    <td>Public domain</td>
+                    <td>No restrictions</td>
+                </tr>
+                <tr class="low-risk">
+                    <td>Do What The F*ck You Want To Public License</td>
+                    <td class="code">WTFPL</td>
+                    <td class="category">Public Domain</td>
+                    <td><span class="risk-indicator low">LOW</span></td>
+                    <td>❌ No</td>
+                    <td>No restrictions</td>
+                    <td>Humorous but valid</td>
+                </tr>
+                
+                <!-- CREATIVE COMMONS -->
+                <tr class="low-risk">
+                    <td>Creative Commons Zero v1.0 Universal</td>
+                    <td class="code">CC0-1.0</td>
+                    <td class="category">Creative Commons</td>
+                    <td><span class="risk-indicator low">LOW</span></td>
+                    <td>❌ No</td>
+                    <td>Public domain</td>
+                    <td>Not for software</td>
+                </tr>
+                <tr class="low-risk">
+                    <td>Creative Commons Attribution 4.0</td>
+                    <td class="code">CC-BY-4.0</td>
+                    <td class="category">Creative Commons</td>
+                    <td><span class="risk-indicator low">LOW</span></td>
+                    <td>⚠️ Attribution</td>
+                    <td>Content license</td>
+                    <td>Not for software</td>
+                </tr>
+                <tr class="medium-risk">
+                    <td>Creative Commons Attribution ShareAlike 4.0</td>
+                    <td class="code">CC-BY-SA-4.0</td>
+                    <td class="category">Creative Commons</td>
+                    <td><span class="risk-indicator medium">MEDIUM</span></td>
+                    <td>✅ Yes</td>
+                    <td>ShareAlike requirement</td>
+                    <td>Copyleft for content</td>
+                </tr>
+                
+                <!-- SPECIALIZED -->
+                <tr class="low-risk">
+                    <td>Artistic license 2.0</td>
+                    <td class="code">Artistic-2.0</td>
+                    <td class="category">Specialized</td>
+                    <td><span class="risk-indicator low">LOW</span></td>
+                    <td>⚠️ Attribution</td>
+                    <td>Artistic work</td>
+                    <td>Perl community</td>
+                </tr>
+                <tr class="low-risk">
+                    <td>SIL Open Font License 1.1</td>
+                    <td class="code">OFL-1.1</td>
+                    <td class="category">Specialized</td>
+                    <td><span class="risk-indicator low">LOW</span></td>
+                    <td>⚠️ Attribution</td>
+                    <td>Font specific</td>
+                    <td>Font embedding allowed</td>
+                </tr>
+                <tr class="low-risk">
+                    <td>LaTeX Project Public License v1.3c</td>
+                    <td class="code">LPPL-1.3c</td>
+                    <td class="category">Specialized</td>
+                    <td><span class="risk-indicator low">LOW</span></td>
+                    <td>⚠️ Attribution</td>
+                    <td>LaTeX specific</td>
+                    <td>Document preparation</td>
+                </tr>
+                <tr class="medium-risk">
+                    <td>Open Software License 3.0</td>
+                    <td class="code">OSL-3.0</td>
+                    <td class="category">Copyleft</td>
+                    <td><span class="risk-indicator medium">MEDIUM</span></td>
+                    <td>✅ Yes</td>
+                    <td>Strong copyleft</td>
+                    <td>Network deployment triggers</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="note">
+            <h3>Contract Compliance Notes:</h3>
+            <ul>
+                <li><strong>HIGH RISK:</strong> Strong copyleft licenses that require disclosure of proprietary code and may create GPL obligations</li>
+                <li><strong>MEDIUM RISK:</strong> Weak copyleft licenses that require disclosure but allow proprietary linking/combination</li>
+                <li><strong>LOW RISK:</strong> Permissive licenses requiring only attribution, minimal compliance burden</li>
+                <li><strong>Disclosure Required:</strong> Based on contract sections 16.7-16.9 requirements for "Included Open Source Software"</li>
+                <li><strong>Family Licenses:</strong> GPL, LGPL, and CC families include multiple versions with similar characteristics</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
