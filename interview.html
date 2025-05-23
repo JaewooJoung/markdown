@@ -15,6 +15,11 @@
             .page-break {
                 page-break-after: always;
             }
+            .question-input {
+                border: none !important;
+                background: none !important;
+                width: 100% !important;
+            }
         }
         
         body {
@@ -67,6 +72,7 @@
             background-color: #FFF9C4;
             text-align: center;
             font-weight: bold;
+            width: 80px;
         }
         
         select {
@@ -129,6 +135,43 @@
             border: 1px solid #ddd;
             border-radius: 4px;
         }
+        
+        .sample-questions {
+            background-color: #F0F7FF;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #2196F3;
+        }
+        
+        .sample-questions h4 {
+            margin: 0 0 10px 0;
+            color: #1976D2;
+        }
+        
+        .sample-questions ul {
+            margin: 5px 0;
+            padding-left: 20px;
+        }
+        
+        .sample-questions li {
+            margin: 5px 0;
+            color: #333;
+        }
+        
+        .question-input {
+            width: 100%;
+            border: 1px solid #ddd;
+            padding: 5px;
+            margin-top: 5px;
+            border-radius: 4px;
+            font-style: italic;
+        }
+        
+        .criteria-row td:first-child {
+            font-weight: bold;
+            background-color: #F5F5F5;
+        }
     </style>
 </head>
 <body>
@@ -150,7 +193,18 @@
         <button class="print-button no-print" onclick="window.print()">Print Report</button>
 
         <!-- ATA Competancy Section -->
-        <h2>ATA COMPETANCY - GRADING MATRIX</h2>
+        <h2>ATA COMPETANCY - GRADING MATRIX (25%)</h2>
+        
+        <div class="sample-questions no-print">
+            <h4>Career to Date - Sample Questions:</h4>
+            <ul>
+                <li>Tell us about a difficult problem you've faced in a project. How did you resolve it and what tools did you use?</li>
+                <li>What interests you about this role and how does it fit with your career aspirations?</li>
+                <li>Can you give an example of when you have built a strong relationship with a supplier that has improved the output/quality from them?</li>
+                <li>Give an example of a time where you had to meet a larger perspective within a tight time frame. What tools/methods did you use to achieve the task?</li>
+            </ul>
+        </div>
+        
         <table>
             <thead>
                 <tr>
@@ -161,13 +215,14 @@
                     <th>Very Good (4)</th>
                     <th>Excellent (5)</th>
                     <th>Score</th>
+                    <th class="no-print">Questions Asked</th>
                 </tr>
             </thead>
             <tbody>
                 <tr class="category-header">
-                    <td colspan="7">Career to Date</td>
+                    <td colspan="8">Career to Date</td>
                 </tr>
-                <tr>
+                <tr class="criteria-row">
                     <td>Motivation</td>
                     <td>No clear understanding of role</td>
                     <td>Basic understanding of demands</td>
@@ -184,11 +239,14 @@
                             <option value="5">5</option>
                         </select>
                     </td>
+                    <td class="no-print">
+                        <input type="text" class="question-input" placeholder="Enter question asked...">
+                    </td>
                 </tr>
                 <tr class="category-header">
-                    <td colspan="7">Competency</td>
+                    <td colspan="8">Competency</td>
                 </tr>
-                <tr>
+                <tr class="criteria-row">
                     <td>Decision Making</td>
                     <td>Makes assumptions; reluctant to decide</td>
                     <td>Basic problem-solving skills</td>
@@ -205,8 +263,11 @@
                             <option value="5">5</option>
                         </select>
                     </td>
+                    <td class="no-print">
+                        <input type="text" class="question-input" placeholder="Enter question asked...">
+                    </td>
                 </tr>
-                <tr>
+                <tr class="criteria-row">
                     <td>Teamwork & Collaboration</td>
                     <td>Works in isolation</td>
                     <td>Basic team participation</td>
@@ -223,8 +284,11 @@
                             <option value="5">5</option>
                         </select>
                     </td>
+                    <td class="no-print">
+                        <input type="text" class="question-input" placeholder="Enter question asked...">
+                    </td>
                 </tr>
-                <tr>
+                <tr class="criteria-row">
                     <td>Developing & Managing Relationships</td>
                     <td>Short-term focus</td>
                     <td>Basic relationship building</td>
@@ -241,8 +305,11 @@
                             <option value="5">5</option>
                         </select>
                     </td>
+                    <td class="no-print">
+                        <input type="text" class="question-input" placeholder="Enter question asked...">
+                    </td>
                 </tr>
-                <tr>
+                <tr class="criteria-row">
                     <td>Drive for Results</td>
                     <td>Makes assumptions about requirements</td>
                     <td>Basic delivery capabilities</td>
@@ -259,16 +326,32 @@
                             <option value="5">5</option>
                         </select>
                     </td>
+                    <td class="no-print">
+                        <input type="text" class="question-input" placeholder="Enter question asked...">
+                    </td>
                 </tr>
                 <tr>
-                    <td colspan="5" style="text-align: right; font-weight: bold;">ATA Sub-Score:</td>
+                    <td colspan="6" style="text-align: right; font-weight: bold;">ATA Sub-Score:</td>
                     <td class="score-cell" id="ataSubScore">0</td>
+                    <td class="no-print"></td>
                 </tr>
             </tbody>
         </table>
 
         <!-- Technical Competency Section -->
-        <h2>SUPPLIER QUALITY ENGINEER SOFTWARE - TECHNICAL MATRIX</h2>
+        <h2>SUPPLIER QUALITY ENGINEER SOFTWARE - TECHNICAL MATRIX (30%)</h2>
+        
+        <div class="sample-questions no-print">
+            <h4>Technical Competencies - Sample Questions:</h4>
+            <ul>
+                <li>Describe your experience with software quality assurance methodologies and testing?</li>
+                <li>Can you explain a specific A-SPICE implementation you were involved in?</li>
+                <li>How have you applied ISO 26262 in automotive projects?</li>
+                <li>What safety concepts have you implemented using ISO 26262?</li>
+                <li>Describe your experience with APQP/PPAP processes. What role have you played in PPAP submissions?</li>
+            </ul>
+        </div>
+        
         <table>
             <thead>
                 <tr>
@@ -279,13 +362,14 @@
                     <th>Very Good (4)</th>
                     <th>Excellent (5)</th>
                     <th>Score</th>
+                    <th class="no-print">Questions Asked</th>
                 </tr>
             </thead>
             <tbody>
                 <tr class="category-header">
-                    <td colspan="7">Technical Competencies (30%)</td>
+                    <td colspan="8">Technical Competencies</td>
                 </tr>
-                <tr>
+                <tr class="criteria-row">
                     <td>Software QA Experience</td>
                     <td>No SQA experience</td>
                     <td>Basic QA testing</td>
@@ -302,8 +386,11 @@
                             <option value="5">5</option>
                         </select>
                     </td>
+                    <td class="no-print">
+                        <input type="text" class="question-input" placeholder="Enter question asked...">
+                    </td>
                 </tr>
-                <tr>
+                <tr class="criteria-row">
                     <td>A-SPICE Knowledge</td>
                     <td>No knowledge</td>
                     <td>Basic awareness</td>
@@ -320,8 +407,11 @@
                             <option value="5">5</option>
                         </select>
                     </td>
+                    <td class="no-print">
+                        <input type="text" class="question-input" placeholder="Enter question asked...">
+                    </td>
                 </tr>
-                <tr>
+                <tr class="criteria-row">
                     <td>ISO 26262 Experience</td>
                     <td>No experience</td>
                     <td>Basic understanding</td>
@@ -338,8 +428,11 @@
                             <option value="5">5</option>
                         </select>
                     </td>
+                    <td class="no-print">
+                        <input type="text" class="question-input" placeholder="Enter question asked...">
+                    </td>
                 </tr>
-                <tr>
+                <tr class="criteria-row">
                     <td>APQP/PPAP Knowledge</td>
                     <td>No knowledge</td>
                     <td>Basic awareness</td>
@@ -356,16 +449,31 @@
                             <option value="5">5</option>
                         </select>
                     </td>
+                    <td class="no-print">
+                        <input type="text" class="question-input" placeholder="Enter question asked...">
+                    </td>
                 </tr>
                 <tr>
-                    <td colspan="5" style="text-align: right; font-weight: bold;">Technical Sub-Score:</td>
+                    <td colspan="6" style="text-align: right; font-weight: bold;">Technical Sub-Score:</td>
                     <td class="score-cell" id="technicalSubScore">0</td>
+                    <td class="no-print"></td>
                 </tr>
             </tbody>
         </table>
 
         <!-- Supplier Management Section -->
         <h2>SUPPLIER MANAGEMENT (30%)</h2>
+        
+        <div class="sample-questions no-print">
+            <h4>Supplier Management - Sample Questions:</h4>
+            <ul>
+                <li>Describe your experience in conducting supplier audits. What major findings have you identified?</li>
+                <li>How have you contributed to supplier development programs?</li>
+                <li>What quality systems have you implemented at suppliers?</li>
+                <li>How have you led with suppliers? What improvements have you driven?</li>
+            </ul>
+        </div>
+        
         <table>
             <thead>
                 <tr>
@@ -376,10 +484,11 @@
                     <th>Very Good (4)</th>
                     <th>Excellent (5)</th>
                     <th>Score</th>
+                    <th class="no-print">Questions Asked</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr class="criteria-row">
                     <td>Supplier Audit Experience</td>
                     <td>None</td>
                     <td>Participated in</td>
@@ -396,8 +505,11 @@
                             <option value="5">5</option>
                         </select>
                     </td>
+                    <td class="no-print">
+                        <input type="text" class="question-input" placeholder="Enter question asked...">
+                    </td>
                 </tr>
-                <tr>
+                <tr class="criteria-row">
                     <td>Quality System Implementation</td>
                     <td>No experience</td>
                     <td>Basic involvement</td>
@@ -414,8 +526,11 @@
                             <option value="5">5</option>
                         </select>
                     </td>
+                    <td class="no-print">
+                        <input type="text" class="question-input" placeholder="Enter question asked...">
+                    </td>
                 </tr>
-                <tr>
+                <tr class="criteria-row">
                     <td>Supplier Development</td>
                     <td>No experience</td>
                     <td>Basic support</td>
@@ -432,16 +547,30 @@
                             <option value="5">5</option>
                         </select>
                     </td>
+                    <td class="no-print">
+                        <input type="text" class="question-input" placeholder="Enter question asked...">
+                    </td>
                 </tr>
                 <tr>
-                    <td colspan="5" style="text-align: right; font-weight: bold;">Supplier Management Sub-Score:</td>
+                    <td colspan="6" style="text-align: right; font-weight: bold;">Supplier Management Sub-Score:</td>
                     <td class="score-cell" id="supplierSubScore">0</td>
+                    <td class="no-print"></td>
                 </tr>
             </tbody>
         </table>
 
         <!-- Automotive Experience Section -->
-        <h2>AUTOMOTIVE EXPERIENCE (20%)</h2>
+        <h2>AUTOMOTIVE EXPERIENCE (15%)</h2>
+        
+        <div class="sample-questions no-print">
+            <h4>Automotive Experience - Sample Questions:</h4>
+            <ul>
+                <li>Describe your automotive industry experience. What major trends have you worked with?</li>
+                <li>Explain your experience with automotive manufacturing processes</li>
+                <li>What manufacturing improvement projects have you led?</li>
+            </ul>
+        </div>
+        
         <table>
             <thead>
                 <tr>
@@ -452,10 +581,11 @@
                     <th>Very Good (4)</th>
                     <th>Excellent (5)</th>
                     <th>Score</th>
+                    <th class="no-print">Questions Asked</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr class="criteria-row">
                     <td>Industry Knowledge</td>
                     <td>No experience</td>
                     <td><2 years</td>
@@ -472,8 +602,11 @@
                             <option value="5">5</option>
                         </select>
                     </td>
+                    <td class="no-print">
+                        <input type="text" class="question-input" placeholder="Enter question asked...">
+                    </td>
                 </tr>
-                <tr>
+                <tr class="criteria-row">
                     <td>Manufacturing Understanding</td>
                     <td>No understanding</td>
                     <td>Basic knowledge</td>
@@ -490,47 +623,14 @@
                             <option value="5">5</option>
                         </select>
                     </td>
-                </tr>
-                <tr>
-                    <td colspan="5" style="text-align: right; font-weight: bold;">Automotive Experience Sub-Score:</td>
-                    <td class="score-cell" id="automotiveSubScore">0</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <!-- Final Tata Competency Section -->
-        <h2>TATA Competency (20%)</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Biographical & Functional</th>
-                    <th>Career to Date</th>
-                    <th>Motivation</th>
-                    <th>Score</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Competency</td>
-                    <td>Decision Making</td>
-                    <td>Teamwork & Collaboration</td>
-                    <td rowspan="2" class="score-cell">
-                        <select class="score-select" data-category="tata">
-                            <option value="0">N/A</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
+                    <td class="no-print">
+                        <input type="text" class="question-input" placeholder="Enter question asked...">
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="3">Developing & Managing Relationships | Drive for Results</td>
-                </tr>
-                <tr>
-                    <td colspan="3" style="text-align: right; font-weight: bold;">TATA Sub-Score:</td>
-                    <td class="score-cell" id="tataSubScore">0</td>
+                    <td colspan="6" style="text-align: right; font-weight: bold;">Automotive Experience Sub-Score:</td>
+                    <td class="score-cell" id="automotiveSubScore">0</td>
+                    <td class="no-print"></td>
                 </tr>
             </tbody>
         </table>
@@ -545,6 +645,14 @@
             <p id="recommendation">Good candidate - Consider for hire</p>
             <h3>Preferred Location</h3>
             <p>Gothenburg</p>
+            <div class="no-print">
+                <h3>Additional Comments</h3>
+                <textarea id="additionalComments" rows="4" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;" placeholder="Enter any additional comments or observations..."></textarea>
+            </div>
+            <div id="printComments" style="display: none;">
+                <h3>Additional Comments</h3>
+                <p id="printCommentsText"></p>
+            </div>
         </div>
 
         <div class="candidate-info" id="printInfo" style="display: none;">
@@ -562,7 +670,7 @@
         });
 
         function calculateScores() {
-            // Calculate ATA sub-score
+            // Calculate ATA sub-score (25% weight)
             let ataScores = document.querySelectorAll('[data-category="ata"]');
             let ataTotal = 0;
             let ataCount = 0;
@@ -573,7 +681,7 @@
                     ataCount++;
                 }
             });
-            let ataSubScore = ataCount > 0 ? (ataTotal / ataCount * 4.25).toFixed(2) : 0;
+            let ataSubScore = ataCount > 0 ? (ataTotal / ataCount * 5).toFixed(2) : 0;
             document.getElementById('ataSubScore').textContent = ataSubScore;
 
             // Calculate Technical sub-score (30% weight)
@@ -604,7 +712,7 @@
             let supplierSubScore = supplierCount > 0 ? (supplierTotal / supplierCount * 6).toFixed(2) : 0;
             document.getElementById('supplierSubScore').textContent = supplierSubScore;
 
-            // Calculate Automotive Experience sub-score (20% weight)
+            // Calculate Automotive Experience sub-score (15% weight)
             let autoScores = document.querySelectorAll('[data-category="automotive"]');
             let autoTotal = 0;
             let autoCount = 0;
@@ -615,27 +723,12 @@
                     autoCount++;
                 }
             });
-            let autoSubScore = autoCount > 0 ? (autoTotal / autoCount * 4).toFixed(2) : 0;
+            let autoSubScore = autoCount > 0 ? (autoTotal / autoCount * 3).toFixed(2) : 0;
             document.getElementById('automotiveSubScore').textContent = autoSubScore;
-
-            // Calculate TATA sub-score (20% weight)
-            let tataScores = document.querySelectorAll('[data-category="tata"]');
-            let tataTotal = 0;
-            let tataCount = 0;
-            tataScores.forEach(score => {
-                let value = parseInt(score.value);
-                if (value > 0) {
-                    tataTotal += value;
-                    tataCount++;
-                }
-            });
-            let tataSubScore = tataCount > 0 ? (tataTotal * 4).toFixed(2) : 0;
-            document.getElementById('tataSubScore').textContent = tataSubScore;
 
             // Calculate total score
             let totalScore = (parseFloat(ataSubScore) + parseFloat(techSubScore) + 
-                            parseFloat(supplierSubScore) + parseFloat(autoSubScore) + 
-                            parseFloat(tataSubScore)).toFixed(2);
+                            parseFloat(supplierSubScore) + parseFloat(autoSubScore)).toFixed(2);
             document.getElementById('totalScore').textContent = totalScore;
 
             // Determine grade
@@ -667,10 +760,18 @@
             document.getElementById('printDate').textContent = document.getElementById('interviewDate').value || 'Not specified';
             document.getElementById('printInterviewer').textContent = document.getElementById('interviewer').value || 'Not specified';
             document.getElementById('printInfo').style.display = 'block';
+            
+            // Handle additional comments
+            const comments = document.getElementById('additionalComments').value;
+            if (comments) {
+                document.getElementById('printCommentsText').textContent = comments;
+                document.getElementById('printComments').style.display = 'block';
+            }
         });
 
         window.addEventListener('afterprint', function() {
             document.getElementById('printInfo').style.display = 'none';
+            document.getElementById('printComments').style.display = 'none';
         });
 
         // Initialize with today's date
