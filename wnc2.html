@@ -28,25 +28,46 @@
       line-height: 25px;
       text-align: center;
     }
-    .holiday {
-      background-color: #ffcccc; /* Light red for holidays */
+    /* Weekend style (lower priority) */
+    .weekend {
+      background-color: #f0f0f0; /* Light gray */
+    }
+    /* Holiday style (higher priority) */
+    td.holiday {
+      background-color: #ffcccc !important; /* Light red, overrides weekend */
       font-weight: bold;
     }
     .vacation-week {
       background-color: #e6f7ff; /* Light blue for weeks 29-32 */
-    }
-    .weekend {
-      background-color: #f0f0f0; /* Light gray for weekends */
     }
     .calendar-table {
       display: inline-block;
       margin-right: 20px;
       margin-bottom: 20px;
     }
+    #weatherContainer {
+      margin: 10px 0;
+      font-weight: bold;
+    }
   </style>
+</head>
+<body>
+  <h1 id="pageTitle">Jaewoo's quick calendar</h1>
+  <h1 id="currentDate"></h1>
+  <h2 id="currentTime"></h2>
+  <div id="weatherContainer">Loading Göteborg weather...</div>
+  <center>
+    <label for="year">Select Year:</label>
+    <input type="number" id="year" onchange="generateCalendar()">
+    <button onclick="generateCalendar()">Go</button>
+  </center>
+  <div id="calendarContainer"></div>
+
   <script>
+    // Global variables
     let holidays = [];
 
+    // Fetch Swedish holidays
     async function fetchHolidays(year) {
       try {
         const response = await fetch(`https://api.dryg.net/dagar/v2.1/${year}`);
@@ -57,32 +78,80 @@
       }
     }
 
+    // Check if date is holiday
     function isHoliday(year, month, day) {
       const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
       return holidays.some(holiday => holiday.datum === dateStr);
     }
 
+    // Get Gothenburg weather from SMHI
     function getWeather() {
-      fetch('https://api.weatherapi.com/v1/current.json?key=ad8caecea06c43d1912181938230407&q=Gothenburg')
+      // SMHI API for Gothenburg (PointID 71420)
+      const url = 'https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/11.97/lat/57.71/data.json';
+      
+      fetch(url)
         .then(response => response.json())
         .then(data => {
-          var weatherIcon = data.current.condition.icon;
-          var weatherImg = document.createElement("img");
-          weatherImg.src = "https:" + weatherIcon;
-          var weatherContainer = document.getElementById("weatherContainer");
-          weatherContainer.innerHTML = "Göteborgsvädret<br>";
-          weatherContainer.appendChild(weatherImg);
+          // Get current time in correct format
+          const now = new Date();
+          const currentTime = now.toISOString().slice(0, 13) + ':00:00Z';
+          
+          // Find the current weather data
+          const currentData = data.timeSeries.find(entry => 
+            entry.validTime === currentTime
+          );
+          
+          if (currentData) {
+            // Extract temperature and weather symbol
+            const temp = currentData.parameters.find(p => p.name === 't').values[0];
+            const weatherSymbol = currentData.parameters.find(p => p.name === 'Wsymb2').values[0];
+            
+            // Weather descriptions based on SMHI symbols
+            const weatherDescriptions = {
+              1: '☀️ Clear sky',
+              2: '🌤️ Nearly clear sky',
+              3: '⛅ Variable cloudiness',
+              4: '☁️ Halfcloudy',
+              5: '☁️ Cloudy',
+              6: '🌥️ High cloudiness',
+              7: '🌫️ Fog',
+              8: '🌦️ Light rain showers',
+              9: '🌧️ Moderate rain showers',
+              10: '🌧️ Heavy rain showers',
+              15: '❄️ Light snow showers',
+              16: '❄️ Moderate snow showers',
+              17: '❄️ Heavy snow showers',
+              18: '⛈️ Thunder',
+              19: '🌨️ Sleet showers',
+              20: '🌨️ Heavy sleet showers',
+              21: '⚡ Lightning',
+              22: '🌧️ Rain',
+              23: '❄️ Snowfall',
+              24: '🌨️ Sleet',
+              25: '⛈️ Thunderstorm',
+              26: '🧊 Freezing rain'
+            };
+            
+            const weatherText = weatherDescriptions[weatherSymbol] || '🌤️ Fair weather';
+            document.getElementById("weatherContainer").innerHTML = 
+              `Göteborg: ${temp.toFixed(1)}°C, ${weatherText} (SMHI)`;
+          } else {
+            document.getElementById("weatherContainer").textContent = 
+              "Göteborg: Weather data not available";
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching SMHI weather:", error);
+          document.getElementById("weatherContainer").textContent = 
+            "Göteborg: Weather service unavailable";
         });
     }
 
+    // Date/time functions
     function getCurrentDateTime() {
-      var now = new Date();
-      var dateString = now.toDateString();
-      var timeString = now.toLocaleTimeString();
-      var dateElement = document.getElementById("currentDate");
-      var timeElement = document.getElementById("currentTime");
-      dateElement.textContent = dateString;
-      timeElement.textContent = timeString;
+      const now = new Date();
+      document.getElementById("currentDate").textContent = now.toDateString();
+      document.getElementById("currentTime").textContent = now.toLocaleTimeString();
     }
 
     function updateTitle(year) {
@@ -90,63 +159,64 @@
       document.getElementById('pageTitle').textContent = `Jaewoo's quick calendar - ${year}`;
     }
 
+    // Calendar generation
     async function generateCalendar() {
-      var yearInput = document.getElementById("year");
-      var year = parseInt(yearInput.value);
+      const yearInput = document.getElementById("year");
+      const year = parseInt(yearInput.value);
       
       await fetchHolidays(year);
       updateTitle(year);
-      var calendarContainer = document.getElementById("calendarContainer");
+      const calendarContainer = document.getElementById("calendarContainer");
       calendarContainer.innerHTML = "";
 
-      for (var month = 1; month <= 12; month++) {
-        var date = new Date(year, month - 1, 1);
-        var monthName = date.toLocaleString('default', { month: 'long' });
-        var daysInMonth = new Date(year, month, 0).getDate();
+      for (let month = 1; month <= 12; month++) {
+        const date = new Date(year, month - 1, 1);
+        const monthName = date.toLocaleString('default', { month: 'long' });
+        const daysInMonth = new Date(year, month, 0).getDate();
 
-        var calendarTable = document.createElement("table");
+        const calendarTable = document.createElement("table");
         calendarTable.classList.add("calendar-table");
 
-        var thead = document.createElement("thead");
-        var tbody = document.createElement("tbody");
-
-        // Month title row
-        var monthTitleRow = document.createElement("tr");
-        var monthTitleCell = document.createElement("th");
+        // Create table header
+        const thead = document.createElement("thead");
+        const monthTitleRow = document.createElement("tr");
+        const monthTitleCell = document.createElement("th");
         monthTitleCell.textContent = monthName;
         monthTitleCell.colSpan = 8;
         monthTitleRow.appendChild(monthTitleCell);
         thead.appendChild(monthTitleRow);
 
         // Weekday headers
-        var headerRow = document.createElement("tr");
-        var weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "WN"];
-        weekdays.forEach(function(weekday) {
-          var th = document.createElement("th");
+        const headerRow = document.createElement("tr");
+        ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "WN"].forEach(weekday => {
+          const th = document.createElement("th");
           th.textContent = weekday;
           headerRow.appendChild(th);
         });
         thead.appendChild(headerRow);
+        calendarTable.appendChild(thead);
 
-        var firstDayOfMonth = new Date(year, month - 1, 1);
-        var dayOfWeek = firstDayOfMonth.getDay();
-        if (dayOfWeek === 0) dayOfWeek = 7;
+        // Create table body
+        const tbody = document.createElement("tbody");
+        let firstDayOfMonth = new Date(year, month - 1, 1);
+        let dayOfWeek = firstDayOfMonth.getDay();
+        if (dayOfWeek === 0) dayOfWeek = 7; // Adjust Sunday
 
-        var week = getWeekNumber(firstDayOfMonth);
-        var day = 1;
+        let week = getWeekNumber(firstDayOfMonth);
+        let day = 1;
 
         while (day <= daysInMonth) {
-          var weekRow = document.createElement("tr");
+          const weekRow = document.createElement("tr");
 
           // Highlight vacation weeks (29-32)
           if (week >= 29 && week <= 32) {
             weekRow.classList.add("vacation-week");
           }
 
-          for (var weekday = 1; weekday <= 7; weekday++) {
-            var td = document.createElement("td");
+          for (let weekday = 1; weekday <= 7; weekday++) {
+            const td = document.createElement("td");
 
-            // Add weekend class to Saturday (6) and Sunday (7)
+            // Mark weekends
             if (weekday === 6 || weekday === 7) {
               td.classList.add("weekend");
             }
@@ -157,13 +227,13 @@
               td.textContent = day;
               
               // Highlight today
-              var today = new Date();
+              const today = new Date();
               if (year === today.getFullYear() && month === today.getMonth() + 1 && day === today.getDate()) {
                 td.classList.add("today");
                 td.style.backgroundColor = "#ffebee";
               }
 
-              // Highlight holidays (overrides weekend color)
+              // Highlight holidays
               if (isHoliday(year, month, day)) {
                 td.classList.add("holiday");
               }
@@ -173,53 +243,43 @@
             weekRow.appendChild(td);
           }
 
-          // Week number cell
-          var weekTd = document.createElement("td");
+          // Add week number
+          const weekTd = document.createElement("td");
           weekTd.classList.add("week-number");
           weekTd.textContent = week;
           weekRow.appendChild(weekTd);
 
           tbody.appendChild(weekRow);
 
-          // Update week number for next row
+          // Update for next week
           if (day <= daysInMonth) {
-            var nextWeekDate = new Date(year, month - 1, day);
+            const nextWeekDate = new Date(year, month - 1, day);
             week = getWeekNumber(nextWeekDate);
             dayOfWeek = nextWeekDate.getDay();
             if (dayOfWeek === 0) dayOfWeek = 7;
           }
         }
 
-        calendarTable.appendChild(thead);
         calendarTable.appendChild(tbody);
         calendarContainer.appendChild(calendarTable);
       }
     }
 
+    // Helper function to get week number
     function getWeekNumber(date) {
-      var januaryFirst = new Date(date.getFullYear(), 0, 1);
-      var daysSinceJanuaryFirst = Math.floor((date - januaryFirst) / 86400000);
+      const januaryFirst = new Date(date.getFullYear(), 0, 1);
+      const daysSinceJanuaryFirst = Math.floor((date - januaryFirst) / 86400000);
       return Math.ceil((daysSinceJanuaryFirst + januaryFirst.getDay() + 1) / 7);
     }
-  </script>
-</head>
-<body>
-  <h1 id="pageTitle">Jaewoo's quick calendar - 2024</h1>
-  <h1 id="currentDate"></h1>
-  <h2 id="currentTime"></h2>
-  <div id="weatherContainer">Göteborgsvädret<br></div>
-  <center>
-    <label for="year">Select Year:</label>
-    <input type="number" id="year" onchange="generateCalendar()">
-    <button onclick="generateCalendar()">Go</button>
-  </center>
-  <div id="calendarContainer"></div>
 
-  <script>
+    // Initialize
     document.getElementById('year').value = new Date().getFullYear();
     getCurrentDateTime();
     getWeather();
     generateCalendar();
+
+    // Update time every second
+    setInterval(getCurrentDateTime, 1000);
   </script>
 </body>
 </html>
