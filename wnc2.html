@@ -3,8 +3,8 @@
 <head>
   <title>Jaewoo's quick calendar</title>
   <style>
-    h1 {text-align: center;}
-    h2 {text-align: center;}
+    h1 {text-align: left;}
+    h2 {text-align: left;}
     div {text-align: center;}
     table {
       border-collapse: collapse;
@@ -52,9 +52,9 @@
   </style>
 </head>
 <body>
-  <h1 id="pageTitle">Jaewoo's quick calendar</h1>
-  <h1 id="currentDate"></h1>
-  <h2 id="currentTime"></h2>
+  <span id="pageTitle">Jaewoo's quick calendar</span><br>
+  <span id="currentDate"></span><br>
+  <span id="currentTime"></span>
   <div id="weatherContainer">Loading Göteborg weather...</div>
   <center>
     <label for="year">Select Year:</label>
@@ -134,7 +134,7 @@
             
             const weatherText = weatherDescriptions[weatherSymbol] || '🌤️ Fair weather';
             document.getElementById("weatherContainer").innerHTML = 
-              `Göteborg: ${temp.toFixed(1)}°C, ${weatherText} (SMHI)`;
+              `Göteborg: ${temp.toFixed(1)}°C, ${weatherText} (from Swedish Meteorological and Hydrological Institute)`;
           } else {
             document.getElementById("weatherContainer").textContent = 
               "Göteborg: Weather data not available";
