@@ -28,9 +28,17 @@
       line-height: 25px;
       text-align: center;
     }
-    .holiday {
-      background-color: #ffcccc; /* Light red for holidays */
+    /* Weekend style (lower priority) */
+    .weekend {
+      background-color: #f0f0f0; /* Light gray */
+    }
+    /* Holiday style (higher priority) */
+    td.holiday {
+      background-color: #ffcccc !important; /* Light red, overrides weekend */
       font-weight: bold;
+    }
+    .vacation-week {
+      background-color: #e6f7ff; /* Light blue for weeks 29-32 */
     }
     .calendar-table {
       display: inline-block;
@@ -39,27 +47,23 @@
     }
   </style>
   <script>
-    // Global variable to store holidays
     let holidays = [];
 
-    // Fetch Swedish holidays for a given year
     async function fetchHolidays(year) {
       try {
         const response = await fetch(`https://api.dryg.net/dagar/v2.1/${year}`);
         const data = await response.json();
-        holidays = data.dagar.filter(day => day.helgdag); // Only keep holidays
+        holidays = data.dagar.filter(day => day.helgdag);
       } catch (error) {
         console.error("Error fetching holidays:", error);
       }
     }
 
-    // Check if a date is a holiday
     function isHoliday(year, month, day) {
       const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
       return holidays.some(holiday => holiday.datum === dateStr);
     }
 
-    // Weather, date/time, and calendar functions (unchanged)
     function getWeather() {
       fetch('https://api.weatherapi.com/v1/current.json?key=ad8caecea06c43d1912181938230407&q=Gothenburg')
         .then(response => response.json())
@@ -88,14 +92,11 @@
       document.getElementById('pageTitle').textContent = `Jaewoo's quick calendar - ${year}`;
     }
 
-    // Modified to highlight holidays
     async function generateCalendar() {
       var yearInput = document.getElementById("year");
       var year = parseInt(yearInput.value);
       
-      // Fetch holidays for the selected year
       await fetchHolidays(year);
-
       updateTitle(year);
       var calendarContainer = document.getElementById("calendarContainer");
       calendarContainer.innerHTML = "";
@@ -131,7 +132,7 @@
 
         var firstDayOfMonth = new Date(year, month - 1, 1);
         var dayOfWeek = firstDayOfMonth.getDay();
-        if (dayOfWeek === 0) dayOfWeek = 7; // Adjust Sunday (0 → 7)
+        if (dayOfWeek === 0) dayOfWeek = 7;
 
         var week = getWeekNumber(firstDayOfMonth);
         var day = 1;
@@ -139,8 +140,18 @@
         while (day <= daysInMonth) {
           var weekRow = document.createElement("tr");
 
+          // Highlight vacation weeks (29-32)
+          if (week >= 29 && week <= 32) {
+            weekRow.classList.add("vacation-week");
+          }
+
           for (var weekday = 1; weekday <= 7; weekday++) {
             var td = document.createElement("td");
+
+            // Mark weekends (Saturday=6, Sunday=7)
+            if (weekday === 6 || weekday === 7) {
+              td.classList.add("weekend");
+            }
 
             if (weekday < dayOfWeek || day > daysInMonth) {
               td.textContent = "";
@@ -154,7 +165,7 @@
                 td.style.backgroundColor = "#ffebee";
               }
 
-              // Highlight holidays
+              // Highlight holidays (overrides everything)
               if (isHoliday(year, month, day)) {
                 td.classList.add("holiday");
               }
@@ -207,7 +218,6 @@
   <div id="calendarContainer"></div>
 
   <script>
-    // Initialize
     document.getElementById('year').value = new Date().getFullYear();
     getCurrentDateTime();
     getWeather();
