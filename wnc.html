@@ -65,16 +65,29 @@
     }
 
     function getWeather() {
-      fetch('https://api.weatherapi.com/v1/current.json?key=ad8caecea06c43d1912181938230407&q=Gothenburg')
-        .then(response => response.json())
-        .then(data => {
-          var weatherIcon = data.current.condition.icon;
-          var weatherImg = document.createElement("img");
-          weatherImg.src = "https:" + weatherIcon;
-          var weatherContainer = document.getElementById("weatherContainer");
-          weatherContainer.innerHTML = "Göteborgsvädret<br>";
-          weatherContainer.appendChild(weatherImg);
-        });
+        // Gothenburg coordinates: 57.7089° N, 11.9746° E
+        fetch('https://api.open-meteo.com/v1/forecast?latitude=57.71&longitude=11.97&current_weather=true')
+          .then(response => response.json())
+          .then(data => {
+            const weather = data.current_weather;
+            const temp = weather.temperature;
+            const weatherCode = weather.weathercode;
+            
+            // Simple weather description based on WMO codes (e.g., 0 = Clear, 1 = Cloudy)
+            let weatherText = "";
+            if (weatherCode === 0) weatherText = "☀️ Clear";
+            else if (weatherCode <= 3) weatherText = "⛅ Partly Cloudy";
+            else if (weatherCode <= 67) weatherText = "🌧️ Rainy";
+            else if (weatherCode <= 99) weatherText = "⛈️ Stormy";
+            
+            const weatherContainer = document.getElementById("weatherContainer");
+            weatherContainer.innerHTML = `Göteborg: ${temp}°C, ${weatherText}`;
+          })
+          .catch(error => {
+            console.error("Error fetching weather:", error);
+            document.getElementById("weatherContainer").textContent = "Weather data unavailable";
+          });
+      }
     }
 
     function getCurrentDateTime() {
