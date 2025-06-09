@@ -35,6 +35,9 @@
     .vacation-week {
       background-color: #e6f7ff; /* Light blue for weeks 29-32 */
     }
+    .weekend {
+      background-color: #f0f0f0; /* Light gray for weekends */
+    }
     .calendar-table {
       display: inline-block;
       margin-right: 20px;
@@ -143,6 +146,11 @@
           for (var weekday = 1; weekday <= 7; weekday++) {
             var td = document.createElement("td");
 
+            // Add weekend class to Saturday (6) and Sunday (7)
+            if (weekday === 6 || weekday === 7) {
+              td.classList.add("weekend");
+            }
+
             if (weekday < dayOfWeek || day > daysInMonth) {
               td.textContent = "";
             } else {
@@ -155,7 +163,7 @@
                 td.style.backgroundColor = "#ffebee";
               }
 
-              // Highlight holidays
+              // Highlight holidays (overrides weekend color)
               if (isHoliday(year, month, day)) {
                 td.classList.add("holiday");
               }
