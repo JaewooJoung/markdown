@@ -134,7 +134,7 @@
             
             const weatherText = weatherDescriptions[weatherSymbol] || '🌤️ Fair weather';
             document.getElementById("weatherContainer").innerHTML = 
-              `Göteborg: ${temp.toFixed(1)}°C, ${weatherText} (from Swedish Meteorological and Hydrological Institute)`;
+              `Göteborg: ${temp.toFixed(1)}°C, ${weatherText} <br>(from Swedish Meteorological and Hydrological Institute)`;
           } else {
             document.getElementById("weatherContainer").textContent = 
               "Göteborg: Weather data not available";
