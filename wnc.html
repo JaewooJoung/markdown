@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Everyday calendar</title>
+  <title>일정체크용 calendar</title>
   <style>
     h1 {text-align: left;}
     h2 {text-align: left;}
@@ -106,12 +106,14 @@
       try {
         const response = await fetch(`https://api.dryg.net/dagar/v2.1/${year}`);
         const data = await response.json();
-        holidays = data.dagar.filter(day => day.helgdag);
+        holidays = data.dagar.filter(day => day.helgdag && day.helgdag !== "Annandag pingst");
         
         // Create a map of date to holiday name
         holidayMap = {};
         holidays.forEach(holiday => {
-          holidayMap[holiday.datum] = holiday.helgdag;
+          if (holiday.helgdag !== "Annandag pingst") {
+            holidayMap[holiday.datum] = holiday.helgdag;
+          }
         });
       } catch (error) {
         console.error("Error fetching holidays:", error);
