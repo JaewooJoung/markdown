@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Minutes for CI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .meeting-details {
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .meeting-details div {
+            margin-bottom: 8px;
+        }
+
+        .meeting-details strong {
+            display: inline-block;
+            width: 120px;
+            font-weight: bold;
+        }
+
+        .editable {
+            background-color: #f9f9f9;
+            padding: 2px 5px;
+            border: 1px solid transparent;
+            border-radius: 3px;
+            transition: all 0.2s;
+            min-width: 200px;
+            display: inline-block;
+        }
+
+        .editable:hover {
+            border-color: #ddd;
+            background-color: #fff;
+        }
+
+        .editable:focus {
+            outline: none;
+            border-color: #4CAF50;
+            background-color: #fff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            color: #333;
+        }
+
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .table-cell {
+            min-height: 20px;
+            cursor: text;
+            padding: 5px;
+        }
+
+        .table-cell:focus {
+            outline: 2px solid #4CAF50;
+            background-color: #fff;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .delete-btn {
+            background-color: #f44336;
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+
+        .delete-btn:hover {
+            background-color: #da190b;
+        }
+
+        .print-btn {
+            background-color: #2196F3;
+        }
+
+        .print-btn:hover {
+            background-color: #0b7dda;
+        }
+
+        @media print {
+            body {
+                padding: 0;
+                background-color: white;
+            }
+
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+
+            .button-container {
+                display: none;
+            }
+
+            .delete-btn {
+                display: none;
+            }
+
+            .editable {
+                border: none;
+                background-color: transparent;
+            }
+
+            .table-cell {
+                outline: none !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+
+            .meeting-details strong {
+                display: block;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Meeting Minutes</h1>
+        
+        <div class="meeting-details">
+            <div><strong>Meeting Title:</strong> <span class="editable" contenteditable="true">Continual discussion on MCDD (Master|Connect|Development|Drive)</span></div>
+            <div><strong>Date:</strong> <span class="editable" contenteditable="true">June 23, 2025</span></div>
+            <div><strong>Time:</strong> <span class="editable" contenteditable="true">14:30 AM - 15:00 PM</span></div>
+            <div><strong>Location:</strong> <span class="editable" contenteditable="true">PO 312</span></div>
+            <div><strong>Attendees:</strong> <span class="editable" contenteditable="true">Anders Gorner, Jaewoo Joung, Jan Järbrink, Jonas Tiihon, Krishnan Ajay, Lucas de Assis</span></div>
+        </div>
+
+        <div class="button-container">
+            <button onclick="addRow()">+ Add New Row</button>
+            <button onclick="clearTable()">Clear Table</button>
+            <button class="print-btn" onclick="window.print()">Print Meeting Minutes</button>
+        </div>
+
+        <table id="minutesTable">
+            <thead>
+                <tr>
+                    <th width="20%">Master</th>
+                    <th width="20%">Connect</th>
+                    <th width="20%">Development</th>
+                    <th width="20%">Drive</th>
+                    <th width="10%">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><div class="table-cell" contenteditable="true">Stronger GTX Connection</div></td>
+                    <td><div class="table-cell" contenteditable="true">Coordinate with GTT team?</div></td>
+                    <td><div class="table-cell" contenteditable="true">Modified Process?</div></td>
+                    <td><div class="table-cell" contenteditable="true">who and when?</div></td>
+                    <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td>
+                </tr>
+                <tr>
+                    <td><div class="table-cell" contenteditable="true">Introlock stability</div></td>
+                    <td><div class="table-cell" contenteditable="true">Coordinate with GTT team?</div></td>
+                    <td><div class="table-cell" contenteditable="true">Modified Process?</div></td>
+                    <td><div class="table-cell" contenteditable="true">who and when?</div></td>
+                    <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Add new row to the table
+        function addRow() {
+            const table = document.getElementById('minutesTable').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+            
+            // Create cells with editable content
+            const cells = ['', '', '', ''];
+            cells.forEach(content => {
+                const cell = newRow.insertCell();
+                cell.innerHTML = `<div class="table-cell" contenteditable="true">${content}</div>`;
+            });
+            
+            // Add delete button
+            const actionCell = newRow.insertCell();
+            actionCell.innerHTML = '<button class="delete-btn" onclick="deleteRow(this)">Delete</button>';
+        }
+
+        // Delete a specific row
+        function deleteRow(button) {
+            if (confirm('Are you sure you want to delete this row?')) {
+                button.closest('tr').remove();
+            }
+        }
+
+        // Clear all rows from the table
+        function clearTable() {
+            if (confirm('Are you sure you want to clear all rows? This action cannot be undone.')) {
+                const tbody = document.getElementById('minutesTable').getElementsByTagName('tbody')[0];
+                tbody.innerHTML = '';
+            }
+        }
+
+        // Auto-save functionality (saves to localStorage)
+        function saveData() {
+            const meetingData = {
+                title: document.querySelectorAll('.meeting-details .editable')[0].textContent,
+                date: document.querySelectorAll('.meeting-details .editable')[1].textContent,
+                time: document.querySelectorAll('.meeting-details .editable')[2].textContent,
+                location: document.querySelectorAll('.meeting-details .editable')[3].textContent,
+                attendees: document.querySelectorAll('.meeting-details .editable')[4].textContent,
+                tableData: []
+            };
+
+            const rows = document.querySelectorAll('#minutesTable tbody tr');
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('.table-cell');
+                const rowData = [];
+                cells.forEach(cell => {
+                    rowData.push(cell.textContent);
+                });
+                meetingData.tableData.push(rowData);
+            });
+
+            localStorage.setItem('meetingMinutes', JSON.stringify(meetingData));
+        }
+
+        // Load saved data
+        function loadData() {
+            const savedData = localStorage.getItem('meetingMinutes');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                
+                // Load meeting details
+                const editables = document.querySelectorAll('.meeting-details .editable');
+                editables[0].textContent = data.title;
+                editables[1].textContent = data.date;
+                editables[2].textContent = data.time;
+                editables[3].textContent = data.location;
+                editables[4].textContent = data.attendees;
+                
+                // Clear existing table rows
+                const tbody = document.getElementById('minutesTable').getElementsByTagName('tbody')[0];
+                tbody.innerHTML = '';
+                
+                // Load table data
+                data.tableData.forEach(rowData => {
+                    const newRow = tbody.insertRow();
+                    rowData.forEach(cellData => {
+                        const cell = newRow.insertCell();
+                        cell.innerHTML = `<div class="table-cell" contenteditable="true">${cellData}</div>`;
+                    });
+                    const actionCell = newRow.insertCell();
+                    actionCell.innerHTML = '<button class="delete-btn" onclick="deleteRow(this)">Delete</button>';
+                });
+            }
+        }
+
+        // Auto-save on any content change
+        document.addEventListener('input', function(e) {
+            if (e.target.classList.contains('editable') || e.target.classList.contains('table-cell')) {
+                saveData();
+            }
+        });
+
+        // Load data when page loads
+        window.addEventListener('load', function() {
+            // Uncomment the next line if you want to load saved data
+            // loadData();
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + P to print
+            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                e.preventDefault();
+                window.print();
+            }
+            
+            // Ctrl/Cmd + N to add new row
+            if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
+                e.preventDefault();
+                addRow();
+            }
+        });
+    </script>
+</body>
+</html>
