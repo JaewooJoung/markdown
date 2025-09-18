@@ -54,6 +54,7 @@
 
         table {
             width: 100%;
+            min-width: 1800px;
             border-collapse: collapse;
             background-color: #333333;
             border-radius: 8px;
@@ -67,21 +68,24 @@
             padding: 12px 8px;
             text-align: left;
             font-weight: 600;
-            font-size: 12px;
+            font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
             border-bottom: 2px solid #666666;
             position: sticky;
             top: 0;
             z-index: 10;
+            white-space: nowrap;
+            min-width: 80px;
         }
 
         td {
             padding: 10px 8px;
             border-bottom: 1px solid #4a4a4a;
-            font-size: 12px;
+            font-size: 11px;
             word-wrap: break-word;
-            max-width: 150px;
+            max-width: 120px;
+            vertical-align: top;
         }
 
         tr:nth-child(even) {
@@ -134,6 +138,11 @@
             color: #81C784;
         }
 
+        .na-value {
+            color: #888888;
+            font-style: italic;
+        }
+
         @media (max-width: 768px) {
             body {
                 padding: 10px;
@@ -144,8 +153,8 @@
             }
             
             th, td {
-                padding: 8px 4px;
-                font-size: 11px;
+                padding: 6px 4px;
+                font-size: 10px;
             }
         }
     </style>
@@ -157,7 +166,7 @@
         <div class="legend">
             <div class="legend-item">
                 <div class="legend-color" style="background: linear-gradient(135deg, #2d5016, #3d6b1f);"></div>
-                <span><strong>Highlighted:</strong> Employees managed by Jaewoo</span>
+                <span><strong>Highlighted:</strong> Employees managed by Jaewoo Joung</span>
             </div>
         </div>
 
@@ -170,20 +179,20 @@
                     <th>Title</th>
                     <th>LOB</th>
                     <th>Status</th>
-                    <th>Email</th>
-                    <th>Phone</th>
+                    <th>Mail Address</th>
+                    <th>Phone Number</th>
                     <th>Manager</th>
-                    <th>Customer</th>
+                    <th>Current Customer</th>
                     <th>Group</th>
                     <th>Company</th>
-                    <th>End Date</th>
+                    <th>End of WO / PO</th>
                     <th>Role Description</th>
                     <th>Project Code</th>
                     <th>Location</th>
                     <th>Customer Manager</th>
-                    <th>Customer Email</th>
-                    <th>Customer Phone</th>
-                    <th>Employment Type</th>
+                    <th>Customer Manager Mail</th>
+                    <th>Customer Manager Phone</th>
+                    <th>Type of Employment</th>
                 </tr>
             </thead>
             <tbody>
@@ -209,7 +218,7 @@
                     <td>Employee</td>
                 </tr>
                 <tr class="jaewoo-managed">
-                    <td class="emp-id">-</td>
+                    <td class="emp-id">930557</td>
                     <td>Anand</td>
                     <td>Shelke</td>
                     <td>HIL Engineer</td>
@@ -233,7 +242,7 @@
                     <td class="emp-id">52750</td>
                     <td>Pratik</td>
                     <td>Patil</td>
-                    <td>-</td>
+                    <td class="na-value">-</td>
                     <td>ESS</td>
                     <td class="status-leave">Parental Leave</td>
                     <td><a href="mailto:Pratik.Patil@tatatechnologies.com" class="email-link">Pratik.Patil@tatatechnologies.com</a></td>
@@ -247,7 +256,7 @@
                     <td>GC</td>
                     <td>Stina Käll</td>
                     <td><a href="mailto:stina.kall@volvo.com" class="email-link">stina.kall@volvo.com</a></td>
-                    <td>-</td>
+                    <td>+46 739029486</td>
                     <td>Deputee</td>
                 </tr>
                 <tr class="jaewoo-managed">
@@ -272,67 +281,67 @@
                     <td>Deputee</td>
                 </tr>
                 <tr>
-                    <td class="emp-id">-</td>
+                    <td class="emp-id na-value">N/A</td>
                     <td>Vairaprakash</td>
                     <td>Muthu Mariappan</td>
                     <td>EDS Engineer</td>
                     <td>ER&D</td>
-                    <td>-</td>
+                    <td class="na-value">N/A</td>
                     <td><a href="mailto:Vairaprakash.Muthumariappan@tatatechnologies.com" class="email-link">Vairaprakash.Muthumariappan@tatatechnologies.com</a></td>
-                    <td>-</td>
+                    <td class="na-value">N/A</td>
                     <td>David Jovén</td>
                     <td>Volvo AB</td>
                     <td>Volvo Trucks</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td class="na-value">N/A</td>
+                    <td class="na-value">N/A</td>
+                    <td class="na-value">N/A</td>
+                    <td class="na-value">N/A</td>
+                    <td class="na-value">N/A</td>
+                    <td class="na-value">N/A</td>
+                    <td class="na-value">N/A</td>
+                    <td class="na-value">N/A</td>
                 </tr>
                 <tr>
-                    <td class="emp-id">-</td>
+                    <td class="emp-id na-value">N/A</td>
                     <td>Pranjal</td>
                     <td>Boruah</td>
                     <td>Electronics HW Engineer</td>
                     <td>ER&D</td>
-                    <td>-</td>
+                    <td class="na-value">N/A</td>
                     <td><a href="mailto:Pranjal.Boruah@tatatechnologies.com" class="email-link">Pranjal.Boruah@tatatechnologies.com</a></td>
-                    <td>-</td>
+                    <td class="na-value">N/A</td>
                     <td>David Jovén</td>
                     <td>Volvo AB</td>
                     <td>Volvo Penta</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td class="na-value">N/A</td>
+                    <td class="na-value">N/A</td>
+                    <td class="na-value">N/A</td>
+                    <td class="na-value">N/A</td>
+                    <td class="na-value">N/A</td>
+                    <td class="na-value">N/A</td>
+                    <td class="na-value">N/A</td>
+                    <td class="na-value">N/A</td>
                 </tr>
                 <tr>
                     <td class="emp-id">53409</td>
                     <td>Isa</td>
                     <td>Aksöz</td>
-                    <td>-</td>
+                    <td class="na-value">N/A</td>
                     <td>ER&D</td>
-                    <td>-</td>
+                    <td class="na-value">N/A</td>
                     <td><a href="mailto:isa.aksoz@tatatechnologies.com" class="email-link">isa.aksoz@tatatechnologies.com</a></td>
-                    <td>-</td>
+                    <td class="na-value">N/A</td>
                     <td>David Jovén</td>
                     <td>Volvo AB</td>
                     <td>Volvo Trucks</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td class="na-value">N/A</td>
+                    <td class="na-value">N/A</td>
+                    <td class="na-value">N/A</td>
+                    <td class="na-value">N/A</td>
+                    <td class="na-value">N/A</td>
+                    <td class="na-value">N/A</td>
+                    <td class="na-value">N/A</td>
+                    <td class="na-value">N/A</td>
                 </tr>
             </tbody>
         </table>
