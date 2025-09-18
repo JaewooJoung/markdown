@@ -3,375 +3,339 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Data Table</title>
+    <title>Employee Table - Dark Mode</title>
     <style>
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            margin: 20px;
-            background-color: #f8f9fa;
-        }
-        
-        .container {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        
-        .header h1 {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
+            padding: 20px;
+            line-height: 1.4;
+        }
+
+        .container {
+            max-width: 100%;
+            overflow-x: auto;
+            background-color: #2d2d2d;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+        }
+
+        h1 {
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 30px;
             font-size: 24px;
             font-weight: 600;
         }
-        
-        .table-wrapper {
-            overflow-x: auto;
-            max-height: 80vh;
+
+        .legend {
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background-color: #3a3a3a;
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
         }
-        
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 5px 0;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 13px;
-            min-width: 2000px;
+            background-color: #333333;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
         }
-        
+
         th {
-            background: #f1f3f4;
+            background: linear-gradient(135deg, #4a4a4a, #5a5a5a);
+            color: #ffffff;
             padding: 12px 8px;
             text-align: left;
             font-weight: 600;
-            border-bottom: 2px solid #e0e0e0;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #666666;
             position: sticky;
             top: 0;
             z-index: 10;
         }
-        
+
         td {
             padding: 10px 8px;
-            border-bottom: 1px solid #e8eaed;
-            vertical-align: top;
+            border-bottom: 1px solid #4a4a4a;
+            font-size: 12px;
+            word-wrap: break-word;
+            max-width: 150px;
         }
-        
+
+        tr:nth-child(even) {
+            background-color: #3a3a3a;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #333333;
+        }
+
+        /* Highlight rows where manager is Jaewoo */
+        tr.jaewoo-managed {
+            background: linear-gradient(135deg, #2d5016, #3d6b1f) !important;
+            border-left: 4px solid #4CAF50;
+        }
+
+        tr.jaewoo-managed td {
+            color: #ffffff;
+            font-weight: 500;
+        }
+
         tr:hover {
-            background-color: #f8f9ff;
+            background-color: #404040 !important;
+            transform: translateY(-1px);
+            transition: all 0.2s ease;
         }
-        
-        .jaewoo-manager {
-            background-color: #fff3cd;
+
+        .email-link {
+            color: #64B5F6;
+            text-decoration: none;
         }
-        
-        .jaewoo-manager:hover {
-            background-color: #ffeaa7;
+
+        .email-link:hover {
+            color: #90CAF9;
+            text-decoration: underline;
         }
-        
+
+        .status-active {
+            color: #4CAF50;
+            font-weight: 600;
+        }
+
+        .status-leave {
+            color: #FF9800;
+            font-weight: 600;
+        }
+
         .emp-id {
             font-weight: 600;
-            color: #1a73e8;
+            color: #81C784;
         }
-        
-        .name {
-            font-weight: 500;
-        }
-        
-        .email {
-            color: #137333;
-            font-size: 12px;
-        }
-        
-        .date {
-            color: #d93025;
-            font-weight: 500;
-        }
-        
-        .location {
-            background: #e8f0fe;
-            padding: 2px 6px;
-            border-radius: 12px;
-            font-size: 11px;
-            color: #1558d6;
-        }
-        
-        .employment-type {
-            background: #e6f4ea;
-            padding: 2px 6px;
-            border-radius: 12px;
-            font-size: 11px;
-            color: #137333;
-        }
-        
-        .gender {
-            text-align: center;
-        }
-        
-        .meetings {
-            text-align: center;
-            color: #137333;
-            font-weight: 500;
-        }
-        
-        .phone {
-            font-family: monospace;
-            font-size: 12px;
-        }
-        
-        .project-code {
-            background: #fef7e0;
-            padding: 2px 6px;
-            border-radius: 12px;
-            font-size: 11px;
-            color: #f29900;
-            font-weight: 500;
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            th, td {
+                padding: 8px 4px;
+                font-size: 11px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>Employee Data Overview</h1>
-        </div>
+        <h1>Employee Directory</h1>
         
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Emp ID</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Title</th>
-                        <th>LOB</th>
-                        <th>Email Address</th>
-                        <th>Phone Number</th>
-                        <th>Manager</th>
-                        <th>Current Customer Group</th>
-                        <th>Company</th>
-                        <th>End of WO/PO</th>
-                        <th>Role Description</th>
-                        <th>Project Code</th>
-                        <th>Location</th>
-                        <th>Customer Manager</th>
-                        <th>Customer Manager Email</th>
-                        <th>Customer Manager Phone</th>
-                        <th>Type of Work</th>
-                        <th>Type of Employment</th>
-                        <th>Gender</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="emp-id">53409</td>
-                        <td class="name">Anand</td>
-                        <td class="name">Shelke</td>
-                        <td>HIL Engineer</td>
-                        <td>ESS</td>
-                        <td class="email">Anandmadhukar.Shelke@tatatechnologies.com</td>
-                        <td class="phone">+46 731 47 52 72</td>
-                        <td>Jaewoo Joung</td>
-                        <td>Volvo Group</td>
-                        <td>Volvo Trucks</td>
-                        <td class="date">2025-07-18</td>
-                        <td>Test Rig Development Engineer_Specialist</td>
-                        <td class="project-code">DP154284</td>
-                        <td class="location">O2</td>
-                        <td>Anders Nilsson</td>
-                        <td class="email">anders.nilsson.5@volvo.com</td>
-                        <td class="phone">-</td>
-                        <td>TM</td>
-                        <td class="employment-type">Deputee</td>
-                        <td class="gender">Male</td>
-                    </tr>
-                    <tr>
-                        <td class="emp-id">-</td>
-                        <td class="name">Isa</td>
-                        <td class="name">Aksöz</td>
-                        <td>-</td>
-                        <td>ER&D</td>
-                        <td class="email">isa.aksoz@tatatechnologies.com</td>
-                        <td class="phone">-</td>
-                        <td>David Jovén</td>
-                        <td>Volvo Group</td>
-                        <td>Volvo Trucks</td>
-                        <td class="date">2025-10-17</td>
-                        <td>Feature Leader_Senior (Aftermarket)</td>
-                        <td class="project-code">DP159660</td>
-                        <td class="location">Arendal / Lundby</td>
-                        <td>Jörgen Ivarsson</td>
-                        <td class="email">jorgen.ivarsson@volvo.com</td>
-                        <td class="phone">-</td>
-                        <td>TM</td>
-                        <td class="employment-type">Employee</td>
-                        <td class="gender">Male</td>
-                    </tr>
-                    <tr>
-                        <td class="emp-id">52750</td>
-                        <td class="name">Jaewoo</td>
-                        <td class="name">Joung</td>
-                        <td>SQE</td>
-                        <td>ESS</td>
-                        <td class="email">Jaewoo.Joung@tatatechnologies.com</td>
-                        <td class="phone">073-500 32 75</td>
-                        <td>Vinodh Kumar</td>
-                        <td>Volvo Group</td>
-                        <td>Volvo Trucks</td>
-                        <td class="date">2025-06-30</td>
-                        <td>Supplier Quality Engineer_Lead</td>
-                        <td class="project-code">DP158516</td>
-                        <td class="location">GC</td>
-                        <td>Tobias Emriksson</td>
-                        <td class="email">tobias.emriksson@volvo.com</td>
-                        <td class="phone">+46 765 531657</td>
-                        <td>TM</td>
-                        <td class="employment-type">Employee</td>
-                        <td class="gender">Male</td>
-                        <td class="meetings">Yes</td>
-                    </tr>
-                    <tr>
-                        <td class="emp-id">54662</td>
-                        <td class="name">Pratik</td>
-                        <td class="name">Patil</td>
-                        <td>-</td>
-                        <td>ESS</td>
-                        <td class="email">Pratik.Patil@tatatechnologies.com</td>
-                        <td class="phone">+46 700 90 24 26</td>
-                        <td>Jaewoo Joung</td>
-                        <td>Volvo Group</td>
-                        <td>Volvo Trucks</td>
-                        <td class="date">2025-05-31</td>
-                        <td>ADAS Embedded Software Application Engineer A_Level 3</td>
-                        <td class="project-code">DP159659</td>
-                        <td class="location">GC</td>
-                        <td>Stina Käll</td>
-                        <td class="email">stina.kall@volvo.com</td>
-                        <td class="phone">-</td>
-                        <td>TM</td>
-                        <td class="employment-type">Deputee</td>
-                        <td class="gender">Male</td>
-                        <td class="meetings">Yes</td>
-                    </tr>
-                    <tr>
-                        <td class="emp-id">54634</td>
-                        <td class="name">Shanmuga</td>
-                        <td class="name">KN</td>
-                        <td>HIL Engineer</td>
-                        <td>ESS</td>
-                        <td class="email">K.Siva@tatatechnologies.com</td>
-                        <td class="phone">703027187</td>
-                        <td>Jaewoo Joung</td>
-                        <td>Volvo Group</td>
-                        <td>Volvo Buses</td>
-                        <td class="date">2025-12-31</td>
-                        <td>Test Rig Development Engineer_Senior</td>
-                        <td class="project-code">DP159658</td>
-                        <td class="location">Arendal</td>
-                        <td>Lena Sjöberg</td>
-                        <td class="email">lena.sjoberg@volvo.com</td>
-                        <td class="phone">-</td>
-                        <td>TM</td>
-                        <td class="employment-type">Deputee</td>
-                        <td class="gender">Male</td>
-                        <td class="meetings">Yes</td>
-                    </tr>
-                    <tr>
-                        <td class="emp-id">-</td>
-                        <td class="name">Tim</td>
-                        <td class="name">Jahnen</td>
-                        <td>-</td>
-                        <td>ESS</td>
-                        <td class="email">Tim.Jahnen@tatatechnologies.com</td>
-                        <td class="phone">46701908789</td>
-                        <td>Vinodh Kumar</td>
-                        <td>Polestar</td>
-                        <td>N/A</td>
-                        <td class="date">2025-09-03</td>
-                        <td>Propulsion System Controls</td>
-                        <td class="project-code">DP159048</td>
-                        <td class="location">-</td>
-                        <td>Stathis Larios</td>
-                        <td class="email">stathis.larios@polestar.com</td>
-                        <td class="phone">-</td>
-                        <td>TM</td>
-                        <td class="employment-type">Employee</td>
-                        <td class="gender">Male</td>
-                        <td class="meetings">Yes</td>
-                    </tr>
-                    <tr>
-                        <td class="emp-id">52756</td>
-                        <td class="name">Vairaprakash</td>
-                        <td class="name">Muthu Mariappan</td>
-                        <td>EDS Engineer</td>
-                        <td>ER&D</td>
-                        <td class="email">Vairaprakash.Muthumariappan@tatatechnologies.com</td>
-                        <td class="phone">-</td>
-                        <td>David Jovén</td>
-                        <td>Volvo Group</td>
-                        <td>Volvo Trucks</td>
-                        <td class="date">2025-07-31</td>
-                        <td>Wiring & Harness Engineer</td>
-                        <td class="project-code">DP158295</td>
-                        <td class="location">O2</td>
-                        <td>Ionut Vranceeanu</td>
-                        <td class="email">ionut.vranceanu@volvo.com</td>
-                        <td class="phone">-</td>
-                        <td>TM</td>
-                        <td class="employment-type">Employee</td>
-                        <td class="gender">Male</td>
-                        <td class="meetings">Yes</td>
-                    </tr>
-                    <tr>
-                        <td class="emp-id">-</td>
-                        <td class="name">Varunkumar</td>
-                        <td class="name">Komirelli</td>
-                        <td>Manufacturing Engineer</td>
-                        <td>ER&D</td>
-                        <td class="email">Varunkumar.Kommirelli@tatatechnologies.com</td>
-                        <td class="phone">-</td>
-                        <td>David Jovén</td>
-                        <td>Polestar</td>
-                        <td>N/A</td>
-                        <td class="date">2025-12-31</td>
-                        <td>Manufaturing Enginer TF</td>
-                        <td class="project-code">DP159049</td>
-                        <td class="location">-</td>
-                        <td>Lenny Stoltz</td>
-                        <td class="email">lenny.stoltz@polestar.com</td>
-                        <td class="phone">-</td>
-                        <td>TM</td>
-                        <td class="employment-type">Deputee</td>
-                        <td class="gender">Male</td>
-                        <td class="meetings">Yes</td>
-                    </tr>
-                    <tr>
-                        <td class="emp-id">-</td>
-                        <td class="name">Pranjal</td>
-                        <td class="name">Boruah</td>
-                        <td>Electronics HW Engineer</td>
-                        <td>ER&D</td>
-                        <td class="email">Pranjal.Boruah@tatatechnologies.com</td>
-                        <td class="phone">-</td>
-                        <td>David Jovén</td>
-                        <td>Volvo Group</td>
-                        <td>Volvo Penta</td>
-                        <td class="date">2025-12-31</td>
-                        <td>Electronics HW component responsible</td>
-                        <td class="project-code">DP163547</td>
-                        <td class="location">-</td>
-                        <td>Steven Flower</td>
-                        <td class="email">steven.flower@volvo.com</td>
-                        <td class="phone">-</td>
-                        <td>TM</td>
-                        <td class="employment-type">Employee</td>
-                        <td class="gender">Male</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(135deg, #2d5016, #3d6b1f);"></div>
+                <span><strong>Highlighted:</strong> Employees managed by Jaewoo</span>
+            </div>
         </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Emp ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Title</th>
+                    <th>LOB</th>
+                    <th>Status</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Manager</th>
+                    <th>Customer</th>
+                    <th>Group</th>
+                    <th>Company</th>
+                    <th>End Date</th>
+                    <th>Role Description</th>
+                    <th>Project Code</th>
+                    <th>Location</th>
+                    <th>Customer Manager</th>
+                    <th>Customer Email</th>
+                    <th>Customer Phone</th>
+                    <th>Employment Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="emp-id">54225</td>
+                    <td>Jaewoo</td>
+                    <td>Joung</td>
+                    <td>SQE</td>
+                    <td>ESS</td>
+                    <td class="status-active">100% to VOLVO AB</td>
+                    <td><a href="mailto:Jaewoo.Joung@tatatechnologies.com" class="email-link">Jaewoo.Joung@tatatechnologies.com</a></td>
+                    <td>+46 073-500 32 75</td>
+                    <td>Vinodh Kumar</td>
+                    <td>Volvo AB</td>
+                    <td>Volvo Trucks</td>
+                    <td>2026-06-30</td>
+                    <td>Supplier Quality Engineer_Lead</td>
+                    <td>DP158516</td>
+                    <td>GC</td>
+                    <td>Tobias Emriksson</td>
+                    <td><a href="mailto:tobias.emriksson@volvo.com" class="email-link">tobias.emriksson@volvo.com</a></td>
+                    <td>+46 765 531657</td>
+                    <td>Employee</td>
+                </tr>
+                <tr class="jaewoo-managed">
+                    <td class="emp-id">-</td>
+                    <td>Anand</td>
+                    <td>Shelke</td>
+                    <td>HIL Engineer</td>
+                    <td>ESS</td>
+                    <td class="status-active">100% to VOLVO AB</td>
+                    <td><a href="mailto:Anandmadhukar.Shelke@tatatechnologies.com" class="email-link">Anandmadhukar.Shelke@tatatechnologies.com</a></td>
+                    <td>+46 731 47 52 72</td>
+                    <td>Jaewoo Joung</td>
+                    <td>Volvo AB</td>
+                    <td>Volvo Trucks</td>
+                    <td>2026-07-18</td>
+                    <td>Test Rig Development Engineer_Specialist</td>
+                    <td>DP154284</td>
+                    <td>O2</td>
+                    <td>Anders Nilsson</td>
+                    <td><a href="mailto:anders.nilsson.5@volvo.com" class="email-link">anders.nilsson.5@volvo.com</a></td>
+                    <td>+46 765533201</td>
+                    <td>Deputee</td>
+                </tr>
+                <tr class="jaewoo-managed">
+                    <td class="emp-id">52750</td>
+                    <td>Pratik</td>
+                    <td>Patil</td>
+                    <td>-</td>
+                    <td>ESS</td>
+                    <td class="status-leave">Parental Leave</td>
+                    <td><a href="mailto:Pratik.Patil@tatatechnologies.com" class="email-link">Pratik.Patil@tatatechnologies.com</a></td>
+                    <td>+46 700 90 24 26</td>
+                    <td>Jaewoo Joung</td>
+                    <td>Volvo AB</td>
+                    <td>Volvo Trucks</td>
+                    <td>2026-05-31</td>
+                    <td>ADAS Embedded Software Application Engineer A_Level 3</td>
+                    <td>DP159659</td>
+                    <td>GC</td>
+                    <td>Stina Käll</td>
+                    <td><a href="mailto:stina.kall@volvo.com" class="email-link">stina.kall@volvo.com</a></td>
+                    <td>-</td>
+                    <td>Deputee</td>
+                </tr>
+                <tr class="jaewoo-managed">
+                    <td class="emp-id">54662</td>
+                    <td>Shanmuga</td>
+                    <td>KN</td>
+                    <td>HIL Engineer</td>
+                    <td>ESS</td>
+                    <td class="status-active">100% to VOLVO AB</td>
+                    <td><a href="mailto:K.Siva@tatatechnologies.com" class="email-link">K.Siva@tatatechnologies.com</a></td>
+                    <td>+46 703027187</td>
+                    <td>Jaewoo Joung</td>
+                    <td>Volvo AB</td>
+                    <td>Volvo Buses</td>
+                    <td>2025-12-31</td>
+                    <td>Test Rig Development Engineer_Senior</td>
+                    <td>DP159658</td>
+                    <td>Arendal</td>
+                    <td>Sofia Ore</td>
+                    <td><a href="mailto:sofia.ore@volvo.com" class="email-link">sofia.ore@volvo.com</a></td>
+                    <td>+46 765538331</td>
+                    <td>Deputee</td>
+                </tr>
+                <tr>
+                    <td class="emp-id">-</td>
+                    <td>Vairaprakash</td>
+                    <td>Muthu Mariappan</td>
+                    <td>EDS Engineer</td>
+                    <td>ER&D</td>
+                    <td>-</td>
+                    <td><a href="mailto:Vairaprakash.Muthumariappan@tatatechnologies.com" class="email-link">Vairaprakash.Muthumariappan@tatatechnologies.com</a></td>
+                    <td>-</td>
+                    <td>David Jovén</td>
+                    <td>Volvo AB</td>
+                    <td>Volvo Trucks</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td class="emp-id">-</td>
+                    <td>Pranjal</td>
+                    <td>Boruah</td>
+                    <td>Electronics HW Engineer</td>
+                    <td>ER&D</td>
+                    <td>-</td>
+                    <td><a href="mailto:Pranjal.Boruah@tatatechnologies.com" class="email-link">Pranjal.Boruah@tatatechnologies.com</a></td>
+                    <td>-</td>
+                    <td>David Jovén</td>
+                    <td>Volvo AB</td>
+                    <td>Volvo Penta</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td class="emp-id">53409</td>
+                    <td>Isa</td>
+                    <td>Aksöz</td>
+                    <td>-</td>
+                    <td>ER&D</td>
+                    <td>-</td>
+                    <td><a href="mailto:isa.aksoz@tatatechnologies.com" class="email-link">isa.aksoz@tatatechnologies.com</a></td>
+                    <td>-</td>
+                    <td>David Jovén</td>
+                    <td>Volvo AB</td>
+                    <td>Volvo Trucks</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </body>
 </html>
