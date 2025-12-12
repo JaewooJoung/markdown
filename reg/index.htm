@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EU 2019/2144 - Vehicle Categories & Type-Approval Requirements</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0f1a;
+            --bg-card: #111827;
+            --accent-blue: #3b82f6;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-red: #ef4444;
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #06b6d4;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border: #1e293b;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container { max-width: 1600px; margin: 0 auto; }
+        
+        h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.25rem; }
+        
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .ref-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-blue);
+            font-size: 0.8rem;
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 6px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.2s;
+        }
+        
+        .ref-link:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: var(--accent-blue);
+        }
+        
+        .ref-link svg { width: 16px; height: 16px; }
+        
+        /* Category Grid */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .category-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            opacity: 0.8;
+        }
+        
+        .category-card.m::before { background: var(--accent-blue); }
+        .category-card.n::before { background: var(--accent-green); }
+        .category-card.o::before { background: var(--accent-amber); }
+        
+        .category-card:hover { border-color: var(--accent-blue); transform: translateY(-2px); }
+        .category-card.active { border-color: var(--accent-blue); box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); }
+        
+        .category-code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        
+        .category-card.m .category-code { color: var(--accent-blue); }
+        .category-card.n .category-code { color: var(--accent-green); }
+        .category-card.o .category-code { color: var(--accent-amber); }
+        
+        .category-name { font-size: 0.7rem; color: var(--text-secondary); line-height: 1.3; }
+        .category-mass {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            margin-top: 0.4rem;
+            padding-top: 0.4rem;
+            border-top: 1px solid var(--border);
+        }
+        
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 0.75rem;
+        }
+        
+        .section-header h2 {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .section-header::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+        
+        /* Regulations Panel */
+        #regulations-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: none;
+            margin-top: 1rem;
+        }
+        
+        #regulations-panel.visible { display: block; animation: fadeIn 0.3s ease; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .panel-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        
+        .panel-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.5rem;
+            padding: 0.25rem;
+            line-height: 1;
+        }
+        
+        .close-btn:hover { color: var(--text-primary); }
+        
+        /* Regulation Groups */
+        .reg-group { margin-bottom: 1.25rem; }
+        
+        .reg-group-title {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent-purple);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .reg-group-title::before {
+            content: '';
+            width: 6px; height: 6px;
+            background: var(--accent-purple);
+            border-radius: 2px;
+        }
+        
+        .reg-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 0.4rem;
+        }
+        
+        .reg-item {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.6rem 0.8rem;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+        }
+        
+        .reg-code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            background: rgba(139, 92, 246, 0.15);
+            color: var(--accent-purple);
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            white-space: nowrap;
+        }
+        
+        .reg-un {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--accent-blue);
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            white-space: nowrap;
+        }
+        
+        .reg-subject { color: var(--text-secondary); line-height: 1.3; flex: 1; }
+        
+        .reg-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            padding: 0.15rem 0.35rem;
+            border-radius: 3px;
+            white-space: nowrap;
+        }
+        
+        .reg-date.A { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); }
+        .reg-date.B { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); }
+        .reg-date.C { background: rgba(239, 68, 68, 0.15); color: var(--accent-red); }
+        .reg-date.D { background: rgba(139, 92, 246, 0.15); color: var(--accent-purple); }
+        .reg-date.X { background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan); }
+        
+        .note-badge {
+            font-size: 0.55rem;
+            color: var(--accent-amber);
+            vertical-align: super;
+            margin-left: 2px;
+            cursor: help;
+        }
+        
+        /* Notes Panel */
+        .notes-section {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(245, 158, 11, 0.05);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-radius: 8px;
+        }
+        
+        .notes-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent-amber);
+            margin-bottom: 0.75rem;
+        }
+        
+        .note-item {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        
+        .note-item::before {
+            content: attr(data-note);
+            position: absolute;
+            left: 0;
+            color: var(--accent-amber);
+            font-weight: 600;
+        }
+        
+        /* Date Legend */
+        .date-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: var(--bg-card);
+            border-radius: 6px;
+            font-size: 0.65rem;
+        }
+        
+        .date-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Legend */
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: var(--bg-card);
+            border-radius: 8px;
+            font-size: 0.7rem;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+        }
+        
+        .legend-color {
+            width: 10px; height: 10px;
+            border-radius: 3px;
+        }
+        
+        .legend-color.m { background: var(--accent-blue); }
+        .legend-color.n { background: var(--accent-green); }
+        .legend-color.o { background: var(--accent-amber); }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.7rem;
+        }
+        
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: var(--text-secondary);
+        }
+        
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>EU Regulation 2019/2144 — Vehicle Type-Approval Requirements</h1>
+        <p class="subtitle">General Safety & Protection of Vehicle Occupants and Vulnerable Road Users</p>
+        <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32019R2144" target="_blank" class="ref-link">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+            Official EUR-Lex Reference
+        </a>
+        
+        <div class="section-header"><h2>M — Passenger Vehicles (≥4 wheels)</h2></div>
+        <div class="category-grid">
+            <div class="category-card m" data-category="M1">
+                <div class="category-code">M₁</div>
+                <div class="category-name">Passenger ≤8 seats (excl. driver)</div>
+                <div class="category-mass">Cars, SUVs</div>
+            </div>
+            <div class="category-card m" data-category="M2">
+                <div class="category-code">M₂</div>
+                <div class="category-name">Passenger >8 seats</div>
+                <div class="category-mass">≤ 5t (Minibus)</div>
+            </div>
+            <div class="category-card m" data-category="M3">
+                <div class="category-code">M₃</div>
+                <div class="category-name">Passenger >8 seats</div>
+                <div class="category-mass">> 5t (Bus/Coach)</div>
+            </div>
+        </div>
+        
+        <div class="section-header"><h2>N — Goods Vehicles (≥4 wheels)</h2></div>
+        <div class="category-grid">
+            <div class="category-card n" data-category="N1">
+                <div class="category-code">N₁</div>
+                <div class="category-name">Goods carriage</div>
+                <div class="category-mass">≤ 3.5t (Van/Pickup)</div>
+            </div>
+            <div class="category-card n" data-category="N2">
+                <div class="category-code">N₂</div>
+                <div class="category-name">Goods carriage</div>
+                <div class="category-mass">3.5 – 12t</div>
+            </div>
+            <div class="category-card n" data-category="N3">
+                <div class="category-code">N₃</div>
+                <div class="category-name">Goods carriage</div>
+                <div class="category-mass">> 12t (Heavy truck)</div>
+            </div>
+        </div>
+        
+        <div class="section-header"><h2>O — Trailers (incl. Semi-trailers)</h2></div>
+        <div class="category-grid">
+            <div class="category-card o" data-category="O1">
+                <div class="category-code">O₁</div>
+                <div class="category-name">Trailer</div>
+                <div class="category-mass">≤ 0.75t</div>
+            </div>
+            <div class="category-card o" data-category="O2">
+                <div class="category-code">O₂</div>
+                <div class="category-name">Trailer</div>
+                <div class="category-mass">0.75 – 3.5t</div>
+            </div>
+            <div class="category-card o" data-category="O3">
+                <div class="category-code">O₃</div>
+                <div class="category-name">Trailer</div>
+                <div class="category-mass">3.5 – 10t</div>
+            </div>
+            <div class="category-card o" data-category="O4">
+                <div class="category-code">O₄</div>
+                <div class="category-name">Trailer</div>
+                <div class="category-mass">> 10t (Semi-trailer)</div>
+            </div>
+        </div>
+        
+        <div id="regulations-panel">
+            <div class="panel-header">
+                <div>
+                    <span class="panel-title" id="panel-title">M1</span>
+                    <div class="panel-desc" id="panel-desc"></div>
+                    <div class="stats">
+                        <span class="stat">Requirements: <span class="stat-value" id="stat-count">0</span></span>
+                    </div>
+                </div>
+                <button class="close-btn" onclick="closePanel()">×</button>
+            </div>
+            <div id="regulations-content"></div>
+            
+            <div class="date-legend">
+                <div class="date-legend-item"><span class="reg-date A">A</span> Prohibition: 6 Jul 2022</div>
+                <div class="date-legend-item"><span class="reg-date B">B</span> Type-approval refusal: 6 Jul 2022 / Prohibition: 7 Jul 2024</div>
+                <div class="date-legend-item"><span class="reg-date C">C</span> Type-approval refusal: 7 Jul 2024 / Prohibition: 7 Jul 2026</div>
+                <div class="date-legend-item"><span class="reg-date D">D</span> Type-approval refusal: 7 Jan 2026 / Prohibition: 7 Jan 2029</div>
+                <div class="date-legend-item"><span class="reg-date X">X</span> Component/STU applicable</div>
+            </div>
+            
+            <div class="notes-section">
+                <div class="notes-title">Notes & Conditions</div>
+                <div class="note-item" data-note="(1)">&nbsp;Compliance required if fitted.</div>
+                <div class="note-item" data-note="(2)">&nbsp;Shall be fitted with adequate windscreen defrosting and demisting device.</div>
+                <div class="note-item" data-note="(3)">&nbsp;Shall be fitted with adequate windscreen washing and wiping devices.</div>
+                <div class="note-item" data-note="(4)">&nbsp;Exempted: N2 semi-trailer tractors 3.5-8t; M2/M3 Class A/I/II; articulated buses M3 Class A/I/II; off-road M2/M3/N2/N3; special purpose M2/M3/N2/N3; vehicles with >3 axles.</div>
+                <div class="note-item" data-note="(5)">&nbsp;Compliance required for automated vehicles.</div>
+                <div class="note-item" data-note="(6)">&nbsp;For vehicles with hydraulic power assisted steering: dates in Note C apply; shall be equipped with lane departure warning instead.</div>
+            </div>
+        </div>
+        
+        <div class="legend">
+            <div class="legend-item"><span class="legend-color m"></span> M: Passenger transport</div>
+            <div class="legend-item"><span class="legend-color n"></span> N: Goods transport</div>
+            <div class="legend-item"><span class="legend-color o"></span> O: Trailers</div>
+        </div>
+    </div>
+
+    <script>
+        // Complete regulations data from EU 2019/2144 Annex II
+        const regulations = {
+            "A": {
+                title: "Restraint Systems, Crash Testing, Fuel System Integrity & HV Electrical Safety",
+                items: [
+                    { code: "A1", reg: "UN R21", subject: "Interior fittings", M1: "A", M2: "", M3: "", N1: "", N2: "", N3: "", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "A2", reg: "UN R17", subject: "Seats and head restraints", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "A3", reg: "UN R80", subject: "Bus seats", M1: "", M2: "A", M3: "A", N1: "", N2: "", N3: "", O1: "", O2: "", O3: "", O4: "", comp: "A" },
+                    { code: "A4", reg: "UN R14", subject: "Safety-belt anchorages", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "A5", reg: "UN R16", subject: "Safety-belts and restraint systems", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "", O2: "", O3: "", O4: "", comp: "A" },
+                    { code: "A6", reg: "UN R16", subject: "Safety-belt reminders", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "A7", reg: "UN R126", subject: "Partitioning systems", M1: "X", M2: "", M3: "", N1: "", N2: "", N3: "", O1: "", O2: "", O3: "", O4: "", STU: "B" },
+                    { code: "A8", reg: "UN R145", subject: "Child restraint anchorages (ISOFIX)", M1: "A", M2: "", M3: "", N1: "", N2: "", N3: "", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "A9", reg: "UN R44/129", subject: "Child restraint systems", M1: "A¹", M2: "A¹", M3: "A¹", N1: "A¹", N2: "A¹", N3: "A¹", O1: "", O2: "", O3: "", O4: "", comp: "A", note: 1 },
+                    { code: "A10", reg: "UN R129", subject: "Enhanced child restraint systems (i-Size)", M1: "A¹", M2: "A¹", M3: "A¹", N1: "A¹", N2: "A¹", N3: "A¹", O1: "", O2: "", O3: "", O4: "", comp: "B", note: 1 },
+                    { code: "A11", reg: "UN R93", subject: "Front underrun protection", M1: "", M2: "", M3: "", N1: "", N2: "A", N3: "A", O1: "", O2: "", O3: "", O4: "", comp: "A" },
+                    { code: "A12", reg: "UN R58", subject: "Rear underrun protection", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "A", O2: "A", O3: "A", O4: "A", comp: "A" },
+                    { code: "A13", reg: "UN R73", subject: "Lateral protection", M1: "", M2: "", M3: "", N1: "", N2: "A", N3: "A", O1: "", O2: "", O3: "A", O4: "A" },
+                    { code: "A14", reg: "UN R34", subject: "Fuel tank safety", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "", O2: "", O3: "", O4: "", comp: "A" },
+                    { code: "A15", reg: "UN R67", subject: "LPG (liquified petroleum gas) safety", M1: "A¹", M2: "A¹", M3: "A¹", N1: "A¹", N2: "A¹", N3: "A¹", O1: "", O2: "", O3: "", O4: "", comp: "A", note: 1 },
+                    { code: "A16", reg: "UN R110", subject: "CNG/LNG (compressed/liquified natural gas) safety", M1: "A¹", M2: "A¹", M3: "A¹", N1: "A¹", N2: "A¹", N3: "A¹", O1: "", O2: "", O3: "", O4: "", comp: "A", note: 1 },
+                    { code: "A17", reg: "UN R134", subject: "Hydrogen safety", M1: "A¹", M2: "A¹", M3: "A¹", N1: "A¹", N2: "A¹", N3: "A¹", O1: "", O2: "", O3: "", O4: "", comp: "A", note: 1 },
+                    { code: "A18", reg: "UN R146", subject: "Hydrogen system material qualification", M1: "X¹", M2: "X¹", M3: "X¹", N1: "X¹", N2: "X¹", N3: "X¹", O1: "", O2: "", O3: "", O4: "", comp: "A", note: 1 },
+                    { code: "A19", reg: "UN R100", subject: "Electric power train safety (in-use)", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "", O2: "", O3: "", O4: "", comp: "A" },
+                    { code: "A20", reg: "UN R94", subject: "Frontal off-set impact", M1: "A", M2: "", M3: "", N1: "A", N2: "", N3: "", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "A21", reg: "UN R137", subject: "Frontal full-width impact", M1: "A", M2: "", M3: "", N1: "A", N2: "", N3: "", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "A22", reg: "UN R12", subject: "Protective steering", M1: "A", M2: "", M3: "", N1: "", N2: "", N3: "", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "A23", reg: "UN R114", subject: "Replacement airbag", M1: "X", M2: "X", M3: "X", N1: "X", N2: "X", N3: "X", O1: "", O2: "", O3: "", O4: "", comp: "A" },
+                    { code: "A24", reg: "UN R29", subject: "Cab impact (commercial vehicles)", M1: "", M2: "", M3: "", N1: "", N2: "A", N3: "A", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "A25", reg: "UN R95", subject: "Side impact", M1: "A", M2: "", M3: "", N1: "A", N2: "", N3: "", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "A26", reg: "UN R135", subject: "Pole side impact", M1: "B", M2: "", M3: "", N1: "B", N2: "", N3: "", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "A27", reg: "UN R34", subject: "Rear impact (fuel system integrity)", M1: "B", M2: "", M3: "", N1: "B", N2: "", N3: "", O1: "", O2: "", O3: "", O4: "" },
+                ]
+            },
+            "B": {
+                title: "Vulnerable Road Users, Vision & Visibility",
+                items: [
+                    { code: "B1", reg: "UN R127", subject: "Pedestrian leg and head protection", M1: "A", M2: "", M3: "", N1: "A", N2: "", N3: "", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "B2", reg: "UN R127", subject: "Enlarged head impact zone", M1: "C", M2: "", M3: "", N1: "C", N2: "", N3: "", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "B3", reg: "—", subject: "Frontal protection system", M1: "X", M2: "", M3: "", N1: "X", N2: "", N3: "", O1: "", O2: "", O3: "", O4: "", STU: "A" },
+                    { code: "B4", reg: "Art. 7", subject: "AEBS for pedestrian and cyclist (light vehicles)", M1: "C", M2: "", M3: "", N1: "C", N2: "", N3: "", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "B5", reg: "Art. 7", subject: "Pedestrian and cyclist collision warning (heavy)", M1: "", M2: "B", M3: "B", N1: "", N2: "B", N3: "B", O1: "", O2: "", O3: "", O4: "", STU: "B" },
+                    { code: "B6", reg: "Art. 7", subject: "Blind spot information system", M1: "", M2: "B", M3: "B", N1: "", N2: "B", N3: "B", O1: "", O2: "", O3: "", O4: "", STU: "B" },
+                    { code: "B7", reg: "Art. 7", subject: "Reversing detection", M1: "B", M2: "B", M3: "B", N1: "B", N2: "B", N3: "B", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "B8", reg: "UN R125", subject: "Forward vision (field of view)", M1: "A", M2: "", M3: "", N1: "", N2: "", N3: "", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "B9", reg: "Art. 9(5)", subject: "Heavy-duty vehicles direct vision (blind spot reduction)", M1: "", M2: "D", M3: "D", N1: "", N2: "D", N3: "D", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "B10", reg: "UN R43", subject: "Safety glazing", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "A", O2: "A", O3: "A", O4: "A", comp: "A" },
+                    { code: "B11", reg: "UN R122", subject: "Defrost/demist", M1: "A²", M2: "A²", M3: "A²", N1: "A²", N2: "A²", N3: "A²", O1: "", O2: "", O3: "", O4: "", note: 2 },
+                    { code: "B12", reg: "UN R121", subject: "Wash/wipe", M1: "A³", M2: "A³", M3: "A³", N1: "A³", N2: "A³", N3: "A³", O1: "", O2: "", O3: "", O4: "", note: 3 },
+                    { code: "B13", reg: "UN R46", subject: "Indirect vision devices (mirrors)", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "", O2: "", O3: "", O4: "", comp: "A" },
+                ]
+            },
+            "C": {
+                title: "Vehicle Chassis, Braking, Tyres & Steering",
+                items: [
+                    { code: "C1", reg: "UN R79", subject: "Steering equipment", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "C2", reg: "UN R79", subject: "Lane departure warning system (LDWS)", M1: "A⁴", M2: "A⁴", M3: "A⁴", N1: "A⁴", N2: "A⁴", N3: "A⁴", O1: "", O2: "", O3: "", O4: "", note: 4 },
+                    { code: "C3", reg: "Art. 6", subject: "Emergency lane keeping system (ELKS)", M1: "B⁶", M2: "", M3: "", N1: "B⁶", N2: "", N3: "", O1: "", O2: "", O3: "", O4: "", note: 6 },
+                    { code: "C4", reg: "UN R13/13-H", subject: "Braking", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "A", O2: "A", O3: "A", O4: "A" },
+                    { code: "C5", reg: "UN R90", subject: "Replacement braking parts", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "A", O2: "A", O3: "A", O4: "A", comp: "A" },
+                    { code: "C6", reg: "UN R139", subject: "Brake assist system (BAS)", M1: "A", M2: "", M3: "", N1: "A", N2: "", N3: "", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "C7", reg: "UN R140", subject: "Electronic stability control (ESC)", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "C8", reg: "UN R131", subject: "AEBS on heavy-duty vehicles", M1: "", M2: "A⁴", M3: "A⁴", N1: "", N2: "A⁴", N3: "A⁴", O1: "", O2: "", O3: "", O4: "", note: 4 },
+                    { code: "C9", reg: "UN R152", subject: "AEBS on light-duty vehicles", M1: "B", M2: "", M3: "", N1: "B", N2: "", N3: "", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "C10", reg: "UN R30/54/117", subject: "Tyre safety and environmental performance", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "A", O2: "A", O3: "A", O4: "A", comp: "A" },
+                    { code: "C11", reg: "UN R64", subject: "Spare wheels and run-flat systems", M1: "A¹", M2: "", M3: "", N1: "A¹", N2: "", N3: "", O1: "", O2: "", O3: "", O4: "", comp: "A", note: 1 },
+                    { code: "C12", reg: "UN R108/109", subject: "Retreaded tyres", M1: "A¹", M2: "A¹", M3: "A¹", N1: "A¹", N2: "A¹", N3: "A¹", O1: "A¹", O2: "A¹", O3: "A¹", O4: "A¹", comp: "A", note: 1 },
+                    { code: "C13", reg: "UN R141", subject: "Tyre pressure monitoring (light vehicles)", M1: "A", M2: "", M3: "", N1: "A", N2: "", N3: "", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "C14", reg: "UN R141", subject: "Tyre pressure monitoring (heavy vehicles)", M1: "", M2: "B", M3: "B", N1: "", N2: "B", N3: "B", O1: "", O2: "B", O3: "B", O4: "B" },
+                    { code: "C15", reg: "UN R142", subject: "Tyre installation", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "A", O2: "A", O3: "A", O4: "A" },
+                    { code: "C16", reg: "UN R124", subject: "Replacement wheels", M1: "X", M2: "X", M3: "X", N1: "X", N2: "X", N3: "X", O1: "X", O2: "X", O3: "X", O4: "X", comp: "A" },
+                ]
+            },
+            "D": {
+                title: "On-board Instruments, Electrical System, Lighting & Protection Against Unauthorised Use",
+                items: [
+                    { code: "D1", reg: "UN R28", subject: "Audible warning devices", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "", O2: "", O3: "", O4: "", comp: "A" },
+                    { code: "D2", reg: "UN R10", subject: "Electromagnetic compatibility (EMC)", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "A", O2: "A", O3: "A", O4: "A", comp: "A" },
+                    { code: "D3", reg: "UN R18/97/116", subject: "Protection against unauthorised use, immobiliser and alarm", M1: "A¹", M2: "A¹", M3: "A¹", N1: "A¹", N2: "A¹", N3: "A¹", O1: "", O2: "", O3: "", O4: "", comp: "A", note: 1 },
+                    { code: "D4", reg: "UN R155", subject: "Cybersecurity", M1: "B", M2: "B", M3: "B", N1: "B", N2: "B", N3: "B", O1: "B", O2: "B", O3: "B", O4: "B" },
+                    { code: "D5", reg: "UN R39", subject: "Speedometer", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "D6", reg: "Art. 7", subject: "Odometer", M1: "B", M2: "B", M3: "B", N1: "B", N2: "B", N3: "B", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "D7", reg: "UN R89", subject: "Speed limitation devices", M1: "", M2: "A", M3: "A", N1: "", N2: "A", N3: "A", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "D8", reg: "Art. 6", subject: "Intelligent speed assistance (ISA)", M1: "B", M2: "B", M3: "B", N1: "B", N2: "B", N3: "B", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "D9", reg: "UN R121", subject: "Identification of controls, tell-tales and indicators", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "D10", reg: "UN R122", subject: "Heating systems", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "", O2: "", O3: "", O4: "", comp: "A" },
+                    { code: "D11", reg: "Various", subject: "Light signalling devices (UN R4/6/7/19/23/38/50/65/77/87/91/119/123/148/149/150)", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "A", O2: "A", O3: "A", O4: "A", comp: "A" },
+                    { code: "D12", reg: "Various", subject: "Road illumination devices (UN R1/5/8/20/31/98/112/113/123/149)", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "", O2: "", O3: "", O4: "", comp: "A" },
+                    { code: "D13", reg: "UN R3/69/70/104", subject: "Retro-reflective devices", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "A", O2: "A", O3: "A", O4: "A", comp: "A" },
+                    { code: "D14", reg: "UN R37/99/128", subject: "Light sources", M1: "X", M2: "X", M3: "X", N1: "X", N2: "X", N3: "X", O1: "X", O2: "X", O3: "X", O4: "X", comp: "A" },
+                    { code: "D15", reg: "UN R48/53/74/86", subject: "Installation of lighting and light-signalling devices", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "A", O2: "A", O3: "A", O4: "A" },
+                    { code: "D16", reg: "UN R13/13-H", subject: "Emergency stop signal (ESS)", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "A", O2: "A", O3: "A", O4: "A" },
+                    { code: "D17", reg: "UN R45", subject: "Headlamp cleaners", M1: "A¹", M2: "A¹", M3: "A¹", N1: "A¹", N2: "A¹", N3: "A¹", O1: "", O2: "", O3: "", O4: "", comp: "A", note: 1 },
+                    { code: "D18", reg: "Art. 7", subject: "Gear shift indicator (GSI)", M1: "A", M2: "", M3: "", N1: "", N2: "", N3: "", O1: "", O2: "", O3: "", O4: "" },
+                ]
+            },
+            "E": {
+                title: "Driver & System Behaviour",
+                items: [
+                    { code: "E1", reg: "Art. 6", subject: "Alcohol interlock installation facilitation", M1: "B", M2: "B", M3: "B", N1: "B", N2: "B", N3: "B", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "E2", reg: "Art. 6", subject: "Driver drowsiness and attention warning", M1: "B", M2: "B", M3: "B", N1: "B", N2: "B", N3: "B", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "E3", reg: "Art. 6", subject: "Advanced driver distraction warning", M1: "C", M2: "C", M3: "C", N1: "C", N2: "C", N3: "C", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "E4", reg: "Art. 11", subject: "Driver availability monitoring system", M1: "B⁵", M2: "B⁵", M3: "B⁵", N1: "B⁵", N2: "B⁵", N3: "B⁵", O1: "", O2: "", O3: "", O4: "", note: 5 },
+                    { code: "E5", reg: "Art. 7", subject: "Event data recorder (EDR)", M1: "B", M2: "B", M3: "B", N1: "B", N2: "B", N3: "B", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "E6", reg: "Art. 11", subject: "Systems to replace driver's control (automated)", M1: "B⁵", M2: "B⁵", M3: "B⁵", N1: "B⁵", N2: "B⁵", N3: "B⁵", O1: "", O2: "", O3: "", O4: "", note: 5 },
+                    { code: "E7", reg: "Art. 11", subject: "Systems providing vehicle info on state and surroundings", M1: "B⁵", M2: "B⁵", M3: "B⁵", N1: "B⁵", N2: "B⁵", N3: "B⁵", O1: "", O2: "", O3: "", O4: "", note: 5 },
+                    { code: "E8", reg: "Art. 11", subject: "Platooning", M1: "", M2: "B¹", M3: "B¹", N1: "", N2: "B¹", N3: "B¹", O1: "", O2: "", O3: "", O4: "", note: 1 },
+                    { code: "E9", reg: "Art. 11", subject: "Systems providing safety info to other road users", M1: "B⁵", M2: "B⁵", M3: "B⁵", N1: "B⁵", N2: "B⁵", N3: "B⁵", O1: "", O2: "", O3: "", O4: "", note: 5 },
+                ]
+            },
+            "F": {
+                title: "General Vehicle Construction & Features",
+                items: [
+                    { code: "F1", reg: "UN R35", subject: "Registration plate space (front/rear)", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "A", O2: "A", O3: "A", O4: "A" },
+                    { code: "F2", reg: "UN R79", subject: "Reversing motion", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "F3", reg: "UN R11", subject: "Door latches and hinges", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "F4", reg: "Art. 7", subject: "Door entry steps, handholds and running boards", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "F5", reg: "UN R26", subject: "External projections (passenger vehicles)", M1: "A", M2: "A", M3: "A", N1: "", N2: "", N3: "", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "F6", reg: "UN R61", subject: "External projections of commercial vehicle cabs", M1: "", M2: "", M3: "", N1: "A", N2: "A", N3: "A", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "F7", reg: "UN R19", subject: "Statutory plate and VIN", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "A", O2: "A", O3: "A", O4: "A" },
+                    { code: "F8", reg: "UN R125", subject: "Towing devices", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "F9", reg: "Art. 7", subject: "Wheel guards", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "F10", reg: "UN R109", subject: "Spray suppression systems", M1: "", M2: "A", M3: "A", N1: "", N2: "A", N3: "A", O1: "", O2: "", O3: "A", O4: "A", comp: "A" },
+                    { code: "F11", reg: "(EU) 1230/2012", subject: "Masses and dimensions", M1: "A", M2: "A", M3: "A", N1: "A", N2: "A", N3: "A", O1: "A", O2: "A", O3: "A", O4: "A" },
+                    { code: "F12", reg: "UN R55/102", subject: "Mechanical couplings", M1: "A¹", M2: "A¹", M3: "A¹", N1: "A¹", N2: "A¹", N3: "A¹", O1: "A¹", O2: "A¹", O3: "A¹", O4: "A¹", comp: "A", note: 1 },
+                    { code: "F13", reg: "UN R105", subject: "Vehicles for dangerous goods", M1: "", M2: "", M3: "", N1: "A¹", N2: "A¹", N3: "A¹", O1: "A¹", O2: "A¹", O3: "A¹", O4: "A¹", note: 1 },
+                    { code: "F14", reg: "UN R107", subject: "General bus construction (M2/M3)", M1: "", M2: "A", M3: "A", N1: "", N2: "", N3: "", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "F15", reg: "UN R66", subject: "Bus strength of superstructure", M1: "", M2: "A", M3: "A", N1: "", N2: "", N3: "", O1: "", O2: "", O3: "", O4: "" },
+                    { code: "F16", reg: "UN R118", subject: "Burning behaviour of materials (buses)", M1: "", M2: "", M3: "A", N1: "", N2: "", N3: "", O1: "", O2: "", O3: "", O4: "", comp: "A" },
+                ]
+            }
+        };
+
+        const categoryDescriptions = {
+            M1: "Passenger vehicles with ≤8 seats (excluding driver)",
+            M2: "Passenger vehicles with >8 seats and max mass ≤5 tonnes",
+            M3: "Passenger vehicles with >8 seats and max mass >5 tonnes",
+            N1: "Goods vehicles with max mass ≤3.5 tonnes",
+            N2: "Goods vehicles with max mass 3.5-12 tonnes",
+            N3: "Goods vehicles with max mass >12 tonnes",
+            O1: "Trailers with max mass ≤0.75 tonnes",
+            O2: "Trailers with max mass 0.75-3.5 tonnes",
+            O3: "Trailers with max mass 3.5-10 tonnes",
+            O4: "Trailers with max mass >10 tonnes"
+        };
+
+        // Get regulations for a specific category
+        function getRegulationsForCategory(category) {
+            const result = {};
+            for (const [section, data] of Object.entries(regulations)) {
+                const filtered = data.items.filter(item => item[category] && item[category] !== "");
+                if (filtered.length > 0) {
+                    result[section] = { title: data.title, items: filtered };
+                }
+            }
+            return result;
+        }
+
+        // Render panel
+        function renderRegulations(category) {
+            const panel = document.getElementById('regulations-panel');
+            const content = document.getElementById('regulations-content');
+            const title = document.getElementById('panel-title');
+            const desc = document.getElementById('panel-desc');
+            const statCount = document.getElementById('stat-count');
+            
+            const regs = getRegulationsForCategory(category);
+            title.textContent = `${category} — Applicable Requirements`;
+            desc.textContent = categoryDescriptions[category];
+            
+            let totalCount = 0;
+            let html = '';
+            
+            for (const [section, data] of Object.entries(regs)) {
+                totalCount += data.items.length;
+                html += `
+                    <div class="reg-group">
+                        <div class="reg-group-title">${section}. ${data.title}</div>
+                        <div class="reg-list">
+                            ${data.items.map(item => {
+                                const dateCode = item[category].replace(/[¹²³⁴⁵⁶⁷⁸⁹⁰]/g, '');
+                                const noteNum = item.note ? `<span class="note-badge" title="See note ${item.note}">(${item.note})</span>` : '';
+                                return `
+                                <div class="reg-item">
+                                    <span class="reg-code">${item.code}</span>
+                                    <span class="reg-un">${item.reg}</span>
+                                    <span class="reg-subject">${item.subject}${noteNum}</span>
+                                    <span class="reg-date ${dateCode}">${item[category]}</span>
+                                </div>
+                            `}).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            statCount.textContent = totalCount;
+            
+            if (html === '') {
+                html = `<div style="text-align:center;padding:2rem;color:var(--text-secondary);">No specific requirements for this category</div>`;
+            }
+            
+            content.innerHTML = html;
+            panel.classList.add('visible');
+        }
+
+        function closePanel() {
+            document.getElementById('regulations-panel').classList.remove('visible');
+            document.querySelectorAll('.category-card').forEach(c => c.classList.remove('active'));
+        }
+
+        // Event listeners
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.category-card').forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                renderRegulations(card.dataset.category);
+            });
+        });
+    </script>
+</body>
+</html>
