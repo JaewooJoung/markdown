@@ -33,9 +33,21 @@
     .weekend {
       background-color: #f0f0f0; /* Light gray */
     }
-    /* Holiday style (higher priority) */
-    td.holiday {
-      background-color: #ffcccc !important; /* Light red, overrides weekend */
+    /* Swedish holiday style (higher priority) */
+    td.holiday-se {
+      background-color: #ffcccc !important; /* Light red */
+      font-weight: bold;
+      cursor: pointer;
+    }
+    /* French holiday style */
+    td.holiday-fr {
+      background-color: #fff9c4 !important; /* Light yellow */
+      font-weight: bold;
+      cursor: pointer;
+    }
+    /* Both Swedish AND French holiday */
+    td.holiday-both {
+      background: linear-gradient(135deg, #ffcccc 50%, #fff9c4 50%) !important;
       font-weight: bold;
       cursor: pointer;
     }
@@ -79,8 +91,27 @@
       border-style: solid;
       border-color: #333 transparent transparent transparent;
     }
-    td.holiday:hover .tooltip {
+    td.holiday-se:hover .tooltip,
+    td.holiday-fr:hover .tooltip,
+    td.holiday-both:hover .tooltip {
       opacity: 1;
+    }
+    /* Legend */
+    .legend {
+      margin: 10px 0;
+      font-size: 14px;
+    }
+    .legend-item {
+      display: inline-block;
+      margin-right: 20px;
+    }
+    .legend-color {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 1px solid #999;
+      vertical-align: middle;
+      margin-right: 4px;
     }
   </style>
 </head>
@@ -89,6 +120,11 @@
   <span id="currentDate"></span>
   <span id="currentTime"></span>
   <div id="weatherContainer">Loading Göteborg weather...</div>
+  <div class="legend">
+    <span class="legend-item"><span class="legend-color" style="background-color:#ffcccc;"></span> Swedish Holiday</span>
+    <span class="legend-item"><span class="legend-color" style="background-color:#fff9c4;"></span> French Holiday</span>
+    <span class="legend-item"><span class="legend-color" style="background:linear-gradient(135deg, #ffcccc 50%, #fff9c4 50%);"></span> Both SE &amp; FR</span>
+  </div>
   <center>
     <label for="year">Select Year:</label>
     <input type="number" id="year" onchange="generateCalendar()">
@@ -99,56 +135,166 @@
   <script>
     // Global variables
     let holidays = [];
-    let holidayMap = {}; // Store holiday names by date
+    let holidayMapSE = {}; // Swedish holidays by date
+    let holidayMapFR = {}; // French holidays by date
 
-    // Fetch Swedish holidays
-    async function fetchHolidays(year) {
-      try {
-        const response = await fetch(`https://api.dryg.net/dagar/v2.1/${year}`);
-        const data = await response.json();
-        holidays = data.dagar.filter(day => day.helgdag && day.helgdag !== "Annandag pingst");
-        
-        // Create a map of date to holiday name
-        holidayMap = {};
-        holidays.forEach(holiday => {
-          if (holiday.helgdag !== "Annandag pingst") {
-            holidayMap[holiday.datum] = holiday.helgdag;
-          }
-        });
-      } catch (error) {
-        console.error("Error fetching holidays:", error);
+    // Generate Swedish holidays for a given year
+    function generateSwedishHolidays(year) {
+      holidayMapSE = {};
+
+      // Fixed Swedish holidays
+      const fixed = [
+        { month: 1,  day: 1,  name: "Nyårsdagen" },
+        { month: 1,  day: 6,  name: "Trettondedag jul" },
+        { month: 5,  day: 1,  name: "Första maj" },
+        { month: 6,  day: 6,  name: "Sveriges nationaldag" },
+        { month: 12, day: 25, name: "Juldagen" },
+        { month: 12, day: 26, name: "Annandag jul" },
+      ];
+
+      fixed.forEach(h => {
+        const dateStr = `${year}-${String(h.month).padStart(2, '0')}-${String(h.day).padStart(2, '0')}`;
+        holidayMapSE[dateStr] = h.name;
+      });
+
+      // Easter-based movable holidays
+      const easter = getEasterSunday(year);
+
+      const movable = [
+        { offset: -2,  name: "Långfredagen" },       // Good Friday
+        { offset: 0,   name: "Påskdagen" },           // Easter Sunday
+        { offset: 1,   name: "Annandag påsk" },       // Easter Monday
+        { offset: 39,  name: "Kristi himmelsfärdsdag" }, // Ascension
+        { offset: 49,  name: "Pingstdagen" },          // Whit Sunday
+      ];
+
+      movable.forEach(h => {
+        const d = new Date(easter);
+        d.setDate(easter.getDate() + h.offset);
+        holidayMapSE[formatDate(d)] = h.name;
+      });
+
+      // Midsommardagen: Saturday between June 20-26
+      for (let d = 20; d <= 26; d++) {
+        const candidate = new Date(year, 5, d); // June = month 5
+        if (candidate.getDay() === 6) { // Saturday
+          holidayMapSE[formatDate(candidate)] = "Midsommardagen";
+          // Midsommarafton (Friday before)
+          const eve = new Date(candidate);
+          eve.setDate(candidate.getDate() - 1);
+          holidayMapSE[formatDate(eve)] = "Midsommarafton";
+          break;
+        }
+      }
+
+      // Alla helgons dag: Saturday between Oct 31 - Nov 6
+      for (let d = 31; d <= 37; d++) {
+        const month = d <= 31 ? 9 : 10; // Oct=9, Nov=10
+        const day = d <= 31 ? d : d - 31;
+        const candidate = new Date(year, month, day);
+        if (candidate.getDay() === 6) { // Saturday
+          holidayMapSE[formatDate(candidate)] = "Alla helgons dag";
+          break;
+        }
       }
     }
 
-    // Check if date is holiday and return holiday name
-    function getHolidayName(year, month, day) {
+    // Compute Easter Sunday using Anonymous Gregorian algorithm
+    function getEasterSunday(year) {
+      const a = year % 19;
+      const b = Math.floor(year / 100);
+      const c = year % 100;
+      const d = Math.floor(b / 4);
+      const e = b % 4;
+      const f = Math.floor((b + 8) / 25);
+      const g = Math.floor((b - f + 1) / 3);
+      const h = (19 * a + b - d - g + 15) % 30;
+      const i = Math.floor(c / 4);
+      const k = c % 4;
+      const l = (32 + 2 * e + 2 * i - h - k) % 7;
+      const m = Math.floor((a + 11 * h + 22 * l) / 451);
+      const month = Math.floor((h + l - 7 * m + 114) / 31);
+      const day = ((h + l - 7 * m + 114) % 31) + 1;
+      return new Date(year, month - 1, day);
+    }
+
+    // Generate French holidays for a given year
+    function generateFrenchHolidays(year) {
+      holidayMapFR = {};
+
+      // Fixed holidays
+      const fixed = [
+        { month: 1,  day: 1,  name: "Jour de l'An" },
+        { month: 5,  day: 1,  name: "Fête du Travail" },
+        { month: 5,  day: 8,  name: "Victoire 1945" },
+        { month: 7,  day: 14, name: "Fête Nationale" },
+        { month: 8,  day: 15, name: "Assomption" },
+        { month: 11, day: 1,  name: "Toussaint" },
+        { month: 11, day: 11, name: "Armistice 1918" },
+        { month: 12, day: 25, name: "Noël" },
+      ];
+
+      fixed.forEach(h => {
+        const dateStr = `${year}-${String(h.month).padStart(2, '0')}-${String(h.day).padStart(2, '0')}`;
+        holidayMapFR[dateStr] = h.name;
+      });
+
+      // Easter-based movable holidays
+      const easter = getEasterSunday(year);
+
+      // Lundi de Pâques (Easter Monday = Easter + 1)
+      const easterMonday = new Date(easter);
+      easterMonday.setDate(easter.getDate() + 1);
+      holidayMapFR[formatDate(easterMonday)] = "Lundi de Pâques";
+
+      // Ascension (Easter + 39 days)
+      const ascension = new Date(easter);
+      ascension.setDate(easter.getDate() + 39);
+      holidayMapFR[formatDate(ascension)] = "Ascension";
+
+      // Lundi de Pentecôte (Easter + 50 days)
+      const pentecostMonday = new Date(easter);
+      pentecostMonday.setDate(easter.getDate() + 50);
+      holidayMapFR[formatDate(pentecostMonday)] = "Lundi de Pentecôte";
+    }
+
+    function formatDate(d) {
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+
+    // Check if date is a Swedish holiday
+    function getSwedishHolidayName(year, month, day) {
       const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-      return holidayMap[dateStr] || null;
+      return holidayMapSE[dateStr] || null;
+    }
+
+    // Check if date is a French holiday
+    function getFrenchHolidayName(year, month, day) {
+      const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      return holidayMapFR[dateStr] || null;
     }
 
     // Get Gothenburg weather from SMHI
     function getWeather() {
-      // SMHI API for Gothenburg (PointID 71420)
       const url = 'https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/11.97/lat/57.71/data.json';
       
       fetch(url)
         .then(response => response.json())
         .then(data => {
-          // Get current time in correct format
           const now = new Date();
           const currentTime = now.toISOString().slice(0, 13) + ':00:00Z';
           
-          // Find the current weather data
           const currentData = data.timeSeries.find(entry => 
             entry.validTime === currentTime
           );
           
           if (currentData) {
-            // Extract temperature and weather symbol
             const temp = currentData.parameters.find(p => p.name === 't').values[0];
             const weatherSymbol = currentData.parameters.find(p => p.name === 'Wsymb2').values[0];
             
-            // Weather descriptions based on SMHI symbols
             const weatherDescriptions = {
               1: '☀️ Clear sky',
               2: '🌤️ Nearly clear sky',
@@ -202,11 +348,12 @@
     }
 
     // Calendar generation
-    async function generateCalendar() {
+    function generateCalendar() {
       const yearInput = document.getElementById("year");
       const year = parseInt(yearInput.value);
       
-      await fetchHolidays(year);
+      generateSwedishHolidays(year);
+      generateFrenchHolidays(year);
       updateTitle(year);
       const calendarContainer = document.getElementById("calendarContainer");
       calendarContainer.innerHTML = "";
@@ -242,7 +389,7 @@
         const tbody = document.createElement("tbody");
         let firstDayOfMonth = new Date(year, month - 1, 1);
         let dayOfWeek = firstDayOfMonth.getDay();
-        if (dayOfWeek === 0) dayOfWeek = 7; // Adjust Sunday
+        if (dayOfWeek === 0) dayOfWeek = 7;
 
         let week = getWeekNumber(firstDayOfMonth);
         let day = 1;
@@ -250,7 +397,6 @@
         while (day <= daysInMonth) {
           const weekRow = document.createElement("tr");
 
-          // Highlight vacation weeks (29-32)
           if (week >= 29 && week <= 32) {
             weekRow.classList.add("vacation-week");
           }
@@ -258,7 +404,6 @@
           for (let weekday = 1; weekday <= 7; weekday++) {
             const td = document.createElement("td");
 
-            // Mark weekends
             if (weekday === 6 || weekday === 7) {
               td.classList.add("weekend");
             }
@@ -268,22 +413,33 @@
             } else {
               td.textContent = day;
               
-              // Highlight today
               const today = new Date();
               if (year === today.getFullYear() && month === today.getMonth() + 1 && day === today.getDate()) {
                 td.classList.add("today");
                 td.style.backgroundColor = "#ffebee";
               }
 
-              // Check for holidays and add tooltip
-              const holidayName = getHolidayName(year, month, day);
-              if (holidayName) {
-                td.classList.add("holiday");
-                
-                // Create tooltip
+              // Check for Swedish and French holidays
+              const seHoliday = getSwedishHolidayName(year, month, day);
+              const frHoliday = getFrenchHolidayName(year, month, day);
+
+              if (seHoliday && frHoliday) {
+                td.classList.add("holiday-both");
                 const tooltip = document.createElement("div");
                 tooltip.classList.add("tooltip");
-                tooltip.textContent = holidayName;
+                tooltip.textContent = `🇸🇪 ${seHoliday} | 🇫🇷 ${frHoliday}`;
+                td.appendChild(tooltip);
+              } else if (seHoliday) {
+                td.classList.add("holiday-se");
+                const tooltip = document.createElement("div");
+                tooltip.classList.add("tooltip");
+                tooltip.textContent = `🇸🇪 ${seHoliday}`;
+                td.appendChild(tooltip);
+              } else if (frHoliday) {
+                td.classList.add("holiday-fr");
+                const tooltip = document.createElement("div");
+                tooltip.classList.add("tooltip");
+                tooltip.textContent = `🇫🇷 ${frHoliday}`;
                 td.appendChild(tooltip);
               }
 
@@ -292,7 +448,6 @@
             weekRow.appendChild(td);
           }
 
-          // Add week number
           const weekTd = document.createElement("td");
           weekTd.classList.add("week-number");
           weekTd.textContent = week;
@@ -300,7 +455,6 @@
 
           tbody.appendChild(weekRow);
 
-          // Update for next week
           if (day <= daysInMonth) {
             const nextWeekDate = new Date(year, month - 1, day);
             week = getWeekNumber(nextWeekDate);
@@ -327,7 +481,6 @@
     getWeather();
     generateCalendar();
 
-    // Update time every second
     setInterval(getCurrentDateTime, 1000);
   </script>
 </body>
