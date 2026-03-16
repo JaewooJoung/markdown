@@ -119,7 +119,10 @@
   <span id="pageTitle">일정체크용 calendar / </span>
   <span id="currentDate"></span>
   <span id="currentTime"></span>
-  <div id="weatherContainer">Loading Göteborg weather...</div>
+  <div id="weatherContainer">
+    <div id="weatherGoteborg">🇸🇪 Loading Göteborg weather...</div>
+    <div id="weatherLyon">🇫🇷 Loading Lyon weather...</div>
+  </div>
   <div class="legend">
     <span class="legend-item"><span class="legend-color" style="background-color:#ffcccc;"></span> Swedish Holiday</span>
     <span class="legend-item"><span class="legend-color" style="background-color:#fff9c4;"></span> French Holiday</span>
@@ -277,8 +280,66 @@
       return holidayMapFR[dateStr] || null;
     }
 
+    // Weather symbol descriptions (shared)
+    const weatherDescriptions = {
+      1: '☀️ Clear sky',
+      2: '🌤️ Nearly clear sky',
+      3: '⛅ Variable cloudiness',
+      4: '☁️ Halfcloudy',
+      5: '☁️ Cloudy',
+      6: '🌥️ High cloudiness',
+      7: '🌫️ Fog',
+      8: '🌦️ Light rain showers',
+      9: '🌧️ Moderate rain showers',
+      10: '🌧️ Heavy rain showers',
+      15: '❄️ Light snow showers',
+      16: '❄️ Moderate snow showers',
+      17: '❄️ Heavy snow showers',
+      18: '⛈️ Thunder',
+      19: '🌨️ Sleet showers',
+      20: '🌨️ Heavy sleet showers',
+      21: '⚡ Lightning',
+      22: '🌧️ Rain',
+      23: '❄️ Snowfall',
+      24: '🌨️ Sleet',
+      25: '⛈️ Thunderstorm',
+      26: '🧊 Freezing rain'
+    };
+
+    // WMO weather code descriptions (for Open-Meteo)
+    const wmoDescriptions = {
+      0: '☀️ Clear sky',
+      1: '🌤️ Mainly clear',
+      2: '⛅ Partly cloudy',
+      3: '☁️ Overcast',
+      45: '🌫️ Fog',
+      48: '🌫️ Depositing rime fog',
+      51: '🌦️ Light drizzle',
+      53: '🌦️ Moderate drizzle',
+      55: '🌧️ Dense drizzle',
+      56: '🌨️ Light freezing drizzle',
+      57: '🌨️ Dense freezing drizzle',
+      61: '🌦️ Slight rain',
+      63: '🌧️ Moderate rain',
+      65: '🌧️ Heavy rain',
+      66: '🌨️ Light freezing rain',
+      67: '🌨️ Heavy freezing rain',
+      71: '❄️ Slight snowfall',
+      73: '❄️ Moderate snowfall',
+      75: '❄️ Heavy snowfall',
+      77: '❄️ Snow grains',
+      80: '🌦️ Slight rain showers',
+      81: '🌧️ Moderate rain showers',
+      82: '🌧️ Violent rain showers',
+      85: '❄️ Slight snow showers',
+      86: '❄️ Heavy snow showers',
+      95: '⛈️ Thunderstorm',
+      96: '⛈️ Thunderstorm with slight hail',
+      99: '⛈️ Thunderstorm with heavy hail'
+    };
+
     // Get Gothenburg weather from SMHI
-    function getWeather() {
+    function getWeatherGoteborg() {
       const url = 'https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/11.97/lat/57.71/data.json';
       
       fetch(url)
@@ -294,45 +355,50 @@
           if (currentData) {
             const temp = currentData.parameters.find(p => p.name === 't').values[0];
             const weatherSymbol = currentData.parameters.find(p => p.name === 'Wsymb2').values[0];
-            
-            const weatherDescriptions = {
-              1: '☀️ Clear sky',
-              2: '🌤️ Nearly clear sky',
-              3: '⛅ Variable cloudiness',
-              4: '☁️ Halfcloudy',
-              5: '☁️ Cloudy',
-              6: '🌥️ High cloudiness',
-              7: '🌫️ Fog',
-              8: '🌦️ Light rain showers',
-              9: '🌧️ Moderate rain showers',
-              10: '🌧️ Heavy rain showers',
-              15: '❄️ Light snow showers',
-              16: '❄️ Moderate snow showers',
-              17: '❄️ Heavy snow showers',
-              18: '⛈️ Thunder',
-              19: '🌨️ Sleet showers',
-              20: '🌨️ Heavy sleet showers',
-              21: '⚡ Lightning',
-              22: '🌧️ Rain',
-              23: '❄️ Snowfall',
-              24: '🌨️ Sleet',
-              25: '⛈️ Thunderstorm',
-              26: '🧊 Freezing rain'
-            };
-            
             const weatherText = weatherDescriptions[weatherSymbol] || '🌤️ Fair weather';
-            document.getElementById("weatherContainer").innerHTML = 
-              `Göteborg: ${temp.toFixed(1)}°C, ${weatherText} <br>(from Swedish Meteorological and Hydrological Institute)`;
+            document.getElementById("weatherGoteborg").innerHTML = 
+              `🇸🇪 Göteborg: ${temp.toFixed(1)}°C, ${weatherText} <span style="font-size:11px;font-weight:normal;">(SMHI)</span>`;
           } else {
-            document.getElementById("weatherContainer").textContent = 
-              "Göteborg: Weather data not available";
+            document.getElementById("weatherGoteborg").textContent = 
+              "🇸🇪 Göteborg: Weather data not available";
           }
         })
         .catch(error => {
           console.error("Error fetching SMHI weather:", error);
-          document.getElementById("weatherContainer").textContent = 
-            "Göteborg: Weather service unavailable";
+          document.getElementById("weatherGoteborg").textContent = 
+            "🇸🇪 Göteborg: Weather service unavailable";
         });
+    }
+
+    // Get Lyon weather from Open-Meteo (free, no API key needed)
+    function getWeatherLyon() {
+      // Lyon coordinates: 45.76, 4.84
+      const url = 'https://api.open-meteo.com/v1/forecast?latitude=45.76&longitude=4.84&current_weather=true&timezone=Europe/Paris';
+      
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          if (data.current_weather) {
+            const temp = data.current_weather.temperature;
+            const code = data.current_weather.weathercode;
+            const weatherText = wmoDescriptions[code] || '🌤️ Fair weather';
+            document.getElementById("weatherLyon").innerHTML = 
+              `🇫🇷 Lyon: ${temp.toFixed(1)}°C, ${weatherText} <span style="font-size:11px;font-weight:normal;">(Open-Meteo)</span>`;
+          } else {
+            document.getElementById("weatherLyon").textContent = 
+              "🇫🇷 Lyon: Weather data not available";
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching Lyon weather:", error);
+          document.getElementById("weatherLyon").textContent = 
+            "🇫🇷 Lyon: Weather service unavailable";
+        });
+    }
+
+    function getWeather() {
+      getWeatherGoteborg();
+      getWeatherLyon();
     }
 
     // Date/time functions
