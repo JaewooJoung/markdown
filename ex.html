@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>오늘의 환율 변환기</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .container {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    padding: 32px;
+    width: 100%;
+    max-width: 480px;
+  }
+  h1 {
+    color: #1e3c72;
+    font-size: 24px;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+  .status {
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 24px;
+    min-height: 18px;
+  }
+  .status.error { color: #c0392b; }
+  .status.success { color: #27ae60; }
+  .currency-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    padding: 14px 16px;
+    background: #f5f7fa;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .currency-row:focus-within {
+    background: #fff;
+    border-color: #2a5298;
+    box-shadow: 0 4px 12px rgba(42,82,152,0.15);
+  }
+  .flag {
+    font-size: 28px;
+    width: 36px;
+    text-align: center;
+  }
+  .currency-info {
+    flex: 1;
+    min-width: 0;
+  }
+  .currency-code {
+    font-weight: 700;
+    color: #1e3c72;
+    font-size: 14px;
+  }
+  .currency-name {
+    font-size: 11px;
+    color: #888;
+  }
+  input[type="number"] {
+    width: 140px;
+    padding: 10px 12px;
+    border: 1px solid #d0d7de;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: right;
+    color: #1e3c72;
+    background: #fff;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type="number"]:focus {
+    border-color: #2a5298;
+  }
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] { -moz-appearance: textfield; }
+  .refresh-btn {
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px;
+    background: #2a5298;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .refresh-btn:hover { background: #1e3c72; }
+  .refresh-btn:disabled { background: #999; cursor: not-allowed; }
+  @media (max-width: 480px) {
+    input[type="number"] { width: 110px; font-size: 15px; }
+    .flag { font-size: 24px; width: 30px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>💱 오늘의 환율 변환기</h1>
+  <p class="subtitle">아무 칸에나 숫자를 입력하면 자동 변환됩니다</p>
+  <div class="status" id="status">환율 불러오는 중...</div>
+
+  <div class="currency-row">
+    <div class="flag">🇰🇷</div>
+    <div class="currency-info">
+      <div class="currency-code">KRW</div>
+      <div class="currency-name">한국 원</div>
+    </div>
+    <input type="number" id="KRW" data-code="KRW" placeholder="0" step="any">
+  </div>
+
+  <div class="currency-row">
+    <div class="flag">🇸🇪</div>
+    <div class="currency-info">
+      <div class="currency-code">SEK</div>
+      <div class="currency-name">스웨덴 크로나</div>
+    </div>
+    <input type="number" id="SEK" data-code="SEK" placeholder="0" step="any">
+  </div>
+
+  <div class="currency-row">
+    <div class="flag">🇺🇸</div>
+    <div class="currency-info">
+      <div class="currency-code">USD</div>
+      <div class="currency-name">미국 달러</div>
+    </div>
+    <input type="number" id="USD" data-code="USD" placeholder="0" step="any">
+  </div>
+
+  <div class="currency-row">
+    <div class="flag">🇨🇳</div>
+    <div class="currency-info">
+      <div class="currency-code">CNY</div>
+      <div class="currency-name">중국 위안</div>
+    </div>
+    <input type="number" id="CNY" data-code="CNY" placeholder="0" step="any">
+  </div>
+
+  <div class="currency-row">
+    <div class="flag">🇪🇺</div>
+    <div class="currency-info">
+      <div class="currency-code">EUR</div>
+      <div class="currency-name">유로</div>
+    </div>
+    <input type="number" id="EUR" data-code="EUR" placeholder="0" step="any">
+  </div>
+
+  <button class="refresh-btn" id="refreshBtn">🔄 환율 새로고침</button>
+</div>
+
+<script>
+  const CURRENCIES = ['KRW', 'SEK', 'USD', 'CNY', 'EUR'];
+  // KRW 기준으로 1 KRW = ? (백업용 기본값, API 실패 시 사용)
+  let rates = {
+    KRW: 1,
+    SEK: 0.0068,
+    USD: 0.00072,
+    CNY: 0.0052,
+    EUR: 0.00062
+  };
+  let isUpdating = false;
+
+  const statusEl = document.getElementById('status');
+  const refreshBtn = document.getElementById('refreshBtn');
+
+  async function fetchRates() {
+    statusEl.textContent = '환율 불러오는 중...';
+    statusEl.className = 'status';
+    refreshBtn.disabled = true;
+
+    try {
+      // 무료 환율 API (api 키 불필요, KRW 기준)
+      const response = await fetch('https://open.er-api.com/v6/latest/KRW');
+      if (!response.ok) throw new Error('API 응답 오류');
+      const data = await response.json();
+
+      if (data.result === 'success') {
+        rates.KRW = 1;
+        rates.SEK = data.rates.SEK;
+        rates.USD = data.rates.USD;
+        rates.CNY = data.rates.CNY;
+        rates.EUR = data.rates.EUR;
+
+        const date = new Date(data.time_last_update_utc);
+        const dateStr = date.toLocaleDateString('ko-KR', {
+          year: 'numeric', month: 'long', day: 'numeric'
+        });
+        statusEl.textContent = `✓ ${dateStr} 환율 적용됨`;
+        statusEl.className = 'status success';
+
+        // 입력값이 있으면 다시 계산
+        const activeInput = document.querySelector('input:focus') ||
+                           document.querySelector('input[data-has-value="true"]');
+        if (activeInput && activeInput.value) {
+          updateAll(activeInput);
+        }
+      } else {
+        throw new Error('환율 데이터 오류');
+      }
+    } catch (err) {
+      console.error(err);
+      statusEl.textContent = '⚠ 환율 가져오기 실패 (기본값 사용 중)';
+      statusEl.className = 'status error';
+    } finally {
+      refreshBtn.disabled = false;
+    }
+  }
+
+  function updateAll(sourceInput) {
+    if (isUpdating) return;
+    isUpdating = true;
+
+    const sourceCode = sourceInput.dataset.code;
+    const sourceValue = parseFloat(sourceInput.value);
+
+    // 모든 입력의 has-value 표시 초기화
+    document.querySelectorAll('input').forEach(i => {
+      i.dataset.hasValue = 'false';
+    });
+
+    if (isNaN(sourceValue) || sourceInput.value === '') {
+      CURRENCIES.forEach(code => {
+        if (code !== sourceCode) {
+          document.getElementById(code).value = '';
+        }
+      });
+      isUpdating = false;
+      return;
+    }
+
+    sourceInput.dataset.hasValue = 'true';
+
+    // 입력 통화 → KRW 로 환산
+    const inKRW = sourceValue / rates[sourceCode];
+
+    // KRW → 다른 모든 통화로 환산
+    CURRENCIES.forEach(code => {
+      if (code !== sourceCode) {
+        const value = inKRW * rates[code];
+        // 통화별 적정 자릿수
+        const decimals = code === 'KRW' ? 0 : (code === 'CNY' || code === 'SEK' ? 2 : 4);
+        document.getElementById(code).value = value.toFixed(decimals);
+      }
+    });
+
+    isUpdating = false;
+  }
+
+  // 모든 입력 칸에 이벤트 리스너 부착
+  CURRENCIES.forEach(code => {
+    const input = document.getElementById(code);
+    input.addEventListener('input', () => updateAll(input));
+  });
+
+  refreshBtn.addEventListener('click', fetchRates);
+
+  // 페이지 로드 시 환율 가져오기
+  fetchRates();
+</script>
+</body>
+</html>
