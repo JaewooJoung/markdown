@@ -39,11 +39,69 @@
     text-align: center;
     font-size: 12px;
     color: #999;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     min-height: 18px;
   }
   .status.error { color: #c0392b; }
   .status.success { color: #27ae60; }
+
+  /* 포맷 토글 */
+  .format-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding: 10px 14px;
+    background: #f0f3f7;
+    border-radius: 10px;
+  }
+  .format-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #999;
+    transition: color 0.2s;
+    user-select: none;
+  }
+  .format-label.active { color: #1e3c72; }
+  .format-label .example {
+    font-size: 11px;
+    font-weight: 400;
+    color: #888;
+    display: block;
+    font-variant-numeric: tabular-nums;
+  }
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+    flex-shrink: 0;
+  }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: #2a5298;
+    border-radius: 26px;
+    transition: 0.3s;
+  }
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.3s;
+  }
+  .switch input:checked + .slider:before {
+    transform: translateX(24px);
+  }
+
   .currency-row {
     display: flex;
     align-items: center;
@@ -92,9 +150,8 @@
     transition: border-color 0.2s;
     font-variant-numeric: tabular-nums;
   }
-  input[type="text"]:focus {
-    border-color: #2a5298;
-  }
+  input[type="text"]:focus { border-color: #2a5298; }
+
   .refresh-btn {
     width: 100%;
     margin-top: 12px;
@@ -110,9 +167,11 @@
   }
   .refresh-btn:hover { background: #1e3c72; }
   .refresh-btn:disabled { background: #999; cursor: not-allowed; }
+
   @media (max-width: 480px) {
     input[type="text"] { width: 120px; font-size: 15px; }
     .flag { font-size: 24px; width: 30px; }
+    .format-label { font-size: 12px; }
   }
 </style>
 </head>
@@ -121,6 +180,22 @@
   <h1>💱 오늘의 환율 변환기</h1>
   <p class="subtitle">아무 칸에나 숫자를 입력하면 자동 변환됩니다</p>
   <div class="status" id="status">환율 불러오는 중...</div>
+
+  <!-- 숫자 포맷 토글 -->
+  <div class="format-toggle">
+    <div class="format-label active" id="labelUS">
+      영미식
+      <span class="example">11,740.34</span>
+    </div>
+    <label class="switch">
+      <input type="checkbox" id="formatToggle">
+      <span class="slider"></span>
+    </label>
+    <div class="format-label" id="labelEU">
+      유럽식
+      <span class="example">11 740,34</span>
+    </div>
+  </div>
 
   <div class="currency-row">
     <div class="flag">🇰🇷</div>
@@ -137,7 +212,7 @@
       <div class="currency-code">SEK</div>
       <div class="currency-name">스웨덴 크로나</div>
     </div>
-    <input type="text" id="SEK" data-code="SEK" placeholder="0.00" inputmode="decimal">
+    <input type="text" id="SEK" data-code="SEK" placeholder="0" inputmode="decimal">
   </div>
 
   <div class="currency-row">
@@ -146,7 +221,7 @@
       <div class="currency-code">USD</div>
       <div class="currency-name">미국 달러</div>
     </div>
-    <input type="text" id="USD" data-code="USD" placeholder="0.00" inputmode="decimal">
+    <input type="text" id="USD" data-code="USD" placeholder="0" inputmode="decimal">
   </div>
 
   <div class="currency-row">
@@ -155,7 +230,7 @@
       <div class="currency-code">CNY</div>
       <div class="currency-name">중국 위안</div>
     </div>
-    <input type="text" id="CNY" data-code="CNY" placeholder="0.00" inputmode="decimal">
+    <input type="text" id="CNY" data-code="CNY" placeholder="0" inputmode="decimal">
   </div>
 
   <div class="currency-row">
@@ -164,7 +239,7 @@
       <div class="currency-code">EUR</div>
       <div class="currency-name">유로</div>
     </div>
-    <input type="text" id="EUR" data-code="EUR" placeholder="0.00" inputmode="decimal">
+    <input type="text" id="EUR" data-code="EUR" placeholder="0" inputmode="decimal">
   </div>
 
   <button class="refresh-btn" id="refreshBtn">🔄 환율 새로고침</button>
@@ -172,67 +247,126 @@
 
 <script>
   const CURRENCIES = ['KRW', 'SEK', 'USD', 'CNY', 'EUR'];
-  // 통화별 표시 소수점 자릿수
   const DECIMALS = { KRW: 0, SEK: 2, USD: 2, CNY: 2, EUR: 2 };
 
-  // KRW 기준 (백업용 기본값)
   let rates = {
-    KRW: 1,
-    SEK: 0.0068,
-    USD: 0.00072,
-    CNY: 0.0052,
-    EUR: 0.00062
+    KRW: 1, SEK: 0.0068, USD: 0.00072, CNY: 0.0052, EUR: 0.00062
   };
   let isUpdating = false;
 
+  // 'US' = 영미식 (1,234.56), 'EU' = 유럽식 (1 234,56)
+  let formatMode = 'US';
+
   const statusEl = document.getElementById('status');
   const refreshBtn = document.getElementById('refreshBtn');
+  const formatToggle = document.getElementById('formatToggle');
+  const labelUS = document.getElementById('labelUS');
+  const labelEU = document.getElementById('labelEU');
 
-  // 천단위 콤마 + 소수점 포맷
-  function formatNumber(value, decimals) {
-    if (isNaN(value) || value === null) return '';
-    return value.toLocaleString('en-US', {
-      minimumFractionDigits: decimals,
-      maximumFractionDigits: decimals
-    });
+  // 현재 포맷의 구분자 반환
+  function getSeparators() {
+    if (formatMode === 'EU') {
+      return { thousand: '\u00A0', decimal: ',' }; // non-breaking space + 콤마
+    }
+    return { thousand: ',', decimal: '.' };
   }
 
-  // 타이핑 중 콤마 자동 삽입 (예: "1234567.8" -> "1,234,567.8")
+  // 숫자를 현재 모드 형식으로 포맷
+  function formatNumber(value, decimals) {
+    if (isNaN(value) || value === null) return '';
+    const sep = getSeparators();
+    const fixed = value.toFixed(decimals);
+    let [intPart, decPart] = fixed.split('.');
+    const isNeg = intPart.startsWith('-');
+    if (isNeg) intPart = intPart.slice(1);
+    const withThousands = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, sep.thousand);
+    let out = withThousands;
+    if (decPart) out += sep.decimal + decPart;
+    if (isNeg) out = '-' + out;
+    return out;
+  }
+
+  // 타이핑 중 자동 포맷 (커서 위치 유지를 위해 분리)
   function formatWhileTyping(rawStr) {
-    if (rawStr === '' || rawStr === '.' || rawStr === '-') return rawStr;
+    if (rawStr === '' || rawStr === '-') return rawStr;
+    const sep = getSeparators();
 
     let isNegative = rawStr.startsWith('-');
     let s = isNegative ? rawStr.slice(1) : rawStr;
 
-    // 숫자/소수점만 남기기
-    s = s.replace(/[^\d.]/g, '');
-
-    // 소수점은 1개만
-    const firstDot = s.indexOf('.');
-    if (firstDot !== -1) {
-      s = s.slice(0, firstDot + 1) + s.slice(firstDot + 1).replace(/\./g, '');
+    // 천단위 구분자 제거
+    if (sep.thousand === '\u00A0') {
+      s = s.replace(/[\s\u00A0]/g, '');
+    } else {
+      s = s.split(sep.thousand).join('');
     }
 
-    let [intPart, decPart] = s.split('.');
+    // 소수점 표시 통일 (사용자가 . 또는 , 어떤 것을 쳐도 받아들임)
+    // 단, 영미식에서 ','는 천단위, 유럽식에서 '.'는 천단위가 될 수 있으므로
+    // 위에서 천단위는 이미 제거됨. 남은 것 중 소수점 후보 처리.
+    if (formatMode === 'EU') {
+      // 유럽식: ',' 가 소수점, 입력된 '.' 도 소수점으로 받아들임
+      s = s.replace(/\./g, ',');
+      // 숫자와 콤마만 남기기
+      s = s.replace(/[^\d,]/g, '');
+      // 콤마는 1개만 (첫 번째만 유지)
+      const firstComma = s.indexOf(',');
+      if (firstComma !== -1) {
+        s = s.slice(0, firstComma + 1) + s.slice(firstComma + 1).replace(/,/g, '');
+      }
+    } else {
+      // 영미식: '.' 가 소수점, 입력된 ',' 는 위에서 이미 제거됨
+      s = s.replace(/[^\d.]/g, '');
+      const firstDot = s.indexOf('.');
+      if (firstDot !== -1) {
+        s = s.slice(0, firstDot + 1) + s.slice(firstDot + 1).replace(/\./g, '');
+      }
+    }
+
+    // 정수부 / 소수부 분리
+    let intPart, decPart;
+    if (formatMode === 'EU') {
+      [intPart, decPart] = s.split(',');
+    } else {
+      [intPart, decPart] = s.split('.');
+    }
     intPart = intPart || '';
 
-    // 정수부 앞 0 제거
+    // 앞의 0 제거
     intPart = intPart.replace(/^0+(?=\d)/, '');
     if (intPart === '') intPart = decPart !== undefined ? '0' : '';
 
-    // 콤마 삽입
-    const withCommas = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    // 천단위 구분자 삽입
+    const withThousands = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, sep.thousand);
 
-    let out = withCommas;
-    if (decPart !== undefined) out += '.' + decPart;
+    let out = withThousands;
+    if (decPart !== undefined) out += sep.decimal + decPart;
     if (isNegative) out = '-' + out;
-
     return out;
   }
 
+  // 포맷된 문자열을 숫자로 파싱
   function parseNumber(str) {
     if (!str) return NaN;
-    return parseFloat(str.replace(/,/g, ''));
+    const sep = getSeparators();
+    let s = str;
+    if (sep.thousand === '\u00A0') {
+      s = s.replace(/[\s\u00A0]/g, '');
+    } else {
+      s = s.split(sep.thousand).join('');
+    }
+    if (sep.decimal === ',') {
+      s = s.replace(',', '.');
+    }
+    return parseFloat(s);
+  }
+
+  // 포맷 모드 변경 시 모든 입력값 다시 그리기
+  function reformatAllInputs() {
+    // 먼저 현재 모드 직전의 sep으로 파싱하기 위해 임시로 inputs의 raw 숫자값을 저장
+    // 단순화: 토글 시점에는 이미 새 모드로 바뀐 상태이므로,
+    // 토글 이벤트에서 바뀌기 직전의 모드로 파싱하고 새 모드로 포맷한다.
+    // → 이 함수는 토글 핸들러에서 호출되며, 인자로 옛 모드를 받는다.
   }
 
   async function fetchRates() {
@@ -295,7 +429,6 @@
     }
 
     sourceInput.dataset.hasValue = 'true';
-
     const inKRW = sourceValue / rates[sourceCode];
 
     CURRENCIES.forEach(code => {
@@ -316,8 +449,13 @@
       const oldValue = e.target.value;
       const oldCursor = e.target.selectionStart;
 
-      // 커서 앞의 숫자/소수점 개수
-      const digitsBeforeCursor = (oldValue.slice(0, oldCursor).match(/[\d.]/g) || []).length;
+      // 커서 앞의 "의미있는 문자"(숫자/소수점) 개수
+      const sep = getSeparators();
+      const meaningfulRegex = sep.decimal === ','
+        ? /[\d,]/g  // 유럽식: 숫자 + 콤마(소수점)
+        : /[\d.]/g; // 영미식: 숫자 + 점(소수점)
+      const beforeCursor = oldValue.slice(0, oldCursor);
+      const meaningfulCount = (beforeCursor.match(meaningfulRegex) || []).length;
 
       const formatted = formatWhileTyping(oldValue);
       e.target.value = formatted;
@@ -326,24 +464,53 @@
       let newCursor = formatted.length;
       let count = 0;
       for (let i = 0; i < formatted.length; i++) {
-        if (/[\d.]/.test(formatted[i])) {
+        if (meaningfulRegex.test(formatted[i])) {
           count++;
-          if (count === digitsBeforeCursor) {
+          if (count === meaningfulCount) {
             newCursor = i + 1;
             break;
           }
         }
+        meaningfulRegex.lastIndex = 0;
       }
-      e.target.setSelectionRange(newCursor, newCursor);
+      try { e.target.setSelectionRange(newCursor, newCursor); } catch(_) {}
 
       updateAll(input);
     });
 
-    // 포커스 잃을 때 깔끔히 정리
     input.addEventListener('blur', (e) => {
       const val = parseNumber(e.target.value);
       if (!isNaN(val) && e.target.value !== '') {
         e.target.value = formatNumber(val, DECIMALS[code]);
+      }
+    });
+  });
+
+  // 포맷 토글 이벤트
+  formatToggle.addEventListener('change', (e) => {
+    const oldMode = formatMode;
+    // 토글 변경 직전, 옛 모드로 모든 input 값을 숫자로 파싱
+    const oldValues = {};
+    CURRENCIES.forEach(c => {
+      oldValues[c] = parseNumber(document.getElementById(c).value);
+    });
+
+    // 새 모드 적용
+    formatMode = e.target.checked ? 'EU' : 'US';
+    if (formatMode === 'EU') {
+      labelUS.classList.remove('active');
+      labelEU.classList.add('active');
+    } else {
+      labelEU.classList.remove('active');
+      labelUS.classList.add('active');
+    }
+
+    // 새 모드로 다시 포맷
+    CURRENCIES.forEach(c => {
+      const v = oldValues[c];
+      const el = document.getElementById(c);
+      if (!isNaN(v)) {
+        el.value = formatNumber(v, DECIMALS[c]);
       }
     });
   });
