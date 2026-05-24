@@ -1,0 +1,153 @@
+<h2 class="sr-only">ICS 메이커</h2>
+<div style="padding: 1rem 0; max-width: 640px;">
+  <div style="background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.25rem 1.5rem;">
+
+    <div style="display:flex; align-items:center; gap:8px; margin-bottom:1.25rem; padding-bottom:1rem; border-bottom:0.5px solid var(--color-border-tertiary);">
+      <i class="ti ti-calendar-plus" style="font-size:20px; color:var(--color-text-secondary);" aria-hidden="true"></i>
+      <span style="font-size:16px; font-weight:500;">ICS 메이커</span>
+    </div>
+
+    <div style="margin-bottom: 1.25rem;">
+      <label style="display:block; font-size:13px; color:var(--color-text-secondary); margin-bottom:6px;">제목 (SUMMARY)</label>
+      <input type="text" id="summary" value="런치" style="width:100%;" />
+    </div>
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:1.25rem;">
+      <div>
+        <label style="display:block; font-size:13px; color:var(--color-text-secondary); margin-bottom:6px;">시작</label>
+        <input type="datetime-local" id="dtstart" value="2026-06-01T12:00" style="width:100%;" />
+      </div>
+      <div>
+        <label style="display:block; font-size:13px; color:var(--color-text-secondary); margin-bottom:6px;">종료</label>
+        <input type="datetime-local" id="dtend" value="2026-06-01T13:00" style="width:100%;" />
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:1.25rem;">
+      <div>
+        <label style="display:block; font-size:13px; color:var(--color-text-secondary); margin-bottom:6px;">시간대</label>
+        <select id="tzid" style="width:100%;">
+          <option value="Europe/Stockholm" selected>Europe/Stockholm</option>
+          <option value="Asia/Seoul">Asia/Seoul</option>
+          <option value="Europe/Zurich">Europe/Zurich</option>
+          <option value="UTC">UTC</option>
+        </select>
+      </div>
+      <div>
+        <label style="display:block; font-size:13px; color:var(--color-text-secondary); margin-bottom:6px;">장소 (LOCATION)</label>
+        <input type="text" id="location" value="Göteborg" style="width:100%;" />
+      </div>
+    </div>
+
+    <div style="margin-bottom:1.25rem;">
+      <label style="display:block; font-size:13px; color:var(--color-text-secondary); margin-bottom:6px;">설명 (DESCRIPTION)</label>
+      <textarea id="description" rows="2" style="width:100%; resize:vertical;">점심 약속</textarea>
+    </div>
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:1.25rem;">
+      <div>
+        <label style="display:block; font-size:13px; color:var(--color-text-secondary); margin-bottom:6px;">알림</label>
+        <select id="alarm" style="width:100%;">
+          <option value="">없음</option>
+          <option value="-PT10M">10분 전</option>
+          <option value="-PT15M" selected>15분 전</option>
+          <option value="-PT30M">30분 전</option>
+          <option value="-PT1H">1시간 전</option>
+          <option value="-P1D">1일 전</option>
+        </select>
+      </div>
+      <div>
+        <label style="display:block; font-size:13px; color:var(--color-text-secondary); margin-bottom:6px;">반복</label>
+        <select id="rrule" style="width:100%;">
+          <option value="" selected>없음</option>
+          <option value="FREQ=DAILY">매일</option>
+          <option value="FREQ=WEEKLY">매주</option>
+          <option value="FREQ=MONTHLY">매월</option>
+          <option value="FREQ=YEARLY">매년</option>
+        </select>
+      </div>
+    </div>
+
+    <div style="display:flex; gap:10px; align-items:center;">
+      <button id="download" style="flex:1;"><i class="ti ti-download" style="font-size:16px; vertical-align:-2px; margin-right:6px;" aria-hidden="true"></i>.ics 다운로드</button>
+      <button id="preview-btn" style="flex:1;"><i class="ti ti-eye" style="font-size:16px; vertical-align:-2px; margin-right:6px;" aria-hidden="true"></i>미리보기</button>
+    </div>
+
+    <pre id="preview" style="display:none; margin-top:1.25rem; padding:1rem; background:var(--color-background-secondary); border-radius:var(--border-radius-md); font-family:var(--font-mono); font-size:12px; line-height:1.6; overflow-x:auto; white-space:pre-wrap; color:var(--color-text-primary);"></pre>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  function esc(s){
+    return String(s).replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\n/g,'\\n');
+  }
+  function pad(n){ return String(n).padStart(2,'0'); }
+  function localFmt(v){
+    var d = v.replace(/[-:]/g,'').replace('T','T');
+    return d.length===13 ? d+'00' : d;
+  }
+  function utcStamp(){
+    var d=new Date();
+    return d.getUTCFullYear()+pad(d.getUTCMonth()+1)+pad(d.getUTCDate())+'T'+pad(d.getUTCHours())+pad(d.getUTCMinutes())+pad(d.getUTCSeconds())+'Z';
+  }
+  function uid(){
+    return utcStamp().replace('Z','')+'-'+Math.floor(Math.random()*9000+1000)+'@nare.local';
+  }
+  function fold(line){
+    var out='', cur='';
+    for(var i=0;i<line.length;i++){
+      cur+=line[i];
+      if(cur.length>=73){ out+=cur+'\r\n '; cur=''; }
+    }
+    return out+cur;
+  }
+  function buildICS(){
+    var tz = document.getElementById('tzid').value;
+    var startV = document.getElementById('dtstart').value;
+    var endV = document.getElementById('dtend').value;
+    var alarm = document.getElementById('alarm').value;
+    var rrule = document.getElementById('rrule').value;
+    var dtPrefix = tz==='UTC' ? '' : ';TZID='+tz;
+    var startStr = tz==='UTC' ? localFmt(startV)+'Z' : localFmt(startV);
+    var endStr = tz==='UTC' ? localFmt(endV)+'Z' : localFmt(endV);
+
+    var lines = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//NARE//Julia ICS Web//KO',
+      'CALSCALE:GREGORIAN',
+      'BEGIN:VEVENT',
+      'UID:'+uid(),
+      'DTSTAMP:'+utcStamp(),
+      'DTSTART'+dtPrefix+':'+startStr,
+      'DTEND'+dtPrefix+':'+endStr,
+      fold('SUMMARY:'+esc(document.getElementById('summary').value)),
+      fold('DESCRIPTION:'+esc(document.getElementById('description').value)),
+      fold('LOCATION:'+esc(document.getElementById('location').value))
+    ];
+    if(rrule) lines.push('RRULE:'+rrule);
+    if(alarm){
+      lines.push('BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:리마인더','TRIGGER:'+alarm,'END:VALARM');
+    }
+    lines.push('END:VEVENT','END:VCALENDAR');
+    return lines.join('\r\n');
+  }
+  document.getElementById('preview-btn').addEventListener('click', function(){
+    var p=document.getElementById('preview');
+    if(p.style.display==='none'){ p.textContent=buildICS(); p.style.display='block'; }
+    else { p.style.display='none'; }
+  });
+  document.getElementById('download').addEventListener('click', function(){
+    var ics=buildICS();
+    var blob=new Blob([ics],{type:'text/calendar;charset=utf-8'});
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement('a');
+    var name=(document.getElementById('summary').value||'event').replace(/[^\w가-힣]+/g,'_');
+    a.href=url; a.download=name+'.ics';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+})();
+</script>
