@@ -119,9 +119,10 @@
   <span id="pageTitle">일정체크용 calendar / </span>
   <span id="currentDate"></span>
   <span id="currentTime"></span>
-  <div id="weatherContainer">
+<div id="weatherContainer">
     <div id="weatherGoteborg">🇸🇪 Loading Göteborg weather...</div>
     <div id="weatherLyon">🇫🇷 Loading Lyon weather...</div>
+    <div id="moonPhase">🌙 Loading moon phase...</div>
   </div>
   <div class="legend">
     <span class="legend-item"><span class="legend-color" style="background-color:#ffcccc;"></span> Swedish Holiday</span>
@@ -390,7 +391,36 @@
             "🇫🇷 Lyon: Weather service unavailable";
         });
     }
+// Calculate current moon phase (no API needed)
+    function getMoonPhase() {
+      const now = new Date();
+      // Known new moon reference: 2000-01-06 18:14 UTC
+      const knownNewMoon = Date.UTC(2000, 0, 6, 18, 14, 0);
+      const synodicMonth = 29.53058867; // days
+      const daysSince = (now.getTime() - knownNewMoon) / 86400000;
+      let age = daysSince % synodicMonth;
+      if (age < 0) age += synodicMonth;
 
+      const illumination = Math.round((1 - Math.cos((age / synodicMonth) * 2 * Math.PI)) / 2 * 100);
+
+      const phases = [
+        { max: 1.0,   icon: "🌑", name: "New Moon" },
+        { max: 6.4,   icon: "🌒", name: "Waxing Crescent" },
+        { max: 8.4,   icon: "🌓", name: "First Quarter" },
+        { max: 13.8,  icon: "🌔", name: "Waxing Gibbous" },
+        { max: 15.8,  icon: "🌕", name: "Full Moon" },
+        { max: 21.1,  icon: "🌖", name: "Waning Gibbous" },
+        { max: 23.1,  icon: "🌗", name: "Last Quarter" },
+        { max: 28.5,  icon: "🌘", name: "Waning Crescent" },
+        { max: 30.0,  icon: "🌑", name: "New Moon" },
+      ];
+
+      const phase = phases.find(p => age < p.max) || phases[phases.length - 1];
+
+      document.getElementById("moonPhase").innerHTML =
+        `${phase.icon} Moon: ${phase.name}, ${illumination}% illuminated ` +
+        `<span style="font-size:11px;font-weight:normal;">(day ${age.toFixed(1)} of cycle)</span>`;
+    }
     function getWeather() {
       getWeatherGoteborg();
       getWeatherLyon();
