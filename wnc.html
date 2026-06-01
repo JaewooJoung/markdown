@@ -339,33 +339,28 @@
     };
 
     // Get Gothenburg weather from SMHI
+// Get Gothenburg weather from Open-Meteo
     function getWeatherGoteborg() {
-      const url = 'https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/11.97/lat/57.71/data.json';
-      
+      // Göteborg coordinates: 57.71, 11.97
+      const url = 'https://api.open-meteo.com/v1/forecast?latitude=57.71&longitude=11.97&current_weather=true&timezone=Europe/Stockholm';
+
       fetch(url)
         .then(response => response.json())
         .then(data => {
-          const now = new Date();
-          const currentTime = now.toISOString().slice(0, 13) + ':00:00Z';
-          
-          const currentData = data.timeSeries.find(entry => 
-            entry.validTime === currentTime
-          );
-          
-          if (currentData) {
-            const temp = currentData.parameters.find(p => p.name === 't').values[0];
-            const weatherSymbol = currentData.parameters.find(p => p.name === 'Wsymb2').values[0];
-            const weatherText = weatherDescriptions[weatherSymbol] || '🌤️ Fair weather';
-            document.getElementById("weatherGoteborg").innerHTML = 
-              `🇸🇪 Göteborg: ${temp.toFixed(1)}°C, ${weatherText} <span style="font-size:11px;font-weight:normal;">(SMHI)</span>`;
+          if (data.current_weather) {
+            const temp = data.current_weather.temperature;
+            const code = data.current_weather.weathercode;
+            const weatherText = wmoDescriptions[code] || '🌤️ Fair weather';
+            document.getElementById("weatherGoteborg").innerHTML =
+              `🇸🇪 Göteborg: ${temp.toFixed(1)}°C, ${weatherText} <span style="font-size:11px;font-weight:normal;">(Open-Meteo)</span>`;
           } else {
-            document.getElementById("weatherGoteborg").textContent = 
+            document.getElementById("weatherGoteborg").textContent =
               "🇸🇪 Göteborg: Weather data not available";
           }
         })
         .catch(error => {
-          console.error("Error fetching SMHI weather:", error);
-          document.getElementById("weatherGoteborg").textContent = 
+          console.error("Error fetching Göteborg weather:", error);
+          document.getElementById("weatherGoteborg").textContent =
             "🇸🇪 Göteborg: Weather service unavailable";
         });
     }
