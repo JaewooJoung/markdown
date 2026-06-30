@@ -242,15 +242,24 @@
     <input type="text" id="EUR" data-code="EUR" placeholder="0" inputmode="decimal">
   </div>
 
+  <div class="currency-row">
+    <div class="flag">🇬🇧</div>
+    <div class="currency-info">
+      <div class="currency-code">GBP</div>
+      <div class="currency-name">영국 파운드</div>
+    </div>
+    <input type="text" id="GBP" data-code="GBP" placeholder="0" inputmode="decimal">
+  </div>
+
   <button class="refresh-btn" id="refreshBtn">🔄 환율 새로고침</button>
 </div>
 
 <script>
-  const CURRENCIES = ['KRW', 'SEK', 'USD', 'CNY', 'EUR'];
-  const DECIMALS = { KRW: 0, SEK: 2, USD: 2, CNY: 2, EUR: 2 };
+  const CURRENCIES = ['KRW', 'SEK', 'USD', 'CNY', 'EUR', 'GBP'];
+  const DECIMALS = { KRW: 0, SEK: 2, USD: 2, CNY: 2, EUR: 2, GBP: 2 };
 
   let rates = {
-    KRW: 1, SEK: 0.0068, USD: 0.00072, CNY: 0.0052, EUR: 0.00062
+    KRW: 1, SEK: 0.0068, USD: 0.00072, CNY: 0.0052, EUR: 0.00062, GBP: 0.00053
   };
   let isUpdating = false;
 
@@ -385,6 +394,7 @@
         rates.USD = data.rates.USD;
         rates.CNY = data.rates.CNY;
         rates.EUR = data.rates.EUR;
+        rates.GBP = data.rates.GBP;
 
         const date = new Date(data.time_last_update_utc);
         const dateStr = date.toLocaleDateString('ko-KR', {
