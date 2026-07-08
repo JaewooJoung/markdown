@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>일정체크용 calendar</title>
+  <style>
+    h1 {text-align: left;}
+    h2 {text-align: left;}
+    div {text-align: center;}
+    table {
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 5px;
+      text-align: center;
+      position: relative;
+    }
+    .week-number {
+      font-weight: bold;
+      color: blue;
+    }
+    .today {
+      font-weight: bold;
+      color: red;
+      border-radius: 50%;
+      display: inline-block;
+      width: 25px;
+      height: 25px;
+      line-height: 25px;
+      text-align: center;
+    }
+    /* Weekend style (lower priority) */
+    .weekend {
+      background-color: #f0f0f0; /* Light gray */
+    }
+    /* Swedish holiday style (higher priority) */
+    td.holiday-se {
+      background-color: #ffcccc !important; /* Light red */
+      font-weight: bold;
+      cursor: pointer;
+    }
+    /* French holiday style */
+    td.holiday-fr {
+      background-color: #fff9c4 !important; /* Light yellow */
+      font-weight: bold;
+      cursor: pointer;
+    }
+    /* Both Swedish AND French holiday */
+    td.holiday-both {
+      background: linear-gradient(135deg, #ffcccc 50%, #fff9c4 50%) !important;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    /* Busy day (from mysch.json) - crossed out */
+    td.busy {
+      background-image:
+        linear-gradient(to top right, transparent 46%, #d32f2f 46%, #d32f2f 54%, transparent 54%),
+        linear-gradient(to bottom right, transparent 46%, #d32f2f 46%, #d32f2f 54%, transparent 54%);
+      text-decoration: line-through;
+      color: #888;
+    }
+    #schedFallback {
+      display: none;
+      margin: 5px 0;
+      font-size: 13px;
+      color: #b71c1c;
+    }
+    .vacation-week {
+      background-color: #e6f7ff; /* Light blue for weeks 29-32 */
+    }
+    .calendar-table {
+      display: inline-block;
+      margin-right: 20px;
+      margin-bottom: 20px;
+    }
+    #weatherContainer {
+      margin: 10px 0;
+      font-weight: bold;
+    }
+    /* Tooltip styles */
+    .tooltip {
+      position: absolute;
+      background-color: #333;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      white-space: nowrap;
+      z-index: 1000;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      margin-bottom: 5px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .tooltip::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #333 transparent transparent transparent;
+    }
+    td.holiday-se:hover .tooltip,
+    td.holiday-fr:hover .tooltip,
+    td.holiday-both:hover .tooltip {
+      opacity: 1;
+    }
+    /* Legend */
+    .legend {
+      margin: 10px 0;
+      font-size: 14px;
+    }
+    .legend-item {
+      display: inline-block;
+      margin-right: 20px;
+    }
+    .legend-color {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 1px solid #999;
+      vertical-align: middle;
+      margin-right: 4px;
+    }
+  </style>
+</head>
+<body>
+  <span id="pageTitle">일정체크용 calendar / </span>
+  <span id="currentDate"></span>
+  <span id="currentTime"></span>
+<div id="weatherContainer">
+    <div id="weatherGoteborg">🇸🇪 Loading Göteborg weather...</div>
+    <div id="weatherLyon">🇫🇷 Loading Lyon weather...</div>
+    <div id="moonPhase">🌙 Loading moon phase...</div>
+  </div>
+  <div class="legend">
+    <span class="legend-item"><span class="legend-color" style="background-color:#ffcccc;"></span> Swedish Holiday</span>
+    <span class="legend-item"><span class="legend-color" style="background-color:#fff9c4;"></span> French Holiday</span>
+    <span class="legend-item"><span class="legend-color" style="background:linear-gradient(135deg, #ffcccc 50%, #fff9c4 50%);"></span> Both 🇸🇪 &amp; 🇫🇷</span>
+    <span class="legend-item"><span class="legend-color" style="background-image:linear-gradient(to top right, transparent 46%, #d32f2f 46%, #d32f2f 54%, transparent 54%), linear-gradient(to bottom right, transparent 46%, #d32f2f 46%, #d32f2f 54%, transparent 54%);"></span> Busy (mysch.json)</span>
+  </div>
+  <div id="schedFallback">
+    ⚠️ Could not auto-load mysch.json (browser blocks local file fetch).
+    <button onclick="document.getElementById('schedFile').click()">Load mysch.json</button>
+    <input type="file" id="schedFile" accept=".json" style="display:none" onchange="loadScheduleFromFile(this.files[0])">
+  </div>
+  <center>
+    <label for="year">Select Year:</label>
+    <input type="number" id="year" onchange="generateCalendar()">
+    <button onclick="generateCalendar()">Go</button>
+  </center>
+  <div id="calendarContainer"></div>
+
+  <script>
+    // Global variables
+    let holidays = [];
+    let holidayMapSE = {}; // Swedish holidays by date
+    let holidayMapFR = {}; // French holidays by date
+
+    // ===== Busy schedule (mysch.json) =====
+    // Supported JSON formats:
+    //   ["W27", "W39-D4", "W39-D5"]                       -> applies to any displayed year
+    //   {"2026": ["W27", "W39-D4"], "2027": ["W3"]}       -> applies per year
+    // W27      = whole week 27 busy (Mon-Sun)
+    // W39-D4   = week 39, day 4 (D1=Mon ... D7=Sun)
+    let busyGlobal = new Set();
+    let busyByYear = {};
+
+    function normalizeEntry(e) {
+      return String(e).trim().toUpperCase().replace(/\s+/g, '');
+    }
+
+    function applyScheduleData(data) {
+      busyGlobal = new Set();
+      busyByYear = {};
+      if (Array.isArray(data)) {
+        data.forEach(e => busyGlobal.add(normalizeEntry(e)));
+      } else if (data && typeof data === 'object') {
+        Object.keys(data).forEach(yr => {
+          const set = new Set();
+          (data[yr] || []).forEach(e => set.add(normalizeEntry(e)));
+          busyByYear[yr] = set;
+        });
+      }
+      generateCalendar(); // re-render with busy marks
+    }
+
+    function isBusy(year, week, weekday) {
+      const keys = [`W${week}`, `W${week}-D${weekday}`];
+      for (const k of keys) {
+        if (busyGlobal.has(k)) return true;
+        const ySet = busyByYear[String(year)];
+        if (ySet && ySet.has(k)) return true;
+      }
+      return false;
+    }
+
+    function loadSchedule() {
+      fetch('mysch.json', { cache: 'no-store' })
+        .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+        .then(data => {
+          document.getElementById('schedFallback').style.display = 'none';
+          applyScheduleData(data);
+        })
+        .catch(err => {
+          console.warn('mysch.json not auto-loaded:', err);
+          document.getElementById('schedFallback').style.display = 'block';
+        });
+    }
+
+    function loadScheduleFromFile(file) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          applyScheduleData(JSON.parse(reader.result));
+          document.getElementById('schedFallback').style.display = 'none';
+        } catch (e) {
+          alert('Invalid JSON in ' + file.name + ': ' + e.message);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // Generate Swedish holidays for a given year
+    function generateSwedishHolidays(year) {
+      holidayMapSE = {};
+
+      // Fixed Swedish holidays
+      const fixed = [
+        { month: 1,  day: 1,  name: "Nyårsdagen" },
+        { month: 1,  day: 6,  name: "Trettondedag jul" },
+        { month: 5,  day: 1,  name: "Första maj" },
+        { month: 6,  day: 6,  name: "Sveriges nationaldag" },
+        { month: 12, day: 25, name: "Juldagen" },
+        { month: 12, day: 26, name: "Annandag jul" },
+      ];
+
+      fixed.forEach(h => {
+        const dateStr = `${year}-${String(h.month).padStart(2, '0')}-${String(h.day).padStart(2, '0')}`;
+        holidayMapSE[dateStr] = h.name;
+      });
+
+      // Easter-based movable holidays
+      const easter = getEasterSunday(year);
+
+      const movable = [
+        { offset: -2,  name: "Långfredagen" },       // Good Friday
+        { offset: 0,   name: "Påskdagen" },           // Easter Sunday
+        { offset: 1,   name: "Annandag påsk" },       // Easter Monday
+        { offset: 39,  name: "Kristi himmelsfärdsdag" }, // Ascension
+        { offset: 49,  name: "Pingstdagen" },          // Whit Sunday
+      ];
+
+      movable.forEach(h => {
+        const d = new Date(easter);
+        d.setDate(easter.getDate() + h.offset);
+        holidayMapSE[formatDate(d)] = h.name;
+      });
+
+      // Midsommardagen: Saturday between June 20-26
+      for (let d = 20; d <= 26; d++) {
+        const candidate = new Date(year, 5, d); // June = month 5
+        if (candidate.getDay() === 6) { // Saturday
+          holidayMapSE[formatDate(candidate)] = "Midsommardagen";
+          // Midsommarafton (Friday before)
+          const eve = new Date(candidate);
+          eve.setDate(candidate.getDate() - 1);
+          holidayMapSE[formatDate(eve)] = "Midsommarafton";
+          break;
+        }
+      }
+
+      // Alla helgons dag: Saturday between Oct 31 - Nov 6
+      for (let d = 31; d <= 37; d++) {
+        const month = d <= 31 ? 9 : 10; // Oct=9, Nov=10
+        const day = d <= 31 ? d : d - 31;
+        const candidate = new Date(year, month, day);
+        if (candidate.getDay() === 6) { // Saturday
+          holidayMapSE[formatDate(candidate)] = "Alla helgons dag";
+          break;
+        }
+      }
+    }
+
+    // Compute Easter Sunday using Anonymous Gregorian algorithm
+    function getEasterSunday(year) {
+      const a = year % 19;
+      const b = Math.floor(year / 100);
+      const c = year % 100;
+      const d = Math.floor(b / 4);
+      const e = b % 4;
+      const f = Math.floor((b + 8) / 25);
+      const g = Math.floor((b - f + 1) / 3);
+      const h = (19 * a + b - d - g + 15) % 30;
+      const i = Math.floor(c / 4);
+      const k = c % 4;
+      const l = (32 + 2 * e + 2 * i - h - k) % 7;
+      const m = Math.floor((a + 11 * h + 22 * l) / 451);
+      const month = Math.floor((h + l - 7 * m + 114) / 31);
+      const day = ((h + l - 7 * m + 114) % 31) + 1;
+      return new Date(year, month - 1, day);
+    }
+
+    // Generate French holidays for a given year
+    function generateFrenchHolidays(year) {
+      holidayMapFR = {};
+
+      // Fixed holidays
+      const fixed = [
+        { month: 1,  day: 1,  name: "Jour de l'An" },
+        { month: 5,  day: 1,  name: "Fête du Travail" },
+        { month: 5,  day: 8,  name: "Victoire 1945" },
+        { month: 7,  day: 14, name: "Fête Nationale" },
+        { month: 8,  day: 15, name: "Assomption" },
+        { month: 11, day: 1,  name: "Toussaint" },
+        { month: 11, day: 11, name: "Armistice 1918" },
+        { month: 12, day: 25, name: "Noël" },
+      ];
+
+      fixed.forEach(h => {
+        const dateStr = `${year}-${String(h.month).padStart(2, '0')}-${String(h.day).padStart(2, '0')}`;
+        holidayMapFR[dateStr] = h.name;
+      });
+
+      // Easter-based movable holidays
+      const easter = getEasterSunday(year);
+
+      // Lundi de Pâques (Easter Monday = Easter + 1)
+      const easterMonday = new Date(easter);
+      easterMonday.setDate(easter.getDate() + 1);
+      holidayMapFR[formatDate(easterMonday)] = "Lundi de Pâques";
+
+      // Ascension (Easter + 39 days)
+      const ascension = new Date(easter);
+      ascension.setDate(easter.getDate() + 39);
+      holidayMapFR[formatDate(ascension)] = "Ascension";
+
+      // Lundi de Pentecôte (Easter + 50 days)
+      const pentecostMonday = new Date(easter);
+      pentecostMonday.setDate(easter.getDate() + 50);
+      holidayMapFR[formatDate(pentecostMonday)] = "Lundi de Pentecôte";
+    }
+
+    function formatDate(d) {
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+
+    // Check if date is a Swedish holiday
+    function getSwedishHolidayName(year, month, day) {
+      const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      return holidayMapSE[dateStr] || null;
+    }
+
+    // Check if date is a French holiday
+    function getFrenchHolidayName(year, month, day) {
+      const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      return holidayMapFR[dateStr] || null;
+    }
+
+    // Weather symbol descriptions (shared)
+    const weatherDescriptions = {
+      1: '☀️ Clear sky',
+      2: '🌤️ Nearly clear sky',
+      3: '⛅ Variable cloudiness',
+      4: '☁️ Halfcloudy',
+      5: '☁️ Cloudy',
+      6: '🌥️ High cloudiness',
+      7: '🌫️ Fog',
+      8: '🌦️ Light rain showers',
+      9: '🌧️ Moderate rain showers',
+      10: '🌧️ Heavy rain showers',
+      15: '❄️ Light snow showers',
+      16: '❄️ Moderate snow showers',
+      17: '❄️ Heavy snow showers',
+      18: '⛈️ Thunder',
+      19: '🌨️ Sleet showers',
+      20: '🌨️ Heavy sleet showers',
+      21: '⚡ Lightning',
+      22: '🌧️ Rain',
+      23: '❄️ Snowfall',
+      24: '🌨️ Sleet',
+      25: '⛈️ Thunderstorm',
+      26: '🧊 Freezing rain'
+    };
+
+    // WMO weather code descriptions (for Open-Meteo)
+    const wmoDescriptions = {
+      0: '☀️ Clear sky',
+      1: '🌤️ Mainly clear',
+      2: '⛅ Partly cloudy',
+      3: '☁️ Overcast',
+      45: '🌫️ Fog',
+      48: '🌫️ Depositing rime fog',
+      51: '🌦️ Light drizzle',
+      53: '🌦️ Moderate drizzle',
+      55: '🌧️ Dense drizzle',
+      56: '🌨️ Light freezing drizzle',
+      57: '🌨️ Dense freezing drizzle',
+      61: '🌦️ Slight rain',
+      63: '🌧️ Moderate rain',
+      65: '🌧️ Heavy rain',
+      66: '🌨️ Light freezing rain',
+      67: '🌨️ Heavy freezing rain',
+      71: '❄️ Slight snowfall',
+      73: '❄️ Moderate snowfall',
+      75: '❄️ Heavy snowfall',
+      77: '❄️ Snow grains',
+      80: '🌦️ Slight rain showers',
+      81: '🌧️ Moderate rain showers',
+      82: '🌧️ Violent rain showers',
+      85: '❄️ Slight snow showers',
+      86: '❄️ Heavy snow showers',
+      95: '⛈️ Thunderstorm',
+      96: '⛈️ Thunderstorm with slight hail',
+      99: '⛈️ Thunderstorm with heavy hail'
+    };
+
+    // Get Gothenburg weather from SMHI
+// Get Gothenburg weather from Open-Meteo
+    function getWeatherGoteborg() {
+      // Göteborg coordinates: 57.71, 11.97
+      const url = 'https://api.open-meteo.com/v1/forecast?latitude=57.71&longitude=11.97&current_weather=true&timezone=Europe/Stockholm';
+
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          if (data.current_weather) {
+            const temp = data.current_weather.temperature;
+            const code = data.current_weather.weathercode;
+            const weatherText = wmoDescriptions[code] || '🌤️ Fair weather';
+            document.getElementById("weatherGoteborg").innerHTML =
+              `🇸🇪 Göteborg: ${temp.toFixed(1)}°C, ${weatherText} <span style="font-size:11px;font-weight:normal;">(Open-Meteo)</span>`;
+          } else {
+            document.getElementById("weatherGoteborg").textContent =
+              "🇸🇪 Göteborg: Weather data not available";
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching Göteborg weather:", error);
+          document.getElementById("weatherGoteborg").textContent =
+            "🇸🇪 Göteborg: Weather service unavailable";
+        });
+    }
+
+    // Get Lyon weather from Open-Meteo (free, no API key needed)
+    function getWeatherLyon() {
+      // Lyon coordinates: 45.76, 4.84
+      const url = 'https://api.open-meteo.com/v1/forecast?latitude=45.76&longitude=4.84&current_weather=true&timezone=Europe/Paris';
+      
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          if (data.current_weather) {
+            const temp = data.current_weather.temperature;
+            const code = data.current_weather.weathercode;
+            const weatherText = wmoDescriptions[code] || '🌤️ Fair weather';
+            document.getElementById("weatherLyon").innerHTML = 
+              `🇫🇷 Lyon: ${temp.toFixed(1)}°C, ${weatherText} <span style="font-size:11px;font-weight:normal;">(Open-Meteo)</span>`;
+          } else {
+            document.getElementById("weatherLyon").textContent = 
+              "🇫🇷 Lyon: Weather data not available";
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching Lyon weather:", error);
+          document.getElementById("weatherLyon").textContent = 
+            "🇫🇷 Lyon: Weather service unavailable";
+        });
+    }
+// Calculate current moon phase (no API needed)
+    function getMoonPhase() {
+      const now = new Date();
+      // Known new moon reference: 2000-01-06 18:14 UTC
+      const knownNewMoon = Date.UTC(2000, 0, 6, 18, 14, 0);
+      const synodicMonth = 29.53058867; // days
+      const daysSince = (now.getTime() - knownNewMoon) / 86400000;
+      let age = daysSince % synodicMonth;
+      if (age < 0) age += synodicMonth;
+
+      const illumination = Math.round((1 - Math.cos((age / synodicMonth) * 2 * Math.PI)) / 2 * 100);
+
+      const phases = [
+        { max: 1.0,   icon: "🌑", name: "New Moon" },
+        { max: 6.4,   icon: "🌒", name: "Waxing Crescent" },
+        { max: 8.4,   icon: "🌓", name: "First Quarter" },
+        { max: 13.8,  icon: "🌔", name: "Waxing Gibbous" },
+        { max: 15.8,  icon: "🌕", name: "Full Moon" },
+        { max: 21.1,  icon: "🌖", name: "Waning Gibbous" },
+        { max: 23.1,  icon: "🌗", name: "Last Quarter" },
+        { max: 28.5,  icon: "🌘", name: "Waning Crescent" },
+        { max: 30.0,  icon: "🌑", name: "New Moon" },
+      ];
+
+      const phase = phases.find(p => age < p.max) || phases[phases.length - 1];
+
+      document.getElementById("moonPhase").innerHTML =
+        `${phase.icon} Moon: ${phase.name}, ${illumination}% illuminated ` +
+        `<span style="font-size:11px;font-weight:normal;">(day ${age.toFixed(1)} of cycle)</span>`;
+    }
+    function getWeather() {
+      getWeatherGoteborg();
+      getWeatherLyon();
+    }
+
+    // Date/time functions
+    function getCurrentDateTime() {
+      const now = new Date();
+      document.getElementById("currentDate").textContent = now.toDateString();
+      document.getElementById("currentTime").textContent = now.toLocaleTimeString();
+    }
+
+    function updateTitle(year) {
+      document.title = `일정체크용 calendar - ${year}`;
+      document.getElementById('pageTitle').textContent = `일정체크용 calendar - ${year}`;
+    }
+
+    // Calendar generation
+    function generateCalendar() {
+      const yearInput = document.getElementById("year");
+      const year = parseInt(yearInput.value);
+      
+      generateSwedishHolidays(year);
+      generateFrenchHolidays(year);
+      updateTitle(year);
+      const calendarContainer = document.getElementById("calendarContainer");
+      calendarContainer.innerHTML = "";
+
+      for (let month = 1; month <= 12; month++) {
+        const date = new Date(year, month - 1, 1);
+        const monthName = date.toLocaleString('default', { month: 'long' });
+        const daysInMonth = new Date(year, month, 0).getDate();
+
+        const calendarTable = document.createElement("table");
+        calendarTable.classList.add("calendar-table");
+
+        // Create table header
+        const thead = document.createElement("thead");
+        const monthTitleRow = document.createElement("tr");
+        const monthTitleCell = document.createElement("th");
+        monthTitleCell.textContent = monthName;
+        monthTitleCell.colSpan = 8;
+        monthTitleRow.appendChild(monthTitleCell);
+        thead.appendChild(monthTitleRow);
+
+        // Weekday headers
+        const headerRow = document.createElement("tr");
+        ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "WN"].forEach(weekday => {
+          const th = document.createElement("th");
+          th.textContent = weekday;
+          headerRow.appendChild(th);
+        });
+        thead.appendChild(headerRow);
+        calendarTable.appendChild(thead);
+
+        // Create table body
+        const tbody = document.createElement("tbody");
+        let firstDayOfMonth = new Date(year, month - 1, 1);
+        let dayOfWeek = firstDayOfMonth.getDay();
+        if (dayOfWeek === 0) dayOfWeek = 7;
+
+        let week = getWeekNumber(firstDayOfMonth);
+        let day = 1;
+
+        while (day <= daysInMonth) {
+          const weekRow = document.createElement("tr");
+
+          if (week >= 29 && week <= 32) {
+            weekRow.classList.add("vacation-week");
+          }
+
+          for (let weekday = 1; weekday <= 7; weekday++) {
+            const td = document.createElement("td");
+
+            if (weekday === 6 || weekday === 7) {
+              td.classList.add("weekend");
+            }
+
+            if (weekday < dayOfWeek || day > daysInMonth) {
+              td.textContent = "";
+            } else {
+              td.textContent = day;
+              
+              const today = new Date();
+              if (year === today.getFullYear() && month === today.getMonth() + 1 && day === today.getDate()) {
+                td.classList.add("today");
+                td.style.backgroundColor = "#ffebee";
+              }
+
+              // Check for Swedish and French holidays
+              const seHoliday = getSwedishHolidayName(year, month, day);
+              const frHoliday = getFrenchHolidayName(year, month, day);
+
+              if (seHoliday && frHoliday) {
+                td.classList.add("holiday-both");
+                const tooltip = document.createElement("div");
+                tooltip.classList.add("tooltip");
+                tooltip.textContent = `🇸🇪 ${seHoliday} | 🇫🇷 ${frHoliday}`;
+                td.appendChild(tooltip);
+              } else if (seHoliday) {
+                td.classList.add("holiday-se");
+                const tooltip = document.createElement("div");
+                tooltip.classList.add("tooltip");
+                tooltip.textContent = `🇸🇪 ${seHoliday}`;
+                td.appendChild(tooltip);
+              } else if (frHoliday) {
+                td.classList.add("holiday-fr");
+                const tooltip = document.createElement("div");
+                tooltip.classList.add("tooltip");
+                tooltip.textContent = `🇫🇷 ${frHoliday}`;
+                td.appendChild(tooltip);
+              }
+
+              // Busy day from mysch.json (W<week> or W<week>-D<weekday>)
+              if (isBusy(year, week, weekday)) {
+                td.classList.add("busy");
+                td.title = `Busy (W${week}-D${weekday})`;
+              }
+
+              day++;
+            }
+            weekRow.appendChild(td);
+          }
+
+          const weekTd = document.createElement("td");
+          weekTd.classList.add("week-number");
+          weekTd.textContent = week;
+          weekRow.appendChild(weekTd);
+
+          tbody.appendChild(weekRow);
+
+          if (day <= daysInMonth) {
+            const nextWeekDate = new Date(year, month - 1, day);
+            week = getWeekNumber(nextWeekDate);
+            dayOfWeek = nextWeekDate.getDay();
+            if (dayOfWeek === 0) dayOfWeek = 7;
+          }
+        }
+
+        calendarTable.appendChild(tbody);
+        calendarContainer.appendChild(calendarTable);
+      }
+    }
+
+    // Helper function to get week number
+    function getWeekNumber(date) {
+      const januaryFirst = new Date(date.getFullYear(), 0, 1);
+      const daysSinceJanuaryFirst = Math.floor((date - januaryFirst) / 86400000);
+      return Math.ceil((daysSinceJanuaryFirst + januaryFirst.getDay() + 1) / 7);
+    }
+
+    // Initialize
+    document.getElementById('year').value = new Date().getFullYear();
+    getCurrentDateTime();
+    getWeather();
+    getMoonPhase();
+    generateCalendar();
+    loadSchedule();
+
+    setInterval(getCurrentDateTime, 1000);
+  </script>
+</body>
+</html>
