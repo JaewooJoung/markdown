@@ -1,7 +1,8 @@
 {
   "2026": [
-    "W27",
-    "W39-D4",
-    "W39-D5"
+    "W27: 한국 여행 (Korea trip)",
+    "W39-D4: Yazaki SW Joint Review",
+    "W39-D5",
+    { "id": "W45-D2", "note": "MEKRA SteerCo 준비" }
   ]
 }

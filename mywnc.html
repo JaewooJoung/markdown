@@ -107,9 +107,11 @@
     }
     td.holiday-se:hover .tooltip,
     td.holiday-fr:hover .tooltip,
-    td.holiday-both:hover .tooltip {
+    td.holiday-both:hover .tooltip,
+    td.busy:hover .tooltip {
       opacity: 1;
     }
+    td.busy { cursor: pointer; }
     /* Legend */
     .legend {
       margin: 10px 0;
@@ -143,6 +145,7 @@
     <span class="legend-item"><span class="legend-color" style="background-color:#fff9c4;"></span> French Holiday</span>
     <span class="legend-item"><span class="legend-color" style="background:linear-gradient(135deg, #ffcccc 50%, #fff9c4 50%);"></span> Both 🇸🇪 &amp; 🇫🇷</span>
     <span class="legend-item"><span class="legend-color" style="background-image:linear-gradient(to top right, transparent 46%, #d32f2f 46%, #d32f2f 54%, transparent 54%), linear-gradient(to bottom right, transparent 46%, #d32f2f 46%, #d32f2f 54%, transparent 54%);"></span> Busy (mysch.json)</span>
+    <span class="legend-item"><span class="legend-color" style="background-color:#e6f7ff;"></span> 휴가 Vacation (W29–W32)</span>
   </div>
   <div id="schedFallback">
     ⚠️ Could not auto-load mysch.json (browser blocks local file fetch).
@@ -164,40 +167,70 @@
 
     // ===== Busy schedule (mysch.json) =====
     // Supported JSON formats:
-    //   ["W27", "W39-D4", "W39-D5"]                       -> applies to any displayed year
-    //   {"2026": ["W27", "W39-D4"], "2027": ["W3"]}       -> applies per year
-    // W27      = whole week 27 busy (Mon-Sun)
-    // W39-D4   = week 39, day 4 (D1=Mon ... D7=Sun)
-    let busyGlobal = new Set();
-    let busyByYear = {};
+    //   ["W27", "W39-D4: Yazaki review"]                          -> applies to any displayed year
+    //   {"2026": ["W27: 한국 여행", {"id":"W39-D4","note":"SteerCo"}]} -> applies per year
+    // Entry formats:
+    //   "W27"                       whole week 27 busy (Mon-Sun)
+    //   "W39-D4"                    week 39, day 4 (D1=Mon ... D7=Sun)
+    //   "W27: comment here"         with comment (shown as tooltip on hover)
+    //   {"id":"W27","note":"..."}   object form with comment
+    let busyGlobal = new Map();   // key -> note ("" if none)
+    let busyByYear = {};          // year -> Map
 
-    function normalizeEntry(e) {
-      return String(e).trim().toUpperCase().replace(/\s+/g, '');
+    function parseEntry(e) {
+      let id, note = "";
+      if (e && typeof e === 'object') {
+        id = e.id || e.week || "";
+        note = e.note || e.comment || "";
+      } else {
+        const s = String(e);
+        const colon = s.indexOf(':');
+        if (colon >= 0) {
+          id = s.slice(0, colon);
+          note = s.slice(colon + 1).trim();
+        } else {
+          id = s;
+        }
+      }
+      id = String(id).trim().toUpperCase().replace(/\s+/g, '');
+      return id ? { id, note } : null;
     }
 
     function applyScheduleData(data) {
-      busyGlobal = new Set();
+      busyGlobal = new Map();
       busyByYear = {};
+      const addTo = (map, e) => {
+        const p = parseEntry(e);
+        if (p) map.set(p.id, p.note);
+      };
       if (Array.isArray(data)) {
-        data.forEach(e => busyGlobal.add(normalizeEntry(e)));
+        data.forEach(e => addTo(busyGlobal, e));
       } else if (data && typeof data === 'object') {
         Object.keys(data).forEach(yr => {
-          const set = new Set();
-          (data[yr] || []).forEach(e => set.add(normalizeEntry(e)));
-          busyByYear[yr] = set;
+          const map = new Map();
+          (data[yr] || []).forEach(e => addTo(map, e));
+          busyByYear[yr] = map;
         });
       }
       generateCalendar(); // re-render with busy marks
     }
 
-    function isBusy(year, week, weekday) {
+    // Returns null if not busy, otherwise { notes: [ ... ] } (notes may be empty)
+    function getBusyInfo(year, week, weekday) {
       const keys = [`W${week}`, `W${week}-D${weekday}`];
-      for (const k of keys) {
-        if (busyGlobal.has(k)) return true;
-        const ySet = busyByYear[String(year)];
-        if (ySet && ySet.has(k)) return true;
+      const maps = [busyGlobal, busyByYear[String(year)]].filter(Boolean);
+      let busy = false;
+      const notes = [];
+      for (const map of maps) {
+        for (const k of keys) {
+          if (map.has(k)) {
+            busy = true;
+            const n = map.get(k);
+            if (n) notes.push(n);
+          }
+        }
       }
-      return false;
+      return busy ? { notes } : null;
     }
 
     function loadSchedule() {
@@ -620,9 +653,22 @@
               }
 
               // Busy day from mysch.json (W<week> or W<week>-D<weekday>)
-              if (isBusy(year, week, weekday)) {
+              const busyInfo = getBusyInfo(year, week, weekday);
+              if (busyInfo) {
                 td.classList.add("busy");
-                td.title = `Busy (W${week}-D${weekday})`;
+                const label = busyInfo.notes.length
+                  ? `📌 ${busyInfo.notes.join(' | ')}`
+                  : `📌 Busy (W${week}-D${weekday})`;
+                td.title = busyInfo.notes.join(' | ') || `Busy (W${week}-D${weekday})`;
+                const existingTooltip = td.querySelector(".tooltip");
+                if (existingTooltip) {
+                  existingTooltip.textContent += ` | ${label}`;
+                } else {
+                  const tooltip = document.createElement("div");
+                  tooltip.classList.add("tooltip");
+                  tooltip.textContent = label;
+                  td.appendChild(tooltip);
+                }
               }
 
               day++;
