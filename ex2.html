@@ -1,837 +1,590 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>환율 + 국채금리</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>환율 · 10년물 국채</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+  }
+  .app {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 16px 44px rgba(0,0,0,0.3);
+    padding: 14px;
+    width: 100%;
+    max-width: 460px;
+  }
 
-    body {
-      background: linear-gradient(145deg, #0b1a33 0%, #1d3b6a 100%);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
-    }
+  /* ── 헤더: 제목 + 상태 + 컨트롤을 한 줄에 ── */
+  header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .titles { flex: 1; min-width: 0; }
+  h1 {
+    font-size: 14px;
+    color: #1e3c72;
+    line-height: 1.2;
+  }
+  #status {
+    font-size: 10.5px;
+    color: #98a2b3;
+    line-height: 1.35;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  #status .ok { color: #1e8449; }
+  #status .bad { color: #c0392b; }
 
-    .glass-card {
-      max-width: 520px;
-      width: 100%;
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border-radius: 40px;
-      padding: 28px 24px 32px;
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.06);
-      color: #f0f4fe;
-      transition: all 0.2s;
-    }
+  .ctrl { display: flex; gap: 6px; flex-shrink: 0; }
+  .ctrl button {
+    border: 1px solid #d8dee7;
+    background: #fff;
+    color: #1e3c72;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 6px 8px;
+    cursor: pointer;
+    font-variant-numeric: tabular-nums;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .ctrl button:hover { background: #f0f3f7; border-color: #2a5298; }
+  .ctrl button:focus-visible { outline: 2px solid #2a5298; outline-offset: 1px; }
+  .ctrl button:disabled { opacity: 0.45; cursor: not-allowed; }
+  #refreshBtn { font-size: 13px; padding: 6px 9px; }
+  #refreshBtn.spin { animation: sp 0.8s linear infinite; }
+  @keyframes sp { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) {
+    #refreshBtn.spin { animation: none; }
+  }
 
-    h1 {
-      font-size: 26px;
-      font-weight: 700;
-      letter-spacing: -0.3px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 4px;
-    }
-    h1 small {
-      font-size: 15px;
-      font-weight: 400;
-      color: rgba(255, 255, 255, 0.5);
-      margin-left: auto;
-    }
-    .sub {
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.5);
-      margin-bottom: 18px;
-      border-left: 2px solid rgba(255, 215, 0, 0.3);
-      padding-left: 12px;
-    }
+  /* ── 통합 행: 국채금리 + 환전 입력 ── */
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    margin-bottom: 5px;
+    background: #f5f7fa;
+    border-radius: 11px;
+    border: 1.5px solid transparent;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .row:focus-within {
+    background: #fff;
+    border-color: #2a5298;
+  }
+  .flag { font-size: 21px; flex-shrink: 0; }
 
-    .status {
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.5);
-      min-height: 22px;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .status.success { color: #7ae0b0; }
-    .status.error { color: #f7a1a1; }
+  .bond { flex: 1; min-width: 0; }
+  .bond-top {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    white-space: nowrap;
+  }
+  .country {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #1e3c72;
+  }
+  .yield {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e3c72;
+    font-variant-numeric: tabular-nums;
+  }
+  .badge {
+    font-size: 8.5px;
+    font-weight: 700;
+    padding: 1px 4px;
+    border-radius: 3px;
+    letter-spacing: 0.2px;
+    background: #eceff3;
+    color: #8a94a0;
+  }
+  .badge.live { background: #e3f6ea; color: #1e8449; }
+  .bond-note {
+    font-size: 9.5px;
+    color: #98a2b3;
+    line-height: 1.3;
+    margin-top: 1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-    /* 토글 - 글로벌 */
-    .toggle-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 6px 14px 6px 18px;
-      border-radius: 40px;
-      margin-bottom: 22px;
-      border: 1px solid rgba(255, 255, 255, 0.04);
-    }
-    .toggle-label {
-      font-size: 13px;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      color: rgba(255, 255, 255, 0.6);
-    }
-    .toggle-label .ex {
-      font-size: 10px;
-      font-weight: 400;
-      color: rgba(255, 255, 255, 0.3);
-    }
-    .toggle-label.active { color: #fff; }
+  input[type="text"] {
+    width: 108px;
+    flex-shrink: 0;
+    padding: 7px 8px;
+    border: 1px solid #d8dee7;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: right;
+    color: #1e3c72;
+    background: #fff;
+    outline: none;
+    font-variant-numeric: tabular-nums;
+  }
+  input[type="text"]:focus { border-color: #2a5298; }
 
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 42px;
-      height: 24px;
-      flex-shrink: 0;
-    }
-    .switch input { opacity: 0; width: 0; height: 0; }
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      inset: 0;
-      background-color: rgba(255, 255, 255, 0.2);
-      border-radius: 24px;
-      transition: 0.3s;
-    }
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 18px;
-      width: 18px;
-      left: 3px;
-      bottom: 3px;
-      background-color: white;
-      border-radius: 50%;
-      transition: 0.3s;
-    }
-    .switch input:checked + .slider {
-      background-color: #f7c948;
-    }
-    .switch input:checked + .slider:before {
-      transform: translateX(18px);
-    }
+  .cur {
+    width: 42px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+  .cur-code {
+    font-size: 12px;
+    font-weight: 700;
+    color: #1e3c72;
+    line-height: 1.2;
+  }
+  .cur-name {
+    font-size: 9px;
+    color: #98a2b3;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
 
-    /* 통화 행 */
-    .currency-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 12px 8px 14px;
-      margin-bottom: 6px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.02);
-      transition: 0.15s;
-      border: 1px solid transparent;
-    }
-    .currency-row:hover {
-      background: rgba(255, 255, 255, 0.05);
-    }
-    .currency-row:focus-within {
-      background: rgba(255, 255, 255, 0.07);
-      border-color: rgba(255, 215, 0, 0.25);
-      box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.05);
-    }
+  /* ── 푸터 ── */
+  footer {
+    margin-top: 8px;
+    font-size: 9.5px;
+    color: #a8b0bd;
+    line-height: 1.5;
+  }
+  footer a { color: #6b86b8; }
+  details summary {
+    cursor: pointer;
+    color: #98a2b3;
+    margin-bottom: 4px;
+  }
+  details pre {
+    padding: 7px;
+    background: #f5f7fa;
+    border-radius: 6px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: 9px;
+    line-height: 1.45;
+    color: #6b7280;
+    margin-bottom: 5px;
+  }
+  .proxy-line {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 5px;
+  }
+  .proxy-line label { cursor: pointer; }
 
-    .flag {
-      font-size: 26px;
-      width: 38px;
-      text-align: center;
-    }
-    .currency-meta {
-      flex: 1;
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
-      line-height: 1.2;
-    }
-    .currency-code {
-      font-weight: 700;
-      font-size: 15px;
-      letter-spacing: -0.2px;
-      color: #fff;
-    }
-    .currency-name {
-      font-size: 11px;
-      color: rgba(255, 255, 255, 0.4);
-    }
-    input[type="text"] {
-      width: 140px;
-      padding: 8px 12px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 16px;
-      font-size: 17px;
-      font-weight: 600;
-      text-align: right;
-      color: #fff;
-      outline: none;
-      transition: 0.2s;
-      font-variant-numeric: tabular-nums;
-    }
-    input[type="text"]:focus {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: #f7c948;
-      box-shadow: 0 0 0 3px rgba(247, 201, 72, 0.1);
-    }
-    input[type="text"]::placeholder {
-      color: rgba(255, 255, 255, 0.2);
-      font-weight: 400;
-    }
-
-    .btn {
-      width: 100%;
-      margin-top: 16px;
-      padding: 14px;
-      background: rgba(255, 215, 0, 0.12);
-      border: 1px solid rgba(255, 215, 0, 0.15);
-      color: #f7c948;
-      font-weight: 600;
-      font-size: 14px;
-      border-radius: 40px;
-      cursor: pointer;
-      transition: 0.2s;
-      backdrop-filter: blur(4px);
-      letter-spacing: 0.3px;
-    }
-    .btn:hover {
-      background: rgba(255, 215, 0, 0.2);
-      border-color: rgba(255, 215, 0, 0.3);
-      transform: scale(0.98);
-    }
-    .btn:disabled {
-      opacity: 0.3;
-      pointer-events: none;
-    }
-
-    .divider {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
-      margin: 28px 0 20px;
-    }
-
-    .bond-header {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      margin-bottom: 4px;
-    }
-    .bond-header h2 {
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: -0.3px;
-    }
-    .bond-header span {
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.3);
-    }
-
-    .bond-status {
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.4);
-      min-height: 22px;
-      margin-bottom: 12px;
-    }
-    .bond-status.success { color: #7ae0b0; }
-    .bond-status.error { color: #f7a1a1; }
-
-    .bond-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 12px 8px 14px;
-      margin-bottom: 5px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid transparent;
-      transition: 0.15s;
-    }
-    .bond-row:hover {
-      background: rgba(255, 255, 255, 0.04);
-    }
-    .bond-flag {
-      font-size: 22px;
-      width: 34px;
-      text-align: center;
-    }
-    .bond-info {
-      flex: 1;
-      min-width: 0;
-    }
-    .bond-country {
-      font-weight: 600;
-      font-size: 14px;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-    .bond-note {
-      font-size: 10px;
-      color: rgba(255, 255, 255, 0.3);
-      letter-spacing: -0.1px;
-    }
-    .badge {
-      font-size: 8px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 40px;
-      background: rgba(255, 215, 0, 0.1);
-      color: #f7c948;
-      letter-spacing: 0.3px;
-      border: 1px solid rgba(255, 215, 0, 0.05);
-    }
-    .badge.manual {
-      background: rgba(255, 255, 255, 0.04);
-      color: rgba(255, 255, 255, 0.3);
-      border-color: transparent;
-    }
-    .bond-yield {
-      font-size: 18px;
-      font-weight: 700;
-      font-variant-numeric: tabular-nums;
-      color: #fff;
-      min-width: 70px;
-      text-align: right;
-    }
-    .bond-bar {
-      width: 100%;
-      height: 3px;
-      background: rgba(255, 255, 255, 0.06);
-      border-radius: 4px;
-      margin-top: 4px;
-      overflow: hidden;
-    }
-    .bond-bar span {
-      display: block;
-      height: 100%;
-      background: linear-gradient(90deg, #f7c948, #f5a623);
-      border-radius: 4px;
-    }
-
-    .diag {
-      margin-top: 12px;
-      font-size: 11px;
-      color: rgba(255, 255, 255, 0.3);
-    }
-    .diag summary {
-      cursor: pointer;
-      text-align: center;
-      padding: 4px 0;
-      border-radius: 30px;
-      background: rgba(255, 255, 255, 0.02);
-    }
-    .diag pre {
-      margin-top: 8px;
-      padding: 12px 14px;
-      background: rgba(0, 0, 0, 0.25);
-      border-radius: 18px;
-      white-space: pre-wrap;
-      word-break: break-word;
-      font-size: 10px;
-      line-height: 1.6;
-      color: rgba(255, 255, 255, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.03);
-    }
-
-    .source-note {
-      text-align: center;
-      font-size: 10px;
-      color: rgba(255, 255, 255, 0.2);
-      margin-top: 18px;
-      line-height: 1.7;
-      letter-spacing: 0.2px;
-    }
-    .source-note a {
-      color: rgba(255, 215, 0, 0.4);
-      text-decoration: none;
-      border-bottom: 1px dotted rgba(255, 215, 0, 0.1);
-    }
-    .source-note a:hover {
-      color: #f7c948;
-    }
-
-    @media (max-width: 480px) {
-      .glass-card { padding: 20px 16px; }
-      input[type="text"] { width: 100px; font-size: 15px; }
-      .flag { font-size: 22px; width: 32px; }
-      .bond-flag { font-size: 20px; width: 30px; }
-      .bond-yield { font-size: 16px; min-width: 60px; }
-    }
-  </style>
+  @media (max-width: 400px) {
+    .app { padding: 11px; }
+    input[type="text"] { width: 86px; font-size: 13px; padding: 6px 7px; }
+    .flag { font-size: 19px; }
+    .country { font-size: 11.5px; }
+    .yield { font-size: 13px; }
+    .cur { width: 38px; }
+    .row { gap: 6px; padding: 6px 8px; }
+  }
+</style>
 </head>
 <body>
-<div class="glass-card">
-  <h1>
-    💱 환율 · 국채
-    <small>실시간</small>
-  </h1>
-  <div class="sub">숫자 입력 → 자동 변환 · 금리 배지로 출처 확인</div>
-  <div class="status" id="status">환율 불러오는 중…</div>
+<div class="app">
 
-  <!-- 포맷 토글 -->
-  <div class="toggle-wrap">
-    <div class="toggle-label active" id="labelUS">영미식 <span class="ex">1,234.56</span></div>
-    <label class="switch">
-      <input type="checkbox" id="formatToggle">
-      <span class="slider"></span>
-    </label>
-    <div class="toggle-label" id="labelEU">유럽식 <span class="ex">1 234,56</span></div>
-  </div>
+  <header>
+    <div class="titles">
+      <h1>환율 · 10년물 국채</h1>
+      <div id="status">불러오는 중…</div>
+    </div>
+    <div class="ctrl">
+      <button id="fmtBtn" title="숫자 표기 방식 바꾸기">1,234.56</button>
+      <button id="refreshBtn" title="환율·금리 새로고침" aria-label="새로고침">↻</button>
+    </div>
+  </header>
 
-  <!-- 통화행 -->
-  <div id="currencyList"></div>
+  <div id="rows"></div>
 
-  <button class="btn" id="refreshBtn">⟳ 환율 새로고침</button>
-
-  <div class="divider"></div>
-
-  <div class="bond-header">
-    <h2>📈 10년물 국채</h2>
-    <span>배지 = 출처</span>
-  </div>
-
-  <!-- 프록시 토글 -->
-  <div class="toggle-wrap" style="margin-bottom:14px; padding:4px 12px 4px 16px;">
-    <div class="toggle-label" style="font-size:12px;">CORS 프록시</div>
-    <label class="switch">
+  <footer>
+    <details id="diag" hidden>
+      <summary>조회 실패 상세</summary>
+      <pre id="diagBody"></pre>
+    </details>
+    금리 출처: <a href="https://data.ecb.europa.eu/help/api/data" target="_blank" rel="noopener">ECB</a> ·
+    <a href="https://developer.api.riksbank.se/apis" target="_blank" rel="noopener">Riksbank</a> ·
+    <a href="https://stooq.com/" target="_blank" rel="noopener">stooq</a>(프록시 경유) · 환율 open.er-api.com
+    <div class="proxy-line">
       <input type="checkbox" id="proxyToggle" checked>
-      <span class="slider"></span>
-    </label>
-    <div class="toggle-label" style="font-size:12px;" id="proxyState">사용 <span class="ex">6개국</span></div>
-  </div>
+      <label for="proxyToggle">CORS 프록시 사용 (끄면 유로존·스웨덴만 실시간)</label>
+    </div>
+  </footer>
 
-  <div class="bond-status" id="bondStatus"></div>
-  <div id="bondList"></div>
-  <button class="btn" id="bondRefreshBtn">⟳ 국채 금리 새로고침</button>
-
-  <details class="diag" id="bondDiag">
-    <summary>조회 실패 상세</summary>
-    <pre id="bondDiagBody"></pre>
-  </details>
-
-  <p class="source-note">
-    ECB · Riksbank · stooq (프록시) · 실패 시 기준값
-  </p>
 </div>
 
 <script>
-  (function() {
-    // ── 통화 설정 ──
-    const CURRENCIES = ['KRW', 'SEK', 'USD', 'CNY', 'EUR', 'GBP'];
-    const DECIMALS = { KRW: 0, SEK: 2, USD: 2, CNY: 2, EUR: 2, GBP: 2 };
-    const FLAGS = { KRW:'🇰🇷', SEK:'🇸🇪', USD:'🇺🇸', CNY:'🇨🇳', EUR:'🇪🇺', GBP:'🇬🇧' };
-    const NAMES = { KRW:'한국 원', SEK:'스웨덴 크로나', USD:'미국 달러', CNY:'중국 위안', EUR:'유로', GBP:'영국 파운드' };
+  // ═══════════════════════════════════════════════════════
+  // 통화 + 10년물 국채를 한 행으로 합친 데이터
+  //   value/date = 조회 실패 시 표시할 기준값(Trading Economics)
+  // ═══════════════════════════════════════════════════════
+  const ITEMS = [
+    { cur:'KRW', curName:'한국 원',       dec:0, flag:'🇰🇷', cc:'KR', country:'대한민국', note:'국고채 10년',     value:4.39, date:'2026-09-08', src:null },
+    { cur:'SEK', curName:'크로나',        dec:2, flag:'🇸🇪', cc:'SE', country:'스웨덴',   note:'Swedish 10Y',     value:3.08, date:'2026-09-08', src:null },
+    { cur:'USD', curName:'달러',          dec:2, flag:'🇺🇸', cc:'US', country:'미국',     note:'US Treasury 10Y', value:4.80, date:'2026-09-09', src:null },
+    { cur:'CNY', curName:'위안',          dec:2, flag:'🇨🇳', cc:'CN', country:'중국',     note:'China 10Y',       value:1.68, date:'2026-09-09', src:null },
+    { cur:'EUR', curName:'유로',          dec:2, flag:'🇪🇺', cc:'EU', country:'유로존',   note:'독일 Bund 10Y',   value:3.42, date:'2026-09-09', src:null },
+    { cur:'GBP', curName:'파운드',        dec:2, flag:'🇬🇧', cc:'GB', country:'영국',     note:'UK Gilt 10Y',     value:5.24, date:'2026-09-09', src:null }
+  ];
 
-    let rates = { KRW:1, SEK:0.0068, USD:0.00072, CNY:0.0052, EUR:0.00062, GBP:0.00053 };
-    let formatMode = 'US'; // 'US' or 'EU'
-    let isUpdating = false;
+  const CURRENCIES = ITEMS.map(i => i.cur);
+  const DECIMALS = Object.fromEntries(ITEMS.map(i => [i.cur, i.dec]));
 
-    const statusEl = document.getElementById('status');
-    const refreshBtn = document.getElementById('refreshBtn');
-    const formatToggle = document.getElementById('formatToggle');
-    const labelUS = document.getElementById('labelUS');
-    const labelEU = document.getElementById('labelEU');
+  let rates = { KRW:1, SEK:0.0068, USD:0.00072, CNY:0.0052, EUR:0.00062, GBP:0.00053 };
+  let formatMode = 'US';          // 'US' = 1,234.56 / 'EU' = 1 234,56
+  let isUpdating = false;
+  let rateMsg = '', bondMsg = '';
 
-    // ── 국채 데이터 ──
-    const BONDS = [
-      { code:'KR', flag:'🇰🇷', country:'대한민국', note:'국고채 10년', value:4.39, date:'2026-09-08', src:null },
-      { code:'SE', flag:'🇸🇪', country:'스웨덴', note:'Swedish 10Y', value:3.08, date:'2026-09-08', src:null },
-      { code:'US', flag:'🇺🇸', country:'미국', note:'US Treasury 10Y', value:4.80, date:'2026-09-09', src:null },
-      { code:'CN', flag:'🇨🇳', country:'중국', note:'China 10Y', value:1.68, date:'2026-09-09', src:null },
-      { code:'EU', flag:'🇪🇺', country:'유로존', note:'독일 Bund 10Y', value:3.42, date:'2026-09-09', src:null },
-      { code:'GB', flag:'🇬🇧', country:'영국', note:'UK Gilt 10Y', value:5.24, date:'2026-09-09', src:null }
-    ];
+  const PROXY = {
+    enabled: true,
+    build: url => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url)
+  };
+  const STOOQ_SYMBOL = { KR:'10YKRY.B', SE:'10YSEY.B', US:'10YUSY.B', CN:'10YCNY.B', DE:'10YDEY.B', GB:'10YUKY.B' };
 
-    // ── 프록시 ──
-    const PROXY = {
-      enabled: true,
-      build: url => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url)
-    };
-
-    const STOOQ_SYMBOL = {
-      KR:'10YKRY.B', SE:'10YSEY.B', US:'10YUSY.B',
-      CN:'10YCNY.B', DE:'10YDEY.B', GB:'10YUKY.B'
-    };
-
-    const BOND_SOURCES = {
-      KR: [['stooq', () => fetchStooq('KR')]],
-      SE: [['Riksbank', fetchRiksbank], ['stooq', () => fetchStooq('SE')]],
-      US: [['stooq', () => fetchStooq('US')]],
-      CN: [['stooq', () => fetchStooq('CN')]],
-      EU: [['ECB', fetchECB], ['stooq', () => fetchStooq('DE')]],
-      GB: [['stooq', () => fetchStooq('GB')]]
-    };
-
-    function splitCsvLine(line) {
-      const out=[]; let cur='', q=false;
-      for(let i=0;i<line.length;i++){
-        const ch=line[i];
-        if(ch==='"' && q && line[i+1]==='"'){ cur+='"'; i++; }
-        else if(ch==='"') q=!q;
-        else if(ch===',' && !q){ out.push(cur); cur=''; }
-        else cur+=ch;
-      }
-      out.push(cur);
-      return out.map(s=>s.trim());
-    }
-
-    function withTimeout(p, ms, label){
-      return Promise.race([
-        p,
-        new Promise((_,rej)=>setTimeout(()=>rej(new Error(label+' 타임아웃')), ms))
-      ]);
-    }
-
-    async function fetchECB(){
-      const url='https://data-api.ecb.europa.eu/service/data/FM/D.U2.EUR.4F.BB.U2_10Y.YLD?lastNObservations=1&format=csvdata';
-      const res=await withTimeout(fetch(url,{cache:'no-store'}),8000,'ECB');
-      if(!res.ok)throw new Error('HTTP '+res.status);
-      const txt=await res.text();
-      const lines=txt.trim().split(/\r?\n/);
-      if(lines.length<2)throw new Error('빈 응답');
-      const h=splitCsvLine(lines[0]);
-      const r=splitCsvLine(lines[lines.length-1]);
-      const v=parseFloat(r[h.indexOf('OBS_VALUE')]);
-      if(!isFinite(v))throw new Error('값 파싱 실패');
-      const ti=h.indexOf('TIME_PERIOD');
-      return { value:v, date: ti>=0 ? r[ti] : '' };
-    }
-
-    async function fetchRiksbank(){
-      const url='https://api.riksbank.se/swea/v1/Observations/Latest/SEGVB10YC';
-      const res=await withTimeout(fetch(url,{cache:'no-store'}),8000,'Riksbank');
-      if(!res.ok)throw new Error('HTTP '+res.status);
-      const d=await res.json();
-      const o=Array.isArray(d)?d[d.length-1]:d;
-      const v=parseFloat(o.value!==undefined?o.value:o.Value);
-      if(!isFinite(v))throw new Error('값 파싱 실패');
-      return { value:v, date: o.date||o.Date||'' };
-    }
-
-    async function fetchStooq(cc){
-      if(!PROXY.enabled)throw new Error('프록시 꺼짐');
-      const sym=STOOQ_SYMBOL[cc];
-      if(!sym)throw new Error('심볼 없음');
-      const target='https://stooq.com/q/l/?s='+sym.toLowerCase()+'&f=sd2t2ohlcv&h&e=csv';
-      const res=await withTimeout(fetch(PROXY.build(target),{cache:'no-store'}),12000,'stooq');
-      if(!res.ok)throw new Error('HTTP '+res.status);
-      const txt=await res.text();
-      const lines=txt.trim().split(/\r?\n/);
-      if(lines.length<2)throw new Error('빈 응답');
-      const h=splitCsvLine(lines[0]).map(s=>s.toLowerCase());
-      const r=splitCsvLine(lines[1]);
-      const ci=h.indexOf('close');
-      if(ci<0)throw new Error('close 컬럼 없음');
-      const v=parseFloat(r[ci]);
-      if(!isFinite(v))throw new Error('값 없음');
-      const di=h.indexOf('date');
-      return { value:v, date: di>=0 ? r[di] : '' };
-    }
-
-    async function resolveBond(b){
-      const errs=[];
-      for(const [name,fn] of (BOND_SOURCES[b.code]||[])){
-        try{
-          const r=await fn();
-          return {...r, src:name};
-        }catch(e){
-          errs.push(name+' → '+e.message);
-        }
-      }
-      throw new Error(errs.length?errs.join(' / '):'소스 없음');
-    }
-
-    // ── 렌더링 ──
-    function renderBondYields(){
-      const max=Math.max(...BONDS.map(b=>b.value));
-      const container=document.getElementById('bondList');
-      container.innerHTML=BONDS.map(b=>`
-        <div class="bond-row">
-          <div class="bond-flag">${b.flag}</div>
-          <div class="bond-info">
-            <div class="bond-country">
-              ${b.country}
-              <span class="badge ${b.src?'':'manual'}">${b.src||'수동'}</span>
-            </div>
-            <div class="bond-note">${b.note}${b.date?' · '+b.date:''}</div>
-            <div class="bond-bar"><span style="width:${(b.value/max*100).toFixed(1)}%"></span></div>
+  // ── 행 그리기 (한 번만. 이후엔 금리 부분만 갱신해서 입력값이 안 지워짐)
+  function buildRows() {
+    document.getElementById('rows').innerHTML = ITEMS.map(i => `
+      <div class="row">
+        <div class="flag">${i.flag}</div>
+        <div class="bond">
+          <div class="bond-top">
+            <span class="country">${i.country}</span>
+            <span class="badge" id="badge-${i.cc}">수동</span>
+            <span class="yield" id="yield-${i.cc}">${i.value.toFixed(2)}%</span>
           </div>
-          <div class="bond-yield">${b.value.toFixed(2)}%</div>
+          <div class="bond-note" id="note-${i.cc}">${i.note} · ${i.date}</div>
         </div>
-      `).join('');
-    }
-
-    async function fetchBondYields(){
-      const statusEl2=document.getElementById('bondStatus');
-      const btn=document.getElementById('bondRefreshBtn');
-      const diag=document.getElementById('bondDiag');
-      const diagBody=document.getElementById('bondDiagBody');
-
-      statusEl2.textContent='국채 금리 불러오는 중…';
-      statusEl2.className='bond-status';
-      btn.disabled=true;
-
-      const results=await Promise.allSettled(BONDS.map(resolveBond));
-      const failures=[];
-      results.forEach((r,i)=>{
-        const b=BONDS[i];
-        if(r.status==='fulfilled'){
-          b.value=r.value.value;
-          if(r.value.date)b.date=r.value.date;
-          if(r.value.note)b.note=r.value.note;
-          b.src=r.value.src;
-        }else{
-          b.src=null;
-          failures.push(b.country+'\n  '+r.reason.message);
-        }
-      });
-
-      renderBondYields();
-
-      const ok=BONDS.filter(b=>b.src).length;
-      if(ok===BONDS.length){
-        statusEl2.textContent='✓ '+ok+'개국 실시간';
-        statusEl2.className='bond-status success';
-      }else if(ok>0){
-        statusEl2.textContent='△ '+ok+'/'+BONDS.length+'개국 실시간 · 나머지 기준값';
-        statusEl2.className='bond-status error';
-      }else{
-        statusEl2.textContent='⚠ 전부 실패 — 기준값 표시';
-        statusEl2.className='bond-status error';
-      }
-
-      diag.style.display=failures.length?'block':'none';
-      diagBody.textContent=failures.join('\n\n');
-      btn.disabled=false;
-    }
-
-    // ── 환율 포맷 유틸 ──
-    function getSeparators(){
-      return formatMode==='EU'
-        ? { thousand:'\u00A0', decimal:',' }
-        : { thousand:',', decimal:'.' };
-    }
-
-    function formatNumber(value, decimals){
-      if(!isFinite(value))return '';
-      const sep=getSeparators();
-      const fixed=value.toFixed(decimals);
-      let [intPart,decPart]=fixed.split('.');
-      const isNeg=intPart.startsWith('-');
-      if(isNeg)intPart=intPart.slice(1);
-      const withThousands=intPart.replace(/\B(?=(\d{3})+(?!\d))/g, sep.thousand);
-      let out=withThousands;
-      if(decPart)out+=sep.decimal+decPart;
-      return isNeg?'-'+out:out;
-    }
-
-    function formatWhileTyping(raw){
-      if(raw===''||raw==='-')return raw;
-      const sep=getSeparators();
-      let isNeg=raw.startsWith('-');
-      let s=isNeg?raw.slice(1):raw;
-
-      if(sep.thousand==='\u00A0') s=s.replace(/[\s\u00A0]/g,'');
-      else s=s.split(sep.thousand).join('');
-
-      if(formatMode==='EU'){
-        s=s.replace(/\./g,',');
-        s=s.replace(/[^\d,]/g,'');
-        const idx=s.indexOf(',');
-        if(idx!==-1){
-          s=s.slice(0,idx+1)+s.slice(idx+1).replace(/,/g,'');
-        }
-      }else{
-        s=s.replace(/[^\d.]/g,'');
-        const idx=s.indexOf('.');
-        if(idx!==-1){
-          s=s.slice(0,idx+1)+s.slice(idx+1).replace(/\./g,'');
-        }
-      }
-
-      let intPart, decPart;
-      if(formatMode==='EU'){
-        [intPart,decPart]=s.split(',');
-      }else{
-        [intPart,decPart]=s.split('.');
-      }
-      intPart=intPart||'';
-      intPart=intPart.replace(/^0+(?=\d)/,'');
-      if(intPart==='' && decPart!==undefined)intPart='0';
-
-      const withThousands=intPart.replace(/\B(?=(\d{3})+(?!\d))/g, sep.thousand);
-      let out=withThousands;
-      if(decPart!==undefined)out+=sep.decimal+decPart;
-      return isNeg?'-'+out:out;
-    }
-
-    function parseNumber(str){
-      if(!str)return NaN;
-      const sep=getSeparators();
-      let s=str;
-      if(sep.thousand==='\u00A0') s=s.replace(/[\s\u00A0]/g,'');
-      else s=s.split(sep.thousand).join('');
-      if(sep.decimal===',') s=s.replace(',','.');
-      return parseFloat(s);
-    }
-
-    // ── 환율 API ──
-    async function fetchRates(){
-      statusEl.textContent='환율 불러오는 중…';
-      statusEl.className='status';
-      refreshBtn.disabled=true;
-      try{
-        const resp=await fetch('https://open.er-api.com/v6/latest/KRW');
-        if(!resp.ok)throw new Error('API 응답 오류');
-        const data=await resp.json();
-        if(data.result==='success'){
-          rates.KRW=1;
-          rates.SEK=data.rates.SEK;
-          rates.USD=data.rates.USD;
-          rates.CNY=data.rates.CNY;
-          rates.EUR=data.rates.EUR;
-          rates.GBP=data.rates.GBP;
-          const d=new Date(data.time_last_update_utc);
-          statusEl.textContent='✓ '+d.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'})+' 적용';
-          statusEl.className='status success';
-          const filled=document.querySelector('input[data-has-value="true"]');
-          if(filled)updateAll(filled);
-        }else throw new Error('환율 데이터 오류');
-      }catch(e){
-        statusEl.textContent='⚠ 환율 기본값 사용';
-        statusEl.className='status error';
-      }finally{
-        refreshBtn.disabled=false;
-      }
-    }
-
-    // ── 업데이트 ──
-    function updateAll(sourceInput){
-      if(isUpdating)return;
-      isUpdating=true;
-      const srcCode=sourceInput.dataset.code;
-      const srcVal=parseNumber(sourceInput.value);
-
-      document.querySelectorAll('input[type="text"]').forEach(i=>i.dataset.hasValue='false');
-
-      if(isNaN(srcVal)||sourceInput.value===''||sourceInput.value==='-'){
-        CURRENCIES.forEach(c=>{
-          if(c!==srcCode) document.getElementById(c).value='';
-        });
-        isUpdating=false;
-        return;
-      }
-
-      sourceInput.dataset.hasValue='true';
-      const inKRW=srcVal/rates[srcCode];
-      CURRENCIES.forEach(c=>{
-        if(c!==srcCode){
-          document.getElementById(c).value=formatNumber(inKRW*rates[c], DECIMALS[c]);
-        }
-      });
-      isUpdating=false;
-    }
-
-    // ── 통화 행 생성 ──
-    function buildCurrencyRows(){
-      const container=document.getElementById('currencyList');
-      container.innerHTML=CURRENCIES.map(code=>`
-        <div class="currency-row">
-          <div class="flag">${FLAGS[code]}</div>
-          <div class="currency-meta">
-            <div class="currency-code">${code}</div>
-            <div class="currency-name">${NAMES[code]}</div>
-          </div>
-          <input type="text" id="${code}" data-code="${code}" placeholder="0" inputmode="decimal">
+        <input type="text" id="${i.cur}" data-code="${i.cur}" placeholder="0" inputmode="decimal"
+               aria-label="${i.curName} 금액">
+        <div class="cur">
+          <div class="cur-code">${i.cur}</div>
+          <div class="cur-name">${i.curName}</div>
         </div>
-      `).join('');
+      </div>
+    `).join('');
+    bindInputs();
+  }
 
-      // 이벤트 바인딩
-      CURRENCIES.forEach(code=>{
-        const input=document.getElementById(code);
-        input.addEventListener('input', function(e){
-          const old=this.value;
-          const cursor=this.selectionStart;
-          const sep=getSeparators();
-          const regex=sep.decimal===',' ? /[\d,]/g : /[\d.]/g;
-          const before=old.slice(0,cursor);
-          const meaningfulCount=(before.match(regex)||[]).length;
+  function paintBond(i) {
+    document.getElementById('yield-' + i.cc).textContent = i.value.toFixed(2) + '%';
+    document.getElementById('note-' + i.cc).textContent = i.note + (i.date ? ' · ' + i.date : '');
+    const b = document.getElementById('badge-' + i.cc);
+    b.textContent = i.src || '수동';
+    b.className = 'badge' + (i.src ? ' live' : '');
+  }
 
-          const formatted=formatWhileTyping(old);
-          this.value=formatted;
+  function paintStatus() {
+    document.getElementById('status').innerHTML = [rateMsg, bondMsg].filter(Boolean).join(' · ');
+  }
 
-          let newCursor=formatted.length;
-          let cnt=0;
-          for(let i=0;i<formatted.length;i++){
-            if(regex.test(formatted[i])){
-              cnt++;
-              if(cnt===meaningfulCount){ newCursor=i+1; break; }
-            }
-            regex.lastIndex=0;
-          }
-          try{ this.setSelectionRange(newCursor,newCursor); }catch(_){}
-          updateAll(this);
-        });
+  // ═══════════════ 숫자 포맷 ═══════════════
+  function getSeparators() {
+    return formatMode === 'EU'
+      ? { thousand: '\u00A0', decimal: ',' }
+      : { thousand: ',',      decimal: '.' };
+  }
 
-        input.addEventListener('blur', function(){
-          const v=parseNumber(this.value);
-          if(!isNaN(v) && this.value!==''){
-            this.value=formatNumber(v, DECIMALS[code]);
-          }
-        });
-      });
+  function formatNumber(value, decimals) {
+    if (isNaN(value) || value === null) return '';
+    const sep = getSeparators();
+    let [intPart, decPart] = value.toFixed(decimals).split('.');
+    const isNeg = intPart.startsWith('-');
+    if (isNeg) intPart = intPart.slice(1);
+    let out = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, sep.thousand);
+    if (decPart) out += sep.decimal + decPart;
+    return isNeg ? '-' + out : out;
+  }
+
+  function formatWhileTyping(rawStr) {
+    if (rawStr === '' || rawStr === '-') return rawStr;
+    const sep = getSeparators();
+    const isNegative = rawStr.startsWith('-');
+    let s = isNegative ? rawStr.slice(1) : rawStr;
+
+    if (sep.thousand === '\u00A0') s = s.replace(/[\s\u00A0]/g, '');
+    else s = s.split(sep.thousand).join('');
+
+    if (formatMode === 'EU') {
+      s = s.replace(/\./g, ',').replace(/[^\d,]/g, '');
+      const f = s.indexOf(',');
+      if (f !== -1) s = s.slice(0, f + 1) + s.slice(f + 1).replace(/,/g, '');
+    } else {
+      s = s.replace(/[^\d.]/g, '');
+      const f = s.indexOf('.');
+      if (f !== -1) s = s.slice(0, f + 1) + s.slice(f + 1).replace(/\./g, '');
     }
 
-    // ── 포맷 토글 ──
-    formatToggle.addEventListener('change', function(){
-      const oldMode=formatMode;
-      const oldVals={};
-      CURRENCIES.forEach(c=>{ oldVals[c]=parseNumber(document.getElementById(c).value); });
+    let [intPart, decPart] = formatMode === 'EU' ? s.split(',') : s.split('.');
+    intPart = (intPart || '').replace(/^0+(?=\d)/, '');
+    if (intPart === '') intPart = decPart !== undefined ? '0' : '';
 
-      formatMode=this.checked?'EU':'US';
-      labelUS.classList.toggle('active', formatMode==='US');
-      labelEU.classList.toggle('active', formatMode==='EU');
+    let out = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, sep.thousand);
+    if (decPart !== undefined) out += sep.decimal + decPart;
+    return isNegative ? '-' + out : out;
+  }
 
-      CURRENCIES.forEach(c=>{
-        const v=oldVals[c];
-        const el=document.getElementById(c);
-        if(!isNaN(v)) el.value=formatNumber(v, DECIMALS[c]);
-      });
+  function parseNumber(str) {
+    if (!str) return NaN;
+    const sep = getSeparators();
+    let s = sep.thousand === '\u00A0'
+      ? str.replace(/[\s\u00A0]/g, '')
+      : str.split(sep.thousand).join('');
+    if (sep.decimal === ',') s = s.replace(',', '.');
+    return parseFloat(s);
+  }
+
+  // ═══════════════ 환전 ═══════════════
+  function updateAll(sourceInput) {
+    if (isUpdating) return;
+    isUpdating = true;
+
+    const sourceCode = sourceInput.dataset.code;
+    const sourceValue = parseNumber(sourceInput.value);
+
+    document.querySelectorAll('input[type="text"]').forEach(i => i.dataset.hasValue = 'false');
+
+    if (isNaN(sourceValue) || sourceInput.value === '' || sourceInput.value === '-') {
+      CURRENCIES.forEach(c => { if (c !== sourceCode) document.getElementById(c).value = ''; });
+      isUpdating = false;
+      return;
+    }
+
+    sourceInput.dataset.hasValue = 'true';
+    const inKRW = sourceValue / rates[sourceCode];
+    CURRENCIES.forEach(c => {
+      if (c !== sourceCode) document.getElementById(c).value = formatNumber(inKRW * rates[c], DECIMALS[c]);
     });
 
-    // ── 이벤트 ──
-    refreshBtn.addEventListener('click', fetchRates);
-    document.getElementById('bondRefreshBtn').addEventListener('click', fetchBondYields);
+    isUpdating = false;
+  }
 
-    const proxyToggle=document.getElementById('proxyToggle');
-    const proxyState=document.getElementById('proxyState');
-    proxyToggle.addEventListener('change', function(){
-      PROXY.enabled=this.checked;
-      proxyState.innerHTML=PROXY.enabled?'사용 <span class="ex">6개국</span>':'해제 <span class="ex">유로·스웨덴</span>';
-      fetchBondYields();
+  function bindInputs() {
+    CURRENCIES.forEach(code => {
+      const input = document.getElementById(code);
+
+      input.addEventListener('input', e => {
+        const oldValue = e.target.value;
+        const oldCursor = e.target.selectionStart;
+        const sep = getSeparators();
+        const meaningful = sep.decimal === ',' ? /[\d,]/ : /[\d.]/;
+        let count = 0;
+        for (const ch of oldValue.slice(0, oldCursor)) if (meaningful.test(ch)) count++;
+
+        const formatted = formatWhileTyping(oldValue);
+        e.target.value = formatted;
+
+        let newCursor = formatted.length, seen = 0;
+        for (let i = 0; i < formatted.length; i++) {
+          if (meaningful.test(formatted[i])) {
+            seen++;
+            if (seen === count) { newCursor = i + 1; break; }
+          }
+        }
+        try { e.target.setSelectionRange(newCursor, newCursor); } catch (_) {}
+
+        updateAll(input);
+      });
+
+      input.addEventListener('blur', e => {
+        const v = parseNumber(e.target.value);
+        if (!isNaN(v) && e.target.value !== '') e.target.value = formatNumber(v, DECIMALS[code]);
+      });
+    });
+  }
+
+  async function fetchRates() {
+    rateMsg = '환율 불러오는 중…';
+    paintStatus();
+    try {
+      const res = await fetch('https://open.er-api.com/v6/latest/KRW');
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      if (data.result !== 'success') throw new Error('데이터 오류');
+
+      rates.KRW = 1;
+      ['SEK','USD','CNY','EUR','GBP'].forEach(c => rates[c] = data.rates[c]);
+
+      const d = new Date(data.time_last_update_utc);
+      rateMsg = '<span class="ok">환율 ' + d.toLocaleDateString('ko-KR', { month:'numeric', day:'numeric' }) + '</span>';
+
+      const filled = document.querySelector('input[data-has-value="true"]');
+      if (filled) updateAll(filled);
+    } catch (err) {
+      console.error(err);
+      rateMsg = '<span class="bad">환율 실패 · 기본값</span>';
+    }
+    paintStatus();
+  }
+
+  // ═══════════════ 국채 금리 ═══════════════
+  const BOND_SOURCES = {
+    KR: [['stooq', () => fetchStooq('KR')]],
+    SE: [['Riksbank', fetchRiksbank], ['stooq', () => fetchStooq('SE')]],
+    US: [['stooq', () => fetchStooq('US')]],
+    CN: [['stooq', () => fetchStooq('CN')]],
+    EU: [['ECB', fetchECB], ['stooq', () => fetchStooq('DE')]],
+    GB: [['stooq', () => fetchStooq('GB')]]
+  };
+
+  function splitCsvLine(line) {
+    const out = [];
+    let cur = '', q = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') { if (q && line[i+1] === '"') { cur += '"'; i++; } else q = !q; }
+      else if (ch === ',' && !q) { out.push(cur); cur = ''; }
+      else cur += ch;
+    }
+    out.push(cur);
+    return out.map(s => s.trim());
+  }
+
+  function withTimeout(p, ms, label) {
+    return Promise.race([p, new Promise((_, rej) =>
+      setTimeout(() => rej(new Error(label + ' 응답 없음 (' + ms + 'ms)')), ms))]);
+  }
+
+  async function fetchECB() {
+    const url = 'https://data-api.ecb.europa.eu/service/data/FM/D.U2.EUR.4F.BB.U2_10Y.YLD?lastNObservations=1&format=csvdata';
+    const res = await withTimeout(fetch(url, { cache:'no-store' }), 8000, 'ECB');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const lines = (await res.text()).trim().split(/\r?\n/);
+    if (lines.length < 2) throw new Error('빈 응답');
+    const h = splitCsvLine(lines[0]), r = splitCsvLine(lines[lines.length - 1]);
+    const v = parseFloat(r[h.indexOf('OBS_VALUE')]);
+    if (!isFinite(v)) throw new Error('값 파싱 실패');
+    const ti = h.indexOf('TIME_PERIOD');
+    return { value: v, date: ti >= 0 ? r[ti] : '', note: '유로존 AAA 10Y' };
+  }
+
+  async function fetchRiksbank() {
+    const res = await withTimeout(
+      fetch('https://api.riksbank.se/swea/v1/Observations/Latest/SEGVB10YC', { cache:'no-store' }), 8000, 'Riksbank');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const d = await res.json();
+    const o = Array.isArray(d) ? d[d.length - 1] : d;
+    const v = parseFloat(o.value !== undefined ? o.value : o.Value);
+    if (!isFinite(v)) throw new Error('값 파싱 실패');
+    return { value: v, date: o.date || o.Date || '' };
+  }
+
+  async function fetchStooq(cc) {
+    if (!PROXY.enabled) throw new Error('프록시 꺼짐');
+    const sym = STOOQ_SYMBOL[cc];
+    if (!sym) throw new Error('심볼 없음');
+    const target = 'https://stooq.com/q/l/?s=' + sym.toLowerCase() + '&f=sd2t2ohlcv&h&e=csv';
+    const res = await withTimeout(fetch(PROXY.build(target), { cache:'no-store' }), 12000, 'stooq');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const lines = (await res.text()).trim().split(/\r?\n/);
+    if (lines.length < 2) throw new Error('빈 응답');
+    const h = splitCsvLine(lines[0]).map(s => s.toLowerCase()), r = splitCsvLine(lines[1]);
+    const ci = h.indexOf('close');
+    if (ci < 0) throw new Error('close 컬럼 없음');
+    const v = parseFloat(r[ci]);
+    if (!isFinite(v)) throw new Error('값 없음');
+    const di = h.indexOf('date');
+    return { value: v, date: di >= 0 ? r[di] : '' };
+  }
+
+  async function resolveBond(i) {
+    const errs = [];
+    for (const [name, fn] of (BOND_SOURCES[i.cc] || [])) {
+      try { return { ...(await fn()), src: name }; }
+      catch (e) { errs.push(name + ' → ' + e.message); }
+    }
+    throw new Error(errs.join(' / ') || '소스 없음');
+  }
+
+  async function fetchBonds() {
+    bondMsg = '금리 불러오는 중…';
+    paintStatus();
+
+    const results = await Promise.allSettled(ITEMS.map(resolveBond));
+    const failures = [];
+
+    results.forEach((r, idx) => {
+      const i = ITEMS[idx];
+      if (r.status === 'fulfilled') {
+        i.value = r.value.value;
+        if (r.value.date) i.date = r.value.date;
+        if (r.value.note) i.note = r.value.note;
+        i.src = r.value.src;
+      } else {
+        i.src = null;
+        failures.push(i.country + '\n  ' + r.reason.message);
+      }
+      paintBond(i);
     });
 
-    // ── 초기화 ──
-    buildCurrencyRows();
-    renderBondYields();
-    fetchRates();
-    fetchBondYields();
-  })();
+    const ok = ITEMS.filter(i => i.src).length;
+    bondMsg = ok === ITEMS.length
+      ? '<span class="ok">금리 ' + ok + '/6 실시간</span>'
+      : '<span class="bad">금리 ' + ok + '/6 실시간</span>';
+    paintStatus();
+
+    const diag = document.getElementById('diag');
+    diag.hidden = failures.length === 0;
+    document.getElementById('diagBody').textContent = failures.join('\n\n');
+  }
+
+  // ═══════════════ 컨트롤 ═══════════════
+  const fmtBtn = document.getElementById('fmtBtn');
+  fmtBtn.addEventListener('click', () => {
+    const old = {};
+    CURRENCIES.forEach(c => old[c] = parseNumber(document.getElementById(c).value));
+
+    formatMode = formatMode === 'US' ? 'EU' : 'US';
+    fmtBtn.textContent = formatMode === 'EU' ? '1\u00A0234,56' : '1,234.56';
+
+    CURRENCIES.forEach(c => {
+      const v = old[c];
+      if (!isNaN(v)) document.getElementById(c).value = formatNumber(v, DECIMALS[c]);
+    });
+  });
+
+  const refreshBtn = document.getElementById('refreshBtn');
+  async function refreshAll() {
+    refreshBtn.disabled = true;
+    refreshBtn.classList.add('spin');
+    await Promise.all([fetchRates(), fetchBonds()]);
+    refreshBtn.classList.remove('spin');
+    refreshBtn.disabled = false;
+  }
+  refreshBtn.addEventListener('click', refreshAll);
+
+  document.getElementById('proxyToggle').addEventListener('change', e => {
+    PROXY.enabled = e.target.checked;
+    fetchBonds();
+  });
+
+  buildRows();
+  refreshAll();
 </script>
 </body>
 </html>
