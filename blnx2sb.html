@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blunux 빌드 절차</title>
+<style>
+  :root {
+    --ground:   #F6F7F9;
+    --surface:  #FFFFFF;
+    --code-bg:  #EEF1F5;
+    --line:     #D9DEE6;
+    --text:     #1A1E25;
+    --muted:    #5C6673;
+    --accent:   #2F6FD0;
+    --warn-bg:  #FBF3E4;
+    --warn-line:#C98A1E;
+    --warn-text:#6B4A08;
+    --ok:       #1F7A4D;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:   #14171C;
+      --surface:  #1A1E25;
+      --code-bg:  #101318;
+      --line:     #2C323C;
+      --text:     #E3E8EF;
+      --muted:    #98A2B0;
+      --accent:   #6FA5EE;
+      --warn-bg:  #2A2113;
+      --warn-line:#C98A1E;
+      --warn-text:#E7C079;
+      --ok:       #5FCB96;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:   #14171C;
+    --surface:  #1A1E25;
+    --code-bg:  #101318;
+    --line:     #2C323C;
+    --text:     #E3E8EF;
+    --muted:    #98A2B0;
+    --accent:   #6FA5EE;
+    --warn-bg:  #2A2113;
+    --warn-line:#C98A1E;
+    --warn-text:#E7C079;
+    --ok:       #5FCB96;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--ground);
+    color: var(--text);
+    font-family: "Noto Sans KR", "Segoe UI", Roboto, -apple-system, "Helvetica Neue", sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    margin: 0;
+    padding: 32px 20px 96px;
+  }
+
+  .wrap { max-width: 760px; margin: 0 auto; }
+
+  header { border-bottom: 2px solid var(--text); padding-bottom: 18px; margin-bottom: 8px; }
+  h1 { font-size: 1.7rem; font-weight: 700; margin: 0 0 6px; letter-spacing: -0.01em; }
+  .sub { color: var(--muted); font-size: 0.92rem; margin: 0; }
+
+  .step {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 20px 22px;
+    margin-top: 22px;
+  }
+  .step > h2 {
+    font-size: 1.15rem;
+    margin: 0 0 4px;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .num {
+    font-family: ui-monospace, "DejaVu Sans Mono", Menlo, Consolas, monospace;
+    font-size: 0.8rem;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 3px;
+    padding: 1px 7px;
+    flex: none;
+  }
+  .step p { margin: 10px 0; }
+  .step p:first-of-type { margin-top: 6px; }
+
+  .cmd { position: relative; margin: 14px 0; }
+  .cmd pre {
+    background: var(--code-bg);
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    margin: 0;
+    padding: 14px 92px 14px 14px;
+    overflow-x: auto;
+    font-family: ui-monospace, "DejaVu Sans Mono", Menlo, Consolas, monospace;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    white-space: pre;
+  }
+  .copy {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font: inherit;
+    font-size: 0.78rem;
+    padding: 4px 12px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .copy:hover { color: var(--text); border-color: var(--muted); }
+  .copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .copy.done { color: var(--ok); border-color: var(--ok); }
+
+  .note {
+    background: var(--warn-bg);
+    border-left: 3px solid var(--warn-line);
+    color: var(--warn-text);
+    padding: 12px 16px;
+    margin: 14px 0;
+    border-radius: 0 4px 4px 0;
+    font-size: 0.93rem;
+  }
+  .note strong { font-weight: 700; }
+
+  code {
+    font-family: ui-monospace, "DejaVu Sans Mono", Menlo, Consolas, monospace;
+    font-size: 0.88em;
+    background: var(--code-bg);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+  .note code { background: rgba(128,128,128,0.18); }
+
+  h3 { font-size: 1rem; margin: 22px 0 8px; }
+  ul { margin: 8px 0; padding-left: 22px; }
+  li { margin: 5px 0; }
+
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.92rem; }
+  th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 0.85rem; }
+
+  footer { margin-top: 34px; color: var(--muted); font-size: 0.87rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Blunux 빌드 절차</h1>
+  <p class="sub">다른 Arch Linux 기계에서 <code>blnx2sb</code> 키트로 Live ISO 만들기 · RAM 16 GB 이상 기준</p>
+</header>
+
+<section class="step">
+  <h2><span class="num">2</span> 준비물 설치</h2>
+  <p>빌드에 필요한 도구를 한 번에 깝니다.</p>
+  <div class="cmd"><pre>sudo pacman -S --needed archiso julia rust git base-devel imagemagick xorriso squashfs-tools</pre></div>
+  <table>
+    <tr><th>도구</th><th>쓰임</th></tr>
+    <tr><td><code>archiso</code></td><td>mkarchiso — ISO 를 만드는 본체</td></tr>
+    <tr><td><code>julia</code></td><td>build.jl 실행 (추가 패키지 불필요)</td></tr>
+    <tr><td><code>rust</code></td><td>설치기·마법사 컴파일</td></tr>
+    <tr><td><code>base-devel</code>, <code>git</code></td><td>AUR 패키지 빌드</td></tr>
+    <tr><td><code>imagemagick</code></td><td>아이콘·배경화면·부팅 스플래시</td></tr>
+    <tr><td><code>xorriso</code>, <code>squashfs-tools</code></td><td>완성된 ISO 검사</td></tr>
+  </table>
+</section>
+
+<section class="step">
+  <h2><span class="num">3</span> 그 기계의 조건 확인</h2>
+  <p>작업 폴더에 약 <strong>15 GB</strong> 가 필요합니다.</p>
+  <div class="cmd"><pre>free -h | head -2 &amp;&amp; df -h /tmp | tail -1</pre></div>
+  <p><code>/tmp</code> 의 <strong>Avail 이 15 G 이상</strong>이면 그대로 진행하시면 됩니다.</p>
+  <div class="note">
+    <strong>/tmp 가 tmpfs 면 크기가 RAM 의 절반입니다.</strong> RAM 16 GB 기계는 보통 8 GB 라 부족합니다.
+    그럴 때는 5단계에서 <code>BLUNUX_WORK</code> 를 쓰세요 — 안 그러면 빌드가 도중에 멈춥니다.
+  </div>
+</section>
+
+<section class="step">
+  <h2><span class="num">4</span> 키트를 내장 디스크로 복사</h2>
+  <p>USB 가 어디에 붙었는지 확인합니다.</p>
+  <div class="cmd"><pre>lsblk -o NAME,LABEL,MOUNTPOINTS | grep blnx</pre></div>
+  <p>나온 경로로 복사합니다. <code>-a</code> 가 실행 권한을 보존합니다.</p>
+  <div class="cmd"><pre>cp -a /run/media/$USER/blnx/blnx2sb ~/ &amp;&amp; cd ~/blnx2sb</pre></div>
+  <div class="note">
+    <strong>USB 위에서 직접 빌드하지 마세요.</strong> 훨씬 느립니다. 내장 디스크로 옮겨서 만드세요.
+  </div>
+</section>
+
+<section class="step">
+  <h2><span class="num">5</span> 빌드</h2>
+  <p><code>/tmp</code> 에 15 GB 이상 여유가 있을 때:</p>
+  <div class="cmd"><pre>julia build.jl config.toml</pre></div>
+  <p>3단계에서 부족했다면 (대부분의 16 GB 기계):</p>
+  <div class="cmd"><pre>BLUNUX_WORK=~/blunux-work julia build.jl config.toml</pre></div>
+  <div class="note">
+    <strong>root 로 실행하지 마세요.</strong> 중간에 <code>sudo</code> 암호를 묻는 것은 정상입니다 —
+    mkarchiso 단계에서만 씁니다.
+  </div>
+  <p><strong>40~60분</strong> 걸립니다. AUR 에서 calamares·kime·yay-bin 을 처음부터 만드느라
+  20~30분이 더 붙고, 네트워크가 있어야 합니다.</p>
+  <p>다른 언어로 만들고 싶으면 파일만 바꾸면 됩니다 — 언어·커널·키보드·입력기가 모두 따라갑니다.</p>
+  <div class="cmd"><pre>julia build.jl config_EN.toml</pre></div>
+</section>
+
+<section class="step">
+  <h2><span class="num">6</span> 결과 확인</h2>
+  <p>빌드 끝에 검사가 자동으로 돕니다. 마지막 줄이 이래야 합니다:</p>
+  <div class="cmd"><pre>NN ok, 3 warn, 0 fail</pre></div>
+  <p><strong>0 fail 이 핵심입니다.</strong> warn 3개는 예상된 것입니다. 나중에 다시 보려면:</p>
+  <div class="cmd"><pre>./scripts/verify-iso out/blunux2-*.iso config.toml</pre></div>
+  <p>만들어진 ISO 확인:</p>
+  <div class="cmd"><pre>ls -lh out/*.iso</pre></div>
+  <div class="note">
+    검사가 <strong>0 fail 이 아니면 그 ISO 는 설치하지 마세요.</strong> 실패한 줄이 무엇이 빠졌고
+    그래서 무엇이 깨지는지 말해 줍니다.
+  </div>
+</section>
+
+<section class="step">
+  <h2><span class="num">7</span> Ventoy USB 만들고 ISO 넣기</h2>
+  <p>Ventoy 는 USB 하나에 ISO 를 여러 개 넣어두고 부팅할 때 고르는 도구입니다. AUR 에 있습니다.</p>
+  <div class="cmd"><pre>yay -S ventoy-bin</pre></div>
+
+  <h3>대상 USB 확인</h3>
+  <p>여기서 장치를 잘못 고르면 엉뚱한 디스크가 지워집니다. <strong>용량과 모델명을 눈으로 확인하세요.</strong></p>
+  <div class="cmd"><pre>lsblk -o NAME,SIZE,TRAN,MODEL,MOUNTPOINTS</pre></div>
+  <p><code>TRAN</code> 이 <code>usb</code> 인 것이 대상입니다. 아래에서 <code>/dev/sdX</code> 를 그 이름으로 바꾸세요.</p>
+
+  <h3>언마운트</h3>
+  <div class="cmd"><pre>sudo umount /dev/sdX*</pre></div>
+
+  <h3>Ventoy 설치</h3>
+  <div class="note">
+    <strong>이 명령은 USB 전체를 지웁니다.</strong> 빌드 키트가 들어 있는 USB 라면
+    <code>blnx2sb</code> 도 함께 사라집니다. 키트는 이미 4단계에서 내장 디스크로 복사했으니
+    대개 괜찮지만, 확인하고 진행하세요.
+  </div>
+  <div class="cmd"><pre>sudo ventoy -i /dev/sdX</pre></div>
+  <p>이미 Ventoy 가 깔린 USB 에 다시 깔려면 <code>-i</code> 대신 <code>-I</code> 를 씁니다.</p>
+
+  <h3>ISO 넣기</h3>
+  <p>USB 를 뽑았다 꽂으면 <code>Ventoy</code> 라는 이름으로 마운트됩니다. 거기에 그냥 복사하면 끝입니다.</p>
+  <div class="cmd"><pre>cp ~/blnx2sb/out/blunux2-*.iso /run/media/$USER/Ventoy/</pre></div>
+  <div class="cmd"><pre>sync &amp;&amp; udisksctl unmount -b /dev/sdX1</pre></div>
+  <p>이 USB 로 부팅하면 ISO 목록이 나오고, 고르면 그대로 Blunux 라이브가 시작됩니다.</p>
+</section>
+
+<section class="step">
+  <h2>잘 안 될 때</h2>
+
+  <h3>gdb-add-index ... No debugging symbols 가 쏟아집니다</h3>
+  <p>kime 빌드 때 나오는 알려진 잡음입니다. 무시하세요 — 패키지는 제대로 만들어집니다.</p>
+
+  <h3>작업 폴더에서 공간이 부족합니다</h3>
+  <p>5단계의 <code>BLUNUX_WORK</code> 를 쓰세요. 이미 실패했다면 남은 작업 폴더를 지우고 다시 시작합니다.</p>
+  <div class="cmd"><pre>sudo rm -rf /tmp/blunux2-work</pre></div>
+
+  <h3>mkarchiso: command not found</h3>
+  <p><code>archiso</code> 가 설치되지 않았습니다. 2단계를 다시 보세요.</p>
+
+  <h3>설치가 마지막에 bootloader ... main.py 오류로 멈춥니다</h3>
+  <p>만든 ISO 로 설치할 때 나오는 것입니다. 그 기계가 <strong>BIOS(레거시) 모드로 부팅</strong>된
+  것입니다 — Blunux 는 UEFI 로만 설치됩니다. 펌웨어에서 <strong>CSM / Legacy Support 를 끄고</strong>
+  부팅 메뉴에서 <code>UEFI:</code> 로 시작하는 항목을 고르세요.</p>
+
+  <h3>USB 에 복사한 파일의 실행 권한이 사라집니다</h3>
+  <p>USB 가 exFAT 이나 FAT32 입니다. 권한과 심볼릭 링크를 저장하지 못해 빌드가 깨집니다.
+  키트를 옮길 USB 는 <strong>ext4</strong> 여야 합니다. (Ventoy USB 는 ISO 만 담으므로 상관없습니다.)</p>
+</section>
+
+<footer>
+  이 문서는 오프라인에서 열립니다 — 인터넷이 없어도 됩니다. 각 명령 오른쪽의 <strong>복사</strong> 버튼을 누르면 그 줄만 클립보드로 갑니다.
+</footer>
+
+</div>
+
+<script>
+  document.querySelectorAll(".cmd").forEach(function (box) {
+    var pre = box.querySelector("pre");
+    var btn = document.createElement("button");
+    btn.className = "copy";
+    btn.type = "button";
+    btn.textContent = "복사";
+    btn.addEventListener("click", function () {
+      var text = pre.textContent;
+      var done = function () {
+        btn.textContent = "복사됨";
+        btn.classList.add("done");
+        setTimeout(function () {
+          btn.textContent = "복사";
+          btn.classList.remove("done");
+        }, 1400);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { fallback(text, done); });
+      } else {
+        fallback(text, done);
+      }
+    });
+    box.appendChild(btn);
+  });
+
+  function fallback(text, done) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand("copy"); done(); } catch (e) { /* 클립보드 차단됨 */ }
+    document.body.removeChild(ta);
+  }
+</script>
+</body>
+</html>
