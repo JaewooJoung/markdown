@@ -178,14 +178,9 @@
 </section>
 
 <section class="step">
-  <h2><span class="num">4</span> 그 기계의 조건 확인</h2>
-  <p>작업 폴더에 약 <strong>15 GB</strong> 가 필요합니다.</p>
-  <div class="cmd"><pre>free -h | head -2 &amp;&amp; df -h /tmp | tail -1</pre></div>
-  <p><code>/tmp</code> 의 <strong>Avail 이 15 G 이상</strong>이면 그대로 진행하시면 됩니다.</p>
-  <div class="note">
-    <strong>/tmp 가 tmpfs 면 크기가 RAM 의 절반입니다.</strong> RAM 16 GB 기계는 보통 8 GB 라 부족합니다.
-    그럴 때는 6단계에서 <code>BLUNUX_WORK</code> 를 쓰세요 — 안 그러면 빌드가 도중에 멈춥니다.
-  </div>
+  <h2><span class="num">4</span> /tmp 크기를 32GB로 설정</h2>
+  <p>빌드 용량이 부족해 멈추는 것을 방지하기 위해 <code>/tmp</code> 마운트 크기를 32GB로 확장합니다.</p>
+  <div class="cmd"><pre>sudo mount -o remount,size=32G /tmp</pre></div>
 </section>
 
 <section class="step">
@@ -201,10 +196,8 @@
 
 <section class="step">
   <h2><span class="num">6</span> 빌드</h2>
-  <p><code>/tmp</code> 에 15 GB 이상 여유가 있을 때:</p>
+  <p>빌드를 시작합니다:</p>
   <div class="cmd"><pre>julia build.jl config.toml</pre></div>
-  <p>4단계에서 부족했다면 (대부분의 16 GB 기계):</p>
-  <div class="cmd"><pre>BLUNUX_WORK=~/blunux-work julia build.jl config.toml</pre></div>
   <div class="note">
     <strong>root 로 실행하지 마세요.</strong> 중간에 <code>sudo</code> 암호를 묻는 것은 정상입니다 —
     mkarchiso 단계에서만 씁니다.
@@ -258,7 +251,7 @@
   <h3>gdb-add-index ... No debugging symbols 가 쏟아집니다</h3>
   <p>kime 빌드 때 나오는 알려진 잡음입니다. 무시하세요 — 패키지는 제대로 만들어집니다.</p>
   <h3>작업 폴더에서 공간이 부족합니다</h3>
-  <p>6단계의 <code>BLUNUX_WORK</code> 를 쓰세요. 이미 실패했다면 남은 작업 폴더를 지우고 다시 시작합니다.</p>
+  <p>4단계를 다시 실행해 <code>/tmp</code> 용량을 늘리세요. 이미 실패했다면 남은 작업 폴더를 지우고 다시 시작합니다.</p>
   <div class="cmd"><pre>sudo rm -rf /tmp/blunux2-work</pre></div>
   <h3>mkarchiso: command not found</h3>
   <p><code>archiso</code> 가 설치되지 않았습니다. 1단계를 다시 보세요.</p>
