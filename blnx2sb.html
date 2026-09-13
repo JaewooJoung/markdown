@@ -184,14 +184,9 @@
 </section>
 
 <section class="step">
-  <h2><span class="num">5</span> 키트를 내장 디스크로 복사</h2>
-  <p>USB 가 어디에 붙었는지 확인합니다.</p>
-  <div class="cmd"><pre>lsblk -o NAME,LABEL,MOUNTPOINTS | grep blnx</pre></div>
-  <p>나온 경로로 복사합니다. <code>-a</code> 가 실행 권한을 보존합니다.</p>
-  <div class="cmd"><pre>cp -a /run/media/$USER/blnx/blnx2sb ~/ &amp;&amp; cd ~/blnx2sb</pre></div>
-  <div class="note">
-    <strong>USB 위에서 직접 빌드하지 마세요.</strong> 훨씬 느립니다. 내장 디스크로 옮겨서 만드세요.
-  </div>
+  <h2><span class="num">5</span> TOML 설정 파일 이동 및 이동 폴더 입장</h2>
+  <p>다운로드한 <code>config.toml</code> 파일을 <code>blnx2sb</code> 폴더 안으로 이동하고, 해당 폴더로 들어갑니다.</p>
+  <div class="cmd"><pre>mv ./config.toml ./blnx2sb/config.toml &amp;&amp; cd ./blnx2sb</pre></div>
 </section>
 
 <section class="step">
@@ -233,9 +228,7 @@
   <div class="cmd"><pre>sudo umount /dev/sdX*</pre></div>
   <h3>Ventoy 설치</h3>
   <div class="note">
-    <strong>이 명령은 USB 전체를 지웁니다.</strong> 빌드 키트가 들어 있는 USB 라면
-    <code>blnx2sb</code> 도 함께 사라집니다. 키트는 이미 5단계에서 내장 디스크로 복사했으니
-    대개 괜찮지만, 확인하고 진행하세요.
+    <strong>이 명령은 USB 전체를 지웁니다.</strong> 확인하고 진행하세요.
   </div>
   <div class="cmd"><pre>sudo ventoy -i /dev/sdX</pre></div>
   <p>이미 Ventoy 가 깔린 USB 에 다시 깔려면 <code>-i</code> 대신 <code>-I</code> 를 씁니다.</p>
